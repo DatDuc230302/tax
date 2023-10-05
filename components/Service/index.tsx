@@ -51,11 +51,11 @@ export default function Service() {
             <div className="flex w-full justify-center text-[30px]">
                 <h3 className="border-b-[3px] border-[#E64558] pb-1">Dịch vụ công</h3>
             </div>
-            <div className="flex w-full gap-[30px] mt-[20px]">
+            <div className="w-full gap-[30px] mt-[20px] justify-center flex flex-wrap lg:flex lg:flex-nowrap">
                 {list1.map((item: items, index: number) => (
                     <div
-                        key={index}
-                        className={`${css.itemImg} flex flex-col relative w-[25%] cursor-pointer`}
+                        key={index} 
+                        className={`${css.itemImg} w-[40%] flex flex-col relative lg:w-[25%] cursor-pointer`}
                     >
                         <div className="py-[40px] z-10 gap-4 flex flex-col px-2">
                             <div className="flex justify-center">
@@ -74,10 +74,13 @@ export default function Service() {
                     </div>
                 ))}
             </div>
-            <div className="flex w-full gap-[30px] mt-[20px]">
+            <div className="w-full gap-[30px] mt-[20px] justify-center flex flex-wrap lg:flex lg:flex-nowrap">
                 {list2.map((item: items, index: number) => (
-                    <div key={index} className={`${css.itemImg} flex flex-col relative w-[25%] cursor-pointer`}>
-                        <div className="py-[40px] z-10 gap-4 flex flex-col px-1">
+                    <div
+                        key={index} 
+                        className={`${css.itemImg} w-[40%] flex flex-col relative lg:w-[25%] cursor-pointer`}
+                    >
+                        <div className="py-[40px] z-10 gap-4 flex flex-col px-2">
                             <div className="flex justify-center">
                                 <Image
                                     className="flex w-[55px] h-[55px]"

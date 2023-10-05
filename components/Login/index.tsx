@@ -24,7 +24,9 @@ export default function Login({ children }: { children: React.ReactNode }) {
     const handleSubmit = () => {};
     return (
         <>
-            <div onClick={onOpen}>{children}</div>
+            <div className="flex items-center gap-2" onClick={onOpen}>
+                {children}
+            </div>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
                 <ModalContent>
                     {(onClose) => (

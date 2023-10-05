@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
-export default function Search() {
+export default function Search({ className }: { className?: string }) {
     const router = useRouter();
     const [valueInput, setValueInput] = useState<string>('');
 
@@ -11,7 +11,9 @@ export default function Search() {
     };
 
     const handleSearch = () => {
-        router.push(`search?keyword=${valueInput}`);
+        if (valueInput.length > 0) {
+            router.push(`search?keyword=${valueInput}`);
+        }
     };
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -22,7 +24,7 @@ export default function Search() {
 
     return (
         <div className="flex items-center gap-3 h-full">
-            <div className="bg-white flex items-center px-3 rounded-[6px]">
+            <div className={`bg-white flex items-center px-3 rounded-[6px] ${className}`}>
                 <input
                     onChange={(e) => handleOnchange(e.target.value)}
                     placeholder="Tìm kiếm"

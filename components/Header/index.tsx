@@ -4,11 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { FaHome } from 'react-icons/fa';
+import { FaHome, FaBars } from 'react-icons/fa';
 import { BiSolidRightArrow } from 'react-icons/bi';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import Search from '../Search';
 import Login from '../Login';
+import Sidebar from '../Sidebar';
 
 interface items {
     icon?: ReactElement;
@@ -16,7 +17,7 @@ interface items {
     href: string;
 }
 
-const listNav: items[] = [
+export const listNav: items[] = [
     {
         icon: <FaHome color={'white'} fontSize={'22px'} />,
         href: '/',
@@ -93,7 +94,7 @@ export default function Header() {
 
     return (
         <header className="flex flex-col select-none">
-            <div className="flex relative h-[135px]">
+            <div className="hidden lg:flex relative h-[135px]">
                 <Image
                     src={'/imgs/bg_header.jpg'}
                     layout="responsive"
@@ -103,8 +104,8 @@ export default function Header() {
                     alt=""
                 />
                 <div className="flex absolute w-full h-full">
-                    <Image className="shrink-0" src={'/imgs/logo.png'} width={220} height={80} alt="" />
-                    <div className="flex h-full justify-center flex-col text-white font-bold text-[26px]">
+                    <Image src={'/imgs/logo.png'} width={220} height={80} alt="" />
+                    <div className="hidden lg:flex h-full justify-center flex-col text-white font-bold text-[26px]">
                         <span>CỔNG THÔNG TIN ĐIỆN TỬ</span>
                         <span>CHI CỤC THUẾ QUẬN 8 - TP. HỒ CHÍ MINH</span>
                     </div>
@@ -119,8 +120,17 @@ export default function Header() {
                     </Login>
                 </div>
             </div>
-            <div className="flex justify-between px-[15px] bg-[#0B80FF] w-full h-[42px]">
-                <div className="flex h-full items-center">
+            <div className="flex justify-between px-[15px] bg-[#0B80FF] w-full h-[70px] lg:h-[42px]">
+                <div className="h-full flex w-full lg:hidden items-center">
+                    <Sidebar>
+                        <FaBars className={'cursor-pointer'} color="white" fontSize={20} />
+                    </Sidebar>
+                    <div className="flex ">
+                        <Image src={'/imgs/logo.png'} width={100} height={100} alt="" />
+                        <h1 className="flex items-center text-white font-bold">Chi cục thuế quận 8</h1>
+                    </div>
+                </div>
+                <div className="hidden lg:flex h-full items-center">
                     {listNav.map((item: items, index: number) => (
                         <Link
                             key={index}
@@ -133,7 +143,10 @@ export default function Header() {
                         </Link>
                     ))}
                 </div>
-                <Search />
+
+                <div className="hidden lg:flex">
+                    <Search />
+                </div>
             </div>
             <div className="flex bg-[#F3F3F3] w-full justify-between h-[50px] px-2">
                 <div className="flex h-full items-center gap-1">
