@@ -6,7 +6,9 @@ import { usePathname } from 'next/navigation';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { FaHome } from 'react-icons/fa';
 import { BiSolidRightArrow } from 'react-icons/bi';
+import { BsFillTelephoneFill } from 'react-icons/bs';
 import Search from '../Search';
+import Login from '../Login';
 
 interface items {
     icon?: ReactElement;
@@ -67,7 +69,7 @@ export default function Header() {
                 break;
             case '/tien-ich':
                 setActive(3);
-                setTitle('Tin tức');
+                setTitle('Tiện ích');
                 break;
             case '/van-de':
                 setActive(4);
@@ -90,7 +92,7 @@ export default function Header() {
     }, [pathName]);
 
     return (
-        <header className="flex flex-col">
+        <header className="flex flex-col select-none">
             <div className="flex relative h-[135px]">
                 <Image
                     src={'/imgs/bg_header.jpg'}
@@ -106,6 +108,15 @@ export default function Header() {
                         <span>CỔNG THÔNG TIN ĐIỆN TỬ</span>
                         <span>CHI CỤC THUẾ QUẬN 8 - TP. HỒ CHÍ MINH</span>
                     </div>
+                </div>
+                <div className="absolute top-0 right-0 flex items-center gap-2 text-white px-2 py-1">
+                    <div className="flex items-center gap-2 font-bold hover:underline cursor-pointer">
+                        <BsFillTelephoneFill color="white" />
+                        <span>0957124124</span>
+                    </div>
+                    <Login>
+                        <span className="hover:underline cursor-pointer px-1">Đăng nhập</span>
+                    </Login>
                 </div>
             </div>
             <div className="flex justify-between px-[15px] bg-[#0B80FF] w-full h-[42px]">
@@ -124,15 +135,20 @@ export default function Header() {
                 </div>
                 <Search />
             </div>
-            {path !== '/' && (
-                <div className="flex bg-[#F3F3F3] w-full gap-1 h-[50px] items-center px-2">
-                    <span>Trang trủ</span>
-                    <i className="flex translate-y-[1.5px]">
-                        <BiSolidRightArrow color={'#333333'} fontSize={12} />
-                    </i>
-                    <span>{title}</span>
+            <div className="flex bg-[#F3F3F3] w-full justify-between h-[50px] px-2">
+                <div className="flex h-full items-center gap-1">
+                    <Link href="/">Trang trủ</Link>
+                    {path !== '/' && (
+                        <>
+                            <i className="flex translate-y-[1.5px]">
+                                <BiSolidRightArrow color={'#333333'} fontSize={12} />
+                            </i>
+                            <span>{title}</span>
+                        </>
+                    )}
                 </div>
-            )}
+                <div className="flex"></div>
+            </div>
         </header>
     );
 }

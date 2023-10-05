@@ -1,3 +1,9 @@
+import Service from '@/components/Service';
+
 export default function Home() {
-    return <main className="flex"></main>;
+    return (
+        <div className="flex">
+            <Service />
+        </div>
+    );
 }

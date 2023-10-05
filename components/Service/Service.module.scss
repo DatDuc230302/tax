@@ -1,0 +1,28 @@
+.itemImg {
+    background: #11a0ef url('https://hcmtax.gov.vn/Background.44382354c45319385428.png') 50% no-repeat;
+    background-size: cover;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    position: relative;
+    height: 260px;
+
+    &:hover {
+        .itemSub {
+            transform: scale(1);
+            border-radius: 0;
+        }
+    }
+}
+
+.itemSub {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: all linear 0.2s;
+    transform: scale(0);
+    background-color: rgba(255, 0, 0, 0.5);
+    border-radius: 50%;
+}
