@@ -8,7 +8,6 @@ import { FaHome, FaBars } from 'react-icons/fa';
 import { BiSolidRightArrow } from 'react-icons/bi';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import Search from '../Search';
-import Login from '../Login';
 import Sidebar from '../Sidebar';
 
 interface items {
@@ -93,7 +92,7 @@ export default function Header() {
     }, [pathName]);
 
     return (
-        <header className="flex flex-col select-none">
+        <header id="header" className="flex flex-col select-none">
             <div className="hidden lg:flex relative h-[135px]">
                 <Image
                     src={'/imgs/bg_header.jpg'}
@@ -115,9 +114,6 @@ export default function Header() {
                         <BsFillTelephoneFill color="white" />
                         <span>0957124124</span>
                     </div>
-                    <Login>
-                        <span className="hover:underline cursor-pointer px-1">Đăng nhập</span>
-                    </Login>
                 </div>
             </div>
             <div className="flex justify-between px-[15px] bg-[#0B80FF] w-full h-[70px] lg:h-[42px]">

@@ -21,7 +21,10 @@ export default function Login({ children }: { children: React.ReactNode }) {
 
     const [hidePass, setHidePass] = useState<boolean>(true);
 
-    const handleSubmit = () => {};
+    const handleSubmit = () => {
+        alert(phone);
+    };
+
     return (
         <>
             <div className="flex items-center gap-2" onClick={onOpen}>

@@ -54,7 +54,7 @@ export default function Service() {
             <div className="w-full gap-[30px] mt-[20px] justify-center flex flex-wrap lg:flex lg:flex-nowrap">
                 {list1.map((item: items, index: number) => (
                     <div
-                        key={index} 
+                        key={index}
                         className={`${css.itemImg} w-[40%] flex flex-col relative lg:w-[25%] cursor-pointer`}
                     >
                         <div className="py-[40px] z-10 gap-4 flex flex-col px-2">
@@ -77,7 +77,7 @@ export default function Service() {
             <div className="w-full gap-[30px] mt-[20px] justify-center flex flex-wrap lg:flex lg:flex-nowrap">
                 {list2.map((item: items, index: number) => (
                     <div
-                        key={index} 
+                        key={index}
                         className={`${css.itemImg} w-[40%] flex flex-col relative lg:w-[25%] cursor-pointer`}
                     >
                         <div className="py-[40px] z-10 gap-4 flex flex-col px-2">
