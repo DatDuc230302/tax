@@ -11,7 +11,7 @@ const config: Config = {
     theme: {
         extend: {
             fontFamily: {
-                sansSerif: ['arial'],
+                sansSerif: [''],
             },
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

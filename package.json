@@ -9,6 +9,10 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
+        "@mui/icons-material": "^5.14.12",
+        "@mui/material": "^5.14.12",
         "@nextui-org/react": "^2.1.13",
         "framer-motion": "^10.16.4",
         "next": "latest",
@@ -16,6 +20,7 @@
         "react-dom": "latest",
         "react-icons": "^4.11.0",
         "react-slick": "^0.29.0",
+        "recharts": "^2.8.0",
         "sass": "^1.68.0",
         "slick-carousel": "^1.8.1"
     },
