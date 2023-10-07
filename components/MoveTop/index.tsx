@@ -5,17 +5,28 @@ import { IoIosArrowUp } from 'react-icons/io';
 
 export default function MoveTop() {
     const [turn, setTurn] = useState<boolean>(false);
-    const [heigh, setHeigh] = useState<number>(0);
+    const [height, setHeight] = useState<number>(0);
 
     useEffect(() => {
-        if (heigh > 500) {
-            setTurn(true);
-        } else {
-            setTurn(false);
-        }
-    }, [heigh]);
+        const handleScroll = () => {
+            setHeight(window.scrollY);
+            if (height > 500) {
+                setTurn(true);
+            } else {
+                setTurn(false);
+            }
+        };
 
-    window.addEventListener('scroll', () => setHeigh(window.scrollY));
+        if (typeof window !== 'undefined') {
+            window.addEventListener('scroll', handleScroll);
+        }
+
+        return () => {
+            if (typeof window !== 'undefined') {
+                window.removeEventListener('scroll', handleScroll);
+            }
+        };
+    }, [height]);
 
     return (
         <div

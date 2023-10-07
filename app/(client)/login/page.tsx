@@ -18,7 +18,7 @@ export default function Login() {
 
     return (
         <div>
-            <Modal isOpen={true} placement="top-center">
+            <Modal backdrop="blur" hideCloseButton isOpen placement="top-center">
                 <ModalContent>
                     <ModalHeader className="flex flex-col gap-1">Đăng nhập</ModalHeader>
                     <ModalBody>

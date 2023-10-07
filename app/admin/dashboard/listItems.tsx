@@ -18,7 +18,7 @@ export const mainListItems = (
                 <ListItemIcon>
                     <DashboardIcon />
                 </ListItemIcon>
-                <ListItemText primary="Trang chủ" />
+                <ListItemText primary="Báo cáo" />
             </ListItemButton>
         </Link>
         <Link href={'/admin/articles'}>

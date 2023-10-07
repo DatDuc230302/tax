@@ -55,7 +55,7 @@ export default function Service() {
                 {list1.map((item: items, index: number) => (
                     <div
                         key={index}
-                        className={`${css.itemImg} w-[40%] flex flex-col relative lg:w-[25%] cursor-pointer`}
+                        className={`${css.itemImg} w-[100%] md:w-[40%] flex flex-col relative lg:w-[25%] cursor-pointer`}
                     >
                         <div className="py-[40px] z-10 gap-4 flex flex-col px-2">
                             <div className="flex justify-center">
@@ -78,7 +78,7 @@ export default function Service() {
                 {list2.map((item: items, index: number) => (
                     <div
                         key={index}
-                        className={`${css.itemImg} w-[40%] flex flex-col relative lg:w-[25%] cursor-pointer`}
+                        className={`${css.itemImg} w-[100%] md:w-[40%] flex flex-col relative lg:w-[25%] cursor-pointer`}
                     >
                         <div className="py-[40px] z-10 gap-4 flex flex-col px-2">
                             <div className="flex justify-center">

@@ -16,6 +16,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from './dashboard/listItems';
+import Link from 'next/link';
+import { useEffect } from 'react';
 
 const drawerWidth: number = 240;
 
@@ -70,35 +72,41 @@ const defaultTheme = createTheme();
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const [open, setOpen] = React.useState(true);
-    const toggleDrawer = () => {
-        setOpen(!open);
-    };
+
+    React.useEffect(() => {
+        document.title = 'Trang quản trị';
+    }, []);
+
+    useEffect(() => {
+        function handleResize() {
+            if (window.innerWidth <= 700) {
+                setOpen(false);
+            } else {
+                setOpen(true);
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        handleResize();
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     return (
         <ThemeProvider theme={defaultTheme}>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <AppBar position="absolute" open={open}>
+                <AppBar className="z-10" position="absolute" open={open}>
                     <Toolbar
+                        className="flex justify-between"
                         sx={{
-                            pr: '24px', // keep right padding when drawer closed
+                            pr: '24px',
                         }}
                     >
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={toggleDrawer}
-                            sx={{
-                                marginRight: '36px',
-                                ...(open && { display: 'none' }),
-                            }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                            Dashboard
-                        </Typography>
+                        <Link href="/">Trang trủ</Link>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
                                 <NotificationsIcon />
@@ -106,26 +114,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         </IconButton>
                     </Toolbar>
                 </AppBar>
-                <Drawer variant="permanent" open={open}>
-                    <Toolbar
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'flex-end',
-                            px: [1],
-                        }}
-                    >
-                        <IconButton onClick={toggleDrawer}>
-                            <ChevronLeftIcon />
-                        </IconButton>
-                    </Toolbar>
-                    <Divider />
+                <Drawer className="z-10 flex shrink-0" variant="permanent" open={open}>
                     <List component="nav">
                         {mainListItems}
                         <Divider sx={{ my: 1 }} />
                     </List>
                 </Drawer>
-                <div className="flex w-full h-full pt-[64px]">{children}</div>
+                <div className="flex w-full h-full pt-[64px] overflow-hidden">{children}</div>
             </Box>
         </ThemeProvider>
     );
