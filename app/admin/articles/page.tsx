@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
-import CreateUser from '@/components/CreateUser';
 import {
     Table,
     TableHeader,
@@ -23,6 +22,7 @@ import { HiMiniPencilSquare } from 'react-icons/hi2';
 import { MdOutlineRestore } from 'react-icons/md';
 import RestoreStatus from '@/components/RestoreStatus';
 import DeleteStatus from '@/components/DeleteStatus';
+import CreateArticle from '@/components/CreateArticle';
 const data = [
     {
         key: '1',
@@ -101,15 +101,7 @@ export default function Articles() {
                         </Dropdown>
                     </div>
                 </div>
-                <Button
-                    className="shrink-0 h-full w-[180px] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e] p-0"
-                    color="primary"
-                >
-                    <CreateUser>
-                        <AiOutlinePlusCircle fontSize={20} />
-                        Thêm tài khoản
-                    </CreateUser>
-                </Button>
+                <CreateArticle />
             </div>
             <Table
                 aria-label="Example table with client side pagination"

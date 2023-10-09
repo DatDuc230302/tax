@@ -2,7 +2,6 @@ import React, { useState, ReactElement } from 'react';
 import css from './Sidebar.module.scss';
 import { Button } from '@nextui-org/react';
 import { FaUser } from 'react-icons/fa';
-import Login from '../Login';
 import { listNav } from '../Header';
 import { AiOutlineClose } from 'react-icons/ai';
 import Search from '../Search';
@@ -23,14 +22,6 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
                 <div onClick={() => setTurn(false)} className={`${css.overlay}`}></div>
                 <div className={`${css.box} ${turn && 'left-[0px]'}`}>
                     <div className="h-[70px] w-full bg-[#0B80FF] flex justify-between items-center px-4">
-                        <Button className="rounded-none" color="danger">
-                            <div className="h-full flex w-full">
-                                <Login>
-                                    <FaUser className={'translate-y-[-1px]'} />
-                                    Đăng nhập
-                                </Login>
-                            </div>
-                        </Button>
                         <AiOutlineClose
                             fontSize={20}
                             color="white"

@@ -4,15 +4,28 @@ import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
-    const [phone, setPhone] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
     const [pass, setPass] = useState<string>('');
+    const router = useRouter();
 
     const [hidePass, setHidePass] = useState<boolean>(true);
 
-    const handleSubmit = () => {
-        if (phone.length > 0 && pass.length > 0) {
+    const handleSubmit = async () => {
+        if (email.length > 0 && pass.length > 0) {
+            const result = await axios.post('https://9963-115-79-24-61.ngrok-free.app/api/v1/login', {
+                email: email,
+                password: pass,
+            });
+            if (result.data.status === 'success') {
+                localStorage.setItem('access_token', result.data.authorisation.token);
+                router.push('/admin/dashboard');
+            } else {
+                alert('Deo dung tai khoan');
+            }
         }
     };
 
@@ -26,17 +39,17 @@ export default function Login() {
                             autoFocus
                             label="Số điện thoại"
                             placeholder="Nhập số điện thoại"
-                            variant="bordered"
-                            type="number"
-                            onChange={(e) => e.target.value[0] !== ' ' && setPhone(e.target.value)}
-                            value={phone}
+                            variant="flat"
+                            type="text"
+                            onChange={(e) => e.target.value[0] !== ' ' && setEmail(e.target.value)}
+                            value={email}
                         />
                         <div className="relative">
                             <Input
                                 label="Mật khẩu"
                                 placeholder="Nhập mật khẩu"
                                 type={hidePass ? 'password' : 'text'}
-                                variant="bordered"
+                                variant="flat"
                                 value={pass}
                                 onChange={(e) => e.target.value[0] !== ' ' && setPass(String(e.target.value))}
                             />

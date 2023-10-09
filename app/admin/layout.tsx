@@ -1,127 +1,81 @@
 'use client';
 
-import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems } from './dashboard/listItems';
+import NoneAdmin from '@/components/NoneAdmin';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import Link from 'next/link';
-import { useEffect } from 'react';
-
-const drawerWidth: number = 240;
-
-interface AppBarProps extends MuiAppBarProps {
-    open?: boolean;
-}
-
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-        position: 'relative',
-        whiteSpace: 'nowrap',
-        width: drawerWidth,
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        boxSizing: 'border-box',
-        ...(!open && {
-            overflowX: 'hidden',
-            transition: theme.transitions.create('width', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-            width: theme.spacing(7),
-            [theme.breakpoints.up('sm')]: {
-                width: theme.spacing(9),
-            },
-        }),
-    },
-}));
-
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+import * as React from 'react';
+import { BiSolidDashboard } from 'react-icons/bi';
+import { BsFillPostcardFill } from 'react-icons/bs';
+import { FaUserFriends, FaBars, FaUser } from 'react-icons/fa';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-    const [open, setOpen] = React.useState(true);
-
     React.useEffect(() => {
         document.title = 'Trang quản trị';
     }, []);
 
-    useEffect(() => {
-        function handleResize() {
-            if (window.innerWidth <= 700) {
-                setOpen(false);
-            } else {
-                setOpen(true);
-            }
-        }
+    interface items {
+        icon: React.ReactElement;
+        title: string;
+        href: string;
+    }
 
-        window.addEventListener('resize', handleResize);
-
-        handleResize();
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+    const listItems: items[] = [
+        {
+            icon: <BiSolidDashboard fontSize={20} />,
+            title: 'Bảng điều khiển',
+            href: '/admin/dashboard',
+        },
+        {
+            icon: <BsFillPostcardFill fontSize={20} />,
+            title: 'Bài viết',
+            href: '/admin/articles',
+        },
+        {
+            icon: <FaUserFriends fontSize={20} />,
+            title: 'Tài khoản',
+            href: '/admin/accounts',
+        },
+    ];
 
     return (
-        <ThemeProvider theme={defaultTheme}>
-            <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
-                <AppBar className="z-10" position="absolute" open={open}>
-                    <Toolbar
-                        className="flex justify-between"
-                        sx={{
-                            pr: '24px',
-                        }}
-                    >
-                        <Link href="/">Trang trủ</Link>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-                <Drawer className="z-10 flex shrink-0" variant="permanent" open={open}>
-                    <List component="nav">
-                        {mainListItems}
-                        <Divider sx={{ my: 1 }} />
-                    </List>
-                </Drawer>
-                <div className="flex w-full h-full pt-[64px] overflow-hidden">{children}</div>
-            </Box>
-        </ThemeProvider>
+        <div className="flex h-full">
+            <div className="flex w-full flex-col">
+                <div className="justify-between px-4 flex bg-[#3077D9] w-full h-[70px]">
+                    <Dropdown>
+                        <DropdownTrigger>
+                            <div className="flex cursor-pointer h-full px-1 items-center">
+                                <FaBars color="white" fontSize={24} />
+                            </div>
+                        </DropdownTrigger>
+                        <DropdownMenu aria-label="Example with disabled actions" disabledKeys={['edit', 'delete']}>
+                            {listItems.map((item: items, index: number) => (
+                                <DropdownItem key={index}>
+                                    <Link href={item.href} className="flex items-center gap-2">
+                                        {item.icon}
+                                        <span>{item.title}</span>
+                                    </Link>
+                                </DropdownItem>
+                            ))}
+                        </DropdownMenu>
+                    </Dropdown>
+                    <Dropdown>
+                        <DropdownTrigger>
+                            <div className="cursor-pointer gap-2 pr-2 flex h-full items-center">
+                                <FaUser color="white" fontSize={24} />
+                                <div className="flex flex-col text-[14px] text-white">
+                                    <span>d</span>
+                                </div>
+                            </div>
+                        </DropdownTrigger>
+                        <DropdownMenu aria-label="Example with disabled actions" disabledKeys={['edit', 'delete']}>
+                            <DropdownItem>
+                                <span>Đăng xuất</span>
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                </div>
+                <div className="flex">{children}</div>
+            </div>
+        </div>
     );
 }
