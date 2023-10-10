@@ -22,6 +22,15 @@
             "@/*": ["./*"]
         }
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/CreateArticle/index.js"],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        ".next/types/**/*.ts",
+        "components/CreateArticle/index.tsx",
+        "app/api/CustomUploadAdapter.js",
+        "components/CreateArticle/Upload.js",
+        "app/api/upload.js"
+    ],
     "exclude": ["node_modules"]
 }

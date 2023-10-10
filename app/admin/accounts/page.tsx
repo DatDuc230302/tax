@@ -141,6 +141,19 @@ export default function Accounts() {
         setSearchValue('');
     }, [sortStatus, sortRole]);
 
+    useEffect(() => {
+        getUsers();
+    }, []);
+
+    const getUsers = async () => {
+        const result = await axios.get('https://cd60-171-252-154-117.ngrok-free.app/api/v1/user/1', {
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+        console.log(result);
+    };
+
     return (
         <div className="flex flex-col w-full gap-4">
             <div className="flex h-max py-4">
@@ -262,7 +275,7 @@ export default function Accounts() {
                     <TableBody>
                         {users.map((item: any, index: number) => (
                             <TableRow key={index}>
-                                <TableCell>{item.name}</TableCell>
+                                <TableCell className="flex w-max flex-nowrap">{item.name}</TableCell>
                                 <TableCell>{item.email}</TableCell>
                                 <TableCell>{item.phone}</TableCell>
                                 <TableCell>{item.pass}</TableCell>
