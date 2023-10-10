@@ -16,7 +16,7 @@ export default function Login() {
 
     const handleSubmit = async () => {
         if (email.length > 0 && pass.length > 0) {
-            const result = await axios.post('https://9963-115-79-24-61.ngrok-free.app/api/v1/login', {
+            const result = await axios.post('https://5aa4-2a09-bac1-7ac0-10-00-246-17.ngrok-free.app/api/v1/login', {
                 email: email,
                 password: pass,
             });

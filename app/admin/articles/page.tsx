@@ -22,7 +22,6 @@ import RestoreStatus from '@/components/RestoreStatus';
 import DeleteStatus from '@/components/DeleteStatus';
 import CreateArticle from '@/components/CreateArticle';
 import UpdateUser from '@/components/UpdateUser';
-import { BiRefresh } from 'react-icons/bi';
 const data = [
     {
         key: '1',
@@ -43,10 +42,6 @@ const data = [
 ];
 
 export default function Articles() {
-    function capitalizeFirstLetter(string: string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
     const [users, setUsers] = useState<object[]>(data);
     const [selection, setSelection] = useState<string>('Tên');
     const [searchValue, setSearchValue] = useState<string>('');

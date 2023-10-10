@@ -80,6 +80,8 @@ const data = [
 
 export default function Accounts() {
     const [users, setUsers] = useState<object[]>([]);
+    const [d, setD] = useState<object[]>([]);
+
     const [sortUsers, setSortUsers] = useState<object[]>([]);
     const [selection, setSelection] = useState<string>('Tên');
     const [searchValue, setSearchValue] = useState<string>('');
@@ -145,13 +147,25 @@ export default function Accounts() {
         getUsers();
     }, []);
 
+    const token =
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vNWFhNC0yYTA5LWJhYzEtN2FjMC0xMC0wMC0yNDYtMTcubmdyb2stZnJlZS5hcHAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNjk2OTI2ODM3LCJleHAiOjE2OTY5MzA0MzcsIm5iZiI6MTY5NjkyNjgzNywianRpIjoiZW44dERncU5Ta2xacXNMRSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.20G79fJKMwQ1ArNFQM4tEBrXZqchVnatFACILpX-G_M';
+
     const getUsers = async () => {
-        const result = await axios.get('https://cd60-171-252-154-117.ngrok-free.app/api/v1/user/1', {
-            headers: {
-                Accept: 'application/json',
-            },
-        });
-        console.log(result);
+        try {
+            const response = await fetch('https://5aa4-2a09-bac1-7ac0-10-00-246-17.ngrok-free.app/api/v1/user', {
+                headers: {
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json(); // Lấy dữ liệu JSON từ phản hồi
+            } else {
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     };
 
     return (

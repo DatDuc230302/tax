@@ -13,31 +13,54 @@ import {
     DropdownTrigger,
     DropdownMenu,
     DropdownItem,
+    Select,
+    SelectItem,
 } from '@nextui-org/react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { serverImages } from '@/server';
 
 interface items {
     title: string;
+    slug?: string;
 }
 
-const listTag: items[] = [{ title: 'Bài báo' }];
+const listTag: items[] = [
+    { title: 'Giải trí', slug: 'giai-tri' },
+    { title: 'Thể thao', slug: 'the-thao' },
+    { title: 'Hài hước', slug: 'hai-huoc' },
+    { title: 'Tuổi trẻ', slug: 'tuoi-tre' },
+];
 
-const listCategory: items[] = [{ title: 'Kinh dị' }];
+const listCategory: items[] = [
+    { title: 'Giải trí', slug: 'giai-tri' },
+    { title: 'Thể thao', slug: 'the-thao' },
+    { title: 'Hài hước', slug: 'hai-huoc' },
+    { title: 'Tuổi trẻ', slug: 'tuoi-tre' },
+];
 
 export default function CreateArticle() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const [title, setTitle] = useState<string>('');
-    const [category, setCategory] = useState<string>('Loại bài viết');
-    const [tag, setTag] = useState<string>('Tag bài viết');
+    const [category, setCategory] = useState<string>('');
+    const [tags, setTags] = useState<string[]>([]);
     const [content, setContent] = useState<string>('');
-    const [sortStatus, setSortStatus] = useState<string>('Sắp xếp trạng thái');
+
+    const handleChooseTag = (slugTag: string) => {
+        if (tags.includes(slugTag)) {
+            setTags(tags.filter((item: string) => item !== slugTag));
+        } else {
+            setTags([...tags, slugTag]);
+        }
+    };
 
     const handleSubmit = () => {
-        if (content.length > 0) {
-            console.log(content);
+        if (title.length === 0 || category.length === 0 || tags.length === 0 || content.length === 0) {
+            alert('Du lieu con thieu khong the post');
+        } else {
+            alert('Ok');
         }
     };
 
@@ -57,9 +80,9 @@ export default function CreateArticle() {
                 Thêm bài viết
             </Button>
             <Modal
-                className="h-[500px] overflow-y-auto"
+                className="h-[650px] overflow-y-auto"
                 size="3xl"
-                isOpen={isOpen}
+                isOpen={true}
                 onOpenChange={onOpenChange}
                 isDismissable={false}
             >
@@ -72,38 +95,29 @@ export default function CreateArticle() {
                                     onChange={(e) => setTitle(String(e.target.value))}
                                     type="text"
                                     value={title}
-                                    placeholder="Tên bài viết"
+                                    label="Tên bài viết"
                                 />
-                                <div className="flex w-full gap-4">
-                                    <Dropdown>
-                                        <DropdownTrigger>
-                                            <Button className="w-full" variant="flat">
-                                                {category}
-                                            </Button>
-                                        </DropdownTrigger>
-                                        <DropdownMenu aria-label="Static Actions">
-                                            {listCategory.map((item: items, index: number) => (
-                                                <DropdownItem key={index}>{item.title}</DropdownItem>
-                                            ))}
-                                        </DropdownMenu>
-                                    </Dropdown>
-                                    <Dropdown>
-                                        <DropdownTrigger>
-                                            <Button className="w-full" variant="flat">
-                                                {tag}
-                                            </Button>
-                                        </DropdownTrigger>
-                                        <DropdownMenu aria-label="Static Actions">
-                                            {listTag.map((item: items, index: number) => (
-                                                <DropdownItem key={index}>{item.title}</DropdownItem>
-                                            ))}
-                                        </DropdownMenu>
-                                    </Dropdown>
+                                <div className="flex gap-4">
+                                    <Select label="Chọn thể loại bài viết" className="w-full">
+                                        {listCategory.map((item: items, index: number) => (
+                                            <SelectItem onClick={() => setCategory(String(item.slug))} key={index}>
+                                                {item.title}
+                                            </SelectItem>
+                                        ))}
+                                    </Select>
+                                    <Select selectionMode="multiple" label="Chọn tag bài viết" className="w-full">
+                                        {listTag.map((item: items, index: number) => (
+                                            <SelectItem onClick={() => handleChooseTag(String(item.slug))} key={index}>
+                                                {item.title}
+                                            </SelectItem>
+                                        ))}
+                                    </Select>
                                 </div>
+
                                 <CKEditor
                                     config={{
                                         ckfinder: {
-                                            uploadUrl: 'http://localhost:5000/upload',
+                                            uploadUrl: `${serverImages}/upload`,
                                         },
                                     }}
                                     data={content}
