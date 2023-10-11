@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { serverBackend } from '@/server';
 
 export default function Login() {
     const [email, setEmail] = useState<string>('');
@@ -16,17 +17,21 @@ export default function Login() {
 
     const handleSubmit = async () => {
         if (email.length > 0 && pass.length > 0) {
-            const result = await axios.post('https://9963-115-79-24-61.ngrok-free.app/api/v1/login', {
+            const result = await axios.post(`${serverBackend}/api/v1/login`, {
                 email: email,
                 password: pass,
             });
             if (result.data.status === 'success') {
-                localStorage.setItem('access_token', result.data.authorisation.token);
+                localStorage.setItem('access_token', result.data.authorization.token);
                 router.push('/admin/dashboard');
             } else {
                 alert('Deo dung tai khoan');
             }
         }
+    };
+
+    const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        e.key === 'Enter' && handleSubmit();
     };
 
     return (
@@ -52,6 +57,7 @@ export default function Login() {
                                 variant="flat"
                                 value={pass}
                                 onChange={(e) => e.target.value[0] !== ' ' && setPass(String(e.target.value))}
+                                onKeyDown={(e) => handleOnKeyDown(e)}
                             />
                             <div className="h-full pr-3 items-center flex absolute bottom-0 right-0">
                                 {hidePass ? (

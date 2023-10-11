@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import { AiOutlinePlusCircle } from 'react-icons/ai';
+import React, { useEffect, useState } from 'react';
 import {
     Table,
     TableHeader,
@@ -11,7 +10,6 @@ import {
     TableCell,
     Button,
     Input,
-    Chip,
     Dropdown,
     DropdownTrigger,
     DropdownMenu,
@@ -19,10 +17,11 @@ import {
 } from '@nextui-org/react';
 import { FaTrashAlt } from 'react-icons/fa';
 import { HiMiniPencilSquare } from 'react-icons/hi2';
-import { MdOutlineRestore } from 'react-icons/md';
+import { MdSettingsBackupRestore } from 'react-icons/md';
 import RestoreStatus from '@/components/RestoreStatus';
 import DeleteStatus from '@/components/DeleteStatus';
 import CreateArticle from '@/components/CreateArticle';
+import UpdateUser from '@/components/UpdateUser';
 const data = [
     {
         key: '1',
@@ -30,7 +29,6 @@ const data = [
         email: 'datduc2303@gmail.com',
         phone: '0958823',
         pass: '1234',
-        role: 'root',
         status: 'active',
     },
     {
@@ -39,43 +37,39 @@ const data = [
         email: 'datduc2303@gmail.com',
         phone: '0958823',
         pass: '1234',
-        role: 'admin',
         status: 'inactive',
     },
 ];
 
 export default function Articles() {
-    function capitalizeFirstLetter(string: string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
     const [users, setUsers] = useState<object[]>(data);
-
     const [selection, setSelection] = useState<string>('Tên');
+    const [searchValue, setSearchValue] = useState<string>('');
+    const [sortUsers, setSortUsers] = useState<object[]>([]);
+    const [sortCategory, setSortCategory] = useState<string>('Sắp xếp thể loại');
+    const [subCategory, setSubCategory] = useState<string>('Sắp xếp thể loại con');
+    const [sortStatus, setSortStatus] = useState<string>('Sắp xếp trạng thái');
 
-    const handleSearch = (key: string) => {
-        switch (selection) {
-            case 'Tên':
-                setUsers(data.filter((item) => item.name.toLocaleLowerCase().includes(key.toLocaleLowerCase())));
-                break;
-            case 'Email':
-                setUsers(data.filter((item) => item.email.toLocaleLowerCase().includes(key.toLocaleLowerCase())));
-                break;
-            case 'Số điện tho':
-                setUsers(data.filter((item) => item.phone.toLocaleLowerCase().includes(key.toLocaleLowerCase())));
-                break;
+    useEffect(() => {}, [searchValue]);
+
+    useEffect(() => {}, [sortStatus]);
+
+    useEffect(() => {
+        if (sortCategory === 'Sắp xếp thể loại') {
+            setSubCategory('Sắp xếp thể loại con');
         }
-    };
+    }, [sortCategory]);
 
     return (
         <div className="flex flex-col w-full px-4 py-[20px] gap-4">
-            <div className="flex justify-end gap-10">
-                <div className="flex flex-1 relative ">
+            <div className="flex px-4 w-full gap-4 flex-col lg:flex-row justify-between">
+                <div className="flex items-center h-full flex-1 relative ">
                     <Input
-                        onChange={(e) => handleSearch(String(e.target.value))}
+                        onChange={(e) => setSearchValue(String(e.target.value))}
                         className="rounded-none"
                         type="text"
                         placeholder={`Tìm kiếm theo ${selection}`}
+                        value={searchValue}
                     />
                     <div className="absolute right-0">
                         <Dropdown>
@@ -101,7 +95,73 @@ export default function Articles() {
                         </Dropdown>
                     </div>
                 </div>
-                <CreateArticle />
+                <div className="flex justify-center flex-col lg:flex-row items-center gap-4">
+                    <div className="flex w-full gap-3 justify-between">
+                        <Dropdown>
+                            <DropdownTrigger>
+                                <Button
+                                    className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
+                                    variant="flat"
+                                >
+                                    {sortCategory}
+                                </Button>
+                            </DropdownTrigger>
+                            <DropdownMenu aria-label="Single selection example" variant="flat">
+                                <DropdownItem onClick={() => setSortCategory('Sắp xếp thể loại')} key="text">
+                                    Tất cả
+                                </DropdownItem>
+                                <DropdownItem onClick={() => setSortCategory('Tin tức')} key="text">
+                                    Tin tức
+                                </DropdownItem>
+                                <DropdownItem onClick={() => setSortCategory('Văn bản')} key="text">
+                                    Văn bản
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        <Dropdown>
+                            <DropdownTrigger>
+                                <Button
+                                    isDisabled={sortCategory === 'Sắp xếp thể loại' ? true : false}
+                                    className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
+                                    variant="flat"
+                                >
+                                    {subCategory}
+                                </Button>
+                            </DropdownTrigger>
+                            <DropdownMenu aria-label="Single selection example" variant="flat">
+                                <DropdownItem onClick={() => setSubCategory('Sắp xếp thể loại con')} key="text">
+                                    Tất cả
+                                </DropdownItem>
+                                <DropdownItem onClick={() => setSubCategory('Tin tức')} key="text">
+                                    Tin tức
+                                </DropdownItem>
+                                <DropdownItem onClick={() => setSubCategory('Văn bản')} key="text">
+                                    Văn bản
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </div>
+                    <div className="flex w-full gap-3 justify-between">
+                        <Dropdown>
+                            <DropdownTrigger>
+                                <Button
+                                    className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
+                                    variant="flat"
+                                >
+                                    {sortStatus}
+                                </Button>
+                            </DropdownTrigger>
+                            <DropdownMenu aria-label="Single selection example" variant="flat">
+                                <DropdownItem onClick={() => setSortStatus('Sắp xếp trạng thái')}>Tất cả</DropdownItem>
+                                <DropdownItem onClick={() => setSortStatus('Hoạt động')}>Hoạt động</DropdownItem>
+                                <DropdownItem onClick={() => setSortStatus('Không hoạt động')}>
+                                    Không hoạt động
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        <CreateArticle />
+                    </div>
+                </div>
             </div>
             <Table
                 aria-label="Example table with client side pagination"
@@ -113,50 +173,47 @@ export default function Articles() {
                     <TableColumn key="name">Tên bài viết</TableColumn>
                     <TableColumn key="content">Nội dung</TableColumn>
                     <TableColumn key="category">Thể loại</TableColumn>
-                    <TableColumn key="role">Tag</TableColumn>
+                    <TableColumn key="role">Thể loại con</TableColumn>
                     <TableColumn key="status">Trạng thái</TableColumn>
                     <TableColumn key="status">Công cụ</TableColumn>
                 </TableHeader>
                 <TableBody>
                     {users.map((item: any, index: number) => (
                         <TableRow key={index}>
-                            <TableCell>{item.name}</TableCell>
+                            <TableCell className="flex w-max flex-nowrap">{item.name}</TableCell>
                             <TableCell>{item.email}</TableCell>
                             <TableCell>{item.phone}</TableCell>
-                            <TableCell>
-                                {item.role === 'root' && (
-                                    <Chip className="text-white" color="danger">
-                                        {capitalizeFirstLetter(item.role)}
-                                    </Chip>
-                                )}
-                                {item.role === 'admin' && (
-                                    <Chip className="text-white" color={'warning'}>
-                                        {capitalizeFirstLetter(item.role)}
-                                    </Chip>
-                                )}
-                            </TableCell>
-                            <TableCell>
+                            <TableCell>{item.pass}</TableCell>
+                            <TableCell className="w-[170px] shrink-0">
                                 {item.status === 'inactive' && (
-                                    <Chip className="text-white" color="success">
-                                        {capitalizeFirstLetter(item.status)}
-                                    </Chip>
+                                    <div className="select-none w-[140px] text-white flex p-1 items-center justify-center rounded-[50px] bg-[#b1b1b1]">
+                                        Không hoạt động
+                                    </div>
                                 )}
                                 {item.status === 'active' && (
-                                    <Chip className="text-white" color="primary">
-                                        {capitalizeFirstLetter(item.status)}
-                                    </Chip>
+                                    <div className="select-none w-[140px] text-white flex p-1 items-center justify-center rounded-[50px]  bg-[#2FBD5E]">
+                                        Hoạt động
+                                    </div>
                                 )}
                             </TableCell>
-                            <TableCell className="flex items-center h-full gap-2">
-                                <HiMiniPencilSquare className={'cursor-pointer'} fontSize={18} />
+                            <TableCell className="flex w-[80px] items-center h-full justify-between">
+                                <UpdateUser
+                                    nameValue={item.name}
+                                    emailValue={item.email}
+                                    phoneValue={item.phone}
+                                    passValue={item.pass}
+                                    confirmPassValue={item.confirmPass}
+                                >
+                                    <HiMiniPencilSquare className={'cursor-pointer'} fontSize={20} />
+                                </UpdateUser>
                                 <DeleteStatus>
                                     {item.status === 'active' && (
-                                        <FaTrashAlt className={'cursor-pointer'} fontSize={18} />
+                                        <FaTrashAlt className={'cursor-pointer'} fontSize={20} />
                                     )}
                                 </DeleteStatus>
                                 {item.status === 'inactive' && (
                                     <RestoreStatus>
-                                        <MdOutlineRestore className={'cursor-pointer'} fontSize={20} />
+                                        <MdSettingsBackupRestore className={'cursor-pointer'} fontSize={20} />
                                     </RestoreStatus>
                                 )}
                             </TableCell>

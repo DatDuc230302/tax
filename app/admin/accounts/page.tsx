@@ -80,6 +80,8 @@ const data = [
 
 export default function Accounts() {
     const [users, setUsers] = useState<object[]>([]);
+    const [d, setD] = useState<object[]>([]);
+
     const [sortUsers, setSortUsers] = useState<object[]>([]);
     const [selection, setSelection] = useState<string>('Tên');
     const [searchValue, setSearchValue] = useState<string>('');
@@ -262,7 +264,7 @@ export default function Accounts() {
                     <TableBody>
                         {users.map((item: any, index: number) => (
                             <TableRow key={index}>
-                                <TableCell>{item.name}</TableCell>
+                                <TableCell className="flex w-max flex-nowrap">{item.name}</TableCell>
                                 <TableCell>{item.email}</TableCell>
                                 <TableCell>{item.phone}</TableCell>
                                 <TableCell>{item.pass}</TableCell>
