@@ -47,12 +47,18 @@ export default function Articles() {
     const [searchValue, setSearchValue] = useState<string>('');
     const [sortUsers, setSortUsers] = useState<object[]>([]);
     const [sortCategory, setSortCategory] = useState<string>('Sắp xếp thể loại');
-    const [sortTag, setSortTag] = useState<string>('Sắp xếp tag');
+    const [subCategory, setSubCategory] = useState<string>('Sắp xếp thể loại con');
     const [sortStatus, setSortStatus] = useState<string>('Sắp xếp trạng thái');
 
     useEffect(() => {}, [searchValue]);
 
     useEffect(() => {}, [sortStatus]);
+
+    useEffect(() => {
+        if (sortCategory === 'Sắp xếp thể loại') {
+            setSubCategory('Sắp xếp thể loại con');
+        }
+    }, [sortCategory]);
 
     return (
         <div className="flex flex-col w-full px-4 py-[20px] gap-4">
@@ -101,23 +107,36 @@ export default function Articles() {
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Single selection example" variant="flat">
-                                <DropdownItem onClick={() => setSortStatus('Sắp xếp trạng thái')} key="text">
+                                <DropdownItem onClick={() => setSortCategory('Sắp xếp thể loại')} key="text">
                                     Tất cả
+                                </DropdownItem>
+                                <DropdownItem onClick={() => setSortCategory('Tin tức')} key="text">
+                                    Tin tức
+                                </DropdownItem>
+                                <DropdownItem onClick={() => setSortCategory('Văn bản')} key="text">
+                                    Văn bản
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                         <Dropdown>
                             <DropdownTrigger>
                                 <Button
+                                    isDisabled={sortCategory === 'Sắp xếp thể loại' ? true : false}
                                     className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
                                     variant="flat"
                                 >
-                                    {sortTag}
+                                    {subCategory}
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Single selection example" variant="flat">
-                                <DropdownItem onClick={() => setSortStatus('Sắp xếp trạng thái')} key="text">
+                                <DropdownItem onClick={() => setSubCategory('Sắp xếp thể loại con')} key="text">
                                     Tất cả
+                                </DropdownItem>
+                                <DropdownItem onClick={() => setSubCategory('Tin tức')} key="text">
+                                    Tin tức
+                                </DropdownItem>
+                                <DropdownItem onClick={() => setSubCategory('Văn bản')} key="text">
+                                    Văn bản
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
@@ -133,7 +152,11 @@ export default function Articles() {
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Single selection example" variant="flat">
-                                <DropdownItem key="text">Tất cả</DropdownItem>
+                                <DropdownItem onClick={() => setSortStatus('Sắp xếp trạng thái')}>Tất cả</DropdownItem>
+                                <DropdownItem onClick={() => setSortStatus('Hoạt động')}>Hoạt động</DropdownItem>
+                                <DropdownItem onClick={() => setSortStatus('Không hoạt động')}>
+                                    Không hoạt động
+                                </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                         <CreateArticle />
@@ -150,7 +173,7 @@ export default function Articles() {
                     <TableColumn key="name">Tên bài viết</TableColumn>
                     <TableColumn key="content">Nội dung</TableColumn>
                     <TableColumn key="category">Thể loại</TableColumn>
-                    <TableColumn key="role">Tag</TableColumn>
+                    <TableColumn key="role">Thể loại con</TableColumn>
                     <TableColumn key="status">Trạng thái</TableColumn>
                     <TableColumn key="status">Công cụ</TableColumn>
                 </TableHeader>
