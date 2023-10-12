@@ -31,6 +31,7 @@ export default function CreateUser({ children }: { children: React.ReactNode }) 
 
     const handleSubmit = async () => {
         const token: any = localStorage.getItem('access_token');
+
         if (
             name.length === 0 ||
             email.length === 0 ||
@@ -41,22 +42,23 @@ export default function CreateUser({ children }: { children: React.ReactNode }) 
         ) {
             setRequire(true);
         } else {
-            const result: any = await axios.post(
-                `${serverBackend}/api/v1/user`,
-                {
-                    image: image,
-                    name: name,
-                    email: email,
-                    phone: phone,
-                    pass: pass,
+            const formData: any = new FormData();
+            formData.append('image', image, image.name);
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('password', pass);
+            const result: any = await axios.post(`${serverBackend}/api/v1/register`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}`,
                 },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                },
-            );
+            });
+            if (result.data.status === 'success') {
+                alert('Them tai khoan thanh cong');
+                console.log(result);
+            } else {
+            }
         }
     };
 
@@ -94,15 +96,14 @@ export default function CreateUser({ children }: { children: React.ReactNode }) 
                             <ModalHeader className="flex flex-col gap-1">Tạo tài khoản</ModalHeader>
                             <ModalBody>
                                 <div className="flex flex-col items-center gap-3">
-                                    <div className="flex border-[1px] border-[#ccc] w-[120px] h-[120px] rounded-[50%]">
+                                    <div className="flex relative border-[1px] border-[#ccc] w-[120px] h-[120px] rounded-[50%]">
                                         {image && (
                                             <Image
                                                 className="rounded-[50%]"
-                                                src={showImage}
+                                                src={showImage ? showImage : ''}
                                                 alt=""
-                                                width={0}
-                                                height={0}
-                                                layout="responsive"
+                                                sizes="120px"
+                                                fill={true}
                                             />
                                         )}
                                     </div>
@@ -123,11 +124,14 @@ export default function CreateUser({ children }: { children: React.ReactNode }) 
                                 />
                                 {require && email.length === 0 && <Chip color="danger">Vui lòng nhập email</Chip>}
                                 <Input
+                                    type="email"
+                                    label="Nhập email"
+                                    variant="flat"
+                                    isInvalid={false}
+                                    errorMessage="Vui lòng nhập đúng email"
+                                    className="w-full"
                                     value={email}
                                     onChange={(e) => setEmail(String(e.target.value))}
-                                    label="Email"
-                                    variant="flat"
-                                    type="email"
                                 />
                                 {require && phone.length === 0 && (
                                     <Chip color="danger">Vui lòng nhập số điện thoại</Chip>

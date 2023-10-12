@@ -24,14 +24,12 @@ interface items {
     slug?: string;
 }
 
-const listTag: items[] = [
-    { title: 'Giải trí', slug: 'giai-tri' },
-    { title: 'Thể thao', slug: 'the-thao' },
-    { title: 'Hài hước', slug: 'hai-huoc' },
-    { title: 'Tuổi trẻ', slug: 'tuoi-tre' },
+const listCategory: items[] = [
+    { title: 'Tin tức', slug: 'tin-tuc' },
+    { title: 'Văn bản', slug: 'van-ban' },
 ];
 
-const listCategory: items[] = [
+const listSubCategory: items[] = [
     { title: 'Giải trí', slug: 'giai-tri' },
     { title: 'Thể thao', slug: 'the-thao' },
     { title: 'Hài hước', slug: 'hai-huoc' },
@@ -129,7 +127,7 @@ export default function CreateArticle() {
                                         label="Chọn thể loại con"
                                         className="w-full"
                                     >
-                                        {listTag.map((item: items, index: number) => (
+                                        {listSubCategory.map((item: items, index: number) => (
                                             <SelectItem onClick={(e) => setSubCategory(String(item.slug))} key={index}>
                                                 {item.title}
                                             </SelectItem>
@@ -146,8 +144,8 @@ export default function CreateArticle() {
                                             Tải hình đại diện
                                         </label>
                                     </Button>
-                                    <div className="flex border-[1px] border-[#ccc] w-full h-[300px]">
-                                        {image && <Image src={image} alt="" width={0} height={0} layout="responsive" />}
+                                    <div className="flex border-[1px] relative border-[#ccc] w-full h-[300px]">
+                                        {image && <Image src={image} alt="" sizes="300px" fill={true} />}
                                     </div>
                                 </div>
                                 <CKEditor

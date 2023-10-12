@@ -12,8 +12,6 @@ import {
     TableCell,
     Button,
     Input,
-    Chip,
-    Tooltip,
     Dropdown,
     DropdownTrigger,
     DropdownMenu,
@@ -27,6 +25,8 @@ import RestoreStatus from '@/components/RestoreStatus';
 import DeleteStatus from '@/components/DeleteStatus';
 import UpdateUser from '@/components/UpdateUser';
 import axios from 'axios';
+import Image from 'next/image';
+import { serverBackend } from '@/server';
 const data = [
     {
         name: 'Tony Reichert',
@@ -80,7 +80,6 @@ const data = [
 
 export default function Accounts() {
     const [users, setUsers] = useState<object[]>([]);
-    const [d, setD] = useState<object[]>([]);
 
     const [sortUsers, setSortUsers] = useState<object[]>([]);
     const [selection, setSelection] = useState<string>('Tên');
@@ -142,6 +141,21 @@ export default function Accounts() {
         setSortUsers(sortData);
         setSearchValue('');
     }, [sortStatus, sortRole]);
+
+    useEffect(() => {
+        getUser();
+    }, []);
+
+    const getUser = async () => {
+        const token: any = localStorage.getItem('access_token');
+        const result = await axios.get(`${serverBackend}/api/v1/user`, {
+            headers: {
+                Accept: 'application / json',
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        console.log(result);
+    };
 
     return (
         <div className="flex flex-col w-full gap-4">
@@ -264,7 +278,18 @@ export default function Accounts() {
                     <TableBody>
                         {users.map((item: any, index: number) => (
                             <TableRow key={index}>
-                                <TableCell className="flex w-max flex-nowrap">{item.name}</TableCell>
+                                <TableCell className="flex w-max flex-nowrap items-center gap-2">
+                                    <div className="flex relative w-[50px] h-[50px] rounded-[50%]">
+                                        <Image
+                                            src={'/imgs/avatar.jpg'}
+                                            sizes="50px"
+                                            fill={true}
+                                            className="rounded-[50%]"
+                                            alt=""
+                                        />
+                                    </div>
+                                    {item.name}
+                                </TableCell>
                                 <TableCell>{item.email}</TableCell>
                                 <TableCell>{item.phone}</TableCell>
                                 <TableCell>{item.pass}</TableCell>
@@ -295,7 +320,7 @@ export default function Accounts() {
                                         </div>
                                     )}
                                 </TableCell>
-                                <TableCell className="flex w-[80px] items-center h-full justify-between">
+                                <TableCell className="flex w-[80px] translate-y-[-15px]">
                                     <UpdateUser
                                         nameValue={item.name}
                                         emailValue={item.email}
