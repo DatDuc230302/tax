@@ -1,8 +1,11 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
-import CreateUser from '@/components/CreateUser';
+import CreateUser from '@/componentsAdmin/CreateUser';
+import ChangeStatusAccount from '@/componentsAdmin/ChangeStatus';
+import UpdateUser from '@/componentsAdmin/UpdateUser';
+
 import {
     Table,
     TableHeader,
@@ -23,13 +26,12 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { HiMiniPencilSquare } from 'react-icons/hi2';
 import { BiRefresh } from 'react-icons/bi';
 import { MdSettingsBackupRestore } from 'react-icons/md';
-import DeleteStatus from '@/components/ChangeStatus';
-import UpdateUser from '@/components/UpdateUser';
 import axios from 'axios';
 import Image from 'next/image';
 import { serverBackend } from '@/server';
 import { loadingApi } from '@/functions/loadingApi';
-import ChangeStatusAccount from '@/components/ChangeStatus';
+import { AdminContext } from '../layout';
+import NoneRole from '@/componentsAdmin/NoneRole';
 
 export default function Accounts() {
     const [users, setUsers] = useState<object[]>([]);
@@ -42,6 +44,8 @@ export default function Accounts() {
     const [sortRole, setSortRole] = useState<string>('Sắp xếp quyền');
     const [loading, setLoading] = useState<boolean>(false);
     const [refresh, setRefresh] = useState<boolean>(false);
+
+    const dataContext = useContext(AdminContext);
 
     useEffect(() => {
         const key: string = searchValue;
@@ -114,7 +118,9 @@ export default function Accounts() {
     //     setUsers(result.data.data);
     // }, setLoading);
 
-    return (
+    return dataContext.role !== 'root' ? (
+        <NoneRole />
+    ) : (
         <div className="flex flex-col w-full gap-4">
             <div className="flex h-max py-4">
                 <div className="flex px-4 w-full gap-4 flex-col lg:flex-row justify-between">
@@ -257,12 +263,12 @@ export default function Accounts() {
                                         <TableCell className="flex w-max flex-nowrap items-center gap-2">
                                             <div className="flex relative w-[50px] h-[50px] rounded-[50%]">
                                                 {/* <Image
-                                                    src={item.avatar}
-                                                    sizes="50px"
-                                                    fill={true}
-                                                    className="rounded-[50%]"
-                                                    alt=""
-                                                /> */}
+                                                src={item.avatar}
+                                                sizes="50px"
+                                                fill={true}
+                                                className="rounded-[50%]"
+                                                alt=""
+                                            /> */}
                                             </div>
                                             {item.name}
                                         </TableCell>

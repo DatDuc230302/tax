@@ -18,9 +18,9 @@ import {
 import { FaTrashAlt } from 'react-icons/fa';
 import { HiMiniPencilSquare } from 'react-icons/hi2';
 import { MdSettingsBackupRestore } from 'react-icons/md';
-import CreateArticle from '@/components/CreateArticle';
-import UpdateUser from '@/components/UpdateUser';
-import ChangeStatus from '@/components/ChangeStatus';
+import CreateArticle from '@/componentsAdmin/CreateArticle';
+import UpdateUser from '@/componentsAdmin/UpdateUser';
+import ChangeStatus from '@/componentsAdmin/ChangeStatus';
 const data = [
     {
         id: '1',
