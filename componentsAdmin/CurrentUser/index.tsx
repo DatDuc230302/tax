@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import React, { useContext } from 'react';
 import { BsFillBellFill } from 'react-icons/bs';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { CiLogout, CiUser } from 'react-icons/ci';
 
 export default function CurrentUser() {
     const dataContext = useContext(AdminContext);
@@ -70,7 +71,7 @@ export default function CurrentUser() {
             <Dropdown>
                 <DropdownTrigger>
                     <div className="cursor-pointer gap-2 pr-2 flex h-full items-center">
-                        <div className="w-[40px] h-[40px] relative">
+                        <div className="w-[40px] flex h-[40px] relative">
                             <Image src="/imgs/avatar.jpg" fill sizes="40px" className="rounded-[50%]" alt="" />
                         </div>
                         <div className="flex items-center text-[14px] text-white">
@@ -81,10 +82,16 @@ export default function CurrentUser() {
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Example with disabled actions" disabledKeys={['edit', 'delete']}>
                     <DropdownItem textValue="info">
-                        <Link href={'/admin/infoAccount'}>Thông tin tài khoản</Link>
+                        <Link className="flex items-center gap-2" href={'/admin/infoAccount'}>
+                            <CiUser fontSize={20} />
+                            Xem hồ sơ
+                        </Link>
                     </DropdownItem>
                     <DropdownItem onClick={() => logout()} textValue="logout">
-                        Đăng xuất
+                        <div className="flex w-full gap-2 items-center">
+                            <CiLogout fontSize={20} />
+                            Đăng xuất
+                        </div>
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>

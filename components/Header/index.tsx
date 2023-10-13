@@ -94,16 +94,13 @@ export default function Header() {
     return (
         <header id="header" className="flex flex-col select-none">
             <div className="hidden lg:flex relative h-[135px]">
-                <Image
-                    src={'/imgs/bg_header.jpg'}
-                    layout="responsive"
-                    width={0}
-                    height={135}
-                    className="object-cover"
-                    alt=""
-                />
+                <div className="flex w-full h-[135px] relative">
+                    <Image src={'/imgs/bg_header.jpg'} fill sizes="135px" alt="" />
+                </div>
                 <div className="flex absolute w-full h-full">
-                    <Image src={'/imgs/logo.png'} width={220} height={80} alt="" />
+                    <div className="w-[220px] h-[120px] relative">
+                        <Image src={'/imgs/logo.png'} fill sizes="220px" alt="" />
+                    </div>
                     <div className="hidden lg:flex h-full justify-center flex-col text-white font-bold text-[26px]">
                         <span>CỔNG THÔNG TIN ĐIỆN TỬ</span>
                         <span>CHI CỤC THUẾ QUẬN 8 - TP. HỒ CHÍ MINH</span>

@@ -43,7 +43,6 @@ export default function Accounts() {
     const [sortStatus, setSortStatus] = useState<string>('Sắp xếp trạng thái');
     const [sortRole, setSortRole] = useState<string>('Sắp xếp quyền');
     const [loading, setLoading] = useState<boolean>(false);
-    const [refresh, setRefresh] = useState<boolean>(false);
 
     const dataContext = useContext(AdminContext);
 
@@ -104,7 +103,7 @@ export default function Accounts() {
 
     // useEffect(() => {
     //     getUser();
-    // }, [refresh]);
+    // }, []);
 
     // const getUser = loadingApi(async () => {
     //     const token: any = localStorage.getItem('access_token');
@@ -210,14 +209,6 @@ export default function Accounts() {
                                     <AiOutlinePlusCircle fontSize={20} />
                                     Thêm tài khoản
                                 </CreateUser>
-                            </Button>
-                            <Button
-                                className="shrink-0 h-[40px] lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
-                                color="primary"
-                                onPress={() => setRefresh(!refresh)}
-                            >
-                                <BiRefresh fontSize={20} />
-                                Tải lại trang
                             </Button>
                         </div>
                     </div>

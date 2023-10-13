@@ -20,19 +20,11 @@ export default function Slide() {
     const slides = ['/imgs/slides/slide1.jpg', '/imgs/slides/slide2.jpg', '/imgs/slides/slide3.jpg'];
 
     return (
-        <div className="flex flex-col mb-4">
-            <Slider {...settings}>
+        <div className="flex w-full justify-center my-4">
+            <Slider className="flex flex-col w-full outline-none" {...settings}>
                 {slides.map((item: string, index: number) => (
-                    <div className="flex">
-                        <Image
-                            key={index}
-                            src={item}
-                            layout="responsive"
-                            width={0}
-                            height={135}
-                            className="object-cover"
-                            alt=""
-                        />
+                    <div className="flex relative h-[600px]">
+                        <Image key={index} src={item} sizes="600px" fill alt="" />
                     </div>
                 ))}
             </Slider>

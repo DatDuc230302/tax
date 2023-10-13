@@ -4,8 +4,8 @@ import Posts from './bai-viet/page';
 
 export default function Home() {
     return (
-        <div className="flex flex-col px-[16px]">
-            {/* <Slide /> */}
+        <div className="flex flex-col">
+            <Slide />
             <Service />
             <Posts />
         </div>
