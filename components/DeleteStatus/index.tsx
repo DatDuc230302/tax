@@ -1,8 +1,23 @@
 import React from 'react';
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure } from '@nextui-org/react';
+import axios from 'axios';
+import { serverBackend } from '@/server';
 
-export default function DeleteStatus({ children }: { children: React.ReactNode }) {
+export default function DeleteStatus({ children, idUser }: { children: React.ReactNode; idUser: string }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+    const deleteUser = async () => {
+        try {
+            const result = await axios.delete(`${serverBackend}/api/v1/user`, {
+                params: {
+                    id: String(idUser),
+                },
+            });
+            console.log(result);
+        } catch {
+            console.log('Lỗi');
+        }
+    };
 
     return (
         <>
@@ -22,7 +37,7 @@ export default function DeleteStatus({ children }: { children: React.ReactNode }
                                 <Button color="danger" variant="flat" onPress={onClose}>
                                     Hủy
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
+                                <Button color="primary" onClick={() => deleteUser()}>
                                     Đồng ý
                                 </Button>
                             </ModalFooter>

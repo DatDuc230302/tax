@@ -9,7 +9,6 @@ import {
     ModalContent,
     ModalFooter,
     ModalHeader,
-    Snippet,
     Spinner,
 } from '@nextui-org/react';
 import Link from 'next/link';
@@ -36,10 +35,9 @@ export default function Login() {
                     password: pass,
                 });
                 if (result.data.status === 'success') {
-                    const encryptedNameUser = btoa(result.data.user.name);
                     sessionStorage.setItem('access_token', result.data.authorization.token);
                     sessionStorage.setItem('role_user', result.data.user.role);
-                    sessionStorage.setItem('name_user', encryptedNameUser);
+                    sessionStorage.setItem('name_user', result.data.user.name);
                     setStatus('success');
                     router.push('/admin/dashboard');
                 } else {

@@ -206,11 +206,9 @@ export default function Articles() {
                                 >
                                     <HiMiniPencilSquare className={'cursor-pointer'} fontSize={20} />
                                 </UpdateUser>
-                                <DeleteStatus>
                                     {item.status === 'active' && (
                                         <FaTrashAlt className={'cursor-pointer'} fontSize={20} />
                                     )}
-                                </DeleteStatus>
                                 {item.status === 'inactive' && (
                                     <RestoreStatus>
                                         <MdSettingsBackupRestore className={'cursor-pointer'} fontSize={20} />
