@@ -18,13 +18,12 @@ import {
 import { FaTrashAlt } from 'react-icons/fa';
 import { HiMiniPencilSquare } from 'react-icons/hi2';
 import { MdSettingsBackupRestore } from 'react-icons/md';
-import RestoreStatus from '@/components/RestoreStatus';
-import DeleteStatus from '@/components/DeleteStatus';
 import CreateArticle from '@/components/CreateArticle';
 import UpdateUser from '@/components/UpdateUser';
+import ChangeStatus from '@/components/ChangeStatus';
 const data = [
     {
-        key: '1',
+        id: '1',
         name: 'Tony Reichert',
         email: 'datduc2303@gmail.com',
         phone: '0958823',
@@ -32,7 +31,7 @@ const data = [
         status: 'active',
     },
     {
-        key: '1',
+        id: '1',
         name: 'Tran duc dat',
         email: 'datduc2303@gmail.com',
         phone: '0958823',
@@ -206,13 +205,15 @@ export default function Articles() {
                                 >
                                     <HiMiniPencilSquare className={'cursor-pointer'} fontSize={20} />
                                 </UpdateUser>
-                                    {item.status === 'active' && (
+                                {item.status === 'active' && (
+                                    <ChangeStatus type="article" method="toInactive" idArticle={item.id}>
                                         <FaTrashAlt className={'cursor-pointer'} fontSize={20} />
-                                    )}
+                                    </ChangeStatus>
+                                )}
                                 {item.status === 'inactive' && (
-                                    <RestoreStatus>
+                                    <ChangeStatus type="article" method="toActive" idArticle={item.id}>
                                         <MdSettingsBackupRestore className={'cursor-pointer'} fontSize={20} />
-                                    </RestoreStatus>
+                                    </ChangeStatus>
                                 )}
                             </TableCell>
                         </TableRow>

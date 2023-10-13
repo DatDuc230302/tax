@@ -1,21 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure } from '@nextui-org/react';
 import axios from 'axios';
 import { serverBackend } from '@/server';
 
-export default function DeleteStatus({ children, idUser }: { children: React.ReactNode; idUser: string }) {
+export default function ChangeStatus({
+    children,
+    type,
+    method,
+    idUser,
+    idArticle,
+}: {
+    children: React.ReactNode;
+    type: string;
+    method: string;
+    idUser?: string;
+    idArticle?: string;
+}) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-    const deleteUser = async () => {
-        try {
-            const result = await axios.delete(`${serverBackend}/api/v1/user`, {
-                params: {
-                    id: String(idUser),
-                },
-            });
-            console.log(result);
-        } catch {
-            console.log('Lỗi');
+    const handeSubmit = () => {
+        switch (type) {
+            case 'account':
+                return alert(`idUser: ${idUser}, method: ${method}`);
+            case 'article':
+                return alert(`article: ${idArticle}, method: ${method}`);
+            default:
+                return;
         }
     };
 
@@ -37,7 +47,7 @@ export default function DeleteStatus({ children, idUser }: { children: React.Rea
                                 <Button color="danger" variant="flat" onPress={onClose}>
                                     Hủy
                                 </Button>
-                                <Button color="primary" onClick={() => deleteUser()}>
+                                <Button onPress={handeSubmit} color="primary">
                                     Đồng ý
                                 </Button>
                             </ModalFooter>

@@ -44,6 +44,7 @@ export default function CreateArticle() {
     const [category, setCategory] = useState<string>('');
     const [subCategory, setSubCategory] = useState<string>('');
     const [content, setContent] = useState<string>('Nội dung bài viết');
+    const [require, setRequire] = useState<boolean>(false);
 
     const handleSubmit = () => {
         if (
@@ -53,7 +54,7 @@ export default function CreateArticle() {
             content.length === 0 ||
             image === null
         ) {
-            alert('Du lieu con thieu khong the post');
+            setRequire(true);
         } else {
             const data: object = {
                 User_id: '1',
@@ -112,10 +113,15 @@ export default function CreateArticle() {
                                     onChange={(e) => setTitle(String(e.target.value))}
                                     type="text"
                                     value={title}
-                                    label="Tên bài viết"
+                                    label="Tiêu đề bài viết"
+                                    errorMessage={require && title.length === 0 && 'Vui lòng nhập tiêu đề bài viết'}
                                 />
                                 <div className="flex gap-4">
-                                    <Select label="Chọn thể loại bài viết" className="w-full">
+                                    <Select
+                                        errorMessage={require && category.length === 0 && 'Vui lòng chọn thể loại'}
+                                        label="Chọn thể loại bài viết"
+                                        className="w-full"
+                                    >
                                         {listCategory.map((item: items, index: number) => (
                                             <SelectItem onClick={() => setCategory(String(item.slug))} key={index}>
                                                 {item.title}
@@ -126,6 +132,12 @@ export default function CreateArticle() {
                                         isDisabled={category.length > 0 ? false : true}
                                         label="Chọn thể loại con"
                                         className="w-full"
+                                        errorMessage={
+                                            require &&
+                                            category.length > 0 &&
+                                            subCategory.length === 0 &&
+                                            'Vui lòng chọn thể loại con'
+                                        }
                                     >
                                         {listSubCategory.map((item: items, index: number) => (
                                             <SelectItem onClick={(e) => setSubCategory(String(item.slug))} key={index}>
@@ -134,20 +146,22 @@ export default function CreateArticle() {
                                         ))}
                                     </Select>
                                 </div>
-                                <div className="flex items-center gap-3">
-                                    <Button color="default" className="w-[250px] p-0">
-                                        <label
-                                            className="w-full h-full flex items-center cursor-pointer justify-center"
-                                            htmlFor="uploadImg"
-                                        >
-                                            <BiUpload color={'black'} fontSize={20} />
-                                            Tải hình đại diện
-                                        </label>
-                                    </Button>
-                                    <div className="flex border-[1px] relative border-[#ccc] w-full h-[300px]">
-                                        {image && <Image src={image} alt="" sizes="300px" fill={true} />}
+                                {category === 'tin-tuc' && (
+                                    <div className="flex items-center gap-3">
+                                        <Button color="default" className="w-[250px] p-0">
+                                            <label
+                                                className="w-full h-full flex items-center cursor-pointer justify-center"
+                                                htmlFor="uploadImg"
+                                            >
+                                                <BiUpload color={'black'} fontSize={20} />
+                                                Tải hình đại diện
+                                            </label>
+                                        </Button>
+                                        <div className="flex border-[1px] relative border-[#ccc] w-full h-[300px]">
+                                            {image && <Image src={image} alt="" sizes="300px" fill={true} />}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                                 <CKEditor
                                     config={{
                                         ckfinder: {

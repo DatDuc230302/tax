@@ -23,13 +23,13 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { HiMiniPencilSquare } from 'react-icons/hi2';
 import { BiRefresh } from 'react-icons/bi';
 import { MdSettingsBackupRestore } from 'react-icons/md';
-import RestoreStatus from '@/components/RestoreStatus';
-import DeleteStatus from '@/components/DeleteStatus';
+import DeleteStatus from '@/components/ChangeStatus';
 import UpdateUser from '@/components/UpdateUser';
 import axios from 'axios';
 import Image from 'next/image';
 import { serverBackend } from '@/server';
 import { loadingApi } from '@/functions/loadingApi';
+import ChangeStatusAccount from '@/components/ChangeStatus';
 
 export default function Accounts() {
     const [users, setUsers] = useState<object[]>([]);
@@ -41,6 +41,7 @@ export default function Accounts() {
     const [sortStatus, setSortStatus] = useState<string>('Sắp xếp trạng thái');
     const [sortRole, setSortRole] = useState<string>('Sắp xếp quyền');
     const [loading, setLoading] = useState<boolean>(false);
+    const [refresh, setRefresh] = useState<boolean>(false);
 
     useEffect(() => {
         const key: string = searchValue;
@@ -97,23 +98,21 @@ export default function Accounts() {
         setSearchValue('');
     }, [sortStatus, sortRole, initialUsers]);
 
-    useEffect(() => {
-        getUser();
-    }, []);
+    // useEffect(() => {
+    //     getUser();
+    // }, [refresh]);
 
-    const getUser = loadingApi(async () => {
-        const token: any = localStorage.getItem('access_token');
-        const result = await axios.get(`${serverBackend}/api/v1/user`, {
-            headers: {
-                Accept: 'application / json',
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        setInitialUsers(result.data.data);
-        setUsers(result.data.data);
-    }, setLoading);
-
-    console.log(users)
+    // const getUser = loadingApi(async () => {
+    //     const token: any = localStorage.getItem('access_token');
+    //     const result = await axios.get(`${serverBackend}/api/v1/user`, {
+    //         headers: {
+    //             Accept: 'application / json',
+    //             Authorization: `Bearer ${token}`,
+    //         },
+    //     });
+    //     setInitialUsers(result.data.data);
+    //     setUsers(result.data.data);
+    // }, setLoading);
 
     return (
         <div className="flex flex-col w-full gap-4">
@@ -209,6 +208,7 @@ export default function Accounts() {
                             <Button
                                 className="shrink-0 h-[40px] lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
                                 color="primary"
+                                onPress={() => setRefresh(!refresh)}
                             >
                                 <BiRefresh fontSize={20} />
                                 Tải lại trang
@@ -305,18 +305,13 @@ export default function Accounts() {
                                             >
                                                 <HiMiniPencilSquare className={'cursor-pointer'} fontSize={20} />
                                             </UpdateUser>
-                                            <DeleteStatus idUser={item.id}>
-                                                {item.status === 'active' && (
+                                            {item.status === 'active' && (
+                                                <ChangeStatusAccount type="account" method="toActive" idUser={item.id}>
                                                     <FaTrashAlt className={'cursor-pointer'} fontSize={20} />
-                                                )}
-                                            </DeleteStatus>
+                                                </ChangeStatusAccount>
+                                            )}
                                             {item.status === 'inactive' && (
-                                                <RestoreStatus>
-                                                    <MdSettingsBackupRestore
-                                                        className={'cursor-pointer'}
-                                                        fontSize={20}
-                                                    />
-                                                </RestoreStatus>
+                                                <MdSettingsBackupRestore className={'cursor-pointer'} fontSize={20} />
                                             )}
                                         </TableCell>
                                     </TableRow>
