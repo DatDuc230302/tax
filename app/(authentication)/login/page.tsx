@@ -28,7 +28,7 @@ export default function Login() {
     const router = useRouter();
 
     const handleSubmit = loadingApi(async () => {
-        sessionStorage.setItem('role_user', 'root');
+        sessionStorage.setItem('role_user', 'admin');
         sessionStorage.setItem('name_user', 'Trần Đức Đạt');
         router.push('/admin/dashboard');
         // try {
