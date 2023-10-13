@@ -15,6 +15,7 @@ import axios from 'axios';
 import { serverBackend } from '@/server';
 import { BsPencilSquare } from 'react-icons/bs';
 import Image from 'next/image';
+import { isEmail } from '@/functions/isEmail';
 
 export default function CreateUser({ children }: { children: React.ReactNode }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -114,53 +115,50 @@ export default function CreateUser({ children }: { children: React.ReactNode }) 
                                     </Tooltip>
                                     <input id="uploadImage" hidden type="file" onChange={(e) => handleUploadImg(e)} />
                                 </div>
-                                {require && name.length === 0 && <Chip color="danger">Vui lòng nhập tên</Chip>}
                                 <Input
                                     autoFocus
                                     label="Tên"
                                     variant="flat"
                                     value={name}
+                                    errorMessage={require && name.length === 0 && 'Vui lòng nhập tên'}
                                     onChange={(e) => setName(String(e.target.value))}
                                 />
-                                {require && email.length === 0 && <Chip color="danger">Vui lòng nhập email</Chip>}
                                 <Input
                                     type="email"
                                     label="Nhập email"
                                     variant="flat"
                                     isInvalid={false}
-                                    errorMessage="Vui lòng nhập đúng email"
+                                    errorMessage={require && (email.length === 0 ? 'Vui lòng nhập email' : !isEmail(email) && 'vui lòng nhập đúng email')}
                                     className="w-full"
                                     value={email}
                                     onChange={(e) => setEmail(String(e.target.value))}
-                                />
-                                {require && phone.length === 0 && (
-                                    <Chip color="danger">Vui lòng nhập số điện thoại</Chip>
-                                )}
+                                />                               
                                 <Input
                                     value={phone}
                                     onChange={(e) => setPhone(String(e.target.value))}
                                     label="Số điện thoại"
                                     variant="flat"
                                     type="number"
+                                    errorMessage={require && phone.length === 0 && 'Vui lòng số điện thoại'}
+
                                 />
-                                {require && pass.length === 0 && <Chip color="danger">Vui lòng nhập mật khẩu</Chip>}
                                 <Input
                                     value={pass}
                                     onChange={(e) => setPass(String(e.target.value))}
                                     label="Mật khẩu"
                                     type="password"
                                     variant="flat"
+                                    errorMessage={require && pass.length === 0 && 'Vui lòng nhập mật khẩu'}
+
                                 />
-                                {require && confirmPass.length === 0 && (
-                                    <Chip color="danger">Vui lòng nhập lại mật khẩu</Chip>
-                                )}
-                                {pass !== confirmPass && <Chip color="danger">Mật khẩu không trùng khớp</Chip>}
                                 <Input
                                     value={confirmPass}
                                     onChange={(e) => setConfirmPass(String(e.target.value))}
                                     label="Nhập lại Mật khẩu"
                                     type="password"
                                     variant="flat"
+                                    errorMessage={require && confirmPass.length === 0 && 'Vui lòng nhập lại mật khẩu'}
+
                                 />
                             </ModalBody>
                             <ModalFooter>

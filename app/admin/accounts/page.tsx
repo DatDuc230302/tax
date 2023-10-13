@@ -113,7 +113,7 @@ export default function Accounts() {
         setUsers(result.data.data);
     }, setLoading);
 
-    console.log(users);
+    console.log(users)
 
     return (
         <div className="flex flex-col w-full gap-4">
@@ -256,13 +256,13 @@ export default function Accounts() {
                                     <TableRow key={index}>
                                         <TableCell className="flex w-max flex-nowrap items-center gap-2">
                                             <div className="flex relative w-[50px] h-[50px] rounded-[50%]">
-                                                <Image
+                                                {/* <Image
                                                     src={item.avatar}
                                                     sizes="50px"
                                                     fill={true}
                                                     className="rounded-[50%]"
                                                     alt=""
-                                                />
+                                                /> */}
                                             </div>
                                             {item.name}
                                         </TableCell>
