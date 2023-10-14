@@ -36,7 +36,7 @@ const listSubCategory: items[] = [
     { title: 'Tuổi trẻ', slug: 'tuoi-tre' },
 ];
 
-export default function CreateArticle() {
+export default function CreatePosts() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const [image, setImage] = useState<any>(null);
@@ -146,22 +146,20 @@ export default function CreateArticle() {
                                         ))}
                                     </Select>
                                 </div>
-                                {category === 'tin-tuc' && (
-                                    <div className="flex items-center gap-3">
-                                        <Button color="default" className="w-[250px] p-0">
-                                            <label
-                                                className="w-full h-full flex items-center cursor-pointer justify-center"
-                                                htmlFor="uploadImg"
-                                            >
-                                                <BiUpload color={'black'} fontSize={20} />
-                                                Tải hình đại diện
-                                            </label>
-                                        </Button>
-                                        <div className="flex border-[1px] relative border-[#ccc] w-full h-[300px]">
-                                            {image && <Image src={image} alt="" sizes="300px" fill={true} />}
-                                        </div>
+                                <div className="flex items-center gap-3">
+                                    <Button color="default" className="w-[250px] p-0">
+                                        <label
+                                            className="w-full h-full flex items-center cursor-pointer justify-center"
+                                            htmlFor="uploadImg"
+                                        >
+                                            <BiUpload color={'black'} fontSize={20} />
+                                            Tải hình đại diện
+                                        </label>
+                                    </Button>
+                                    <div className="flex border-[1px] relative border-[#ccc] w-full h-[300px]">
+                                        {image && <Image src={image} alt="" sizes="300px" fill={true} />}
                                     </div>
-                                )}
+                                </div>
                                 <CKEditor
                                     config={{
                                         ckfinder: {

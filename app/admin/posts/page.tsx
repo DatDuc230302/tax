@@ -14,11 +14,11 @@ import {
     DropdownTrigger,
     DropdownMenu,
     DropdownItem,
+    Tooltip,
 } from '@nextui-org/react';
-import { FaTrashAlt } from 'react-icons/fa';
-import { HiMiniPencilSquare } from 'react-icons/hi2';
-import { MdSettingsBackupRestore } from 'react-icons/md';
-import CreateArticle from '@/componentsAdmin/CreateArticle';
+import CreatPosts from '@/componentsAdmin/CreatePosts';
+import { BsInfoCircle } from 'react-icons/bs';
+import Link from 'next/link';
 const data = [
     {
         id: '1',
@@ -38,7 +38,7 @@ const data = [
     },
 ];
 
-export default function Articles() {
+export default function Posts() {
     const [users, setUsers] = useState<object[]>(data);
     const [selection, setSelection] = useState<string>('Tên');
     const [searchValue, setSearchValue] = useState<string>('');
@@ -156,7 +156,7 @@ export default function Articles() {
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                        <CreateArticle />
+                        <CreatPosts />
                     </div>
                 </div>
             </div>
@@ -171,6 +171,8 @@ export default function Articles() {
                     <TableColumn key="content">Nội dung</TableColumn>
                     <TableColumn key="category">Thể loại</TableColumn>
                     <TableColumn key="role">Thể loại con</TableColumn>
+                    <TableColumn key="status">Số hiệu</TableColumn>
+                    <TableColumn key="status">Ngày ban hành</TableColumn>
                     <TableColumn key="status">Trạng thái</TableColumn>
                     <TableColumn key="status">Công cụ</TableColumn>
                 </TableHeader>
@@ -181,6 +183,8 @@ export default function Articles() {
                             <TableCell>{item.email}</TableCell>
                             <TableCell>{item.phone}</TableCell>
                             <TableCell>{item.pass}</TableCell>
+                            <TableCell>15vh</TableCell>
+                            <TableCell>15 / 5</TableCell>
                             <TableCell className="w-[170px] shrink-0">
                                 {item.status === 'inactive' && (
                                     <div className="select-none w-[140px] text-white flex p-1 items-center justify-center rounded-[50px] bg-[#b1b1b1]">
@@ -193,7 +197,13 @@ export default function Articles() {
                                     </div>
                                 )}
                             </TableCell>
-                            <TableCell className="flex w-[80px] items-center h-full justify-between">f</TableCell>
+                            <TableCell className="flex w-[80px] items-center h-full justify-between">
+                                <Tooltip content="Xem chi tiết bài viết">
+                                    <Link href={`/admin/posts/${item.id}`} className="cursor-pointer">
+                                        <BsInfoCircle fontSize={20} />
+                                    </Link>
+                                </Tooltip>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

@@ -1,6 +1,7 @@
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import Link from 'next/link';
 import React from 'react';
+import { AiFillDashboard } from 'react-icons/ai';
 import { BiCategory, BiSolidDashboard } from 'react-icons/bi';
 import { BsClockHistory, BsFillPostcardFill } from 'react-icons/bs';
 import { FaBars, FaUserFriends } from 'react-icons/fa';
@@ -13,14 +14,14 @@ interface items {
 
 const listItems: items[] = [
     {
-        icon: <BiSolidDashboard fontSize={20} />,
+        icon: <AiFillDashboard fontSize={20} />,
         title: 'Bảng điều khiển',
         href: '/admin/dashboard',
     },
     {
         icon: <BsFillPostcardFill fontSize={20} />,
         title: 'Bài viết',
-        href: '/admin/articles',
+        href: '/admin/posts',
     },
     {
         icon: <FaUserFriends fontSize={20} />,
