@@ -2,17 +2,15 @@ import React, { useEffect } from 'react';
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure, Tooltip } from '@nextui-org/react';
 import axios from 'axios';
 import { serverBackend } from '@/server';
+import { LiaExchangeAltSolid } from 'react-icons/lia';
 
 export default function ChangeStatus({
-    children,
     type,
     status,
     idUser,
-    idArticle,
     refresh,
     setRefresh,
 }: {
-    children: React.ReactNode;
     type: string;
     status: string;
     idUser?: string;
@@ -26,8 +24,8 @@ export default function ChangeStatus({
         switch (type) {
             case 'account':
                 return changeStatusAccount();
-            case 'article':
-                return alert(`article: ${idArticle}, method: ${status}`);
+            case 'posts':
+                return changeStatusPost();
             default:
                 return;
         }
@@ -46,11 +44,15 @@ export default function ChangeStatus({
         }
     };
 
+    const changeStatusPost = async () => {
+        alert('Post đây');
+    };
+
     return (
         <>
             <Tooltip color="primary" content="Thay đổi trạng thái">
                 <div onClick={onOpen} color="primary">
-                    {children}
+                    <LiaExchangeAltSolid className={'cursor-pointer'} fontSize={20} />
                 </div>
             </Tooltip>
             <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">

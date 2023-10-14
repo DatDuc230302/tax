@@ -16,36 +16,34 @@ import {
     DropdownItem,
     Tooltip,
 } from '@nextui-org/react';
-import CreatPosts from '@/componentsAdmin/CreatePosts';
 import { BsInfoCircle } from 'react-icons/bs';
 import Link from 'next/link';
+import ManageCategory from '@/componentsAdmin/ManageCategory/page';
+import ChangeStatus from '@/componentsAdmin/ChangeStatus';
+import CreatePost from '@/componentsAdmin/CreatePost';
+import UpdatePost from '@/componentsAdmin/UpdatePost';
 const data = [
     {
         id: '1',
-        name: 'Tony Reichert',
-        email: 'datduc2303@gmail.com',
-        phone: '0958823',
-        pass: '1234',
+        title: 'Tony Reichert',
+        content: 'Dat dep trai',
+        category: 'Pháp luật',
+        subCategory: 'Hai hước',
+        number: '1234',
+        data: '15/5',
         status: 'active',
-    },
-    {
-        id: '1',
-        name: 'Tran duc dat',
-        email: 'datduc2303@gmail.com',
-        phone: '0958823',
-        pass: '1234',
-        status: 'inactive',
     },
 ];
 
 export default function Posts() {
-    const [users, setUsers] = useState<object[]>(data);
+    const [posts, setPosts] = useState<object[]>(data);
     const [selection, setSelection] = useState<string>('Tên');
     const [searchValue, setSearchValue] = useState<string>('');
-    const [sortUsers, setSortUsers] = useState<object[]>([]);
     const [sortCategory, setSortCategory] = useState<string>('Sắp xếp thể loại');
     const [subCategory, setSubCategory] = useState<string>('Sắp xếp thể loại con');
     const [sortStatus, setSortStatus] = useState<string>('Sắp xếp trạng thái');
+    const [turnBoxCategory, setTurnBoxCategory] = useState<boolean>(false);
+    const [refresh, setRefresh] = useState<boolean>(false);
 
     useEffect(() => {}, [searchValue]);
 
@@ -59,39 +57,7 @@ export default function Posts() {
 
     return (
         <div className="flex flex-col w-full px-4 py-[20px] gap-4">
-            <div className="flex px-4 w-full gap-4 flex-col lg:flex-row justify-between">
-                <div className="flex items-center h-full flex-1 relative ">
-                    <Input
-                        onChange={(e) => setSearchValue(String(e.target.value))}
-                        className="rounded-none"
-                        type="text"
-                        placeholder={`Tìm kiếm theo ${selection}`}
-                        value={searchValue}
-                    />
-                    <div className="absolute right-0">
-                        <Dropdown>
-                            <DropdownTrigger>
-                                <Button variant="flat">{selection}</Button>
-                            </DropdownTrigger>
-                            <DropdownMenu
-                                aria-label="Single selection example"
-                                variant="flat"
-                                disallowEmptySelection
-                                selectionMode="single"
-                            >
-                                <DropdownItem onClick={() => setSelection('Tên')} key="text">
-                                    Tên
-                                </DropdownItem>
-                                <DropdownItem onClick={() => setSelection('Email')} key="text">
-                                    Email
-                                </DropdownItem>
-                                <DropdownItem onClick={() => setSelection('Số điện thoại')} key="text">
-                                    Số điện thoại
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                    </div>
-                </div>
+            <div className="flex w-full gap-4 flex-col lg:flex-row justify-between">
                 <div className="flex justify-center flex-col lg:flex-row items-center gap-4">
                     <div className="flex w-full gap-3 justify-between">
                         <Dropdown>
@@ -156,8 +122,47 @@ export default function Posts() {
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                        <CreatPosts />
+                        <Button
+                            onClick={() => setTurnBoxCategory(true)}
+                            className="shrink-0 lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e] p-0"
+                            color="primary"
+                        >
+                            Quản lý thể loại
+                        </Button>
                     </div>
+                    <CreatePost />
+                </div>
+            </div>
+            <div className="flex w-full lg:w-[957px] items-center h-full flex-1 relative ">
+                <Input
+                    onChange={(e) => setSearchValue(String(e.target.value))}
+                    className="rounded-none"
+                    type="text"
+                    placeholder={`Tìm kiếm theo ${selection}`}
+                    value={searchValue}
+                />
+                <div className="absolute right-0">
+                    <Dropdown>
+                        <DropdownTrigger>
+                            <Button variant="flat">{selection}</Button>
+                        </DropdownTrigger>
+                        <DropdownMenu
+                            aria-label="Single selection example"
+                            variant="flat"
+                            disallowEmptySelection
+                            selectionMode="single"
+                        >
+                            <DropdownItem onClick={() => setSelection('Tên')} key="text">
+                                Tên
+                            </DropdownItem>
+                            <DropdownItem onClick={() => setSelection('Email')} key="text">
+                                Email
+                            </DropdownItem>
+                            <DropdownItem onClick={() => setSelection('Số điện thoại')} key="text">
+                                Số điện thoại
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
                 </div>
             </div>
             <Table
@@ -167,7 +172,7 @@ export default function Posts() {
                 }}
             >
                 <TableHeader>
-                    <TableColumn key="name">Tên bài viết</TableColumn>
+                    <TableColumn key="name">Tiêu đề bài viết</TableColumn>
                     <TableColumn key="content">Nội dung</TableColumn>
                     <TableColumn key="category">Thể loại</TableColumn>
                     <TableColumn key="role">Thể loại con</TableColumn>
@@ -177,12 +182,12 @@ export default function Posts() {
                     <TableColumn key="status">Công cụ</TableColumn>
                 </TableHeader>
                 <TableBody>
-                    {users.map((item: any, index: number) => (
+                    {posts.map((item: any, index: number) => (
                         <TableRow key={index}>
-                            <TableCell className="flex w-max flex-nowrap">{item.name}</TableCell>
-                            <TableCell>{item.email}</TableCell>
-                            <TableCell>{item.phone}</TableCell>
-                            <TableCell>{item.pass}</TableCell>
+                            <TableCell className="flex w-max flex-nowrap">{item.title}</TableCell>
+                            <TableCell>{item.content}</TableCell>
+                            <TableCell>{item.category}</TableCell>
+                            <TableCell>{item.subCategory}</TableCell>
                             <TableCell>15vh</TableCell>
                             <TableCell>15 / 5</TableCell>
                             <TableCell className="w-[170px] shrink-0">
@@ -197,7 +202,19 @@ export default function Posts() {
                                     </div>
                                 )}
                             </TableCell>
-                            <TableCell className="flex w-[80px] items-center h-full justify-between">
+                            <TableCell className="flex w-[80px] items-center h-full justify-between gap-3">
+                                <UpdatePost
+                                    oldTitle={item.title}
+                                    oldContent={item.content}
+                                    oldCategory={item.category}
+                                    oldSubCategory={item.subCategory}
+                                />
+                                <ChangeStatus
+                                    type="posts"
+                                    status={item.status}
+                                    refresh={refresh}
+                                    setRefresh={setRefresh}
+                                />
                                 <Tooltip content="Xem chi tiết bài viết">
                                     <Link href={`/admin/posts/${item.id}`} className="cursor-pointer">
                                         <BsInfoCircle fontSize={20} />
@@ -208,6 +225,11 @@ export default function Posts() {
                     ))}
                 </TableBody>
             </Table>
+            {turnBoxCategory && (
+                <div className="fixed z-30 top-[70px] bg-white bottom-0 left-0 right-0">
+                    <ManageCategory setTurnBoxCategory={setTurnBoxCategory} />
+                </div>
+            )}
         </div>
     );
 }

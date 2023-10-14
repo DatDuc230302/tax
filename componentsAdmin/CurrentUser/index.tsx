@@ -15,9 +15,10 @@ import { useRouter } from 'next/navigation';
 import React, { useContext } from 'react';
 import { BsFillBellFill } from 'react-icons/bs';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import { CiLogout, CiUser } from 'react-icons/ci';
+import { CiLogout, CiSettings, CiUser } from 'react-icons/ci';
 import axios from 'axios';
 import { serverBackend } from '@/server';
+import { BiMessageAltDetail } from 'react-icons/bi';
 
 export default function CurrentUser() {
     const dataContext = useContext(AdminContext);
@@ -49,7 +50,24 @@ export default function CurrentUser() {
     return (
         <div className="flex select-none h-full items-center gap-6">
             <Popover placement="bottom" crossOffset={-60} offset={14}>
-                <Badge content="12" size="sm" color="danger">
+                <Badge content="1" size="sm" color="danger">
+                    <PopoverTrigger>
+                        <div>
+                            <BiMessageAltDetail className="cursor-pointer" fontSize={30} color="white" />
+                        </div>
+                    </PopoverTrigger>
+                </Badge>
+                <PopoverContent>
+                    <div className="px-4 py-2">
+                        <div className="text-small font-bold">Hộp thư</div>
+                        <div className="">
+                            <span>Cập nhật mới</span>
+                        </div>
+                    </div>
+                </PopoverContent>
+            </Popover>
+            <Popover placement="bottom" crossOffset={-60} offset={14}>
+                <Badge content="7" size="sm" color="danger">
                     <PopoverTrigger>
                         <div>
                             <BsFillBellFill className="cursor-pointer" fontSize={26} color="white" />
@@ -68,7 +86,7 @@ export default function CurrentUser() {
             <Dropdown>
                 <DropdownTrigger>
                     <div className="cursor-pointer gap-2 pr-2 flex h-full items-center">
-                        <div className="w-[40px] flex h-[40px] relative">
+                        <div style={{ height: 40, width: 40 }} className="relative">
                             <Image src="/imgs/avatar.jpg" fill sizes="40px" className="rounded-[50%]" alt="" />
                         </div>
                         <div className="flex items-center text-[14px] text-white">
@@ -79,10 +97,16 @@ export default function CurrentUser() {
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Example with disabled actions" disabledKeys={['edit', 'delete']}>
                     <DropdownItem textValue="info">
-                        <Link className="flex items-center gap-2" href={'/admin/infoAccount'}>
+                        <Link className="flex items-center gap-2" href={'/admin/profile'}>
                             <CiUser fontSize={20} />
                             Xem hồ sơ
                         </Link>
+                    </DropdownItem>
+                    <DropdownItem textValue="logout">
+                        <div className="flex w-full gap-2 items-center">
+                            <CiSettings fontSize={20} />
+                            Cài đặt
+                        </div>
                     </DropdownItem>
                     <DropdownItem onClick={() => logout()} textValue="logout">
                         <div className="flex w-full gap-2 items-center">

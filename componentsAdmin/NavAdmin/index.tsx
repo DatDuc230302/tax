@@ -33,11 +33,6 @@ const listItems: items[] = [
         title: 'Lịch sử hoạt động',
         href: '/admin/history',
     },
-    {
-        icon: <BiCategory fontSize={20} />,
-        title: 'Quản lý thể loại',
-        href: '/admin/category',
-    },
 ];
 
 export default function NavAdmin() {

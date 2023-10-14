@@ -313,12 +313,7 @@ export default function Accounts() {
                                                         idUser={item.id}
                                                         refresh={refresh}
                                                         setRefresh={setRefresh}
-                                                    >
-                                                        <LiaExchangeAltSolid
-                                                            className={'cursor-pointer'}
-                                                            fontSize={20}
-                                                        />
-                                                    </ChangeStatus>
+                                                    />
                                                     <Delete type="account" idUser={item.id}>
                                                         <FaTrashAlt fontSize={20} />
                                                     </Delete>
