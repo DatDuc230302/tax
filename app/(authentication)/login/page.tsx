@@ -28,28 +28,29 @@ export default function Login() {
     const router = useRouter();
 
     const handleSubmit = loadingApi(async () => {
-        sessionStorage.setItem('role_user', 'admin');
-        sessionStorage.setItem('name_user', 'Trần Đức Đạt');
-        router.push('/admin/dashboard');
-        // try {
-        //     if (email.length > 0 && pass.length > 0) {
-        //         const result = await axios.post(`${serverBackend}/api/v1/login`, {
-        //             email: email,
-        //             password: pass,
-        //         });
-        //         if (result.data.status === 'success') {
-        //             sessionStorage.setItem('access_token', result.data.authorization.token);
-        //             sessionStorage.setItem('role_user', result.data.user.role);
-        //             sessionStorage.setItem('name_user', result.data.user.name);
-        //             setStatus('success');
-        //             router.push('/admin/dashboard');
-        //         } else {
-        //             alert('Deo dung tai khoan');
-        //         }
-        //     }
-        // } catch {
-        //     console.log('Loi ');
-        // }
+        try {
+            if (email.length > 0 && pass.length > 0) {
+                const result = await axios.post(`${serverBackend}/api/v1/login`, {
+                    email: email,
+                    password: pass,
+                });
+                if (result.data.status === 'success') {
+                    console.log(result);
+                    const currentUser: object = {
+                        name: result.data.user.name,
+                        role: result.data.user.role,
+                        token: result.data.authorization.token,
+                    };
+                    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    setStatus('success');
+                    router.push('/admin/dashboard');
+                } else {
+                    alert('Deo dung tai khoan');
+                }
+            }
+        } catch {
+            console.log('Loi ');
+        }
     }, setLoading);
 
     const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

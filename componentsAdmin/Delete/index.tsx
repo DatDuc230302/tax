@@ -3,29 +3,23 @@ import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure, Too
 import axios from 'axios';
 import { serverBackend } from '@/server';
 
-export default function ChangeStatus({
+export default function Delete({
     children,
     type,
-    status,
     idUser,
     idArticle,
-    refresh,
-    setRefresh,
 }: {
     children: React.ReactNode;
     type: string;
-    status: string;
     idUser?: string;
     idArticle?: string;
-    refresh: boolean;
-    setRefresh: any;
 }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const handeSubmit = () => {
         switch (type) {
             case 'account':
-                return changeStatusAccount();
+                return alert(`idUser: ${idUser}, method: ${status}`);
             case 'article':
                 return alert(`article: ${idArticle}, method: ${status}`);
             default:
@@ -33,23 +27,10 @@ export default function ChangeStatus({
         }
     };
 
-    const changeStatusAccount = async () => {
-        try {
-            const formData: any = new FormData();
-            formData.append('id', String(idUser));
-            const result = await axios.post(`${serverBackend}/api/v1/userStatus`, formData);
-            if (result.data.message === 'success') {
-                setRefresh(!refresh);
-            }
-        } catch {
-            console.log('Lỗi');
-        }
-    };
-
     return (
         <>
-            <Tooltip color="primary" content="Thay đổi trạng thái">
-                <div onClick={onOpen} color="primary">
+            <Tooltip color="primary" content="Xóa tài khoản">
+                <div className="cursor-pointer" onClick={onOpen} color="primary">
                     {children}
                 </div>
             </Tooltip>
@@ -59,10 +40,7 @@ export default function ChangeStatus({
                         <>
                             <ModalBody className="p-5">
                                 <div className="pt-4 text-[20px]">
-                                    <span className="flex gap-1">
-                                        Xác nhận chuyển trạng thái thành
-                                        <b>{status === 'active' ? 'Không hoạt động' : 'Hoạt động'}</b>
-                                    </span>
+                                    <span className="flex gap-1">Xác nhận chuyển trạng thái thành</span>
                                 </div>
                             </ModalBody>
                             <ModalFooter>

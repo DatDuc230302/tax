@@ -3,8 +3,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import CreateUser from '@/componentsAdmin/CreateUser';
-import ChangeStatusAccount from '@/componentsAdmin/ChangeStatus';
-import UpdateUser from '@/componentsAdmin/UpdateUser';
+import ChangeStatus from '@/componentsAdmin/ChangeStatus';
+import Delete from '@/componentsAdmin/Delete';
 
 import {
     Table,
@@ -19,19 +19,18 @@ import {
     DropdownTrigger,
     DropdownMenu,
     DropdownItem,
-    Card,
     Skeleton,
+    Tooltip,
 } from '@nextui-org/react';
 import { FaTrashAlt } from 'react-icons/fa';
-import { HiMiniPencilSquare } from 'react-icons/hi2';
-import { BiRefresh } from 'react-icons/bi';
-import { MdSettingsBackupRestore } from 'react-icons/md';
+import { LiaExchangeAltSolid } from 'react-icons/lia';
 import axios from 'axios';
 import Image from 'next/image';
 import { serverBackend } from '@/server';
 import { loadingApi } from '@/functions/loadingApi';
 import { AdminContext } from '../layout';
 import NoneRole from '@/componentsAdmin/NoneRole';
+import { formatTime } from '@/functions/formatTime';
 
 export default function Accounts() {
     const [users, setUsers] = useState<object[]>([]);
@@ -43,6 +42,7 @@ export default function Accounts() {
     const [sortStatus, setSortStatus] = useState<string>('Sắp xếp trạng thái');
     const [sortRole, setSortRole] = useState<string>('Sắp xếp quyền');
     const [loading, setLoading] = useState<boolean>(false);
+    const [refresh, setRefresh] = useState<boolean>(false);
 
     const dataContext = useContext(AdminContext);
 
@@ -101,21 +101,25 @@ export default function Accounts() {
         setSearchValue('');
     }, [sortStatus, sortRole, initialUsers]);
 
-    // useEffect(() => {
-    //     getUser();
-    // }, []);
+    useEffect(() => {
+        getUser();
+    }, [refresh]);
 
-    // const getUser = loadingApi(async () => {
-    //     const token: any = localStorage.getItem('access_token');
-    //     const result = await axios.get(`${serverBackend}/api/v1/user`, {
-    //         headers: {
-    //             Accept: 'application / json',
-    //             Authorization: `Bearer ${token}`,
-    //         },
-    //     });
-    //     setInitialUsers(result.data.data);
-    //     setUsers(result.data.data);
-    // }, setLoading);
+    const getUser = loadingApi(async () => {
+        try {
+            const token: any = localStorage.getItem('access_token');
+            const result = await axios.get(`${serverBackend}/api/v1/user`, {
+                headers: {
+                    Accept: 'application / json',
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setInitialUsers(result.data.data);
+            setUsers(result.data.data);
+        } catch {
+            console.log('Error');
+        }
+    }, setLoading);
 
     return dataContext.role !== 'root' ? (
         <NoneRole />
@@ -246,21 +250,23 @@ export default function Accounts() {
                                 <TableColumn key="phone">Số điện thoại</TableColumn>
                                 <TableColumn key="role">Quyền</TableColumn>
                                 <TableColumn key="status">Trạng thái</TableColumn>
-                                <TableColumn key="status">Công cụ</TableColumn>
+                                <TableColumn key="created">Ngày tạo</TableColumn>
+                                <TableColumn key="updated">Ngày cập nhật</TableColumn>
+                                <TableColumn key="tools">Công cụ</TableColumn>
                             </TableHeader>
                             <TableBody>
                                 {users.map((item: any, index: number) => (
                                     <TableRow key={index}>
                                         <TableCell className="flex w-max flex-nowrap items-center gap-2">
-                                            <div className="flex relative w-[50px] h-[50px] rounded-[50%]">
-                                                {/* <Image
-                                                src={item.avatar}
-                                                sizes="50px"
-                                                fill={true}
-                                                className="rounded-[50%]"
-                                                alt=""
-                                            /> */}
-                                            </div>
+                                            {/* <div className="flex relative w-[50px] h-[50px] rounded-[50%]">
+                                                <Image
+                                                    src={''}
+                                                    sizes="50px"
+                                                    fill={true}
+                                                    className="rounded-[50%]"
+                                                    alt=""
+                                                />
+                                            </div> */}
                                             {item.name}
                                         </TableCell>
                                         <TableCell>{item.email}</TableCell>
@@ -292,23 +298,31 @@ export default function Accounts() {
                                                 </div>
                                             )}
                                         </TableCell>
-                                        <TableCell className="flex w-[80px] translate-y-[-15px]">
-                                            <UpdateUser
-                                                nameValue={item.name}
-                                                emailValue={item.email}
-                                                phoneValue={item.phone}
-                                                passValue={item.pass}
-                                                confirmPassValue={item.confirmPass}
-                                            >
-                                                <HiMiniPencilSquare className={'cursor-pointer'} fontSize={20} />
-                                            </UpdateUser>
-                                            {item.status === 'active' && (
-                                                <ChangeStatusAccount type="account" method="toActive" idUser={item.id}>
-                                                    <FaTrashAlt className={'cursor-pointer'} fontSize={20} />
-                                                </ChangeStatusAccount>
-                                            )}
-                                            {item.status === 'inactive' && (
-                                                <MdSettingsBackupRestore className={'cursor-pointer'} fontSize={20} />
+                                        <TableCell className="w-[170px] whitespace-nowrap">
+                                            {formatTime(item.created_at)}
+                                        </TableCell>
+                                        <TableCell className="w-[170px] whitespace-nowrap">
+                                            {formatTime(item.updated_at)}
+                                        </TableCell>
+                                        <TableCell className="w-[170px] whitespace-nowrap">
+                                            {item.role !== 'root' && (
+                                                <div className="flex gap-2">
+                                                    <ChangeStatus
+                                                        type="account"
+                                                        status={item.status}
+                                                        idUser={item.id}
+                                                        refresh={refresh}
+                                                        setRefresh={setRefresh}
+                                                    >
+                                                        <LiaExchangeAltSolid
+                                                            className={'cursor-pointer'}
+                                                            fontSize={20}
+                                                        />
+                                                    </ChangeStatus>
+                                                    <Delete type="account" idUser={item.id}>
+                                                        <FaTrashAlt fontSize={20} />
+                                                    </Delete>
+                                                </div>
                                             )}
                                         </TableCell>
                                     </TableRow>

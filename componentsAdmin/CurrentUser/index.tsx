@@ -16,6 +16,8 @@ import React, { useContext } from 'react';
 import { BsFillBellFill } from 'react-icons/bs';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { CiLogout, CiUser } from 'react-icons/ci';
+import axios from 'axios';
+import { serverBackend } from '@/server';
 
 export default function CurrentUser() {
     const dataContext = useContext(AdminContext);
@@ -23,30 +25,25 @@ export default function CurrentUser() {
     const router = useRouter();
 
     const logout = async () => {
-        sessionStorage.removeItem('role_user');
-        sessionStorage.removeItem('name_user');
-        router.push('/login');
-        // try {
-        //     const token: any = sessionStorage.getItem('access_token');
-        //     const result = await axios.post(
-        //         `${serverBackend}/api/v1/logout`,
-        //         {},
-        //         {
-        //             headers: {
-        //                 'Content-Type': 'multipart/form-data',
-        //                 Authorization: `Bearer ${token}`,
-        //             },
-        //         },
-        //     );
-        //     if (result.data.status === 'success') {
-        //         sessionStorage.removeItem('access_token');
-        //         sessionStorage.removeItem('name_user');
-        //         sessionStorage.removeItem('role_user');
-        //         router.push('/login');
-        //     }
-        // } catch {
-        //     console.log('Error');
-        // }
+        try {
+            const token: any = sessionStorage.getItem('access_token');
+            const result = await axios.post(
+                `${serverBackend}/api/v1/logout`,
+                {},
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+            if (result.data.status === 'success') {
+                sessionStorage.removeItem('currentUser');
+                router.push('/login');
+            }
+        } catch {
+            console.log('Error');
+        }
     };
 
     return (

@@ -19,8 +19,6 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { HiMiniPencilSquare } from 'react-icons/hi2';
 import { MdSettingsBackupRestore } from 'react-icons/md';
 import CreateArticle from '@/componentsAdmin/CreateArticle';
-import UpdateUser from '@/componentsAdmin/UpdateUser';
-import ChangeStatus from '@/componentsAdmin/ChangeStatus';
 const data = [
     {
         id: '1',
@@ -195,27 +193,7 @@ export default function Articles() {
                                     </div>
                                 )}
                             </TableCell>
-                            <TableCell className="flex w-[80px] items-center h-full justify-between">
-                                <UpdateUser
-                                    nameValue={item.name}
-                                    emailValue={item.email}
-                                    phoneValue={item.phone}
-                                    passValue={item.pass}
-                                    confirmPassValue={item.confirmPass}
-                                >
-                                    <HiMiniPencilSquare className={'cursor-pointer'} fontSize={20} />
-                                </UpdateUser>
-                                {item.status === 'active' && (
-                                    <ChangeStatus type="article" method="toInactive" idArticle={item.id}>
-                                        <FaTrashAlt className={'cursor-pointer'} fontSize={20} />
-                                    </ChangeStatus>
-                                )}
-                                {item.status === 'inactive' && (
-                                    <ChangeStatus type="article" method="toActive" idArticle={item.id}>
-                                        <MdSettingsBackupRestore className={'cursor-pointer'} fontSize={20} />
-                                    </ChangeStatus>
-                                )}
-                            </TableCell>
+                            <TableCell className="flex w-[80px] items-center h-full justify-between">f</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

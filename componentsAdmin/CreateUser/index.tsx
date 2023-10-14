@@ -128,11 +128,16 @@ export default function CreateUser({ children }: { children: React.ReactNode }) 
                                     label="Nhập email"
                                     variant="flat"
                                     isInvalid={false}
-                                    errorMessage={require && (email.length === 0 ? 'Vui lòng nhập email' : !isEmail(email) && 'vui lòng nhập đúng email')}
+                                    errorMessage={
+                                        require &&
+                                        (email.length === 0
+                                            ? 'Vui lòng nhập email'
+                                            : !isEmail(email) && 'vui lòng nhập đúng email')
+                                    }
                                     className="w-full"
                                     value={email}
                                     onChange={(e) => setEmail(String(e.target.value))}
-                                />                               
+                                />
                                 <Input
                                     value={phone}
                                     onChange={(e) => setPhone(String(e.target.value))}
@@ -140,7 +145,6 @@ export default function CreateUser({ children }: { children: React.ReactNode }) 
                                     variant="flat"
                                     type="number"
                                     errorMessage={require && phone.length === 0 && 'Vui lòng số điện thoại'}
-
                                 />
                                 <Input
                                     value={pass}
@@ -149,7 +153,6 @@ export default function CreateUser({ children }: { children: React.ReactNode }) 
                                     type="password"
                                     variant="flat"
                                     errorMessage={require && pass.length === 0 && 'Vui lòng nhập mật khẩu'}
-
                                 />
                                 <Input
                                     value={confirmPass}
@@ -158,7 +161,6 @@ export default function CreateUser({ children }: { children: React.ReactNode }) 
                                     type="password"
                                     variant="flat"
                                     errorMessage={require && confirmPass.length === 0 && 'Vui lòng nhập lại mật khẩu'}
-
                                 />
                             </ModalBody>
                             <ModalFooter>

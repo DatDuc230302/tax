@@ -1,7 +1,7 @@
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import Link from 'next/link';
 import React from 'react';
-import { BiSolidDashboard } from 'react-icons/bi';
+import { BiCategory, BiSolidDashboard } from 'react-icons/bi';
 import { BsClockHistory, BsFillPostcardFill } from 'react-icons/bs';
 import { FaBars, FaUserFriends } from 'react-icons/fa';
 
@@ -31,6 +31,11 @@ const listItems: items[] = [
         icon: <BsClockHistory fontSize={20} />,
         title: 'Lịch sử hoạt động',
         href: '/admin/history',
+    },
+    {
+        icon: <BiCategory fontSize={20} />,
+        title: 'Quản lý thể loại',
+        href: '/admin/category',
     },
 ];
 
