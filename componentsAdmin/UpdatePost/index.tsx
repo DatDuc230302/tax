@@ -7,51 +7,39 @@ import {
     ModalBody,
     ModalFooter,
     Button,
-    useDisclosure,
     Input,
-    Select,
-    SelectItem,
     Tooltip,
+    Dropdown,
+    DropdownTrigger,
+    DropdownMenu,
+    DropdownItem,
 } from '@nextui-org/react';
-import { AiOutlinePlusCircle } from 'react-icons/ai';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { serverImages } from '@/server';
-import { BiUpload } from 'react-icons/bi';
 import Image from 'next/image';
 import { HiMiniPencilSquare } from 'react-icons/hi2';
-
-interface items {
-    title: string;
-    slug?: string;
-}
-
-const listCategory: items[] = [
-    { title: 'Tin tức', slug: 'tin-tuc' },
-    { title: 'Văn bản', slug: 'van-ban' },
-];
-
-const listSubCategory: items[] = [
-    { title: 'Giải trí', slug: 'giai-tri' },
-    { title: 'Thể thao', slug: 'the-thao' },
-    { title: 'Hài hước', slug: 'hai-huoc' },
-    { title: 'Tuổi trẻ', slug: 'tuoi-tre' },
-];
+import { BsChevronDown } from 'react-icons/bs';
 
 export default function UpdatePost({
     oldTitle,
     oldContent,
     oldCategory,
     oldSubCategory,
+    img,
+    categories,
+    subCategories,
 }: {
     oldTitle: string;
     oldContent: string;
     oldCategory: string;
     oldSubCategory: string;
+    img: string;
+    categories: object[];
+    subCategories: object[];
 }) {
     const [turn, setTurn] = useState<boolean>(false);
-
-    const [image, setImage] = useState<any>(null);
+    const [image, setImage] = useState<any>(img);
     const [title, setTitle] = useState<string>(oldTitle);
     const [category, setCategory] = useState<string>(oldCategory);
     const [subCategory, setSubCategory] = useState<string>(oldSubCategory);
@@ -123,53 +111,66 @@ export default function UpdatePost({
                             label="Tiêu đề bài viết"
                             errorMessage={require && title.length === 0 && 'Vui lòng nhập tiêu đề bài viết'}
                         />
-                        <div className="flex gap-4">
-                            <Select
-                                errorMessage={require && category.length === 0 && 'Vui lòng chọn thể loại'}
-                                label="Chọn thể loại bài viết"
-                                className="w-full"
-                            >
-                                {listCategory.map((item: items, index: number) => (
-                                    <SelectItem
-                                        onClick={() =>
-                                            category === item.slug ? setCategory('') : setCategory(String(item.slug))
-                                        }
-                                        key={index}
-                                    >
-                                        {item.title}
-                                    </SelectItem>
-                                ))}
-                            </Select>
-                            <Select
-                                isDisabled={category.length > 0 ? false : true}
-                                label="Chọn thể loại con"
-                                className="w-full"
-                                errorMessage={
-                                    require &&
-                                    category.length > 0 &&
-                                    subCategory.length === 0 &&
-                                    'Vui lòng chọn thể loại con'
-                                }
-                            >
-                                {listSubCategory.map((item: items, index: number) => (
-                                    <SelectItem onClick={(e) => setSubCategory(String(item.slug))} key={index}>
-                                        {item.title}
-                                    </SelectItem>
-                                ))}
-                            </Select>
+                        <div className="flex gap-4 h-[50px]">
+                            <Dropdown>
+                                <DropdownTrigger>
+                                    <Button className="h-full w-full px-0 relative">
+                                        <Input
+                                            label="Thể loại cha"
+                                            type="text"
+                                            className="flex pb-4 justify-start cursor-pointer"
+                                            value={category}
+                                        />
+                                        <div className="absolute w-full h-full z-10 flex items-center justify-end px-4">
+                                            <BsChevronDown fontSize={18} />
+                                        </div>
+                                    </Button>
+                                </DropdownTrigger>
+                                <DropdownMenu
+                                    aria-label="Multiple selection example"
+                                    variant="flat"
+                                    closeOnSelect={false}
+                                    selectionMode="single"
+                                >
+                                    {categories.map((item: any, index: number) => (
+                                        <DropdownItem onClick={() => setCategory(item.name)} key={index}>
+                                            {item.name}
+                                        </DropdownItem>
+                                    ))}
+                                </DropdownMenu>
+                            </Dropdown>
+                            <Dropdown>
+                                <DropdownTrigger>
+                                    <Button className="h-full w-full px-0 relative">
+                                        <Input
+                                            label="Thể loại cha"
+                                            type="text"
+                                            className="flex pb-4 justify-start cursor-pointer"
+                                            value={subCategory}
+                                        />
+                                        <div className="absolute w-full h-full z-10 flex items-center justify-end px-4">
+                                            <BsChevronDown fontSize={18} />
+                                        </div>
+                                    </Button>
+                                </DropdownTrigger>
+                                <DropdownMenu
+                                    aria-label="Multiple selection example"
+                                    variant="flat"
+                                    closeOnSelect={false}
+                                    disallowEmptySelection
+                                    selectionMode="single"
+                                >
+                                    {subCategories.map((item: any, index: number) => (
+                                        <DropdownItem onClick={() => setSubCategory(item.subcategory_name)} key={index}>
+                                            {item.subcategory_name}
+                                        </DropdownItem>
+                                    ))}
+                                </DropdownMenu>
+                            </Dropdown>
                         </div>
                         <div className="flex items-center gap-3">
-                            <Button color="default" className="w-[250px] p-4">
-                                <label
-                                    className="w-full h-full flex items-center cursor-pointer justify-center"
-                                    htmlFor="uploadImg"
-                                >
-                                    <BiUpload color={'black'} fontSize={20} />
-                                    Tải hình đại diện
-                                </label>
-                            </Button>
-                            <div style={{ height: 300 }} className="flex border-[1px] relative border-[#ccc] w-full">
-                                {image && <Image src={image} alt="" sizes="300px" fill={true} />}
+                            <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">
+                                {image && <Image src={image} alt="" fill sizes="10000px" />}
                             </div>
                         </div>
                         <CKEditor

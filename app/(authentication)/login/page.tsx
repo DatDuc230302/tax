@@ -35,7 +35,6 @@ export default function Login() {
                     password: pass,
                 });
                 if (result.data.status === 'success') {
-                    console.log(result);
                     const currentUser: object = {
                         name: result.data.user.name,
                         role: result.data.user.role,

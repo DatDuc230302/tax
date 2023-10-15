@@ -27,8 +27,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     useEffect(() => {
         document.title = 'Trang quản trị';
         const currentUser: any = JSON.parse(`${sessionStorage.getItem('currentUser')}`);
-        const name: string = currentUser.name;
-        const role: string = currentUser.role;
+        const name: string = currentUser ? currentUser.name : '';
+        const role: string = currentUser ? currentUser.role : 'default';
         setNameUser(String(name));
         setRoleUser(String(role));
     }, []);

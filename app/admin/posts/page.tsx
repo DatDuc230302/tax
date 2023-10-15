@@ -22,6 +22,9 @@ import ManageCategory from '@/componentsAdmin/ManageCategory/page';
 import ChangeStatus from '@/componentsAdmin/ChangeStatus';
 import CreatePost from '@/componentsAdmin/CreatePost';
 import UpdatePost from '@/componentsAdmin/UpdatePost';
+import { loadingApi } from '@/functions/loadingApi';
+import { serverBackend } from '@/server';
+import axios from 'axios';
 const data = [
     {
         id: '1',
@@ -44,16 +47,38 @@ export default function Posts() {
     const [sortStatus, setSortStatus] = useState<string>('Sắp xếp trạng thái');
     const [turnBoxCategory, setTurnBoxCategory] = useState<boolean>(false);
     const [refresh, setRefresh] = useState<boolean>(false);
-
-    useEffect(() => {}, [searchValue]);
-
-    useEffect(() => {}, [sortStatus]);
+    const [categories, setCategories] = useState<object[]>([]);
+    const [subCategories, setSubCategories] = useState<object[]>([]);
 
     useEffect(() => {
-        if (sortCategory === 'Sắp xếp thể loại') {
-            setSubCategory('Sắp xếp thể loại con');
+        getPosts();
+        getCategories();
+        getSubCategories();
+    }, [refresh]);
+
+    const getPosts = async () => {};
+
+    const getCategories = async () => {
+        try {
+            const result = await axios.get(`${serverBackend}/api/v1/category`);
+            if (result.data.message === 'success') {
+                setCategories(result.data.data);
+            }
+        } catch {
+            console.log('Lỗi nè');
         }
-    }, [sortCategory]);
+    };
+
+    const getSubCategories = async () => {
+        try {
+            const result = await axios.get(`${serverBackend}/api/v1/subcategory`);
+            if (result.data.message === 'success') {
+                setSubCategories(result.data.data);
+            }
+        } catch {
+            console.log('Lỗi nè');
+        }
+    };
 
     return (
         <div className="flex flex-col w-full px-4 py-[20px] gap-4">
@@ -130,7 +155,7 @@ export default function Posts() {
                             Quản lý thể loại
                         </Button>
                     </div>
-                    <CreatePost />
+                    <CreatePost subCategories={subCategories} />
                 </div>
             </div>
             <div className="flex w-full lg:w-[957px] items-center h-full flex-1 relative ">
@@ -185,9 +210,9 @@ export default function Posts() {
                     {posts.map((item: any, index: number) => (
                         <TableRow key={index}>
                             <TableCell className="flex w-max flex-nowrap">{item.title}</TableCell>
-                            <TableCell>{item.content}</TableCell>
-                            <TableCell>{item.category}</TableCell>
-                            <TableCell>{item.subCategory}</TableCell>
+                            <TableCell className="w-[170px] whitespace-nowrap">{item.content}</TableCell>
+                            <TableCell className="w-[170px] whitespace-nowrap">{item.category}</TableCell>
+                            <TableCell className="w-[170px] whitespace-nowrap">{item.subCategory}</TableCell>
                             <TableCell>15vh</TableCell>
                             <TableCell>15 / 5</TableCell>
                             <TableCell className="w-[170px] shrink-0">
@@ -202,12 +227,15 @@ export default function Posts() {
                                     </div>
                                 )}
                             </TableCell>
-                            <TableCell className="flex w-[80px] items-center h-full justify-between gap-3">
+                            <TableCell className="flex w-[80px] translate-y-[3px] items-center h-full justify-between gap-3">
                                 <UpdatePost
                                     oldTitle={item.title}
                                     oldContent={item.content}
                                     oldCategory={item.category}
                                     oldSubCategory={item.subCategory}
+                                    img={'/imgs/avatar.jpg'}
+                                    categories={categories}
+                                    subCategories={subCategories}
                                 />
                                 <ChangeStatus
                                     type="posts"
@@ -227,7 +255,13 @@ export default function Posts() {
             </Table>
             {turnBoxCategory && (
                 <div className="fixed z-30 top-[70px] bg-white bottom-0 left-0 right-0">
-                    <ManageCategory setTurnBoxCategory={setTurnBoxCategory} />
+                    <ManageCategory
+                        categories={categories}
+                        subCategories={subCategories}
+                        refresh={refresh}
+                        setRefresh={setRefresh}
+                        setTurnBoxCategory={setTurnBoxCategory}
+                    />
                 </div>
             )}
         </div>

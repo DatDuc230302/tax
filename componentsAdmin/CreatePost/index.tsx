@@ -36,7 +36,7 @@ const listSubCategory: items[] = [
     { title: 'Tuổi trẻ', slug: 'tuoi-tre' },
 ];
 
-export default function CreatePost() {
+export default function CreatePost({ subCategories }: { subCategories: object[] }) {
     const [turn, setTurn] = useState<boolean>(false);
 
     const [image, setImage] = useState<any>(null);
@@ -114,37 +114,22 @@ export default function CreatePost() {
                             label="Tiêu đề bài viết"
                             errorMessage={require && title.length === 0 && 'Vui lòng nhập tiêu đề bài viết'}
                         />
-                        <div className="flex gap-4">
-                            <Select
-                                errorMessage={require && category.length === 0 && 'Vui lòng chọn thể loại'}
-                                label="Chọn thể loại bài viết"
-                                className="w-full"
-                            >
-                                {listCategory.map((item: items, index: number) => (
+                        <div className="flex gap-4 relative">
+                            <div className="flex w-full h-full">
+                                <Input label="Thể loại cha" value={category} />
+                                <div className="absolute left-0 right-0 top-0 bottom-0"></div>
+                            </div>
+
+                            <Select label="Chọn thể loại con" className="w-full">
+                                {subCategories.map((item: any, index: number) => (
                                     <SelectItem
-                                        onClick={() =>
-                                            category === item.slug ? setCategory('') : setCategory(String(item.slug))
-                                        }
+                                        onClick={(e) => {
+                                            setCategory(String(item.category_name));
+                                            setSubCategory(String(item.slug));
+                                        }}
                                         key={index}
                                     >
-                                        {item.title}
-                                    </SelectItem>
-                                ))}
-                            </Select>
-                            <Select
-                                isDisabled={category.length > 0 ? false : true}
-                                label="Chọn thể loại con"
-                                className="w-full"
-                                errorMessage={
-                                    require &&
-                                    category.length > 0 &&
-                                    subCategory.length === 0 &&
-                                    'Vui lòng chọn thể loại con'
-                                }
-                            >
-                                {listSubCategory.map((item: items, index: number) => (
-                                    <SelectItem onClick={(e) => setSubCategory(String(item.slug))} key={index}>
-                                        {item.title}
+                                        {item.subcategory_name}
                                     </SelectItem>
                                 ))}
                             </Select>
