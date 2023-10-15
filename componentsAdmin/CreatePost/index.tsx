@@ -11,30 +11,18 @@ import {
     Input,
     Select,
     SelectItem,
+    Dropdown,
+    DropdownTrigger,
+    DropdownMenu,
+    DropdownItem,
 } from '@nextui-org/react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { serverImages } from '@/server';
+import { serverBackend, serverImages } from '@/server';
 import { BiUpload } from 'react-icons/bi';
 import Image from 'next/image';
-
-interface items {
-    title: string;
-    slug?: string;
-}
-
-const listCategory: items[] = [
-    { title: 'Tin tức', slug: 'tin-tuc' },
-    { title: 'Văn bản', slug: 'van-ban' },
-];
-
-const listSubCategory: items[] = [
-    { title: 'Giải trí', slug: 'giai-tri' },
-    { title: 'Thể thao', slug: 'the-thao' },
-    { title: 'Hài hước', slug: 'hai-huoc' },
-    { title: 'Tuổi trẻ', slug: 'tuoi-tre' },
-];
+import { isDate } from '@/functions/isDate';
 
 export default function CreatePost({ subCategories }: { subCategories: object[] }) {
     const [turn, setTurn] = useState<boolean>(false);
@@ -43,28 +31,34 @@ export default function CreatePost({ subCategories }: { subCategories: object[] 
     const [title, setTitle] = useState<string>('');
     const [category, setCategory] = useState<string>('');
     const [subCategory, setSubCategory] = useState<string>('');
+    const [serial, setSerial] = useState<string>('');
+    const [issuance, setIssuance] = useState<string>('');
     const [content, setContent] = useState<string>('Nội dung bài viết');
     const [require, setRequire] = useState<boolean>(false);
+    const [showSubCategories, setShowSubCategories] = useState<object[]>(subCategories);
+
+    useEffect(() => {
+        if (category.length === 0) {
+            setShowSubCategories(subCategories);
+        } else {
+            setShowSubCategories(subCategories.filter((item: any) => item.category_name === category));
+        }
+    }, [category]);
 
     const handleSubmit = () => {
-        if (
-            title.length === 0 ||
-            category.length === 0 ||
-            subCategory.length === 0 ||
-            content.length === 0 ||
-            image === null
-        ) {
-            setRequire(true);
-        } else {
-            const data: object = {
-                User_id: '1',
-                Images: '2',
-                Title: title,
-                Category: category,
-                SubCategory: subCategory,
-                Content: content,
-            };
-        }
+        // if (
+        //     title.length === 0 ||
+        //     category.length === 0 ||
+        //     subCategory.length === 0 ||
+        //     serial.length === 0 ||
+        //     issuance.length === 0 ||
+        //     content.length === 0
+        // ) {
+        //     setRequire(true);
+        // } else {
+        //     console.log(content);
+        // }
+        console.log(content);
     };
 
     const handleCkeditor = (event: any, editor: any) => {
@@ -84,6 +78,15 @@ export default function CreatePost({ subCategories }: { subCategories: object[] 
             reader.readAsDataURL(file);
         } else {
             setImage(null);
+        }
+    };
+
+    const chooseCategory = (categoryName: string) => {
+        if (categoryName === category) {
+            setSubCategory('');
+            setCategory('');
+        } else {
+            setCategory(categoryName);
         }
     };
 
@@ -115,24 +118,64 @@ export default function CreatePost({ subCategories }: { subCategories: object[] 
                             errorMessage={require && title.length === 0 && 'Vui lòng nhập tiêu đề bài viết'}
                         />
                         <div className="flex gap-4 relative">
-                            <div className="flex w-full h-full">
-                                <Input label="Thể loại cha" value={category} />
-                                <div className="absolute left-0 right-0 top-0 bottom-0"></div>
-                            </div>
-
-                            <Select label="Chọn thể loại con" className="w-full">
+                            <Select
+                                errorMessage={require && category.length === 0 && 'Vui lòng chọn thể loại cha'}
+                                label="Chọn thể loại cha"
+                                className="w-full"
+                            >
                                 {subCategories.map((item: any, index: number) => (
-                                    <SelectItem
-                                        onClick={(e) => {
-                                            setCategory(String(item.category_name));
-                                            setSubCategory(String(item.slug));
-                                        }}
-                                        key={index}
-                                    >
-                                        {item.subcategory_name}
+                                    <SelectItem onClick={() => chooseCategory(item.category_name)} key={index}>
+                                        {item.category_name}
                                     </SelectItem>
                                 ))}
                             </Select>
+                            <Dropdown>
+                                <DropdownTrigger>
+                                    <Button
+                                        isDisabled={category.length === 0}
+                                        className="w-full h-full px-0"
+                                        variant="flat"
+                                    >
+                                        <Input
+                                            errorMessage={
+                                                require && subCategory.length === 0 && 'Vui lòng chọn thể loại con'
+                                            }
+                                            label="Thể loại con"
+                                            type="text"
+                                            value={subCategory}
+                                        />
+                                        <i className="absolute cursor-pointer left-0 right-0 bottom-0 top-0"></i>
+                                    </Button>
+                                </DropdownTrigger>
+                                <DropdownMenu aria-label="Static Actions">
+                                    {showSubCategories.map((item: any, index: number) => (
+                                        <DropdownItem onClick={() => setSubCategory(item.subcategory_name)} key={index}>
+                                            {item.subcategory_name}
+                                        </DropdownItem>
+                                    ))}
+                                </DropdownMenu>
+                            </Dropdown>
+                        </div>
+                        <div className="flex gap-4 relative">
+                            <Input
+                                onChange={(e) => setSerial(String(e.target.value))}
+                                type="text"
+                                value={serial}
+                                label="Số hiệu"
+                                errorMessage={require && serial.length === 0 && 'Vui lòng nhập số hiệu'}
+                            />
+                            <Input
+                                onChange={(e) => setIssuance(String(e.target.value))}
+                                type="text"
+                                value={issuance}
+                                label="Ngày ban hành VD: 13\10\2022"
+                                errorMessage={
+                                    require &&
+                                    (issuance.length === 0
+                                        ? 'Vui lòng nhập ngày phát hành'
+                                        : !isDate(issuance) && 'Vui lòng nhập đúng định dạng thời gian')
+                                }
+                            />
                         </div>
                         <div className="flex items-center gap-3">
                             <Button color="default" className="w-[250px] p-4">
@@ -151,14 +194,13 @@ export default function CreatePost({ subCategories }: { subCategories: object[] 
                         <CKEditor
                             config={{
                                 ckfinder: {
-                                    uploadUrl: `${serverImages}/upload`,
+                                    uploadUrl: `${serverBackend}/api/v1/upload-images`,
                                 },
                             }}
                             data={content}
                             onChange={handleCkeditor}
                             editor={ClassicEditor}
                         />
-
                         <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                     </ModalBody>
                     <ModalFooter>

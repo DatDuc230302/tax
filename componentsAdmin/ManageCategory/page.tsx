@@ -85,7 +85,6 @@ export default function ManageCategory({
                                             </TableCell>
                                             <TableCell className="flex w-[80px] items-center h-full justify-between">
                                                 <BsPencilSquare fontSize={20} />
-                                                <BsTrash fontSize={20} />
                                             </TableCell>
                                         </TableRow>
                                     ))}
