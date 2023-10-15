@@ -27,6 +27,7 @@ import { isDate } from '@/functions/isDate';
 export default function CreatePost({ subCategories }: { subCategories: object[] }) {
     const [turn, setTurn] = useState<boolean>(false);
 
+    const [showImage, setShowImage] = useState<any>(null);
     const [image, setImage] = useState<any>(null);
     const [title, setTitle] = useState<string>('');
     const [category, setCategory] = useState<string>('');
@@ -46,19 +47,23 @@ export default function CreatePost({ subCategories }: { subCategories: object[] 
     }, [category]);
 
     const handleSubmit = () => {
-        // if (
-        //     title.length === 0 ||
-        //     category.length === 0 ||
-        //     subCategory.length === 0 ||
-        //     serial.length === 0 ||
-        //     issuance.length === 0 ||
-        //     content.length === 0
-        // ) {
-        //     setRequire(true);
-        // } else {
-        //     console.log(content);
-        // }
-        console.log(content);
+        if (
+            title.length === 0 ||
+            category.length === 0 ||
+            subCategory.length === 0 ||
+            serial.length === 0 ||
+            isDate(issuance) === false ||
+            content.length === 0
+        ) {
+            setRequire(true);
+        } else {
+            const formData: any = new FormData();
+            formData.append('title', title);
+            formData.append('content', content);
+            formData.append('image', image, image.name);
+            formData.append('serial_number', serial);
+            formData.append('issuance_date', issuance);
+        }
     };
 
     const handleCkeditor = (event: any, editor: any) => {
@@ -71,7 +76,8 @@ export default function CreatePost({ subCategories }: { subCategories: object[] 
         const reader: any = new FileReader();
 
         reader.onloadend = () => {
-            setImage(reader.result);
+            setImage(file);
+            setShowImage(reader.result);
         };
 
         if (file) {
@@ -188,7 +194,7 @@ export default function CreatePost({ subCategories }: { subCategories: object[] 
                                 </label>
                             </Button>
                             <div style={{ height: 300 }} className="flex border-[1px] relative border-[#ccc] w-full">
-                                {image && <Image src={image} alt="" sizes="300px" fill={true} />}
+                                {image && <Image src={showImage} alt="" sizes="300px" fill={true} />}
                             </div>
                         </div>
                         <CKEditor
