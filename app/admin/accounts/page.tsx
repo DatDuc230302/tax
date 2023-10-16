@@ -65,7 +65,7 @@ export default function Accounts() {
             default:
                 break;
         }
-    }, [searchValue]);
+    }, [searchValue, selection]);
 
     useEffect(() => {
         let sortData: object[] = [];

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { serverBackend } from '@/server';
 import AlertMessage from '@/componentsAdmin/AlertMessage';
 
-export default function page({ params }: { params: { id: string } }) {
+export default function DetailPost({ params }: { params: { id: string } }) {
     const [alert, setAlert] = useState<boolean>(false);
     useEffect(() => {
         getPost();

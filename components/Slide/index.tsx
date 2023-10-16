@@ -23,8 +23,8 @@ export default function Slide() {
         <div className="flex w-full justify-center my-4">
             <Slider className="flex flex-col w-full outline-none" {...settings}>
                 {slides.map((item: string, index: number) => (
-                    <div className="flex relative h-[600px]">
-                        <Image key={index} src={item} sizes="600px" fill alt="" />
+                    <div key={index} className="flex relative h-[600px]">
+                        <Image src={item} sizes="600px" fill alt="" />
                     </div>
                 ))}
             </Slider>
