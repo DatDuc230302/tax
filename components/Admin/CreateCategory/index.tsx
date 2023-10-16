@@ -47,7 +47,7 @@ export default function CreateCategory({ refresh, setRefresh }: { refresh: boole
                 <AiOutlinePlusCircle fontSize={20} />
                 Thêm thể loại
             </Button>
-            <Modal hideCloseButton isOpen={turn} className="h-[700px] overflow-y-auto" size="3xl" isDismissable={false}>
+            <Modal hideCloseButton isOpen={turn} className="h-[200px]" size="3xl" isDismissable={false}>
                 <ModalContent>
                     <ModalHeader className="flex flex-col gap-1">Thêm thể loại</ModalHeader>
                     <ModalBody>

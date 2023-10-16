@@ -1,4 +1,4 @@
-import LoginAdmin from '@/componentsAdmin/LoginAdmin';
+import LoginAdmin from '@/components/Admin/LoginAdmin';
 import React from 'react';
 
 export default function Login() {
