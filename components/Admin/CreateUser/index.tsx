@@ -71,7 +71,10 @@ export default function CreateUser() {
 
     return (
         <>
-            <Button color="primary" variant="flat" onClick={() => setTurn(true)}>
+            <Button
+                className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
+                onClick={() => setTurn(true)}
+            >
                 <AiOutlinePlusCircle fontSize={20} />
                 Thêm tài khoản
             </Button>
@@ -88,14 +91,13 @@ export default function CreateUser() {
                     <ModalHeader className="flex flex-col gap-1">Tạo tài khoản</ModalHeader>
                     <ModalBody>
                         <div className="flex flex-col items-center gap-3">
-                            <div className="w-[50px] h-[50px] bg-red-500"></div>
-                            <div className="flex relative border-[1px]  border-[#ccc] h-[120px] rounded-[50%]">
+                            <div className="flex relative border-[1px] w-[120px] border-[#ccc] h-[120px] rounded-[50%]">
                                 {image && (
                                     <Image
                                         className="rounded-[50%]"
                                         src={showImage ? showImage : ''}
                                         alt=""
-                                        sizes="120px"
+                                        sizes="100000px"
                                         fill={true}
                                     />
                                 )}

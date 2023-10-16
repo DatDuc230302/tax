@@ -1,4 +1,4 @@
-import AccountsController from '@/componentsAdmin/AccountsController';
+import AccountsController from '@/components/Admin/AccountsController';
 import React from 'react';
 
 export default function Accounts() {

@@ -1,7 +1,7 @@
 'use client';
 
-import CreateCategory from '@/componentsAdmin/CreateCategory';
-import CreateSubCategory from '@/componentsAdmin/CreateSubCategory';
+import CreateCategory from '@/components/Admin/CreateCategory';
+import CreateSubCategory from '@/components/Admin/CreateSubCategory';
 import { formatTime } from '@/functions/formatTime';
 import { serverBackend } from '@/server';
 import {

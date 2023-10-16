@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useContext, useEffect, useState } from 'react';
-import { AiOutlinePlusCircle } from 'react-icons/ai';
-import CreateUser from '@/componentsAdmin/CreateUser';
-import ChangeStatus from '@/componentsAdmin/ChangeStatus';
-import Delete from '@/componentsAdmin/Delete';
+import CreateUser from '@/components/Admin/CreateUser';
+import ChangeStatus from '@/components/Admin/ChangeStatus';
+import Delete from '@/components/Admin/Delete';
 
 import {
     Table,
@@ -25,7 +24,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 import axios from 'axios';
 import { serverBackend } from '@/server';
 import { AdminContext } from '@/app/admin/layout';
-import NoneRole from '@/componentsAdmin/NoneRole';
+import NoneRole from '@/components/Admin/NoneRole';
 import { formatTime } from '@/functions/formatTime';
 
 export default function AccountsController() {
@@ -63,7 +62,7 @@ export default function AccountsController() {
             default:
                 break;
         }
-    }, [searchValue, selection, sortUsers, users]);
+    }, [searchValue, selection, sortUsers]);
 
     useEffect(() => {
         let sortData: object[] = [];
@@ -106,9 +105,7 @@ export default function AccountsController() {
             const result = await axios.get(`${serverBackend}/api/v1/user`);
             setInitialUsers(result.data.data);
             setUsers(result.data.data);
-        } catch (err) {
-            alert('Không kết nói được với server');
-        }
+        } catch (err) {}
     };
 
     return dataContext.role !== 'root' ? (
@@ -153,7 +150,10 @@ export default function AccountsController() {
                         <div className="flex w-full gap-3 justify-between">
                             <Dropdown>
                                 <DropdownTrigger>
-                                    <Button color="primary" variant="flat">
+                                    <Button
+                                        className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
+                                        variant="flat"
+                                    >
                                         {sortStatus}
                                     </Button>
                                 </DropdownTrigger>
@@ -171,7 +171,10 @@ export default function AccountsController() {
                             </Dropdown>
                             <Dropdown>
                                 <DropdownTrigger>
-                                    <Button variant="flat" color="primary">
+                                    <Button
+                                        className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
+                                        variant="flat"
+                                    >
                                         {sortRole}
                                     </Button>
                                 </DropdownTrigger>

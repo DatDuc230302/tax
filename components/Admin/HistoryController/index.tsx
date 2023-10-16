@@ -1,7 +1,7 @@
 'use client';
 import React, { useContext } from 'react';
 import { AdminContext } from '@/app/admin/layout';
-import NoneRole from '@/componentsAdmin/NoneRole';
+import NoneRole from '@/components/Admin/NoneRole';
 import { Tab, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tabs, Tooltip } from '@nextui-org/react';
 import { BsInfoCircle } from 'react-icons/bs';
 

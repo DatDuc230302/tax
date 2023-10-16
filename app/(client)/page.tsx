@@ -1,5 +1,5 @@
-import Service from '@/components/Service';
-import Slide from '@/components/Slide';
+import Service from '@/components/Client/Service';
+import Slide from '@/components/Client/Slide';
 import Posts from './bai-viet/page';
 
 export default function Home() {

@@ -20,10 +20,10 @@ import {
 } from '@nextui-org/react';
 import { BsInfoCircle } from 'react-icons/bs';
 import Link from 'next/link';
-import ManageCategory from '@/componentsAdmin/ManageCategory/page';
-import ChangeStatus from '@/componentsAdmin/ChangeStatus';
-import CreatePost from '@/componentsAdmin/CreatePost';
-import UpdatePost from '@/componentsAdmin/UpdatePost';
+import ManageCategory from '@/components/Admin/ManageCategory/page';
+import ChangeStatus from '@/components/Admin/ChangeStatus';
+import CreatePost from '@/components/Admin/CreatePost';
+import UpdatePost from '@/components/Admin/UpdatePost';
 import { serverBackend } from '@/server';
 import axios from 'axios';
 import { formatTime } from '@/functions/formatTime';

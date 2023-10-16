@@ -1,11 +1,11 @@
 'use client';
 
-import NoneRole from '@/componentsAdmin/NoneRole';
+import NoneRole from '@/components/Admin/NoneRole';
+import NavAdmin from '@/components/Admin/NavAdmin';
+import CurrentUser from '@/components/Admin/CurrentUser';
 import { serverBackend } from '@/server';
 import axios from 'axios';
 import React, { useEffect, useState, createContext } from 'react';
-import NavAdmin from '@/componentsAdmin/NavAdmin';
-import CurrentUser from '@/componentsAdmin/CurrentUser';
 
 interface typeContext {
     id: string;
