@@ -13,7 +13,7 @@ export default function Profile() {
                 <div className="flex items-center gap-20">
                     <span className="flex">Ảnh đại diện:</span>
                     <div className="relative flex w-[100px] h-[100px] rounded-[50%]">
-                        <Image src={'/imgs/avatar.jpg'} className="rounded-[50%]" fill sizes="100px" alt="" />
+                        <Image src={'/imgs/avatar.jpg'} className="rounded-[50%]" fill sizes="10000px" alt="" />
                     </div>
                 </div>
                 <span>Quyền: {dataContext.role}</span>

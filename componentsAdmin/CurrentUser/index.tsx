@@ -87,7 +87,7 @@ export default function CurrentUser() {
                 <DropdownTrigger>
                     <div className="cursor-pointer gap-2 pr-2 flex h-full items-center">
                         <div style={{ height: 40, width: 40 }} className="relative">
-                            <Image src="/imgs/avatar.jpg" fill sizes="40px" className="rounded-[50%]" alt="" />
+                            <Image src="/imgs/avatar.jpg" fill sizes="10000px" className="rounded-[50%]" alt="" />
                         </div>
                         <div className="flex items-center text-[14px] text-white">
                             <span>{dataContext.name}</span>

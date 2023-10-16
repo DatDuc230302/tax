@@ -29,6 +29,8 @@ export default function UpdatePost({
     img,
     categories,
     subCategories,
+    refresh,
+    setRefresh,
 }: {
     oldTitle: string;
     oldContent: string;
@@ -37,6 +39,8 @@ export default function UpdatePost({
     img: string;
     categories: object[];
     subCategories: object[];
+    refresh: boolean;
+    setRefresh: any;
 }) {
     const [turn, setTurn] = useState<boolean>(false);
     const [image, setImage] = useState<any>(img);
@@ -143,7 +147,7 @@ export default function UpdatePost({
                                 <DropdownTrigger>
                                     <Button className="h-full w-full px-0 relative">
                                         <Input
-                                            label="Thể loại cha"
+                                            label="Thể loại con"
                                             type="text"
                                             className="flex pb-4 justify-start cursor-pointer"
                                             value={subCategory}

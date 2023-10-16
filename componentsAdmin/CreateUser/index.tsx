@@ -15,6 +15,7 @@ import { serverBackend } from '@/server';
 import { BsPencilSquare } from 'react-icons/bs';
 import Image from 'next/image';
 import { isEmail } from '@/functions/isEmail';
+import AlertDialog from '../AlertMessage';
 
 export default function CreateUser({ children }: { children: React.ReactNode }) {
     const [turn, setTurn] = useState<boolean>(false);
@@ -27,36 +28,34 @@ export default function CreateUser({ children }: { children: React.ReactNode }) 
     const [pass, setPass] = useState<string>('');
     const [confirmPass, setConfirmPass] = useState<string>('');
     const [require, setRequire] = useState<boolean>(false);
+    const [alert, setAlert] = useState<boolean>(false);
 
     const handleSubmit = async () => {
-        const token: any = localStorage.getItem('access_token');
-
-        if (
-            name.length === 0 ||
-            email.length === 0 ||
-            phone.length === 0 ||
-            pass.length === 0 ||
-            confirmPass.length === 0 ||
-            image === null
-        ) {
-            setRequire(true);
-        } else {
-            const formData: any = new FormData();
-            formData.append('image', image, image.name);
-            formData.append('name', name);
-            formData.append('email', email);
-            formData.append('phone', phone);
-            formData.append('password', pass);
-            const result: any = await axios.post(`${serverBackend}/api/v1/register`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            if (result.data.status === 'success') {
-                alert('Them tai khoan thanh cong');
-                console.log(result);
+        try {
+            if (
+                name.length === 0 ||
+                email.length === 0 ||
+                phone.length === 0 ||
+                pass.length === 0 ||
+                confirmPass.length === 0 ||
+                image === null
+            ) {
+                setRequire(true);
             } else {
+                const formData: any = new FormData();
+                formData.append('image', image, image.name);
+                formData.append('name', name);
+                formData.append('email', email);
+                formData.append('phone', phone);
+                formData.append('password', pass);
+                const result: any = await axios.post(`${serverBackend}/api/v1/register`, formData);
+                if (result.data.status === 'success') {
+                } else {
+                }
+            }
+        } catch (err: any) {
+            if (err.response.status === 500) {
+                setAlert(true);
             }
         }
     };
@@ -82,6 +81,7 @@ export default function CreateUser({ children }: { children: React.ReactNode }) 
             <div className={'w-full justify-center h-full flex items-center gap-2'} onClick={() => setTurn(true)}>
                 {children}
             </div>
+            {alert && <AlertDialog title="Thông báo" content="Email này đã có người sử dụng vui lòng tạo email khác" />}
             <Modal
                 backdrop="blur"
                 className="z-20 h-[700px] overflow-y-auto"

@@ -36,6 +36,7 @@ export default function Login() {
                 });
                 if (result.data.status === 'success') {
                     const currentUser: object = {
+                        id: result.data.user.id,
                         name: result.data.user.name,
                         role: result.data.user.role,
                         token: result.data.authorization.token,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import {
     Modal,
@@ -7,7 +7,6 @@ import {
     ModalBody,
     ModalFooter,
     Button,
-    useDisclosure,
     Input,
     Select,
     SelectItem,
@@ -19,23 +18,46 @@ import {
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { serverBackend, serverImages } from '@/server';
+import { serverBackend } from '@/server';
 import { BiUpload } from 'react-icons/bi';
 import Image from 'next/image';
 import { isDate } from '@/functions/isDate';
+import axios from 'axios';
+import { AdminContext } from '@/app/admin/layout';
 
-export default function CreatePost({ subCategories }: { subCategories: object[] }) {
+export default function CreatePost({
+    refresh,
+    setRefresh,
+    subCategories,
+}: {
+    refresh: boolean;
+    setRefresh: any;
+    subCategories: object[];
+}) {
+    // Cho phép bật tắt creatPost
     const [turn, setTurn] = useState<boolean>(false);
 
+    const dataContext: any = useContext(AdminContext);
+
+    // State cho phép hiển thị ảnh khi người dùng tải lên
     const [showImage, setShowImage] = useState<any>(null);
+    // State cho phép gữi file ảnh lên server
     const [image, setImage] = useState<any>(null);
+    // State tiêu đề của bài đăng
     const [title, setTitle] = useState<string>('');
+    // State thể loại của bài đăng
     const [category, setCategory] = useState<string>('');
+    // State thể loại con của bài đăng
     const [subCategory, setSubCategory] = useState<string>('');
+    // State số hiệu bài đăng
     const [serial, setSerial] = useState<string>('');
+    // State ngày phát hành bài đăng
     const [issuance, setIssuance] = useState<string>('');
+    // State nội dung bài đăng
     const [content, setContent] = useState<string>('Nội dung bài viết');
+    // State check validate
     const [require, setRequire] = useState<boolean>(false);
+    // State nối bảng giữ subcategories và categories
     const [showSubCategories, setShowSubCategories] = useState<object[]>(subCategories);
 
     useEffect(() => {
@@ -46,23 +68,37 @@ export default function CreatePost({ subCategories }: { subCategories: object[] 
         }
     }, [category]);
 
-    const handleSubmit = () => {
-        if (
-            title.length === 0 ||
-            category.length === 0 ||
-            subCategory.length === 0 ||
-            serial.length === 0 ||
-            isDate(issuance) === false ||
-            content.length === 0
-        ) {
-            setRequire(true);
-        } else {
-            const formData: any = new FormData();
-            formData.append('title', title);
-            formData.append('content', content);
-            formData.append('image', image, image.name);
-            formData.append('serial_number', serial);
-            formData.append('issuance_date', issuance);
+    const handleSubmit = async () => {
+        try {
+            if (
+                title.length === 0 ||
+                category.length === 0 ||
+                subCategory.length === 0 ||
+                isDate(issuance) === false ||
+                content.length === 0
+            ) {
+                setRequire(true);
+            } else {
+                const tempIdSubCategory: any = showSubCategories.filter(
+                    (item: any) => item.subcategory_name === subCategory,
+                );
+                const idSubCategory: string = String(tempIdSubCategory[0].id);
+                const formData: any = new FormData();
+                formData.append('user_id', dataContext.id);
+                formData.append('title', title);
+                formData.append('content', content);
+                formData.append('image', image, image.name);
+                formData.append('serial_number', serial);
+                formData.append('Issuance_date', issuance);
+                formData.append('subcategory_id', idSubCategory);
+                const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
+                if (result.data.message === 'success') {
+                    setTurn(false);
+                    setRefresh(!refresh);
+                }
+            }
+        } catch {
+            alert('Khong the post');
         }
     };
 
@@ -84,15 +120,6 @@ export default function CreatePost({ subCategories }: { subCategories: object[] 
             reader.readAsDataURL(file);
         } else {
             setImage(null);
-        }
-    };
-
-    const chooseCategory = (categoryName: string) => {
-        if (categoryName === category) {
-            setSubCategory('');
-            setCategory('');
-        } else {
-            setCategory(categoryName);
         }
     };
 
@@ -124,17 +151,28 @@ export default function CreatePost({ subCategories }: { subCategories: object[] 
                             errorMessage={require && title.length === 0 && 'Vui lòng nhập tiêu đề bài viết'}
                         />
                         <div className="flex gap-4 relative">
-                            <Select
-                                errorMessage={require && category.length === 0 && 'Vui lòng chọn thể loại cha'}
-                                label="Chọn thể loại cha"
-                                className="w-full"
-                            >
-                                {subCategories.map((item: any, index: number) => (
-                                    <SelectItem onClick={() => chooseCategory(item.category_name)} key={index}>
-                                        {item.category_name}
-                                    </SelectItem>
-                                ))}
-                            </Select>
+                            <Dropdown>
+                                <DropdownTrigger>
+                                    <Button className="w-full h-full px-0" variant="flat">
+                                        <Input
+                                            errorMessage={
+                                                require && subCategory.length === 0 && 'Vui lòng chọn thể loại con'
+                                            }
+                                            label="Thể loại cha"
+                                            type="text"
+                                            value={category}
+                                        />
+                                        <i className="absolute cursor-pointer left-0 right-0 bottom-0 top-0"></i>
+                                    </Button>
+                                </DropdownTrigger>
+                                <DropdownMenu aria-label="Static Actions">
+                                    {subCategories.map((item: any, index: number) => (
+                                        <SelectItem onClick={() => setCategory(item.category_name)} key={index}>
+                                            {item.category_name}
+                                        </SelectItem>
+                                    ))}
+                                </DropdownMenu>
+                            </Dropdown>
                             <Dropdown>
                                 <DropdownTrigger>
                                     <Button

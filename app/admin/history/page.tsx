@@ -69,6 +69,41 @@ export default function History() {
                         </TableBody>
                     </Table>
                 </Tab>
+                <Tab key="time" title="Thời gian truy cập">
+                    <Table
+                        aria-label="Example table with client side pagination"
+                        classNames={{
+                            wrapper: 'max-h-[400px]',
+                        }}
+                    >
+                        <TableHeader>
+                            <TableColumn key="name">Tên tài khoản</TableColumn>
+                            <TableColumn key="email">Thời gian đăng nhập</TableColumn>
+                            <TableColumn key="phone">Thời gian đăng xuất</TableColumn>
+                            <TableColumn key="role">Tổng thời gian truy cập</TableColumn>
+                        </TableHeader>
+                        <TableBody>
+                            {data.map((item: any, index: number) => (
+                                <TableRow key={index}>
+                                    <TableCell className="w-[25%] whitespace-nowrap">{item.nameAccount}</TableCell>
+                                    <TableCell className="w-[25%] whitespace-nowrap">{item.namePost}</TableCell>
+                                    <TableCell className="w-[25%] whitespace-nowrap flex gap-2">
+                                        {item.action}
+                                        <Tooltip content="Xem chi tiết hành động" placement="bottom">
+                                            <i
+                                                onClick={() => showAction(item.id)}
+                                                className="w-[20px] flex cursor-pointer"
+                                            >
+                                                <BsInfoCircle fontSize={20} />
+                                            </i>
+                                        </Tooltip>
+                                    </TableCell>
+                                    <TableCell className="w-[25%] whitespace-nowrap">{item.date}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </Tab>
             </Tabs>
         </div>
     );

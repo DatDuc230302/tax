@@ -8,27 +8,32 @@ import NavAdmin from '@/componentsAdmin/NavAdmin';
 import CurrentUser from '@/componentsAdmin/CurrentUser';
 
 interface typeContext {
+    id: string;
     name: string;
     role: string;
 }
 
 export const AdminContext = createContext<typeContext>({
+    id: '',
     name: '',
     role: '',
 });
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+    const [idUser, setIdUser] = useState<string>('');
     const [nameUser, setNameUser] = useState<string>('');
     const [roleUser, setRoleUser] = useState<string>('');
 
     // Truyền dữ liệu thông qua đây
-    const dataContext = { name: nameUser, role: roleUser };
+    const dataContext = { id: idUser, name: nameUser, role: roleUser };
 
     useEffect(() => {
         document.title = 'Trang quản trị';
         const currentUser: any = JSON.parse(`${sessionStorage.getItem('currentUser')}`);
-        const name: string = currentUser ? currentUser.name : '';
-        const role: string = currentUser ? currentUser.role : 'default';
+        const id: string = currentUser && currentUser.id ? currentUser.id : '0';
+        const name: string = currentUser && currentUser.name ? currentUser.name : 'Anonymous';
+        const role: string = currentUser && currentUser.role ? currentUser.role : 'default';
+        setIdUser(String(id));
         setNameUser(String(name));
         setRoleUser(String(role));
     }, []);

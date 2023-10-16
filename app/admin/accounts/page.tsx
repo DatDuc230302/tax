@@ -23,9 +23,7 @@ import {
     Tooltip,
 } from '@nextui-org/react';
 import { FaTrashAlt } from 'react-icons/fa';
-import { LiaExchangeAltSolid } from 'react-icons/lia';
 import axios from 'axios';
-import Image from 'next/image';
 import { serverBackend } from '@/server';
 import { loadingApi } from '@/functions/loadingApi';
 import { AdminContext } from '../layout';
@@ -116,8 +114,8 @@ export default function Accounts() {
             });
             setInitialUsers(result.data.data);
             setUsers(result.data.data);
-        } catch {
-            console.log('Error');
+        } catch (err) {
+            alert('Không kết nói được với server');
         }
     }, setLoading);
 

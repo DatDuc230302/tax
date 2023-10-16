@@ -15,6 +15,8 @@ import {
     DropdownMenu,
     DropdownItem,
     Tooltip,
+    Chip,
+    Skeleton,
 } from '@nextui-org/react';
 import { BsInfoCircle } from 'react-icons/bs';
 import Link from 'next/link';
@@ -25,21 +27,10 @@ import UpdatePost from '@/componentsAdmin/UpdatePost';
 import { loadingApi } from '@/functions/loadingApi';
 import { serverBackend } from '@/server';
 import axios from 'axios';
-const data = [
-    {
-        id: '1',
-        title: 'Tony Reichert',
-        content: 'Dat dep trai',
-        category: 'Pháp luật',
-        subCategory: 'Hai hước',
-        number: '1234',
-        data: '15/5',
-        status: 'active',
-    },
-];
+import { formatTime } from '@/functions/formatTime';
 
 export default function Posts() {
-    const [posts, setPosts] = useState<object[]>(data);
+    const [posts, setPosts] = useState<object[]>([]);
     const [selection, setSelection] = useState<string>('Tên');
     const [searchValue, setSearchValue] = useState<string>('');
     const [sortCategory, setSortCategory] = useState<string>('Sắp xếp thể loại');
@@ -49,6 +40,7 @@ export default function Posts() {
     const [refresh, setRefresh] = useState<boolean>(false);
     const [categories, setCategories] = useState<object[]>([]);
     const [subCategories, setSubCategories] = useState<object[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         getPosts();
@@ -56,9 +48,19 @@ export default function Posts() {
         getSubCategories();
     }, [refresh]);
 
-    const getPosts = async () => {};
+    const getPosts = loadingApi(async () => {
+        try {
+            const result: any = await axios.get(`${serverBackend}/api/v1/post`);
 
-    const getCategories = async () => {
+            if (result.data.message === 'success') {
+                setPosts(result.data.data);
+            }
+        } catch {
+            console.log('Error');
+        }
+    }, setLoading);
+
+    const getCategories = loadingApi(async () => {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/category`);
             if (result.data.message === 'success') {
@@ -67,9 +69,9 @@ export default function Posts() {
         } catch {
             console.log('Lỗi nè');
         }
-    };
+    }, setLoading);
 
-    const getSubCategories = async () => {
+    const getSubCategories = loadingApi(async () => {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/subcategory`);
             if (result.data.message === 'success') {
@@ -78,7 +80,7 @@ export default function Posts() {
         } catch {
             console.log('Lỗi nè');
         }
-    };
+    }, setLoading);
 
     return (
         <div className="flex flex-col w-full px-4 py-[20px] gap-4">
@@ -155,7 +157,7 @@ export default function Posts() {
                             Quản lý thể loại
                         </Button>
                     </div>
-                    <CreatePost subCategories={subCategories} />
+                    <CreatePost refresh={refresh} setRefresh={setRefresh} subCategories={subCategories} />
                 </div>
             </div>
             <div className="flex w-full lg:w-[957px] items-center h-full flex-1 relative ">
@@ -190,69 +192,106 @@ export default function Posts() {
                     </Dropdown>
                 </div>
             </div>
-            <Table
-                aria-label="Example table with client side pagination"
-                classNames={{
-                    wrapper: 'max-h-[400px]',
-                }}
-            >
-                <TableHeader>
-                    <TableColumn key="name">Tiêu đề bài viết</TableColumn>
-                    <TableColumn key="content">Nội dung</TableColumn>
-                    <TableColumn key="category">Thể loại</TableColumn>
-                    <TableColumn key="role">Thể loại con</TableColumn>
-                    <TableColumn key="status">Số hiệu</TableColumn>
-                    <TableColumn key="status">Ngày ban hành</TableColumn>
-                    <TableColumn key="status">Trạng thái</TableColumn>
-                    <TableColumn key="status">Công cụ</TableColumn>
-                </TableHeader>
-                <TableBody>
-                    {posts.map((item: any, index: number) => (
-                        <TableRow key={index}>
-                            <TableCell className="flex w-max flex-nowrap">{item.title}</TableCell>
-                            <TableCell className="w-[170px] whitespace-nowrap">{item.content}</TableCell>
-                            <TableCell className="w-[170px] whitespace-nowrap">{item.category}</TableCell>
-                            <TableCell className="w-[170px] whitespace-nowrap">{item.subCategory}</TableCell>
-                            <TableCell>15vh</TableCell>
-                            <TableCell>15 / 5</TableCell>
-                            <TableCell className="w-[170px] shrink-0">
-                                {item.status === 'inactive' && (
-                                    <div className="select-none w-[140px] text-white flex p-1 items-center justify-center rounded-[50px] bg-[#b1b1b1]">
-                                        Không hoạt động
+            {loading ? (
+                <>
+                    <Skeleton className="rounded-lg">
+                        <div className="h-24 rounded-lg bg-default-300"></div>
+                    </Skeleton>
+                    <Skeleton className="w-full rounded-lg">
+                        <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+                    </Skeleton>
+                    <Skeleton className="w-full rounded-lg">
+                        <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+                    </Skeleton>
+                    <Skeleton className="w-full rounded-lg">
+                        <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+                    </Skeleton>
+                </>
+            ) : (
+                <Table
+                    aria-label="Example table with client side pagination"
+                    classNames={{
+                        wrapper: 'max-h-[400px]',
+                    }}
+                >
+                    <TableHeader>
+                        <TableColumn key="name">Tiêu đề bài viết</TableColumn>
+                        <TableColumn key="content">Nội dung</TableColumn>
+                        <TableColumn key="category">Thể loại cha</TableColumn>
+                        <TableColumn key="role">Thể loại con</TableColumn>
+                        <TableColumn key="status">Số hiệu</TableColumn>
+                        <TableColumn key="status">Ngày ban hành</TableColumn>
+                        <TableColumn key="status">Ngày tạo</TableColumn>
+                        <TableColumn key="status">Ngày cập nhật</TableColumn>
+                        <TableColumn key="status">Trạng thái</TableColumn>
+                        <TableColumn key="status">Công cụ</TableColumn>
+                    </TableHeader>
+                    <TableBody>
+                        {posts.map((item: any, index: number) => (
+                            <TableRow key={index}>
+                                <TableCell>
+                                    <div className="w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
+                                        {item.title}
                                     </div>
-                                )}
-                                {item.status === 'active' && (
-                                    <div className="select-none w-[140px] text-white flex p-1 items-center justify-center rounded-[50px]  bg-[#2FBD5E]">
-                                        Hoạt động
-                                    </div>
-                                )}
-                            </TableCell>
-                            <TableCell className="flex w-[80px] translate-y-[3px] items-center h-full justify-between gap-3">
-                                <UpdatePost
-                                    oldTitle={item.title}
-                                    oldContent={item.content}
-                                    oldCategory={item.category}
-                                    oldSubCategory={item.subCategory}
-                                    img={'/imgs/avatar.jpg'}
-                                    categories={categories}
-                                    subCategories={subCategories}
-                                />
-                                <ChangeStatus
-                                    type="posts"
-                                    status={item.status}
-                                    refresh={refresh}
-                                    setRefresh={setRefresh}
-                                />
-                                <Tooltip content="Xem chi tiết bài viết">
-                                    <Link href={`/admin/posts/${item.id}`} className="cursor-pointer">
-                                        <BsInfoCircle fontSize={20} />
-                                    </Link>
-                                </Tooltip>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                                </TableCell>
+                                <TableCell className="w-[200px] whitespace-nowrap">
+                                    <Chip size="md" color="primary">
+                                        Nội dung
+                                    </Chip>
+                                </TableCell>
+                                <TableCell className="w-[200px] whitespace-nowrap">{item.category_name}</TableCell>
+                                <TableCell className="w-[200px] whitespace-nowrap">{item.subcategory_name}</TableCell>
+                                <TableCell className="w-[200px] whitespace-nowrap">
+                                    {item.serial_number ? item.serial_number : 'null'}
+                                </TableCell>
+                                <TableCell className="w-[200px] whitespace-nowrap">{item.Issuance_date}</TableCell>
+                                <TableCell className="w-[200px] whitespace-nowrap">
+                                    {formatTime(item.created_at)}
+                                </TableCell>
+                                <TableCell className="w-[200px] whitespace-nowrap">
+                                    {formatTime(item.updated_at)}
+                                </TableCell>
+                                <TableCell className="w-[200px] whitespace-nowrap">
+                                    {item.status === 'inactive' && (
+                                        <div className="select-none w-[140px] text-white flex p-1 items-center justify-center rounded-[50px] bg-[#b1b1b1]">
+                                            Không hoạt động
+                                        </div>
+                                    )}
+                                    {item.status === 'active' && (
+                                        <div className="select-none w-[140px] text-white flex p-1 items-center justify-center rounded-[50px]  bg-[#2FBD5E]">
+                                            Hoạt động
+                                        </div>
+                                    )}
+                                </TableCell>
+                                <TableCell className="w-[200px] flex gap-3 whitespace-nowrap">
+                                    <UpdatePost
+                                        oldTitle={item.title}
+                                        oldContent={item.content}
+                                        oldCategory={item.category}
+                                        oldSubCategory={item.subCategory}
+                                        img={'/imgs/avatar.jpg'}
+                                        categories={categories}
+                                        subCategories={subCategories}
+                                        refresh={refresh}
+                                        setRefresh={setRefresh}
+                                    />
+                                    <ChangeStatus
+                                        type="posts"
+                                        status={item.status}
+                                        refresh={refresh}
+                                        setRefresh={setRefresh}
+                                    />
+                                    <Tooltip content="Xem chi tiết bài viết">
+                                        <Link href={`/admin/posts/${item.id}`} className="cursor-pointer">
+                                            <BsInfoCircle fontSize={20} />
+                                        </Link>
+                                    </Tooltip>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            )}
             {turnBoxCategory && (
                 <div className="fixed z-30 top-[70px] bg-white bottom-0 left-0 right-0">
                     <ManageCategory
