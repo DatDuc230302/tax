@@ -36,7 +36,7 @@ const listPosts: items[] = [
     },
 ];
 
-export default function Posts() {
+export default function Postss() {
     const [active, setActive] = useState<number>(0);
 
     const handleChange = (index: number) => {

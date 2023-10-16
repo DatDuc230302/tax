@@ -1,12 +1,12 @@
-'use client';
+// 'use client';
 
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
 export default function Search() {
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
 
-    const keyword = searchParams.get('keyword');
+    // const keyword = searchParams.get('keyword');
 
-    return <div className="flex flex-col">{keyword}</div>;
+    return <div className="flex flex-col">Dat</div>;
 }

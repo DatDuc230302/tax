@@ -1,3 +1,5 @@
+'use client';
+
 import { AdminContext } from '@/app/admin/layout';
 import {
     Badge,

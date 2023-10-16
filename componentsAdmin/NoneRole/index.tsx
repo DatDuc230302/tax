@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

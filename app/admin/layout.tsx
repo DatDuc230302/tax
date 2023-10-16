@@ -28,7 +28,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const dataContext = { id: idUser, name: nameUser, role: roleUser };
 
     useEffect(() => {
-        document.title = 'Trang quản trị';
+        // document.title = 'Trang quản trị';
         const currentUser: any = JSON.parse(`${sessionStorage.getItem('currentUser')}`);
         const id: string = currentUser && currentUser.id ? currentUser.id : '0';
         const name: string = currentUser && currentUser.name ? currentUser.name : 'Anonymous';

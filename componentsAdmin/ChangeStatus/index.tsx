@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect } from 'react';
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure, Tooltip } from '@nextui-org/react';
 import axios from 'axios';

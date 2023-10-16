@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, ReactElement } from 'react';
 import css from './Sidebar.module.scss';
 import { Button } from '@nextui-org/react';

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import {
     Modal,
@@ -16,8 +18,9 @@ import { BsPencilSquare } from 'react-icons/bs';
 import Image from 'next/image';
 import { isEmail } from '@/functions/isEmail';
 import AlertDialog from '../AlertMessage';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 
-export default function CreateUser({ children }: { children: React.ReactNode }) {
+export default function CreateUser() {
     const [turn, setTurn] = useState<boolean>(false);
 
     const [showImage, setShowImage] = useState<any>(null);
@@ -78,9 +81,11 @@ export default function CreateUser({ children }: { children: React.ReactNode }) 
 
     return (
         <>
-            <div className={'w-full justify-center h-full flex items-center gap-2'} onClick={() => setTurn(true)}>
-                {children}
-            </div>
+            <Button color="primary" variant="flat" onClick={() => setTurn(true)}>
+                <AiOutlinePlusCircle fontSize={20} />
+                Thêm tài khoản
+            </Button>
+
             {alert && <AlertDialog title="Thông báo" content="Email này đã có người sử dụng vui lòng tạo email khác" />}
             <Modal
                 backdrop="blur"
