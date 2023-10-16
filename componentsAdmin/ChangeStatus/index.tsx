@@ -52,7 +52,7 @@ export default function ChangeStatus({
     return (
         <>
             <Tooltip color="primary" content="Thay đổi trạng thái">
-                <div onClick={onOpen} color="primary">
+                <div onClick={onOpen}>
                     <LiaExchangeAltSolid className={'cursor-pointer'} fontSize={20} />
                 </div>
             </Tooltip>

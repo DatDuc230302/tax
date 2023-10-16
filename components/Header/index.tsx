@@ -95,7 +95,7 @@ export default function Header() {
         <header id="header" className="flex flex-col select-none">
             <div className="hidden lg:flex relative h-[135px]">
                 <div className="flex w-full h-[135px] relative">
-                    <Image src={'/imgs/bg_header.jpg'} fill sizes="135px" alt="" />
+                    <Image src={'/imgs/bg_header.jpg'} fill sizes="1000000px" alt="" />
                 </div>
                 <div className="flex absolute w-full h-full">
                     <div className="w-[220px] h-[120px] relative">

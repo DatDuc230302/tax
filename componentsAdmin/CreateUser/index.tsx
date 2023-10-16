@@ -1,17 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-    Modal,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Button,
-    useDisclosure,
-    Input,
-    Tooltip,
-} from '@nextui-org/react';
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Tooltip } from '@nextui-org/react';
 import axios from 'axios';
 import { serverBackend } from '@/server';
 import { BsPencilSquare } from 'react-icons/bs';
@@ -98,10 +88,8 @@ export default function CreateUser() {
                     <ModalHeader className="flex flex-col gap-1">Tạo tài khoản</ModalHeader>
                     <ModalBody>
                         <div className="flex flex-col items-center gap-3">
-                            <div
-                                style={{ width: 120 }}
-                                className="flex relative border-[1px] border-[#ccc] h-[120px] rounded-[50%]"
-                            >
+                            <div className="w-[50px] h-[50px] bg-red-500"></div>
+                            <div className="flex relative border-[1px]  border-[#ccc] h-[120px] rounded-[50%]">
                                 {image && (
                                     <Image
                                         className="rounded-[50%]"
