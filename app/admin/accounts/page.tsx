@@ -65,7 +65,7 @@ export default function Accounts() {
             default:
                 break;
         }
-    }, [searchValue, selection]);
+    }, [searchValue, selection, sortUsers, users]);
 
     useEffect(() => {
         let sortData: object[] = [];
@@ -97,27 +97,21 @@ export default function Accounts() {
         setUsers(sortData);
         setSortUsers(sortData);
         setSearchValue('');
-    }, [sortStatus, sortRole, initialUsers]);
+    }, [sortStatus, sortRole, initialUsers, sortUsers, users]);
 
     useEffect(() => {
         getUser();
     }, [refresh]);
 
-    const getUser = loadingApi(async () => {
+    const getUser = async () => {
         try {
-            const token: any = localStorage.getItem('access_token');
-            const result = await axios.get(`${serverBackend}/api/v1/user`, {
-                headers: {
-                    Accept: 'application / json',
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            const result = await axios.get(`${serverBackend}/api/v1/user`);
             setInitialUsers(result.data.data);
             setUsers(result.data.data);
         } catch (err) {
             alert('Không kết nói được với server');
         }
-    }, setLoading);
+    };
 
     return dataContext.role !== 'root' ? (
         <NoneRole />

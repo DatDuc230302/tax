@@ -89,7 +89,7 @@ export default function Header() {
             default:
                 setActive(0);
         }
-    }, [pathName]);
+    }, [path]);
 
     return (
         <header id="header" className="flex flex-col select-none">

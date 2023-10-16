@@ -24,7 +24,6 @@ import ManageCategory from '@/componentsAdmin/ManageCategory/page';
 import ChangeStatus from '@/componentsAdmin/ChangeStatus';
 import CreatePost from '@/componentsAdmin/CreatePost';
 import UpdatePost from '@/componentsAdmin/UpdatePost';
-import { loadingApi } from '@/functions/loadingApi';
 import { serverBackend } from '@/server';
 import axios from 'axios';
 import { formatTime } from '@/functions/formatTime';
@@ -48,7 +47,7 @@ export default function Posts() {
         getSubCategories();
     }, [refresh]);
 
-    const getPosts = loadingApi(async () => {
+    const getPosts = async () => {
         try {
             const result: any = await axios.get(`${serverBackend}/api/v1/post`);
 
@@ -58,9 +57,9 @@ export default function Posts() {
         } catch {
             console.log('Error');
         }
-    }, setLoading);
+    };
 
-    const getCategories = loadingApi(async () => {
+    const getCategories = async () => {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/category`);
             if (result.data.message === 'success') {
@@ -69,9 +68,9 @@ export default function Posts() {
         } catch {
             console.log('Lỗi nè');
         }
-    }, setLoading);
+    };
 
-    const getSubCategories = loadingApi(async () => {
+    const getSubCategories = async () => {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/subcategory`);
             if (result.data.message === 'success') {
@@ -80,7 +79,7 @@ export default function Posts() {
         } catch {
             console.log('Lỗi nè');
         }
-    }, setLoading);
+    };
 
     return (
         <div className="flex flex-col w-full px-4 py-[20px] gap-4">
