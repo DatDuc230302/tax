@@ -12,9 +12,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <head>
-                <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta>
-            </head>
             <body className={inter.className}>
                 <div className="w-full">{children}</div>
             </body>
