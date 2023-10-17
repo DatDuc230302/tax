@@ -16,7 +16,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className={inter.className}>
                 <div className="w-full">{children}</div>
             </body>
-            <Footer />
         </html>
     );
 }
