@@ -1,6 +1,6 @@
-import DashboardController from '@/components/Admin/DashboardController';
+import DashboardController from '@/components/Admin/DashboardAdmin';
 import React from 'react';
 
-export default function Admin() {
+export default function Page() {
     return <DashboardController />;
 }

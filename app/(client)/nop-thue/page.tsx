@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function Tax() {
+export default function Page() {
     return <div>Tax</div>;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function Uilities() {
+export default function Page() {
     return <div>Uilities</div>;
 }

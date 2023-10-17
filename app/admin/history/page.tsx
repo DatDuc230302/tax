@@ -1,6 +1,6 @@
-import HistoryController from '@/components/Admin/HistoryController';
+import HistoryAdmin from '@/components/Admin/HistoryAdmin';
 import React from 'react';
 
-export default function History() {
-    return <HistoryController />;
+export default function Page() {
+    return <HistoryAdmin />;
 }

@@ -1,6 +1,6 @@
 import LoginAdmin from '@/components/Admin/LoginAdmin';
 import React from 'react';
 
-export default function Login() {
+export default function Page() {
     return <LoginAdmin />;
 }

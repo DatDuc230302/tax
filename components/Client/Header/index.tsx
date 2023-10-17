@@ -141,20 +141,6 @@ export default function Header() {
                     <Search />
                 </div>
             </div>
-            <div className="flex bg-[#F3F3F3] w-full justify-between h-[50px] px-2">
-                <div className="flex h-full items-center gap-1">
-                    <Link href="/">Trang trủ</Link>
-                    {path !== '/' && (
-                        <>
-                            <i className="flex translate-y-[1.5px]">
-                                <BiSolidRightArrow color={'#333333'} fontSize={12} />
-                            </i>
-                            <span>{title}</span>
-                        </>
-                    )}
-                </div>
-                <div className="flex"></div>
-            </div>
         </header>
     );
 }

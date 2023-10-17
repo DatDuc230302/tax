@@ -1,6 +1,6 @@
-import AccountsController from '@/components/Admin/AccountsController';
+import AccountsAdmin from '@/components/Admin/AccountsAdmin';
 import React from 'react';
 
-export default function Accounts() {
-    return <AccountsController />;
+export default function Page() {
+    return <AccountsAdmin />;
 }

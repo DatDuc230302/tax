@@ -20,14 +20,13 @@ import {
     DropdownItem,
     Skeleton,
 } from '@nextui-org/react';
-import { FaTrashAlt } from 'react-icons/fa';
 import axios from 'axios';
 import { serverBackend } from '@/server';
 import { AdminContext } from '@/app/admin/layout';
 import NoneRole from '@/components/Admin/NoneRole';
 import { formatTime } from '@/functions/formatTime';
 
-export default function AccountsController() {
+export default function AccountsAdmin() {
     const [users, setUsers] = useState<object[]>([]);
     const [initialUsers, setInitialUsers] = useState<object[]>([]);
 

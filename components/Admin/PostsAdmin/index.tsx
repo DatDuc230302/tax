@@ -28,7 +28,7 @@ import axios from 'axios';
 import { formatTime } from '@/functions/formatTime';
 import Delete from '../Delete';
 
-export default function PostsController() {
+export default function PostsAdmin() {
     const [posts, setPosts] = useState<object[]>([]);
     const [selection, setSelection] = useState<string>('Tên');
     const [searchValue, setSearchValue] = useState<string>('');

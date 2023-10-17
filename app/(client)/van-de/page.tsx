@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function Prolems() {
+export default function Page() {
     return <div>Prolems</div>;
 }

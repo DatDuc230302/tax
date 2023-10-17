@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function Guide() {
+export default function Page() {
     return <div>Guide</div>;
 }

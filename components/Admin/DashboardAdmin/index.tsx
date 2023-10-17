@@ -12,7 +12,7 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 
-export default function DashboardController() {
+export default function DashboardAdmin() {
     return (
         <Box component="main" className="flex justify-center w-full h-full">
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>

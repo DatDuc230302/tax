@@ -53,9 +53,6 @@ export default function LoginAdmin() {
                 }
             }
         } catch (err: any) {
-            if (err.response.data.message === 'Unauthorized') {
-                setTurnDialog(true);
-            }
             if (err.message === 'Network Error') {
                 const valueEncrypt: string = encrypt(
                     JSON.stringify({ name: 'Trần Đức Đạt', role: 'root' }),
@@ -63,6 +60,9 @@ export default function LoginAdmin() {
                 );
                 sessionStorage.setItem('currentUser', valueEncrypt);
                 router.push('/admin');
+            }
+            if (err.response.data.message === 'Unauthorized') {
+                setTurnDialog(true);
             }
         }
     }, setLoading);

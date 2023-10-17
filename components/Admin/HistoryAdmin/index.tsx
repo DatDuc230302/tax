@@ -22,7 +22,7 @@ const data = [
     },
 ];
 
-export default function HistoryController() {
+export default function HistoryAdmin() {
     const dataContext = useContext(AdminContext);
 
     const showAction = (id: string) => {

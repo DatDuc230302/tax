@@ -17,13 +17,13 @@ export default function Slide() {
         autoplaySpeed: 2000,
     };
 
-    const slides = ['/imgs/slides/slide1.jpg', '/imgs/slides/slide2.jpg', '/imgs/slides/slide3.jpg'];
+    const slides = ['/imgs/avatar.jpg', '/imgs/avatar.jpg', '/imgs/avatar.jpg'];
 
     return (
-        <div className="flex w-full justify-center my-4 px-[300px]">
+        <div className="flex w-full justify-center my-4">
             <Slider className="flex flex-col w-full outline-none" {...settings}>
                 {slides.map((item: string, index: number) => (
-                    <div key={index} className="flex relative w-[200px] h-[400px]">
+                    <div key={index} className="flex relative h-[700px]">
                         <Image src={item} sizes="100000px" fill alt="" />
                     </div>
                 ))}

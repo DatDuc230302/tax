@@ -1,6 +1,6 @@
-import ProfileController from '@/components/Admin/ProfileController';
+import ProfileAdmin from '@/components/Admin/ProfileAdmin';
 import React from 'react';
 
-export default function Profile() {
-    return <ProfileController />;
+export default function Page() {
+    return <ProfileAdmin />;
 }

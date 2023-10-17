@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
 
-export default function News() {
+export default function Page() {
     return <div></div>;
 }

@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import { AdminContext } from '@/app/admin/layout';
 import Image from 'next/image';
 
-export default function ProfileController() {
+export default function ProfileAdmin() {
     const dataContext: any = useContext(AdminContext);
     return (
         <div className="flex w-full mt-4 justify-center">

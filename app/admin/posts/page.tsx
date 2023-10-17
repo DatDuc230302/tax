@@ -1,6 +1,6 @@
-import PostsController from '@/components/Admin/PostsController';
+import PostsAdmin from '@/components/Admin/PostsAdmin';
 import React from 'react';
 
-export default function Posts() {
-    return <PostsController />;
+export default function Page() {
+    return <PostsAdmin />;
 }

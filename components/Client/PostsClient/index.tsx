@@ -36,7 +36,7 @@ const listPosts: items[] = [
     },
 ];
 
-export default function Postss() {
+export default function PostsClient() {
     const [active, setActive] = useState<number>(0);
 
     const handleChange = (index: number) => {
@@ -69,7 +69,7 @@ export default function Postss() {
                         <div className="flex items-center h-full gap-6">
                             <Image src="/imgs/posts/document.png" width={37} height={49} alt="" />
                             <Link
-                                href={`/bai-viet/${1}`}
+                                href={`/bai-dang/${1}`}
                                 className="pr-[10px] flex font-bold cursor-pointer hover:text-red-500 duration-100 ease-linear"
                             >
                                 Luật thuế thu nhập cá nhân số 04/2007/QH12 của Quốc hội Luật thuế thu nhập cá nhân số
