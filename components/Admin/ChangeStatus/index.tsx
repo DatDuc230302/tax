@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure, Tooltip } from '@nextui-org/react';
 import axios from 'axios';
 import { serverBackend } from '@/server';
@@ -7,25 +7,24 @@ import { LiaExchangeAltSolid } from 'react-icons/lia';
 
 export default function ChangeStatus({
     type,
-    status,
     idUser,
+    idPost,
     refresh,
     setRefresh,
 }: {
     type: string;
-    status: string;
     idUser?: string;
-    idArticle?: string;
+    idPost?: string;
     refresh: boolean;
     setRefresh: any;
 }) {
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [turn, setTurn] = useState<boolean>(false);
 
     const handeSubmit = () => {
         switch (type) {
             case 'account':
                 return changeStatusAccount();
-            case 'posts':
+            case 'post':
                 return changeStatusPost();
             default:
                 return;
@@ -46,38 +45,42 @@ export default function ChangeStatus({
     };
 
     const changeStatusPost = async () => {
-        alert('Post đây');
+        try {
+            const result = await axios.post(`${serverBackend}/api/v1/postStatus`, {
+                id: idPost,
+            });
+            if (result.data.message === 'success') {
+                setTurn(false);
+                setRefresh(!refresh);
+            }
+        } catch {}
     };
 
     return (
         <>
             <Tooltip color="primary" content="Thay đổi trạng thái">
-                <div onClick={onOpen}>
+                <div onClick={() => setTurn(true)}>
                     <LiaExchangeAltSolid className={'cursor-pointer'} fontSize={20} />
                 </div>
             </Tooltip>
-            <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+            <Modal backdrop="blur" isOpen={turn} onOpenChange={() => setTurn(false)} placement="top-center">
                 <ModalContent>
-                    {(onClose) => (
-                        <>
-                            <ModalBody className="p-5">
-                                <div className="pt-4 text-[20px]">
-                                    <span className="flex gap-1">
-                                        Xác nhận chuyển trạng thái thành
-                                        <b>{status === 'active' ? 'Không hoạt động' : 'Hoạt động'}</b>
-                                    </span>
-                                </div>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button color="danger" variant="flat" onPress={onClose}>
-                                    Hủy
-                                </Button>
-                                <Button onPress={handeSubmit} color="primary">
-                                    Đồng ý
-                                </Button>
-                            </ModalFooter>
-                        </>
-                    )}
+                    <ModalBody className="p-5 w-max">
+                        <div className="pt-4 text-[20px]">
+                            <span className="flex flex-col gap-1">
+                                Xác nhận chuyển trạng thái thành
+                                <b>{status === 'active' ? 'Không hoạt động' : 'Hoạt động'}</b>
+                            </span>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" variant="flat" onClick={() => setTurn(false)}>
+                            Hủy
+                        </Button>
+                        <Button onClick={() => handeSubmit()} color="primary">
+                            Đồng ý
+                        </Button>
+                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </>

@@ -245,25 +245,15 @@ export default function PostsAdmin() {
                                 <UpdatePost
                                     oldTitle={item.title}
                                     oldContent={item.content}
-                                    oldCategory={item.category}
-                                    oldSubCategory={item.subCategory}
+                                    oldCategory={item.category_name}
+                                    oldSubCategory={item.subcategory_name}
                                     img={'/imgs/avatar.jpg'}
                                     categories={categories}
                                     subCategories={subCategories}
                                     refresh={refresh}
                                     setRefresh={setRefresh}
                                 />
-                                <ChangeStatus
-                                    type="posts"
-                                    status={item.status}
-                                    refresh={refresh}
-                                    setRefresh={setRefresh}
-                                />
-                                <Tooltip content="Xem chi tiết bài viết">
-                                    <Link href={`/admin/posts/${item.id}`} className="cursor-pointer">
-                                        <BsInfoCircle fontSize={20} />
-                                    </Link>
-                                </Tooltip>
+                                <ChangeStatus type="post" idPost={item.id} refresh={refresh} setRefresh={setRefresh} />
                                 <Delete type="post" idPost={item.id} refresh={refresh} setRefresh={setRefresh}></Delete>
                             </TableCell>
                         </TableRow>

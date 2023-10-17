@@ -52,19 +52,23 @@ export default function UpdatePost({
     const [subCategory, setSubCategory] = useState<string>(oldSubCategory);
     const [content, setContent] = useState<string>(oldContent);
     const [require, setRequire] = useState<boolean>(false);
+    const [imageFile, setImageFile] = useState<any>(null);
 
     const handleSubmit = async () => {
-        // if (
-        //     title.length === 0 ||
-        //     category.length === 0 ||
-        //     subCategory.length === 0 ||
-        //     content.length === 0 ||
-        //     image === null
-        // ) {
-        //     setRequire(true);
-        // } else {
-        // }
-        const result = await axios.put(`${serverBackend}/api/v1/post`, {});
+        if (
+            title.length === 0 ||
+            category.length === 0 ||
+            subCategory.length === 0 ||
+            content.length === 0 ||
+            image === null
+        ) {
+            setRequire(true);
+        } else {
+            if (imageFile === null) {
+                console.log('Dat');
+            }
+        }
+        // const result = await axios.put(`${serverBackend}/api/v1/post`, {});
     };
 
     const handleCkeditor = (event: any, editor: any) => {
@@ -78,6 +82,7 @@ export default function UpdatePost({
 
         reader.onloadend = () => {
             setImage(reader.result);
+            setImageFile(file);
         };
 
         if (file) {
@@ -114,17 +119,17 @@ export default function UpdatePost({
                         <div className="flex gap-4 h-[50px]">
                             <Dropdown>
                                 <DropdownTrigger>
-                                    <Button className="h-full w-full px-0 relative">
+                                    <div className="relative w-full h-[50px]">
                                         <Input
                                             label="Thể loại cha"
                                             type="text"
                                             className="flex pb-4 justify-start cursor-pointer"
                                             value={category}
                                         />
-                                        <div className="absolute w-full h-full z-10 flex items-center justify-end px-4">
+                                        <div className="absolute cursor-pointer justify-end top-0 items-center px-4 w-full h-full z-10 flex">
                                             <BsChevronDown fontSize={18} />
                                         </div>
-                                    </Button>
+                                    </div>
                                 </DropdownTrigger>
                                 <DropdownMenu
                                     aria-label="Multiple selection example"
@@ -141,17 +146,17 @@ export default function UpdatePost({
                             </Dropdown>
                             <Dropdown>
                                 <DropdownTrigger>
-                                    <Button className="h-full w-full px-0 relative">
+                                    <div className="relative w-full h-[50px]">
                                         <Input
-                                            label="Thể loại con"
+                                            label="Thể loại cha"
                                             type="text"
                                             className="flex pb-4 justify-start cursor-pointer"
-                                            value={subCategory}
+                                            value={category}
                                         />
-                                        <div className="absolute w-full h-full z-10 flex items-center justify-end px-4">
+                                        <div className="absolute cursor-pointer justify-end top-0 items-center px-4 w-full h-full z-10 flex">
                                             <BsChevronDown fontSize={18} />
                                         </div>
-                                    </Button>
+                                    </div>
                                 </DropdownTrigger>
                                 <DropdownMenu
                                     aria-label="Multiple selection example"
