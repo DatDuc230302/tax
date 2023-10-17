@@ -4,7 +4,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     return (
         <div className="flex flex-col">
             <Header />
-            {children}
+            <div className="flex justify-center">
+                <div className="flex w-[1200px] px-4 flex-col">{children}</div>
+            </div>
             <Footer />
         </div>
     );

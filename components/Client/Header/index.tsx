@@ -92,7 +92,7 @@ export default function Header() {
     }, [path]);
 
     return (
-        <header id="header" className="flex flex-col select-none">
+        <header className="flex flex-col select-none">
             <div className="hidden lg:flex relative h-[135px]">
                 <div className="flex w-full h-[135px] relative">
                     <Image src={'/imgs/bg_header.jpg'} fill sizes="1000000px" alt="" />
@@ -106,39 +106,34 @@ export default function Header() {
                         <span>CHI CỤC THUẾ QUẬN 8 - TP. HỒ CHÍ MINH</span>
                     </div>
                 </div>
-                <div className="absolute top-0 right-0 flex items-center gap-2 text-white px-2 py-1">
-                    <div className="flex items-center gap-2 font-bold hover:underline cursor-pointer">
-                        <BsFillTelephoneFill color="white" />
-                        <span>0957124124</span>
-                    </div>
-                </div>
             </div>
-            <div className="flex justify-between px-[15px] bg-[#0B80FF] w-full h-[70px] lg:h-[42px]">
-                <div className="h-full flex w-full lg:hidden items-center">
-                    <Sidebar>
-                        <FaBars className={'cursor-pointer'} color="white" fontSize={20} />
-                    </Sidebar>
-                    <div className="flex ">
-                        <Image src={'/imgs/logo.png'} width={100} height={100} alt="" />
-                        <h1 className="flex items-center text-white font-bold">Chi cục thuế quận 8</h1>
+            <div className="flex bg-[#0B80FF] justify-center">
+                <div className="flex w-[1200px] px-4 justify-between h-[70px] lg:h-[42px]">
+                    <div className="h-full flex w-full lg:hidden items-center">
+                        <Sidebar>
+                            <FaBars className={'cursor-pointer'} color="white" fontSize={20} />
+                        </Sidebar>
+                        <div className="flex ">
+                            <Image src={'/imgs/logo.png'} width={100} height={100} alt="" />
+                            <h1 className="flex items-center text-white font-bold">Chi cục thuế quận 8</h1>
+                        </div>
                     </div>
-                </div>
-                <div className="hidden lg:flex h-full items-center">
-                    {listNav.map((item: items, index: number) => (
-                        <Link
-                            key={index}
-                            href={`${item.href}`}
-                            className={`${
-                                active === index && `bg-[#52b6ff]`
-                            } text-white select-none h-full items-center px-4 hover:bg-[#52B6FF] duration-100 ease-linear flex shrink-0 cursor-pointer font-bold`}
-                        >
-                            {item.icon ? item.icon : item.title}
-                        </Link>
-                    ))}
-                </div>
-
-                <div className="hidden lg:flex">
-                    <Search />
+                    <div className="hidden lg:flex h-full items-center">
+                        {listNav.map((item: items, index: number) => (
+                            <Link
+                                key={index}
+                                href={`${item.href}`}
+                                className={`${
+                                    active === index && `bg-[#52b6ff]`
+                                } text-white select-none h-full items-center px-4 hover:bg-[#52B6FF] duration-100 ease-linear flex shrink-0 cursor-pointer font-bold`}
+                            >
+                                {item.icon ? item.icon : item.title}
+                            </Link>
+                        ))}
+                    </div>
+                    <div className="hidden lg:flex">
+                        <Search />
+                    </div>
                 </div>
             </div>
         </header>
