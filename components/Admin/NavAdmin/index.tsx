@@ -18,7 +18,7 @@ const listItems: items[] = [
     {
         icon: <AiFillDashboard fontSize={20} />,
         title: 'Bảng điều khiển',
-        href: '/admin/dashboard',
+        href: '/admin',
     },
     {
         icon: <BsFillPostcardFill fontSize={20} />,

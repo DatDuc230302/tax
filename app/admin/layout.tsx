@@ -6,36 +6,44 @@ import CurrentUser from '@/components/Admin/CurrentUser';
 import { serverBackend } from '@/server';
 import axios from 'axios';
 import React, { useEffect, useState, createContext } from 'react';
+import { decrypt } from '@/functions/crypto';
 
 interface typeContext {
     id: string;
     name: string;
     role: string;
+    token: string;
 }
 
 export const AdminContext = createContext<typeContext>({
     id: '',
     name: '',
     role: '',
+    token: '',
 });
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const [idUser, setIdUser] = useState<string>('');
     const [nameUser, setNameUser] = useState<string>('');
     const [roleUser, setRoleUser] = useState<string>('');
+    const [tokenUser, setTokenUser] = useState<string>('');
 
     // Truyền dữ liệu thông qua đây
-    const dataContext = { id: idUser, name: nameUser, role: roleUser };
+    const dataContext = { id: idUser, name: nameUser, role: roleUser, token: tokenUser };
 
     useEffect(() => {
-        // document.title = 'Trang quản trị';
-        const currentUser: any = JSON.parse(`${sessionStorage.getItem('currentUser')}`);
+        document.title = 'Trang quản trị';
+        const valueDecrypt: any = sessionStorage.getItem('currentUser');
+        const currentUser: any =
+            sessionStorage.getItem('currentUser') && JSON.parse(decrypt(valueDecrypt, 'DucDat2303'));
         const id: string = currentUser && currentUser.id ? currentUser.id : '0';
         const name: string = currentUser && currentUser.name ? currentUser.name : 'Anonymous';
         const role: string = currentUser && currentUser.role ? currentUser.role : 'default';
+        const token: string = currentUser && currentUser.token ? currentUser.token : 'Null';
         setIdUser(String(id));
         setNameUser(String(name));
         setRoleUser(String(role));
+        setTokenUser(token);
     }, []);
 
     const renderUI = () => {

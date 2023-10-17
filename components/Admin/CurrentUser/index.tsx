@@ -11,7 +11,6 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from '@nextui-org/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useContext } from 'react';
@@ -29,14 +28,13 @@ export default function CurrentUser() {
 
     const logout = async () => {
         try {
-            const token: any = sessionStorage.getItem('access_token');
             const result = await axios.post(
                 `${serverBackend}/api/v1/logout`,
                 {},
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${dataContext.token}`,
                     },
                 },
             );
@@ -44,8 +42,11 @@ export default function CurrentUser() {
                 sessionStorage.removeItem('currentUser');
                 router.push('/login');
             }
-        } catch {
-            console.log('Error');
+        } catch (err: any) {
+            if (err.message === 'Network Error') {
+                sessionStorage.removeItem('currentUser');
+                router.push('/login');
+            }
         }
     };
 
