@@ -63,7 +63,7 @@ export default function PostsClient() {
     };
 
     return (
-        <div className="flex flex-col mt-6 min-h-[700px]">
+        <div className="flex flex-col mt-6 h-[1000px]">
             <div className=" flex flex-col gap-2 items-center lg:flex-row justify-between">
                 <h2 className="text-[30px]">{title}</h2>
                 <div className="flex gap-2">
