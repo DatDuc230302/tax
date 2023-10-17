@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import { nextui } from '@nextui-org/react';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 const config: Config = {
     content: [
@@ -10,6 +11,12 @@ const config: Config = {
     ],
     theme: {
         extend: {},
+        screens: {
+            xs: '475px',
+            md1: '1270px',
+            '3xl': '2200px',
+            ...defaultTheme.screens,
+        },
     },
     darkMode: 'class',
     plugins: [nextui()],

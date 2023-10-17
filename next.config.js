@@ -4,7 +4,9 @@ const nextConfig = {
         domains: [''],
     },
     server: {
-        http: true,
+        http: {
+            port: 80,
+        },
     },
 };
 
