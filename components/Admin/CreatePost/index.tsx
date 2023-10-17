@@ -26,6 +26,7 @@ import Image from 'next/image';
 import { isDate } from '@/functions/isDate';
 import axios from 'axios';
 import { AdminContext } from '@/app/admin/layout';
+import SnackbarMessage from '@/components/Common/SnackbarMessage';
 
 export default function CreatePost({
     refresh,
@@ -61,6 +62,8 @@ export default function CreatePost({
     const [require, setRequire] = useState<boolean>(false);
     // State nối bảng giữ subcategories và categories
     const [showSubCategories, setShowSubCategories] = useState<object[]>(subCategories);
+    // Trạng thái sau khi thêm bài viết
+    const [status, setStatus] = useState<string>('');
 
     useEffect(() => {
         if (category.length === 0) {
@@ -97,6 +100,7 @@ export default function CreatePost({
                 if (result.data.message === 'success') {
                     setTurn(false);
                     setRefresh(!refresh);
+                    setStatus('success');
                 }
             }
         } catch {
@@ -127,6 +131,7 @@ export default function CreatePost({
 
     return (
         <>
+            {status === 'success' && <SnackbarMessage type={1} title="Thêm bài đăng thành công" />}
             <Button
                 onClick={() => setTurn(true)}
                 className="shrink-0 lg:w-[180px] w-[100%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e] p-0"

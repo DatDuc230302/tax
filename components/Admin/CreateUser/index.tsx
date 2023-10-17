@@ -7,7 +7,7 @@ import { serverBackend } from '@/server';
 import { BsPencilSquare } from 'react-icons/bs';
 import Image from 'next/image';
 import { isEmail } from '@/functions/isEmail';
-import AlertDialog from '../AlertMessage';
+import AlertDialog from '../../Common/AlertMessage';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 export default function CreateUser() {

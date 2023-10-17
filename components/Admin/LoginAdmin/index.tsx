@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation';
 import { loadingApi } from '@/functions/loadingApi';
 import { serverBackend } from '@/server';
 import { encrypt } from '@/functions/crypto';
-import AlertDialog from '../AlertMessage';
+import AlertDialog from '../../Common/AlertMessage';
 import { isEmail } from '@/functions/isEmail';
 
 export default function LoginAdmin() {

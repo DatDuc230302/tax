@@ -293,9 +293,12 @@ export default function AccountsController() {
                                                         refresh={refresh}
                                                         setRefresh={setRefresh}
                                                     />
-                                                    <Delete type="account" idUser={item.id}>
-                                                        <FaTrashAlt fontSize={20} />
-                                                    </Delete>
+                                                    <Delete
+                                                        type="account"
+                                                        idUser={item.id}
+                                                        refresh={refresh}
+                                                        setRefresh={refresh}
+                                                    />
                                                 </div>
                                             )}
                                         </TableCell>
