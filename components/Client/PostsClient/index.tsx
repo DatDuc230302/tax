@@ -96,7 +96,7 @@ export default function PostsClient() {
                             </Link>
                         </div>
                         <div className="flex justify-between md:justify-start lg:justify-start gap-10 flex-shrink-0 ">
-                            <div className="flex flex-col">
+                            <div className="flex flex-col w-[200px] whitespace-nowrap">
                                 <span>Số hiệu:</span>
                                 <span className="text-red-500">{item.serial_number}</span>
                             </div>

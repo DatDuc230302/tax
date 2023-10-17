@@ -6,7 +6,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             <div className="flex flex-col w-[1200px] px-4">
                 <Header />
                 {children}
-                <Footer />
             </div>
         </div>
     );

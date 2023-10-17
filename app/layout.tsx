@@ -1,3 +1,4 @@
+import Footer from '@/components/Client/Footer';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className={inter.className}>
                 <div className="w-full">{children}</div>
             </body>
+            <Footer />
         </html>
     );
 }

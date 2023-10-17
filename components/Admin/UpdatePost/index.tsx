@@ -18,10 +18,11 @@ import {
 } from '@nextui-org/react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { serverImages } from '@/server';
+import { serverBackend, serverImages } from '@/server';
 import Image from 'next/image';
 import { HiMiniPencilSquare } from 'react-icons/hi2';
 import { BsChevronDown } from 'react-icons/bs';
+import axios from 'axios';
 
 export default function UpdatePost({
     oldTitle,
@@ -52,25 +53,18 @@ export default function UpdatePost({
     const [content, setContent] = useState<string>(oldContent);
     const [require, setRequire] = useState<boolean>(false);
 
-    const handleSubmit = () => {
-        if (
-            title.length === 0 ||
-            category.length === 0 ||
-            subCategory.length === 0 ||
-            content.length === 0 ||
-            image === null
-        ) {
-            setRequire(true);
-        } else {
-            const data: object = {
-                User_id: '1',
-                Images: '2',
-                Title: title,
-                Category: category,
-                SubCategory: subCategory,
-                Content: content,
-            };
-        }
+    const handleSubmit = async () => {
+        // if (
+        //     title.length === 0 ||
+        //     category.length === 0 ||
+        //     subCategory.length === 0 ||
+        //     content.length === 0 ||
+        //     image === null
+        // ) {
+        //     setRequire(true);
+        // } else {
+        // }
+        const result = await axios.put(`${serverBackend}/api/v1/post`, {});
     };
 
     const handleCkeditor = (event: any, editor: any) => {
