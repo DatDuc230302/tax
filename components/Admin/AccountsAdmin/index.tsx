@@ -107,6 +107,8 @@ export default function AccountsAdmin() {
         } catch (err) {}
     };
 
+    
+
     return dataContext.role !== 'root' ? (
         <NoneRole />
     ) : (
@@ -191,7 +193,7 @@ export default function AccountsAdmin() {
                             </Dropdown>
                         </div>
                         <div className="flex w-full gap-3 justify-between">
-                            <CreateUser />
+                            <CreateUser refresh={refresh} setRefresh={setRefresh} />
                         </div>
                     </div>
                 </div>
@@ -236,15 +238,6 @@ export default function AccountsAdmin() {
                                 {users.map((item: any, index: number) => (
                                     <TableRow key={index}>
                                         <TableCell className="flex w-max flex-nowrap items-center gap-2">
-                                            {/* <div className="flex relative w-[50px] h-[50px] rounded-[50%]">
-                                                <Image
-                                                    src={''}
-                                                    sizes="50px"
-                                                    fill={true}
-                                                    className="rounded-[50%]"
-                                                    alt=""
-                                                />
-                                            </div> */}
                                             {item.name}
                                         </TableCell>
                                         <TableCell>{item.email}</TableCell>
@@ -288,6 +281,7 @@ export default function AccountsAdmin() {
                                                     <ChangeStatus
                                                         type="account"
                                                         idUser={item.id}
+                                                        status={item.status}
                                                         refresh={refresh}
                                                         setRefresh={setRefresh}
                                                     />

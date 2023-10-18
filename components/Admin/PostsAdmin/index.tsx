@@ -253,7 +253,13 @@ export default function PostsAdmin() {
                                     refresh={refresh}
                                     setRefresh={setRefresh}
                                 />
-                                <ChangeStatus type="post" idPost={item.id} refresh={refresh} setRefresh={setRefresh} />
+                                <ChangeStatus
+                                    type="post"
+                                    idPost={item.id}
+                                    status={item.status}
+                                    refresh={refresh}
+                                    setRefresh={setRefresh}
+                                />
                                 <Delete type="post" idPost={item.id} refresh={refresh} setRefresh={setRefresh}></Delete>
                             </TableCell>
                         </TableRow>

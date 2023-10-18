@@ -10,7 +10,7 @@ import { isEmail } from '@/functions/isEmail';
 import AlertDialog from '../../Common/AlertMessage';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 
-export default function CreateUser() {
+export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; setRefresh: any }) {
     const [turn, setTurn] = useState<boolean>(false);
 
     const [showImage, setShowImage] = useState<any>(null);
@@ -43,6 +43,8 @@ export default function CreateUser() {
                 formData.append('password', pass);
                 const result: any = await axios.post(`${serverBackend}/api/v1/register`, formData);
                 if (result.data.status === 'success') {
+                    setRefresh(!refresh);
+                    setTurn(false);
                 } else {
                 }
             }

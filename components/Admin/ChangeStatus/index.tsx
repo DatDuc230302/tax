@@ -9,12 +9,14 @@ export default function ChangeStatus({
     type,
     idUser,
     idPost,
+    status,
     refresh,
     setRefresh,
 }: {
     type: string;
     idUser?: string;
     idPost?: string;
+    status: string;
     refresh: boolean;
     setRefresh: any;
 }) {
@@ -38,6 +40,7 @@ export default function ChangeStatus({
             const result = await axios.post(`${serverBackend}/api/v1/userStatus`, formData);
             if (result.data.message === 'success') {
                 setRefresh(!refresh);
+                setTurn(false);
             }
         } catch {
             console.log('Lỗi');

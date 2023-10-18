@@ -39,6 +39,7 @@ export default function Delete({
         if (result.data.message === 'success') {
             setStatus('success');
             setRefresh(!refresh);
+            setTurn(false);
         }
     };
 
