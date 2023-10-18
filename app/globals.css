@@ -30,30 +30,51 @@ input[type='number'] {
     -moz-appearance: textfield;
 }
 
-body {
-    font-family: 'Open Sans', sans-serif !important;
-}
-
 @font-face {
     font-family: 'Open Sans';
-    src: url('./../public/fonts/OpenSans-ExtraBold.ttf');
+    src: url('./../public/fonts/openSans/OpenSans-ExtraBold.ttf');
     font-weight: 800;
 }
 
 @font-face {
     font-family: 'Open Sans';
-    src: url('./../public/fonts/OpenSans-Bold.ttf');
+    src: url('./../public/fonts/openSans/OpenSans-Bold.ttf');
     font-weight: 700;
 }
 
 @font-face {
     font-family: 'Open Sans';
-    src: url('./../public/fonts/OpenSans-Regular.ttf');
+    src: url('./../public/fonts/openSans/OpenSans-Regular.ttf');
     font-weight: 400;
 }
 
 @font-face {
     font-family: 'Open Sans';
-    src: url('./../public/fonts/OpenSans-Light.ttf');
+    src: url('./../public/fonts/openSans/OpenSans-Light.ttf');
+    font-weight: 300;
+}
+/* Merriweather */
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('./../public/fonts/merriweather/Merriweather-Black.ttf');
+    font-weight: 900;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('./../public/fonts/merriweather/Merriweather-Bold.ttf');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('./../public/fonts/merriweather/Merriweather-Regular.ttf');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('./../public/fonts/merriweather/Merriweather-Light.ttf');
     font-weight: 300;
 }

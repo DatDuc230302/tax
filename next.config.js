@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: [''],
+        domains: ['media.hcmtax.gov.vn'],
     },
     server: {
         port: 80,

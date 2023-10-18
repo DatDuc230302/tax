@@ -1,0 +1,21 @@
+.hover {
+    transition: all linear 0.2s;
+    cursor: pointer;
+    &:hover {
+        .img {
+            transform: scale(1.1);
+        }
+        .title {
+            color: red;
+        }
+    }
+}
+
+.img {
+    transition: all linear 0.2s;
+}
+
+.title {
+    transition: all linear 0.2s;
+    font-weight: bold;
+}

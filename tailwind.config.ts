@@ -13,6 +13,8 @@ const config: Config = {
         extend: {
             fontFamily: {
                 sansSerif: ['sans-serif'],
+                openSans: ['Open Sans'],
+                merriweather: ['Merriweather'],
             },
         },
         screens: {

@@ -47,9 +47,9 @@ const list2: items[] = [
 
 export default function Service() {
     return (
-        <div className="flex w-full flex-col select-none">
+        <div className="flex w-full flex-col select-none my-2">
             <div className="flex w-full justify-center text-[30px]">
-                <h3 className="border-b-[3px] border-[#E64558] pb-1">Dịch vụ công</h3>
+                <h3 className="border-b-[3px] border-[#E64558] pb-1 font-merriweather font-bold">DỊCH VỤ CÔNG</h3>
             </div>
             <div className="w-full gap-[30px] mt-[20px] justify-center flex flex-wrap lg:flex lg:flex-nowrap">
                 {list1.map((item: items, index: number) => (

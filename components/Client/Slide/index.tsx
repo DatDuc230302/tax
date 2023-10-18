@@ -24,7 +24,7 @@ export default function Slide() {
             <Slider className="flex md1:w-full md:w-[600px] w-[400px] flex-col items-center" {...settings}>
                 {slides.map((item: string, index: number) => (
                     <div key={index} className="flex relative md1:w-full md1:h-[700px] md:h-[500px] h-[400px]">
-                        <Image src={item} sizes="100000px" fill alt="" />
+                        <Image className="object-cover" src={item} sizes="100000px" fill alt="" />
                     </div>
                 ))}
             </Slider>
