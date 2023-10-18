@@ -46,7 +46,6 @@ export default function Document() {
     const getPosts = async () => {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/post`);
-            console.log(result);
             if (result.data.message === 'success') {
                 setPosts(result.data.data);
                 setTitle(result.data.data[0].category_name);

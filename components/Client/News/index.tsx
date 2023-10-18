@@ -1,10 +1,15 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import css from './News.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+import axios from 'axios';
+import { serverBackend } from '@/server';
 
 export default function News() {
-    const news = [
+    const [news, setNews] = useState<object[]>([]);
+    const newsV = [
         {
             id: 1,
             img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202308/Images/782c7a22-ed07-4d92-afc8-5848b3a861a2-20230823023746-e.jpeg',
@@ -31,6 +36,22 @@ export default function News() {
             title: 'Triển khai liên thông đăng ký kinh doanh và đăng ký thuế đối với hộ kinh doanh theo',
         },
     ];
+
+    useEffect(() => {
+        getNews();
+    }, []);
+
+    const getNews = async () => {
+        try {
+            const result = await axios.get(`${serverBackend}/api/v1/post`);
+            if (result.data.message === 'success') {
+                setNews(result.data.data);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     return (
         <div className="flex justify-center">
             <div className="flex w-[1200px] flex-col my-2 font-merriweather">
@@ -54,7 +75,9 @@ export default function News() {
                                 >
                                     <div className="flex relative w-full overflow-hidden h-[300px]">
                                         <Image
-                                            src={item.img}
+                                            src={
+                                                'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202308/Images/infographic-cv-2749-20230801030536-e.jpeg'
+                                            }
                                             alt=""
                                             className={`${css.img} object-cover`}
                                             fill
