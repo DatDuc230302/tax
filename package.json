@@ -10,8 +10,6 @@
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^40.0.0",
-        "@ckeditor/ckeditor5-clipboard": "^40.0.0",
-        "@ckeditor/ckeditor5-editor-classic": "^40.0.0",
         "@ckeditor/ckeditor5-react": "^6.1.0",
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
@@ -19,6 +17,7 @@
         "@mui/material": "^5.14.12",
         "@nextui-org/react": "^2.1.13",
         "axios": "^1.5.1",
+        "ckeditor5-custom-build": "file:ckeditor5",
         "framer-motion": "^10.16.4",
         "next": "latest",
         "react": "latest",

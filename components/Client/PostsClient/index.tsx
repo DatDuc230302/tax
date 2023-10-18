@@ -55,10 +55,14 @@ export default function PostsClient() {
     }, []);
 
     const getPosts = async () => {
-        const result = await axios.get(`${serverBackend}/api/v1/post`);
-        if (result.data.message === 'success') {
-            setPosts(result.data.data);
-            setTitle(result.data.data[0].category_name);
+        try {
+            const result = await axios.get(`${serverBackend}/api/v1/post`);
+            if (result.data.message === 'success') {
+                setPosts(result.data.data);
+                setTitle(result.data.data[0].category_name);
+            }
+        } catch (err) {
+            console.log(err);
         }
     };
 

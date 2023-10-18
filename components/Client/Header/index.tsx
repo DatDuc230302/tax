@@ -97,13 +97,15 @@ export default function Header() {
                 <div className="flex w-full h-[135px] relative">
                     <Image src={'/imgs/bg_header.jpg'} fill sizes="1000000px" alt="" />
                 </div>
-                <div className="flex absolute w-full h-full">
-                    <div className="w-[220px] h-[120px] relative">
-                        <Image src={'/imgs/logo.png'} fill sizes="220px" alt="" />
-                    </div>
-                    <div className="hidden lg:flex h-full justify-center flex-col text-white font-bold text-[26px]">
-                        <span>CỔNG THÔNG TIN ĐIỆN TỬ</span>
-                        <span>CHI CỤC THUẾ QUẬN 8 - TP. HỒ CHÍ MINH</span>
+                <div className="flex absolute w-full justify-center h-full">
+                    <div className="flex w-[1283px]">
+                        <div className="w-[220px] h-[120px] relative">
+                            <Image src={'/imgs/logo.png'} fill sizes="100000px" alt="" />
+                        </div>
+                        <div className="hidden lg:flex h-full justify-center flex-col text-white font-bold text-[26px]">
+                            <span>CỔNG THÔNG TIN ĐIỆN TỬ</span>
+                            <span>CHI CỤC THUẾ QUẬN 8 - TP. HỒ CHÍ MINH</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,8 +115,10 @@ export default function Header() {
                         <Sidebar>
                             <FaBars className={'cursor-pointer'} color="white" fontSize={20} />
                         </Sidebar>
-                        <div className="flex ">
-                            <Image src={'/imgs/logo.png'} width={100} height={100} alt="" />
+                        <div className="flex">
+                            <div className="h-[100px] relative">
+                                <Image src={'/imgs/logo.png'} sizes="100000px" fill alt="" />
+                            </div>
                             <h1 className="flex items-center text-white font-bold">Chi cục thuế quận 8</h1>
                         </div>
                     </div>

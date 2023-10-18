@@ -30,7 +30,8 @@
         "components/CreateArticle/index.tsx",
         "app/api/CustomUploadAdapter.js",
         "components/CreateArticle/Upload.js",
-        "app/api/upload.js"
+        "app/api/upload.js",
+        "components/Admin/CreatePost/index.js"
     ],
     "exclude": ["node_modules"]
 }

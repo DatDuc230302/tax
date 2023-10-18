@@ -10,7 +10,6 @@ import {
     ModalFooter,
     Button,
     Input,
-    Select,
     SelectItem,
     Dropdown,
     DropdownTrigger,
@@ -18,8 +17,6 @@ import {
     DropdownItem,
 } from '@nextui-org/react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { serverBackend } from '@/server';
 import { BiUpload } from 'react-icons/bi';
 import Image from 'next/image';
@@ -27,6 +24,8 @@ import { isDate } from '@/functions/isDate';
 import axios from 'axios';
 import { AdminContext } from '@/app/admin/layout';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 export default function CreatePost({
     refresh,
@@ -128,6 +127,44 @@ export default function CreatePost({
             setImage(null);
         }
     };
+
+    // const editorConfiguration = {
+    //     toolbar: {
+    //         items: [
+    //             'heading',
+    //             '|',
+    //             'bold',
+    //             'italic',
+    //             'link',
+    //             'bulletedList',
+    //             'numberedList',
+    //             '|',
+    //             'outdent',
+    //             'indent',
+    //             '|',
+    //             'imageUpload',
+    //             'blockQuote',
+    //             'insertTable',
+    //             'mediaEmbed',
+    //             'undo',
+    //             'redo',
+    //         ],
+    //     },
+    //     language: 'en',
+    //     image: {
+    //         toolbar: [
+    //             'imageTextAlternative',
+    //             'toggleImageCaption',
+    //             'imageStyle:inline',
+    //             'imageStyle:block',
+    //             'imageStyle:side',
+    //             'linkImage',
+    //         ],
+    //     },
+    //     table: {
+    //         contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties'],
+    //     },
+    // };
 
     return (
         <>
@@ -243,14 +280,15 @@ export default function CreatePost({
                             </div>
                         </div>
                         <CKEditor
+                            // config={editorConfiguration}
+                            data={content}
+                            onChange={handleCkeditor}
+                            editor={ClassicEditor}
                             config={{
                                 ckfinder: {
                                     uploadUrl: `${serverBackend}/api/v1/upload-images`,
                                 },
                             }}
-                            data={content}
-                            onChange={handleCkeditor}
-                            editor={ClassicEditor}
                         />
                         <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                     </ModalBody>

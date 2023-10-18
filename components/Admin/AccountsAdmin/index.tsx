@@ -287,7 +287,6 @@ export default function AccountsAdmin() {
                                                 <div className="flex gap-2">
                                                     <ChangeStatus
                                                         type="account"
-                                                        status={item.status}
                                                         idUser={item.id}
                                                         refresh={refresh}
                                                         setRefresh={setRefresh}
