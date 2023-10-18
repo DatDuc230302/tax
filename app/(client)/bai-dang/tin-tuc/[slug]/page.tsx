@@ -24,8 +24,6 @@ export default function Page({ params }: { params: { slug: string } }) {
         }
     };
 
-    console.log(post);
-
     return (
         <div className="w-full flex justify-center mt-5">
             <div className="w-[1200px] flex flex-col gap-3y gap-3">

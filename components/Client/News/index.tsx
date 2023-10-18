@@ -92,7 +92,8 @@ export default function News() {
                         {news.map(
                             (item: any, index: number) =>
                                 index > 0 && (
-                                    <div
+                                    <Link
+                                        href={`/bai-dang/tin-tuc/${item.id}`}
                                         key={index}
                                         className={`${css.hover} items-center flex w-full h-max p-4 gap-3 bg-[#F9F9F9]`}
                                     >
@@ -108,10 +109,9 @@ export default function News() {
                                             />
                                         </div>
                                         <h3 className={`${css.title}  text-[16px] line-clamp-2 max-w-[400px]`}>
-                                            Triển khai liên thông đăng ký kinh doanh và đăng ký thuế đối với hộ kinh
-                                            doanh theo
+                                            {item.title}
                                         </h3>
-                                    </div>
+                                    </Link>
                                 ),
                         )}
                     </div>
