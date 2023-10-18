@@ -22,10 +22,6 @@ export const listNav: items[] = [
         href: '/',
     },
     {
-        title: 'TIN TỨC',
-        href: '/tin-tuc',
-    },
-    {
         title: 'NỘP THUẾ',
         href: '/nop-thue',
     },
@@ -110,12 +106,12 @@ export default function Header() {
                 </div>
             </div>
             <div className="flex bg-[#0B80FF] justify-center">
-                <div className="flex w-[1200px] px-4 justify-between h-[70px] lg:h-[42px]">
+                <div className="flex w-[1200px] justify-between h-[70px] lg:h-[42px]">
                     <div className="h-full flex w-full lg:hidden items-center">
                         <Sidebar>
                             <FaBars className={'cursor-pointer'} color="white" fontSize={20} />
                         </Sidebar>
-                        <div className="flex">
+                        <div className="flex gap-3">
                             <div className="h-[100px] relative">
                                 <Image src={'/imgs/logo.png'} sizes="100000px" fill alt="" />
                             </div>

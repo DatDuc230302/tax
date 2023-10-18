@@ -47,55 +47,57 @@ const list2: items[] = [
 
 export default function Service() {
     return (
-        <div className="flex w-full flex-col select-none my-2">
-            <div className="flex w-full justify-center text-[30px]">
-                <h3 className="border-b-[3px] border-[#E64558] pb-1 font-merriweather font-bold">DỊCH VỤ CÔNG</h3>
-            </div>
-            <div className="w-full gap-[30px] mt-[20px] justify-center flex flex-wrap lg:flex lg:flex-nowrap">
-                {list1.map((item: items, index: number) => (
-                    <div
-                        key={index}
-                        className={`${css.itemImg} w-[100%] md:w-[40%] flex flex-col relative lg:w-[25%] cursor-pointer`}
-                    >
-                        <div className="py-[40px] z-10 gap-4 flex flex-col px-2">
-                            <div className="flex justify-center">
-                                <Image
-                                    className="flex w-[55px] h-[55px]"
-                                    src={item.img}
-                                    width={55}
-                                    height={55}
-                                    alt=""
-                                />
+        <div className="w-full justify-center flex bg-[#F3F3F3] py-4">
+            <div className="flex w-[1200px] flex-col select-none my-2 ">
+                <div className="flex w-full justify-center text-[30px]">
+                    <h3 className="border-b-[3px] border-[#E64558] pb-1 font-merriweather font-bold">DỊCH VỤ CÔNG</h3>
+                </div>
+                <div className="w-full gap-[30px] mt-[20px] justify-center flex flex-wrap lg:flex lg:flex-nowrap">
+                    {list1.map((item: items, index: number) => (
+                        <div
+                            key={index}
+                            className={`${css.itemImg} w-[100%] md:w-[40%] flex flex-col relative lg:w-[25%] cursor-pointer`}
+                        >
+                            <div className="py-[40px] z-10 gap-4 flex flex-col px-2">
+                                <div className="flex justify-center">
+                                    <Image
+                                        className="flex w-[55px] h-[55px]"
+                                        src={item.img}
+                                        width={55}
+                                        height={55}
+                                        alt=""
+                                    />
+                                </div>
+                                <h3 className="text-white text-[21px] text-center">{item.title}</h3>
+                                <h4 className="text-white text-[14px] text-center">{item.title}</h4>
                             </div>
-                            <h3 className="text-white text-[21px] text-center">{item.title}</h3>
-                            <h4 className="text-white text-[14px] text-center">{item.title}</h4>
+                            <div className={`${css.itemSub}`}></div>
                         </div>
-                        <div className={`${css.itemSub}`}></div>
-                    </div>
-                ))}
-            </div>
-            <div className="w-full gap-[30px] mt-[20px] justify-center flex flex-wrap lg:flex lg:flex-nowrap">
-                {list2.map((item: items, index: number) => (
-                    <div
-                        key={index}
-                        className={`${css.itemImg} w-[100%] md:w-[40%] flex flex-col relative lg:w-[25%] cursor-pointer`}
-                    >
-                        <div className="py-[40px] z-10 gap-4 flex flex-col px-2">
-                            <div className="flex justify-center">
-                                <Image
-                                    className="flex w-[55px] h-[55px]"
-                                    src={item.img}
-                                    width={55}
-                                    height={55}
-                                    alt=""
-                                />
+                    ))}
+                </div>
+                <div className="w-full gap-[30px] mt-[20px] justify-center flex flex-wrap lg:flex lg:flex-nowrap">
+                    {list2.map((item: items, index: number) => (
+                        <div
+                            key={index}
+                            className={`${css.itemImg} w-[100%] md:w-[40%] flex flex-col relative lg:w-[25%] cursor-pointer`}
+                        >
+                            <div className="py-[40px] z-10 gap-4 flex flex-col px-2">
+                                <div className="flex justify-center">
+                                    <Image
+                                        className="flex w-[55px] h-[55px]"
+                                        src={item.img}
+                                        width={55}
+                                        height={55}
+                                        alt=""
+                                    />
+                                </div>
+                                <h3 className="text-white text-[21px] text-center">{item.title}</h3>
+                                <h4 className="text-white text-[14px] text-center">{item.title}</h4>
                             </div>
-                            <h3 className="text-white text-[21px] text-center">{item.title}</h3>
-                            <h4 className="text-white text-[14px] text-center">{item.title}</h4>
+                            <div className={`${css.itemSub}`}></div>
                         </div>
-                        <div className={`${css.itemSub}`}></div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );

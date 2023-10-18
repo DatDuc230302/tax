@@ -2,8 +2,6 @@
 
 import React, { useState, ReactElement } from 'react';
 import css from './Sidebar.module.scss';
-import { Button } from '@nextui-org/react';
-import { FaUser } from 'react-icons/fa';
 import { listNav } from '../Header';
 import { AiOutlineClose } from 'react-icons/ai';
 import Search from '../Search';
