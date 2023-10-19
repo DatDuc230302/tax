@@ -21,6 +21,7 @@ import { serverBackend } from '@/server';
 import { encrypt } from '@/functions/crypto';
 import AlertDialog from '../../Common/AlertMessage';
 import { isEmail } from '@/functions/isEmail';
+import SnackbarMessage from '@/components/Common/SnackbarMessage';
 
 export default function LoginAdmin() {
     const [email, setEmail] = useState<string>('');
@@ -29,6 +30,7 @@ export default function LoginAdmin() {
     const [loading, setLoading] = useState<boolean>(false);
     const [require, setRequire] = useState<boolean>(false);
     const [turnDialog, setTurnDialog] = useState<boolean>(false);
+    const [networkError, setNetworkError] = useState<boolean>(false);
     const router = useRouter();
 
     const handleSubmit = loadingApi(async () => {
@@ -54,15 +56,17 @@ export default function LoginAdmin() {
             }
         } catch (err: any) {
             if (err.message === 'Network Error') {
+                setNetworkError(true);
                 const valueEncrypt: string = encrypt(
                     JSON.stringify({ name: 'Trần Đức Đạt', role: 'root' }),
                     'DucDat2303',
                 );
                 sessionStorage.setItem('currentUser', valueEncrypt);
                 router.push('/admin');
-            }
-            if (err.response.data.message === 'Unauthorized') {
-                setTurnDialog(true);
+            } else {
+                if (err.response.data.message === 'Unauthorized') {
+                    setTurnDialog(true);
+                }
             }
         }
     }, setLoading);
@@ -73,6 +77,7 @@ export default function LoginAdmin() {
 
     return (
         <div>
+            {networkError && <SnackbarMessage title="Không kết nối được với máy chủ" type={4} />}
             <Modal backdrop="blur" hideCloseButton isOpen placement="top-center">
                 <ModalContent>
                     {loading ? (

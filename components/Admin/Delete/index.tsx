@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure, Tooltip } from '@nextui-org/react';
 import axios from 'axios';
 import { serverBackend } from '@/server';
-import SnackbarMessage from '@/components/Common/SnackbarMessage';
 import { BsFillTrashFill } from 'react-icons/bs';
 
 export default function Delete({
@@ -21,12 +20,11 @@ export default function Delete({
     setRefresh: any;
 }) {
     const [turn, setTurn] = useState<boolean>(false);
-    const [status, setStatus] = useState<string>('');
 
     const handeSubmit = () => {
         switch (type) {
             case 'account':
-                return alert(`idUser: ${idUser}, method: ${status}`);
+                return deleteAccount();
             case 'post':
                 return deletePost();
             default:
@@ -37,15 +35,30 @@ export default function Delete({
     const deletePost = async () => {
         const result = await axios.delete(`${serverBackend}/api/v1/post/${idPost}`);
         if (result.data.message === 'success') {
-            setStatus('success');
             setRefresh(!refresh);
             setTurn(false);
         }
     };
 
+    const deleteAccount = async () => {
+        try {
+            const result = await axios.delete(`${serverBackend}/api/v1/user/${idUser}`);
+            console.log(result);
+            // if (result.data.message === 'success') {
+            //     setRefresh(!refresh);
+            //     setTurn(false);
+            // }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     return (
         <>
-            <Tooltip color="primary" content="Xóa bài đăng">
+            <Tooltip
+                color="primary"
+                content={(type === 'account' && 'Xóa tài khoản') || (type === 'post' && 'Xóa bài đăng')}
+            >
                 <div className="cursor-pointer" onClick={() => setTurn(true)} color="primary">
                     <BsFillTrashFill fontSize={20} />
                 </div>
@@ -54,7 +67,12 @@ export default function Delete({
                 <ModalContent>
                     <ModalBody className="p-5">
                         <div className="pt-4 text-[20px]">
-                            <span className="flex gap-1">Bạn có muốn xóa bài đăng này không ?</span>
+                            {type === 'post' && (
+                                <span className="flex gap-1">Bạn có muốn xóa bài đăng này không ?</span>
+                            )}
+                            {type === 'account' && (
+                                <span className="flex gap-1">Bạn có muốn tài khoản này không ?</span>
+                            )}
                         </div>
                     </ModalBody>
                     <ModalFooter>

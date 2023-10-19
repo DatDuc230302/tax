@@ -3,8 +3,6 @@
 import NoneRole from '@/components/Admin/NoneRole';
 import NavAdmin from '@/components/Admin/NavAdmin';
 import CurrentUser from '@/components/Admin/CurrentUser';
-import { serverBackend } from '@/server';
-import axios from 'axios';
 import React, { useEffect, useState, createContext } from 'react';
 import { decrypt } from '@/functions/crypto';
 
@@ -36,6 +34,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         const valueDecrypt: any = sessionStorage.getItem('currentUser');
         const currentUser: any =
             sessionStorage.getItem('currentUser') && JSON.parse(decrypt(valueDecrypt, 'DucDat2303'));
+        // const currentUser: any = sessionStorage.getItem('currentUser') && JSON.parse(decrypt(valueDecrypt, 'admindd'));
         const id: string = currentUser && currentUser.id ? currentUser.id : '0';
         const name: string = currentUser && currentUser.name ? currentUser.name : 'Anonymous';
         const role: string = currentUser && currentUser.role ? currentUser.role : 'default';

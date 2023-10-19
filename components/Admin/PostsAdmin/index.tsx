@@ -1,24 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import {
-    Table,
-    TableHeader,
-    TableColumn,
-    TableBody,
-    TableRow,
-    TableCell,
-    Button,
-    Input,
-    Dropdown,
-    DropdownTrigger,
-    DropdownMenu,
-    DropdownItem,
-    Tooltip,
-    Chip,
-} from '@nextui-org/react';
-import { BsInfoCircle } from 'react-icons/bs';
-import Link from 'next/link';
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip } from '@nextui-org/react';
 import ManageCategory from '@/components/Admin/ManageCategory/page';
 import ChangeStatus from '@/components/Admin/ChangeStatus';
 import CreatePost from '@/components/Admin/CreatePost';
@@ -27,18 +10,16 @@ import { serverBackend } from '@/server';
 import axios from 'axios';
 import { formatTime } from '@/functions/formatTime';
 import Delete from '../Delete';
+import SortPosts from '../SortPosts';
+import SnackbarMessage from '@/components/Common/SnackbarMessage';
 
 export default function PostsAdmin() {
     const [posts, setPosts] = useState<object[]>([]);
-    const [selection, setSelection] = useState<string>('Tên');
-    const [searchValue, setSearchValue] = useState<string>('');
-    const [sortCategory, setSortCategory] = useState<string>('Sắp xếp thể loại');
-    const [subCategory, setSubCategory] = useState<string>('Sắp xếp thể loại con');
-    const [sortStatus, setSortStatus] = useState<string>('Sắp xếp trạng thái');
     const [turnBoxCategory, setTurnBoxCategory] = useState<boolean>(false);
     const [refresh, setRefresh] = useState<boolean>(false);
     const [categories, setCategories] = useState<object[]>([]);
     const [subCategories, setSubCategories] = useState<object[]>([]);
+    const [alert, setAlert] = useState<boolean>(false);
 
     useEffect(() => {
         getPosts();
@@ -53,8 +34,10 @@ export default function PostsAdmin() {
             if (result.data.message === 'success') {
                 setPosts(result.data.data);
             }
-        } catch {
-            console.log('Error');
+        } catch (err: any) {
+            if (err.message === 'Network Error') {
+                setAlert(true);
+            }
         }
     };
 
@@ -64,8 +47,10 @@ export default function PostsAdmin() {
             if (result.data.message === 'success') {
                 setCategories(result.data.data);
             }
-        } catch {
-            console.log('Lỗi nè');
+        } catch (err: any) {
+            if (err.message === 'Network Error') {
+                setAlert(true);
+            }
         }
     };
 
@@ -75,120 +60,19 @@ export default function PostsAdmin() {
             if (result.data.message === 'success') {
                 setSubCategories(result.data.data);
             }
-        } catch {
-            console.log('Lỗi nè');
+        } catch (err: any) {
+            if (err.message === 'Network Error') {
+                setAlert(true);
+            }
         }
     };
 
     return (
-        <div className="flex flex-col w-full px-4 py-[20px] gap-4 mt-4">
-            <div className="flex w-full gap-4 flex-col lg:flex-row justify-between">
-                <div className="flex justify-center flex-col lg:flex-row items-center gap-4">
-                    <div className="flex w-full gap-3 justify-between">
-                        <Dropdown>
-                            <DropdownTrigger>
-                                <Button
-                                    className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
-                                    variant="flat"
-                                >
-                                    {sortCategory}
-                                </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu aria-label="Single selection example" variant="flat">
-                                <DropdownItem onClick={() => setSortCategory('Sắp xếp thể loại')} key="text">
-                                    Tất cả
-                                </DropdownItem>
-                                <DropdownItem onClick={() => setSortCategory('Tin tức')} key="text">
-                                    Tin tức
-                                </DropdownItem>
-                                <DropdownItem onClick={() => setSortCategory('Văn bản')} key="text">
-                                    Văn bản
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                        <Dropdown>
-                            <DropdownTrigger>
-                                <Button
-                                    isDisabled={sortCategory === 'Sắp xếp thể loại' ? true : false}
-                                    className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
-                                    variant="flat"
-                                >
-                                    {subCategory}
-                                </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu aria-label="Single selection example" variant="flat">
-                                <DropdownItem onClick={() => setSubCategory('Sắp xếp thể loại con')} key="text">
-                                    Tất cả
-                                </DropdownItem>
-                                <DropdownItem onClick={() => setSubCategory('Tin tức')} key="text">
-                                    Tin tức
-                                </DropdownItem>
-                                <DropdownItem onClick={() => setSubCategory('Văn bản')} key="text">
-                                    Văn bản
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                    </div>
-                    <div className="flex w-full gap-3 justify-between">
-                        <Dropdown>
-                            <DropdownTrigger>
-                                <Button
-                                    className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
-                                    variant="flat"
-                                >
-                                    {sortStatus}
-                                </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu aria-label="Single selection example" variant="flat">
-                                <DropdownItem onClick={() => setSortStatus('Sắp xếp trạng thái')}>Tất cả</DropdownItem>
-                                <DropdownItem onClick={() => setSortStatus('Hoạt động')}>Hoạt động</DropdownItem>
-                                <DropdownItem onClick={() => setSortStatus('Không hoạt động')}>
-                                    Không hoạt động
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                        <Button
-                            onClick={() => setTurnBoxCategory(true)}
-                            className="shrink-0 lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e] p-0"
-                            color="primary"
-                        >
-                            Quản lý thể loại
-                        </Button>
-                    </div>
-                    <CreatePost refresh={refresh} setRefresh={setRefresh} subCategories={subCategories} />
-                </div>
-            </div>
-            <div className="flex w-full lg:w-[957px] items-center h-full flex-1 relative ">
-                <Input
-                    onChange={(e) => setSearchValue(String(e.target.value))}
-                    className="rounded-none"
-                    type="text"
-                    placeholder={`Tìm kiếm theo ${selection}`}
-                    value={searchValue}
-                />
-                <div className="absolute right-0">
-                    <Dropdown>
-                        <DropdownTrigger>
-                            <Button variant="flat">{selection}</Button>
-                        </DropdownTrigger>
-                        <DropdownMenu
-                            aria-label="Single selection example"
-                            variant="flat"
-                            disallowEmptySelection
-                            selectionMode="single"
-                        >
-                            <DropdownItem onClick={() => setSelection('Tên')} key="text">
-                                Tên
-                            </DropdownItem>
-                            <DropdownItem onClick={() => setSelection('Email')} key="text">
-                                Email
-                            </DropdownItem>
-                            <DropdownItem onClick={() => setSelection('Số điện thoại')} key="text">
-                                Số điện thoại
-                            </DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
-                </div>
+        <div className="flex flex-col w-full px-4 gap-4 mt-4">
+            {alert && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
+            <div className="flex gap-3">
+                <SortPosts />
+                <CreatePost subCategories={subCategories} refresh={refresh} setRefresh={setRefresh} />
             </div>
             <Table
                 aria-label="Example table with client side pagination"

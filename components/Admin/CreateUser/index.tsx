@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Tooltip } from '@nextui-org/react';
 import axios from 'axios';
 import { serverBackend } from '@/server';
@@ -9,19 +9,27 @@ import Image from 'next/image';
 import { isEmail } from '@/functions/isEmail';
 import AlertDialog from '../../Common/AlertMessage';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
+import SnackbarMessage from '@/components/Common/SnackbarMessage';
 
 export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; setRefresh: any }) {
     const [turn, setTurn] = useState<boolean>(false);
 
-    const [showImage, setShowImage] = useState<any>(null);
-    const [image, setImage] = useState<any>(null);
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
     const [pass, setPass] = useState<string>('');
     const [confirmPass, setConfirmPass] = useState<string>('');
     const [require, setRequire] = useState<boolean>(false);
-    const [alert, setAlert] = useState<boolean>(false);
+    const [existEmail, setExistEmail] = useState<boolean>(false);
+    const [networkError, setNetworkError] = useState<boolean>(false);
+
+    const clearAllInputs = () => {
+        setName('');
+        setEmail('');
+        setPhone('');
+        setPass('');
+        setConfirmPass('');
+    };
 
     const handleSubmit = async () => {
         try {
@@ -30,13 +38,11 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
                 email.length === 0 ||
                 phone.length === 0 ||
                 pass.length === 0 ||
-                confirmPass.length === 0 ||
-                image === null
+                confirmPass.length === 0
             ) {
                 setRequire(true);
             } else {
                 const formData: any = new FormData();
-                formData.append('image', image, image.name);
                 formData.append('name', name);
                 formData.append('email', email);
                 formData.append('phone', phone);
@@ -45,34 +51,19 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
                 if (result.data.status === 'success') {
                     setRefresh(!refresh);
                     setTurn(false);
-                } else {
+                    clearAllInputs();
                 }
             }
         } catch (err: any) {
-            if (err.response.status === 500) {
-                setAlert(true);
+            if (err.message === 'Network Error') {
+                setNetworkError(true);
             }
-        }
-    };
-
-    const handleUploadImg = (e: any) => {
-        const file = e.target.files[0];
-        const reader: any = new FileReader();
-
-        reader.onloadend = () => {
-            setShowImage(reader.result);
-            setImage(file);
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            setShowImage(null);
         }
     };
 
     return (
         <>
+            {networkError && <SnackbarMessage title="Không kết nối được đến máy chủ" type={4} />}
             <Button
                 className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
                 onClick={() => setTurn(true)}
@@ -80,11 +71,12 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
                 <AiOutlinePlusCircle fontSize={20} />
                 Thêm tài khoản
             </Button>
-
-            {alert && <AlertDialog title="Thông báo" content="Email này đã có người sử dụng vui lòng tạo email khác" />}
+            {existEmail && (
+                <AlertDialog title="Thông báo" content="Email này đã có người sử dụng vui lòng tạo email khác" />
+            )}
             <Modal
                 backdrop="blur"
-                className="z-20 h-[700px] overflow-y-auto"
+                className="z-20"
                 isOpen={turn}
                 onOpenChange={() => setTurn(false)}
                 placement="top-center"
@@ -92,25 +84,6 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
                 <ModalContent>
                     <ModalHeader className="flex flex-col gap-1">Tạo tài khoản</ModalHeader>
                     <ModalBody>
-                        <div className="flex flex-col items-center gap-3">
-                            <div className="flex relative border-[1px] w-[120px] border-[#ccc] h-[120px] rounded-[50%]">
-                                {image && (
-                                    <Image
-                                        className="rounded-[50%]"
-                                        src={showImage ? showImage : ''}
-                                        alt=""
-                                        sizes="100000px"
-                                        fill={true}
-                                    />
-                                )}
-                            </div>
-                            <Tooltip color="secondary" content="Thêm ảnh đại diện">
-                                <label htmlFor="uploadImage" className=" cursor-pointer">
-                                    <BsPencilSquare fontSize={20} />
-                                </label>
-                            </Tooltip>
-                            <input id="uploadImage" hidden type="file" onChange={(e) => handleUploadImg(e)} />
-                        </div>
                         <Input
                             autoFocus
                             label="Tên"

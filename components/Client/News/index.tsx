@@ -53,7 +53,7 @@ export default function News() {
     };
 
     return (
-        <div className="flex justify-center">
+        <div className="flex justify-center px-4">
             <div className="flex w-[1200px] flex-col my-2 font-merriweather">
                 <div className="flex justify-between border-b-[2px] pb-4 border-[#eaeaea]">
                     <h1 className="text-[30px]">Tin tức sự kiện</h1>

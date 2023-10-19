@@ -1,8 +1,7 @@
-'use client';
-
 import { AdminContext } from '@/app/admin/layout';
 import {
     Badge,
+    Button,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -12,43 +11,15 @@ import {
     PopoverTrigger,
 } from '@nextui-org/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import React, { useContext } from 'react';
 import { BsFillBellFill } from 'react-icons/bs';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { CiLogout, CiSettings, CiUser } from 'react-icons/ci';
-import axios from 'axios';
-import { serverBackend } from '@/server';
 import { BiMessageAltDetail } from 'react-icons/bi';
+import LogoutAdmin from '../LogoutAdmin';
 
 export default function CurrentUser() {
     const dataContext = useContext(AdminContext);
-
-    const router = useRouter();
-
-    const logout = async () => {
-        try {
-            const result = await axios.post(
-                `${serverBackend}/api/v1/logout`,
-                {},
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${dataContext.token}`,
-                    },
-                },
-            );
-            if (result.data.status === 'success') {
-                sessionStorage.removeItem('currentUser');
-                router.push('/login');
-            }
-        } catch (err: any) {
-            if (err.message === 'Network Error') {
-                sessionStorage.removeItem('currentUser');
-                router.push('/login');
-            }
-        }
-    };
 
     return (
         <div className="flex select-none h-full items-center gap-6">
@@ -88,12 +59,10 @@ export default function CurrentUser() {
             </Popover>
             <Dropdown>
                 <DropdownTrigger>
-                    <div className="cursor-pointer gap-2 pr-2 flex h-full items-center">
-                        <div className="flex items-center text-[14px] text-white">
-                            <span>{dataContext.name}</span>
-                            <MdOutlineKeyboardArrowDown fontSize={20} />
-                        </div>
-                    </div>
+                    <Button className="bg-transparent text-white flex justify-center">
+                        <span>{dataContext.name}</span>
+                        <MdOutlineKeyboardArrowDown fontSize={20} />
+                    </Button>
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Example with disabled actions" disabledKeys={['edit', 'delete']}>
                     <DropdownItem textValue="info">
@@ -108,11 +77,13 @@ export default function CurrentUser() {
                             Cài đặt
                         </div>
                     </DropdownItem>
-                    <DropdownItem onClick={() => logout()} textValue="logout">
-                        <div className="flex w-full gap-2 items-center">
-                            <CiLogout fontSize={20} />
-                            Đăng xuất
-                        </div>
+                    <DropdownItem textValue="logout">
+                        <LogoutAdmin>
+                            <div className="flex w-full gap-2 items-center">
+                                <CiLogout fontSize={20} />
+                                Đăng xuất
+                            </div>
+                        </LogoutAdmin>
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>

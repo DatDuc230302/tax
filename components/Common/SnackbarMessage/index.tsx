@@ -36,7 +36,13 @@ export default function SnackbarMessage({ type, title }: { type: number; title: 
     };
 
     return (
-        <Snackbar open={turn} autoHideDuration={2000} onClose={() => setTurn(false)} message={title}>
+        <Snackbar
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            open={turn}
+            autoHideDuration={2000}
+            onClose={() => setTurn(false)}
+            message={title}
+        >
             {renderUI()}
         </Snackbar>
     );
