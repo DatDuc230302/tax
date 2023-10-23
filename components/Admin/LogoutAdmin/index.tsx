@@ -24,12 +24,12 @@ export default function LogoutAdmin({ children }: { children: React.ReactNode })
             );
             if (result.data.status === 'success') {
                 sessionStorage.removeItem('currentUser');
-                router.push('/login');
+                router.push('/');
             }
         } catch (err: any) {
             if (err.message === 'Network Error') {
                 sessionStorage.removeItem('currentUser');
-                router.push('/login');
+                router.push('/');
             }
         }
     };

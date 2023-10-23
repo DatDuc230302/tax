@@ -30,8 +30,10 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 export default function CreatePost({
     refresh,
     setRefresh,
+    categories,
     subCategories,
 }: {
+    categories: object[];
     refresh: boolean;
     setRefresh: any;
     subCategories: object[];
@@ -128,44 +130,6 @@ export default function CreatePost({
         }
     };
 
-    // const editorConfiguration = {
-    //     toolbar: {
-    //         items: [
-    //             'heading',
-    //             '|',
-    //             'bold',
-    //             'italic',
-    //             'link',
-    //             'bulletedList',
-    //             'numberedList',
-    //             '|',
-    //             'outdent',
-    //             'indent',
-    //             '|',
-    //             'imageUpload',
-    //             'blockQuote',
-    //             'insertTable',
-    //             'mediaEmbed',
-    //             'undo',
-    //             'redo',
-    //         ],
-    //     },
-    //     language: 'en',
-    //     image: {
-    //         toolbar: [
-    //             'imageTextAlternative',
-    //             'toggleImageCaption',
-    //             'imageStyle:inline',
-    //             'imageStyle:block',
-    //             'imageStyle:side',
-    //             'linkImage',
-    //         ],
-    //     },
-    //     table: {
-    //         contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties'],
-    //     },
-    // };
-
     return (
         <>
             {status === 'success' && <SnackbarMessage type={1} title="Thêm bài đăng thành công" />}
@@ -210,9 +174,9 @@ export default function CreatePost({
                                     </Button>
                                 </DropdownTrigger>
                                 <DropdownMenu aria-label="Static Actions">
-                                    {subCategories.map((item: any, index: number) => (
-                                        <SelectItem onClick={() => setCategory(item.category_name)} key={index}>
-                                            {item.category_name}
+                                    {categories.map((item: any, index: number) => (
+                                        <SelectItem onClick={() => setCategory(item.name)} key={index}>
+                                            {item.name}
                                         </SelectItem>
                                     ))}
                                 </DropdownMenu>

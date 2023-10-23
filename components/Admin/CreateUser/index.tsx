@@ -57,7 +57,17 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
         } catch (err: any) {
             if (err.message === 'Network Error') {
                 setNetworkError(true);
+            } else {
+                if (err.response.data.message === 'The email has already been taken.') {
+                    setExistEmail(true);
+                }
             }
+        }
+    };
+
+    const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleSubmit();
         }
     };
 
@@ -71,9 +81,12 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
                 <AiOutlinePlusCircle fontSize={20} />
                 Thêm tài khoản
             </Button>
-            {existEmail && (
-                <AlertDialog title="Thông báo" content="Email này đã có người sử dụng vui lòng tạo email khác" />
-            )}
+            <AlertDialog
+                turn={existEmail}
+                setTurn={setExistEmail}
+                title="Thông báo"
+                content="Email này đã có người sử dụng vui lòng tạo email khác"
+            />
             <Modal
                 backdrop="blur"
                 className="z-20"
@@ -91,6 +104,7 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
                             value={name}
                             errorMessage={require && name.length === 0 && 'Vui lòng nhập tên'}
                             onChange={(e) => setName(String(e.target.value))}
+                            onKeyDown={(e) => handleOnKeyDown(e)}
                         />
                         <Input
                             type="email"
@@ -106,6 +120,7 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
                             className="w-full"
                             value={email}
                             onChange={(e) => setEmail(String(e.target.value))}
+                            onKeyDown={(e) => handleOnKeyDown(e)}
                         />
                         <Input
                             value={phone}
@@ -114,6 +129,7 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
                             variant="flat"
                             type="number"
                             errorMessage={require && phone.length === 0 && 'Vui lòng số điện thoại'}
+                            onKeyDown={(e) => handleOnKeyDown(e)}
                         />
                         <Input
                             value={pass}
@@ -122,6 +138,7 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
                             type="password"
                             variant="flat"
                             errorMessage={require && pass.length === 0 && 'Vui lòng nhập mật khẩu'}
+                            onKeyDown={(e) => handleOnKeyDown(e)}
                         />
                         <Input
                             value={confirmPass}
@@ -130,6 +147,7 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
                             type="password"
                             variant="flat"
                             errorMessage={require && confirmPass.length === 0 && 'Vui lòng nhập lại mật khẩu'}
+                            onKeyDown={(e) => handleOnKeyDown(e)}
                         />
                     </ModalBody>
                     <ModalFooter>

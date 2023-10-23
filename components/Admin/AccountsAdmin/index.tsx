@@ -13,6 +13,7 @@ import { formatTime } from '@/functions/formatTime';
 import SortAccounts from '../SortAccounts';
 import CreateUser from '../CreateUser';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
+import TrashAccounts from '../TrashAccounts';
 
 export default function AccountsAdmin() {
     // Dữ liệu users ban đầu
@@ -52,6 +53,7 @@ export default function AccountsAdmin() {
             <div className="flex gap-3 py-4">
                 <SortAccounts setUsers={setUsers} initialUsers={initialUsers} />
                 <CreateUser refresh={refresh} setRefresh={setRefresh} />
+                <TrashAccounts />
             </div>
             <div className="flex flex-col gap-4">
                 <Table
@@ -119,12 +121,14 @@ export default function AccountsAdmin() {
                                                 refresh={refresh}
                                                 setRefresh={setRefresh}
                                             />
-                                            <Delete
-                                                type="account"
-                                                idUser={item.id}
-                                                refresh={refresh}
-                                                setRefresh={refresh}
-                                            />
+                                            {item.status === 'inactive' && (
+                                                <Delete
+                                                    type="account"
+                                                    idUser={item.id}
+                                                    refresh={refresh}
+                                                    setRefresh={setRefresh}
+                                                />
+                                            )}
                                         </div>
                                     )}
                                 </TableCell>
