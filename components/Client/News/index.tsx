@@ -9,11 +9,13 @@ import { serverBackend } from '@/server';
 import { Card, Skeleton } from '@nextui-org/react';
 import { loadingApi } from '@/functions/loadingApi';
 import { removeDuplicates } from '@/functions/removeDuplicates';
+import SnackbarMessage from '@/components/Common/SnackbarMessage';
 
 export default function News() {
     const [news, setNews] = useState<object[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [subCategories, setSubCategories] = useState<object[]>([]);
+    const [networkError, setNetworkError] = useState<boolean>(false);
 
     useEffect(() => {
         getNews();
@@ -26,13 +28,16 @@ export default function News() {
                 setNews(result.data.data);
                 setSubCategories(removeDuplicates(result.data.data, 'subcategory_name'));
             }
-        } catch (err) {
-            console.log(err);
+        } catch (err: any) {
+            if (err.message === 'Network Error') {
+                setNetworkError(true);
+            }
         }
     }, setLoading);
 
     return (
         <div className="flex justify-center px-4 my-3">
+            {networkError && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
             <div className="flex w-[1200px] flex-col my-2 font-merriweather">
                 {loading ? (
                     <Card className="w-full space-y-5 p-4" radius="lg">
