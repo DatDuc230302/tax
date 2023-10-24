@@ -30,6 +30,10 @@ input[type='number'] {
     -moz-appearance: textfield;
 }
 
+input {
+    outline: none;
+}
+
 @font-face {
     font-family: 'Open Sans';
     src: url('./../public/fonts/openSans/OpenSans-ExtraBold.ttf');
@@ -77,4 +81,22 @@ input[type='number'] {
     font-family: 'Merriweather';
     src: url('./../public/fonts/merriweather/Merriweather-Light.ttf');
     font-weight: 300;
+}
+
+/* Custom Scroll */
+
+/* custom scrollbar */
+html::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+html::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+html::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 8px;
 }

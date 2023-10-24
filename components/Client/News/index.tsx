@@ -36,7 +36,7 @@ export default function News() {
     }, setLoading);
 
     return (
-        <div className="flex justify-center px-4 my-3">
+        <div className="flex justify-center pt-10 px-4">
             {networkError && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
             <div className="flex w-[1200px] flex-col my-2 font-merriweather">
                 {loading ? (
@@ -58,7 +58,7 @@ export default function News() {
                     </Card>
                 ) : (
                     <>
-                        <div className="flex justify-between border-b-[2px] pb-4 border-[#eaeaea]">
+                        <div className="flex justify-between border-b-[2px] pb-3 border-[#eaeaea]">
                             <h1 className="text-[30px]">Tin tức sự kiện</h1>
                             <div className="flex gap-3 items-center">
                                 {subCategories.map((item: any, index) => (
