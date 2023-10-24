@@ -24,8 +24,10 @@ import { isDate } from '@/functions/isDate';
 import axios from 'axios';
 import { AdminContext } from '@/app/admin/layout';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
+
+
+import {CKEditor} from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 export default function CreatePost({
     refresh,
@@ -128,43 +130,59 @@ export default function CreatePost({
         }
     };
 
-    // const editorConfiguration = {
-    //     toolbar: {
-    //         items: [
-    //             'heading',
-    //             '|',
-    //             'bold',
-    //             'italic',
-    //             'link',
-    //             'bulletedList',
-    //             'numberedList',
-    //             '|',
-    //             'outdent',
-    //             'indent',
-    //             '|',
-    //             'imageUpload',
-    //             'blockQuote',
-    //             'insertTable',
-    //             'mediaEmbed',
-    //             'undo',
-    //             'redo',
-    //         ],
-    //     },
-    //     language: 'en',
-    //     image: {
-    //         toolbar: [
-    //             'imageTextAlternative',
-    //             'toggleImageCaption',
-    //             'imageStyle:inline',
-    //             'imageStyle:block',
-    //             'imageStyle:side',
-    //             'linkImage',
-    //         ],
-    //     },
-    //     table: {
-    //         contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties'],
-    //     },
-    // };
+ const editorConfiguration ={
+        toolbar: {
+			items: [
+				'ckbox',
+				'|',
+				'codeBlock',
+				'|',
+				'exportPdf',
+				'exportWord',
+				'|',
+				'fontBackgroundColor',
+				'fontSize',
+				'highlight',
+				'style',
+				'-',
+				'heading',
+				'bold',
+				'italic',
+				'link',
+				'bulletedList',
+				'numberedList',
+				'outdent',
+				'indent',
+				'alignment',
+				'imageUpload',
+				'blockQuote',
+				'insertTable',
+				'mediaEmbed',
+				'undo',
+				'fontFamily',
+				'fontColor',
+				'redo'
+			],
+    },
+    language: 'vi',
+		image: {
+			toolbar: [
+				'imageTextAlternative',
+				'toggleImageCaption',
+				'imageStyle:inline',
+				'imageStyle:block',
+				'imageStyle:side'
+			]
+		},
+		table: {
+			contentToolbar: [
+				'tableColumn',
+				'tableRow',
+				'mergeTableCells'
+			]
+		}
+		
+	};
 
     return (
         <>
@@ -279,7 +297,7 @@ export default function CreatePost({
                                 {image && <Image src={showImage} alt="" sizes="300px" fill={true} />}
                             </div>
                         </div>
-                        <CKEditor
+                        {/* <CKEditor
                             // config={editorConfiguration}
                             data={content}
                             onChange={handleCkeditor}
@@ -289,6 +307,12 @@ export default function CreatePost({
                                     uploadUrl: `${serverBackend}/api/v1/upload-images`,
                                 },
                             }}
+                        /> */}
+                        {/* <TextEditor/> */}
+                         <CKEditor
+                            editor={ClassicEditor}
+                            data=""
+                            config={editorConfiguration}
                         />
                         <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                     </ModalBody>
