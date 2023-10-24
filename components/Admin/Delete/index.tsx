@@ -43,11 +43,10 @@ export default function Delete({
     const deleteAccount = async () => {
         try {
             const result = await axios.delete(`${serverBackend}/api/v1/user/${idUser}`);
-            console.log(result);
-            // if (result.data.message === 'success') {
-            //     setRefresh(!refresh);
-            //     setTurn(false);
-            // }
+            if (result.data.message === 'success') {
+                setRefresh(!refresh);
+                setTurn(false);
+            }
         } catch (err) {
             console.log(err);
         }

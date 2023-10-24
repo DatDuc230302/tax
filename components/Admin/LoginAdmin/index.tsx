@@ -29,8 +29,9 @@ export default function LoginAdmin() {
     const [hidePass, setHidePass] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
     const [require, setRequire] = useState<boolean>(false);
-    const [turnDialog, setTurnDialog] = useState<boolean>(false);
+    const [wrongAccount, setWrongAccount] = useState<boolean>(false);
     const [networkError, setNetworkError] = useState<boolean>(false);
+    const [inactive, setInactive] = useState<boolean>(false);
     const router = useRouter();
 
     const handleSubmit = loadingApi(async () => {
@@ -43,29 +44,33 @@ export default function LoginAdmin() {
                     password: pass,
                 });
                 if (result.data.status === 'success') {
-                    const currentUser: object = {
-                        id: result.data.user.id,
-                        name: result.data.user.name,
-                        role: result.data.user.role,
-                        token: result.data.authorization.token,
-                    };
-                    const valueEncrypt: any = encrypt(JSON.stringify(currentUser), 'DucDat2303');
-                    sessionStorage.setItem('currentUser', valueEncrypt);
-                    router.push('/admin');
+                    if (result.data.user.status === 'active') {
+                        const currentUser: object = {
+                            id: result.data.user.id,
+                            name: result.data.user.name,
+                            role: result.data.user.role,
+                            token: result.data.authorization.token,
+                        };
+                        const valueEncrypt: any = encrypt(JSON.stringify(currentUser), 'DucDat2303');
+                        sessionStorage.setItem('currentUser', valueEncrypt);
+                        router.push('/admin');
+                    } else {
+                        setInactive(true);
+                    }
                 }
             }
         } catch (err: any) {
             if (err.message === 'Network Error') {
                 setNetworkError(true);
                 const valueEncrypt: string = encrypt(
-                    JSON.stringify({ name: 'Trần Đức Đạt', role: 'root' }),
+                    JSON.stringify({ name: 'Trần Đức Đạt', role: 'root', email: 'dat@gmail.com', phone: '098764521' }),
                     'DucDat2303',
                 );
                 sessionStorage.setItem('currentUser', valueEncrypt);
                 router.push('/admin');
             } else {
                 if (err.response.data.message === 'Unauthorized') {
-                    setTurnDialog(true);
+                    setWrongAccount(true);
                 }
             }
         }
@@ -78,6 +83,18 @@ export default function LoginAdmin() {
     return (
         <div>
             {networkError && <SnackbarMessage title="Không kết nối được với máy chủ" type={4} />}
+            <AlertDialog
+                turn={wrongAccount}
+                setTurn={setWrongAccount}
+                title="Thông báo"
+                content="Tài khoản hoặc mật khẩu không đúng"
+            />
+            <AlertDialog
+                turn={inactive}
+                setTurn={setInactive}
+                title="Thông báo"
+                content="Tài khoản của bạn đã bị khóa, vui lòng liên hệ quản trị viên"
+            />
             <Modal backdrop="blur" hideCloseButton isOpen placement="top-center">
                 <ModalContent>
                     {loading ? (
@@ -89,12 +106,6 @@ export default function LoginAdmin() {
                         </ModalBody>
                     ) : (
                         <>
-                            {turnDialog && (
-                                <AlertDialog
-                                    title="Thông báo"
-                                    content="Đăng nhập không thành công sai tài khoản hoặc mật khẩu"
-                                />
-                            )}
                             <ModalHeader className="flex flex-col gap-1">Đăng nhập</ModalHeader>
                             <ModalBody>
                                 <Input

@@ -10,6 +10,8 @@ interface typeContext {
     id: string;
     name: string;
     role: string;
+    email: string;
+    phone: string;
     token: string;
 }
 
@@ -17,6 +19,8 @@ export const AdminContext = createContext<typeContext>({
     id: '',
     name: '',
     role: '',
+    email: '',
+    phone: '',
     token: '',
 });
 
@@ -25,23 +29,35 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const [nameUser, setNameUser] = useState<string>('');
     const [roleUser, setRoleUser] = useState<string>('');
     const [tokenUser, setTokenUser] = useState<string>('');
+    const [emailUser, setEmailUser] = useState<string>('');
+    const [phoneUser, setPhoneUser] = useState<string>('');
 
     // Truyền dữ liệu thông qua đây
-    const dataContext = { id: idUser, name: nameUser, role: roleUser, token: tokenUser };
+    const dataContext = {
+        id: idUser,
+        name: nameUser,
+        role: roleUser,
+        token: tokenUser,
+        email: emailUser,
+        phone: phoneUser,
+    };
 
     useEffect(() => {
         document.title = 'Trang quản trị';
         const valueDecrypt: any = sessionStorage.getItem('currentUser');
         const currentUser: any =
             sessionStorage.getItem('currentUser') && JSON.parse(decrypt(valueDecrypt, 'DucDat2303'));
-        // const currentUser: any = sessionStorage.getItem('currentUser') && JSON.parse(decrypt(valueDecrypt, 'admindd'));
         const id: string = currentUser && currentUser.id ? currentUser.id : '0';
         const name: string = currentUser && currentUser.name ? currentUser.name : 'Anonymous';
         const role: string = currentUser && currentUser.role ? currentUser.role : 'default';
         const token: string = currentUser && currentUser.token ? currentUser.token : 'Null';
+        const email: string = currentUser && currentUser.email ? currentUser.email : 'Null';
+        const phone: string = currentUser && currentUser.phone ? currentUser.phone : 'Null';
         setIdUser(String(id));
         setNameUser(String(name));
         setRoleUser(String(role));
+        setEmailUser(String(email));
+        setPhoneUser(String(phone));
         setTokenUser(token);
     }, []);
 

@@ -32,8 +32,10 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export default function CreatePost({
     refresh,
     setRefresh,
+    categories,
     subCategories,
 }: {
+    categories: object[];
     refresh: boolean;
     setRefresh: any;
     subCategories: object[];
@@ -228,9 +230,9 @@ export default function CreatePost({
                                     </Button>
                                 </DropdownTrigger>
                                 <DropdownMenu aria-label="Static Actions">
-                                    {subCategories.map((item: any, index: number) => (
-                                        <SelectItem onClick={() => setCategory(item.category_name)} key={index}>
-                                            {item.category_name}
+                                    {categories.map((item: any, index: number) => (
+                                        <SelectItem onClick={() => setCategory(item.name)} key={index}>
+                                            {item.name}
                                         </SelectItem>
                                     ))}
                                 </DropdownMenu>

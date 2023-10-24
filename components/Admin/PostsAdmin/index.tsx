@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip } from '@nextui-org/react';
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Button } from '@nextui-org/react';
 import ManageCategory from '@/components/Admin/ManageCategory/page';
 import ChangeStatus from '@/components/Admin/ChangeStatus';
 import CreatePost from '@/components/Admin/CreatePost';
@@ -15,7 +15,6 @@ import SnackbarMessage from '@/components/Common/SnackbarMessage';
 
 export default function PostsAdmin() {
     const [posts, setPosts] = useState<object[]>([]);
-    const [turnBoxCategory, setTurnBoxCategory] = useState<boolean>(false);
     const [refresh, setRefresh] = useState<boolean>(false);
     const [categories, setCategories] = useState<object[]>([]);
     const [subCategories, setSubCategories] = useState<object[]>([]);
@@ -72,7 +71,18 @@ export default function PostsAdmin() {
             {alert && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
             <div className="flex gap-3">
                 <SortPosts />
-                <CreatePost subCategories={subCategories} refresh={refresh} setRefresh={setRefresh} />
+                <ManageCategory
+                    categories={categories}
+                    subCategories={subCategories}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                />
+                <CreatePost
+                    categories={categories}
+                    subCategories={subCategories}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                />
             </div>
             <Table
                 aria-label="Example table with client side pagination"
@@ -150,17 +160,6 @@ export default function PostsAdmin() {
                     ))}
                 </TableBody>
             </Table>
-            {turnBoxCategory && (
-                <div className="fixed z-30 top-[70px] bg-white bottom-0 left-0 right-0">
-                    <ManageCategory
-                        categories={categories}
-                        subCategories={subCategories}
-                        refresh={refresh}
-                        setRefresh={setRefresh}
-                        setTurnBoxCategory={setTurnBoxCategory}
-                    />
-                </div>
-            )}
         </div>
     );
 }
