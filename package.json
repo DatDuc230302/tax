@@ -40,6 +40,7 @@
         "@nextui-org/react": "^2.1.13",
         "axios": "^1.5.1",
         "ckbox": "^2.1.2",
+        "ckeditor4": "^4.23.0",
         "ckeditor5-custom-build": "file:ckeditor5",
         "framer-motion": "^10.16.4",
         "next": "latest",
@@ -62,5 +63,7 @@
         "postcss": "latest",
         "tailwindcss": "latest",
         "typescript": "latest"
-    }
+    },
+    "proxy": "http://localhost",
+    "secure": false
 }
