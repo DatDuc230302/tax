@@ -8,17 +8,18 @@ import { FaBars } from 'react-icons/fa';
 import Search from '../Search';
 import Sidebar from '../Sidebar';
 import NavCategories from '../NavCategories';
+import CurrentDate from '../CurrentDate';
 
 export default function Header() {
     return (
         <header className="flex flex-col select-none">
             <div className="hidden lg:flex relative h-[135px]">
                 <div className="flex w-full h-[135px] relative">
-                    <Image src={'/imgs/bg_header.jpg'} fill sizes="1000000px" alt="" />
+                    <Image className="object-cover" src={'/imgs/bg_header.jpg'} fill sizes="1000000px" alt="" />
                 </div>
                 <div className="flex absolute w-full justify-center h-full">
-                    <div className="flex w-[1283px]">
-                        <div className="w-[220px] h-[120px] relative">
+                    <div className="flex w-[1200px] items-center gap-3">
+                        <div className="w-[110px] h-[110px] relative">
                             <Image src={'/imgs/logo.png'} fill sizes="100000px" alt="" />
                         </div>
                         <div className="hidden lg:flex h-full justify-center flex-col text-white font-bold text-[26px]">
@@ -47,6 +48,7 @@ export default function Header() {
                     </div>
                 </div>
             </div>
+            <CurrentDate />
         </header>
     );
 }
