@@ -32,6 +32,6 @@
         "components/CreateArticle/Upload.js",
         "app/api/upload.js",
         "components/Admin/CreatePost/index.js"
-, "ckeditor5/src/Components/TextEditor.jsx"    ],
+, "ckeditor5/src/Components/TextEditor.jsx", "components/Admin/CreatePost/index.jsx"    ],
     "exclude": ["node_modules"]
 }
