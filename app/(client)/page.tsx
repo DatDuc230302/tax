@@ -1,8 +1,7 @@
 import Service from '@/components/Client/Service';
 import Slide from '@/components/Client/Slide';
-import Posts from './bai-dang/page';
 import News from '@/components/Client/News';
-import Document from '@/components/Client/Document';
+import Video from '@/components/Client/Video';
 
 export default function Page() {
     return (
@@ -10,7 +9,7 @@ export default function Page() {
             <Slide />
             <News />
             <Service />
-            <Document />
+            <Video />
         </div>
     );
 }

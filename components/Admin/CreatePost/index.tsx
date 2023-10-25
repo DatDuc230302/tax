@@ -24,8 +24,10 @@ import { isDate } from '@/functions/isDate';
 import axios from 'axios';
 import { AdminContext } from '@/app/admin/layout';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
+
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 export default function CreatePost({
     refresh,
     setRefresh,
@@ -128,60 +130,6 @@ export default function CreatePost({
             setImage(null);
         }
     };
-
-    const editorConfiguration ={
-        toolbar: {
-			items: [
-				'ckbox',
-				'|',
-				'codeBlock',
-				'|',
-				'exportPdf',
-				'exportWord',
-				'|',
-				'fontBackgroundColor',
-				'fontSize',
-				'highlight',
-				'style',
-				'-',
-				'heading',
-				'bold',
-				'italic',
-				'link',
-				'bulletedList',
-				'numberedList',
-				'outdent',
-				'indent',
-				'alignment',
-				'imageUpload',
-				'blockQuote',
-				'insertTable',
-				'mediaEmbed',
-				'undo',
-				'fontFamily',
-				'fontColor',
-				'redo'
-			],
-    },
-    language: 'vi',
-		image: {
-			toolbar: [
-				'imageTextAlternative',
-				'toggleImageCaption',
-				'imageStyle:inline',
-				'imageStyle:block',
-				'imageStyle:side'
-			]
-		},
-		table: {
-			contentToolbar: [
-				'tableColumn',
-				'tableRow',
-				'mergeTableCells'
-			]
-		}
-		
-	};
     return (
         <>
             {status === 'success' && <SnackbarMessage type={1} title="Thêm bài đăng thành công" />}
@@ -295,7 +243,8 @@ export default function CreatePost({
                                 {image && <Image src={showImage} alt="" sizes="300px" fill={true} />}
                             </div>
                         </div>
-                        {/* <TextEditor/> */}
+
+ 
                          <CKEditor
                     editor={ ClassicEditor }
                     data="<p>Hello from CKEditor 5!</p>"
@@ -333,6 +282,18 @@ export default function CreatePost({
                         console.log( 'Focus.', editor );
                     } }
                 />
+
+                        {/* <CKEditor
+                            data={content}
+                            onChange={handleCkeditor}
+                            editor={ClassicEditor}
+                            config={{
+                                ckfinder: {
+                                    uploadUrl: `${serverBackend}/api/v1/upload-images`,
+                                },
+                            }}
+                        /> */}
+
 
                         <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                     </ModalBody>
