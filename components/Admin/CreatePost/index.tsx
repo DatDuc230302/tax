@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef, useMemo } from 'react';
 
 import {
     Modal,
@@ -24,7 +24,11 @@ import { isDate } from '@/functions/isDate';
 import axios from 'axios';
 import { AdminContext } from '@/app/admin/layout';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
+
+import JoditEditor from 'jodit-react';
+
 import Ckeditor from '@/components/Common/Ckeditor';
+
 
 export default function CreatePost({
     refresh,
@@ -123,6 +127,19 @@ export default function CreatePost({
             setImage(null);
         }
     };
+
+    const editor = useRef(null);
+        const [editorContent, setEditorContent] = useState('');
+        const placeholder = 'Start typing...';
+        const config = useMemo(() => ({
+            readonly: false,
+            placeholder: placeholder || 'Start typing...',
+            uploader: {
+                insertImageAsBase64URI: false, 
+                url: `${serverBackend}/api/v1/upload-images`, 
+            },
+        }), [placeholder]);
+
 
     return (
         <>
@@ -237,7 +254,18 @@ export default function CreatePost({
                                 {image && <Image src={showImage} alt="" sizes="300px" fill={true} />}
                             </div>
                         </div>
+
+                        {/* <TextEditor/> */}
+                         <JoditEditor
+                        ref={editor}
+                        value={content}
+                        config={config}
+                        onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+                        onChange={newContent => {}}
+                    />
+
                         <Ckeditor content={content} setContent={setContent} />
+
                         <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                     </ModalBody>
                     <ModalFooter>
