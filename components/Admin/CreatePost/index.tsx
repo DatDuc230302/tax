@@ -24,7 +24,12 @@ import { isDate } from '@/functions/isDate';
 import axios from 'axios';
 import { AdminContext } from '@/app/admin/layout';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
+
 import JoditEditor from 'jodit-react';
+
+import Ckeditor from '@/components/Common/Ckeditor';
+
+
 export default function CreatePost({
     refresh,
     setRefresh,
@@ -107,11 +112,6 @@ export default function CreatePost({
         }
     };
 
-    const handleCkeditor = (event: any, editor: any) => {
-        const data: any = editor.getData();
-        setContent(data);
-    };
-
     const handleUploadImg = (e: any) => {
         const file = e.target.files[0];
         const reader: any = new FileReader();
@@ -127,6 +127,7 @@ export default function CreatePost({
             setImage(null);
         }
     };
+
     const editor = useRef(null);
         const [editorContent, setEditorContent] = useState('');
         const placeholder = 'Start typing...';
@@ -138,6 +139,7 @@ export default function CreatePost({
                 url: `${serverBackend}/api/v1/upload-images`, 
             },
         }), [placeholder]);
+
 
     return (
         <>
@@ -252,6 +254,7 @@ export default function CreatePost({
                                 {image && <Image src={showImage} alt="" sizes="300px" fill={true} />}
                             </div>
                         </div>
+
                         {/* <TextEditor/> */}
                          <JoditEditor
                         ref={editor}
@@ -260,6 +263,9 @@ export default function CreatePost({
                         onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
                         onChange={newContent => {}}
                     />
+
+                        <Ckeditor content={content} setContent={setContent} />
+
                         <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                     </ModalBody>
                     <ModalFooter>
