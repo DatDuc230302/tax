@@ -41,15 +41,15 @@ export default function CreateCategory({ refresh, setRefresh }: { refresh: boole
         <>
             <Button
                 onClick={() => setTurn(true)}
-                className="shrink-0 lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e] p-0"
+                className="shrink-0 lg:w-max w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e] px-3"
                 color="primary"
             >
                 <AiOutlinePlusCircle fontSize={20} />
-                Thêm thể loại
+                Thêm thể loại cha
             </Button>
             <Modal hideCloseButton isOpen={turn} className="h-[200px]" size="3xl" isDismissable={false}>
                 <ModalContent>
-                    <ModalHeader className="flex flex-col gap-1">Thêm thể loại</ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1">Thêm thể loại cha</ModalHeader>
                     <ModalBody>
                         <div className="flex gap-4">
                             <Input

@@ -24,22 +24,16 @@ import { isDate } from '@/functions/isDate';
 import axios from 'axios';
 import { AdminContext } from '@/app/admin/layout';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
-
 import JoditEditor from 'jodit-react';
-
 import Ckeditor from '@/components/Common/Ckeditor';
-
 
 export default function CreatePost({
     refresh,
     setRefresh,
-    categories,
-    subCategories,
 }: {
     categories: object[];
     refresh: boolean;
     setRefresh: any;
-    subCategories: object[];
 }) {
     // Cho phép bật tắt creatPost
     const [turn, setTurn] = useState<boolean>(false);
@@ -61,21 +55,11 @@ export default function CreatePost({
     // State ngày phát hành bài đăng
     const [issuance, setIssuance] = useState<string>('');
     // State nội dung bài đăng
-    const [content, setContent] = useState<string>('Nội dung bài viết');
+    const [content, setContent] = useState<string>('');
     // State check validate
     const [require, setRequire] = useState<boolean>(false);
-    // State nối bảng giữ subcategories và categories
-    const [showSubCategories, setShowSubCategories] = useState<object[]>(subCategories);
     // Trạng thái sau khi thêm bài viết
     const [status, setStatus] = useState<string>('');
-
-    useEffect(() => {
-        if (category.length === 0) {
-            setShowSubCategories(subCategories);
-        } else {
-            setShowSubCategories(subCategories.filter((item: any) => item.category_name === category));
-        }
-    }, [category]);
 
     const handleSubmit = async () => {
         try {
@@ -88,10 +72,6 @@ export default function CreatePost({
             ) {
                 setRequire(true);
             } else {
-                const tempIdSubCategory: any = showSubCategories.filter(
-                    (item: any) => item.subcategory_name === subCategory,
-                );
-                const idSubCategory: string = String(tempIdSubCategory[0].id);
                 const formData: any = new FormData();
                 formData.append('user_id', dataContext.id);
                 formData.append('title', title);
@@ -99,7 +79,6 @@ export default function CreatePost({
                 formData.append('image', image, image.name);
                 formData.append('serial_number', serial);
                 formData.append('Issuance_date', issuance);
-                formData.append('subcategory_id', idSubCategory);
                 const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
                 if (result.data.message === 'success') {
                     setTurn(false);
@@ -128,18 +107,20 @@ export default function CreatePost({
         }
     };
 
-    const editor = useRef(null);
-        const [editorContent, setEditorContent] = useState('');
-        const placeholder = 'Start typing...';
-        const config = useMemo(() => ({
+    const editor = useRef<any>(null);
+    const [editorContent, setEditorContent] = useState<string>('');
+    const placeholder: string = 'Nội dung bài viết';
+    const config: any = useMemo(
+        () => ({
             readonly: false,
-            placeholder: placeholder || 'Start typing...',
+            placeholder: placeholder,
             uploader: {
-                insertImageAsBase64URI: false, 
-                url: `${serverBackend}/api/v1/upload-images`, 
+                insertImageAsBase64URI: false,
+                url: `${serverBackend}/api/v1/upload-images`,
             },
-        }), [placeholder]);
-
+        }),
+        [placeholder],
+    );
 
     return (
         <>
@@ -170,7 +151,7 @@ export default function CreatePost({
                             errorMessage={require && title.length === 0 && 'Vui lòng nhập tiêu đề bài viết'}
                         />
                         <div className="flex gap-4 relative">
-                            <Dropdown>
+                            {/* <Dropdown>
                                 <DropdownTrigger>
                                     <Button className="w-full h-full px-0" variant="flat">
                                         <Input
@@ -191,33 +172,7 @@ export default function CreatePost({
                                         </SelectItem>
                                     ))}
                                 </DropdownMenu>
-                            </Dropdown>
-                            <Dropdown>
-                                <DropdownTrigger>
-                                    <Button
-                                        isDisabled={category.length === 0}
-                                        className="w-full h-full px-0"
-                                        variant="flat"
-                                    >
-                                        <Input
-                                            errorMessage={
-                                                require && subCategory.length === 0 && 'Vui lòng chọn thể loại con'
-                                            }
-                                            label="Thể loại con"
-                                            type="text"
-                                            value={subCategory}
-                                        />
-                                        <i className="absolute cursor-pointer left-0 right-0 bottom-0 top-0"></i>
-                                    </Button>
-                                </DropdownTrigger>
-                                <DropdownMenu aria-label="Static Actions">
-                                    {showSubCategories.map((item: any, index: number) => (
-                                        <DropdownItem onClick={() => setSubCategory(item.subcategory_name)} key={index}>
-                                            {item.subcategory_name}
-                                        </DropdownItem>
-                                    ))}
-                                </DropdownMenu>
-                            </Dropdown>
+                            </Dropdown> */}
                         </div>
                         <div className="flex gap-4 relative">
                             <Input
@@ -254,18 +209,18 @@ export default function CreatePost({
                                 {image && <Image src={showImage} alt="" sizes="300px" fill={true} />}
                             </div>
                         </div>
-
-                        {/* <TextEditor/> */}
-                         <JoditEditor
-                        ref={editor}
-                        value={content}
-                        config={config}
-                        onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-                        onChange={newContent => {}}
-                    />
-
-                        <Ckeditor content={content} setContent={setContent} />
-
+                        <JoditEditor
+                            ref={editor}
+                            value={content}
+                            config={{
+                                uploader: {
+                                    insertImageAsBase64URI: false,
+                                    url: `${serverBackend}/api/v1/upload-images`,
+                                },
+                            }}
+                            // onChange={(newContent) => {}}
+                        />
+                        {/* <Ckeditor content={content} setContent={setContent} /> */}
                         <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                     </ModalBody>
                     <ModalFooter>

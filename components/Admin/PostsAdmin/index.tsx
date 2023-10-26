@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Button } from '@nextui-org/react';
-import ManageCategory from '@/components/Admin/ManageCategory/page';
+import ManageCategory from '@/components/Admin/ManageCategory';
 import ChangeStatus from '@/components/Admin/ChangeStatus';
 import CreatePost from '@/components/Admin/CreatePost';
 import UpdatePost from '@/components/Admin/UpdatePost';
@@ -17,13 +17,11 @@ export default function PostsAdmin() {
     const [posts, setPosts] = useState<object[]>([]);
     const [refresh, setRefresh] = useState<boolean>(false);
     const [categories, setCategories] = useState<object[]>([]);
-    const [subCategories, setSubCategories] = useState<object[]>([]);
     const [alert, setAlert] = useState<boolean>(false);
 
     useEffect(() => {
         getPosts();
         getCategories();
-        getSubCategories();
     }, [refresh]);
 
     const getPosts = async () => {
@@ -53,36 +51,13 @@ export default function PostsAdmin() {
         }
     };
 
-    const getSubCategories = async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/subcategory`);
-            if (result.data.message === 'success') {
-                setSubCategories(result.data.data);
-            }
-        } catch (err: any) {
-            if (err.message === 'Network Error') {
-                setAlert(true);
-            }
-        }
-    };
-
     return (
         <div className="flex flex-col w-full px-4 gap-4 mt-4">
             {alert && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
             <div className="flex gap-3">
                 <SortPosts />
-                <ManageCategory
-                    categories={categories}
-                    subCategories={subCategories}
-                    refresh={refresh}
-                    setRefresh={setRefresh}
-                />
-                <CreatePost
-                    categories={categories}
-                    subCategories={subCategories}
-                    refresh={refresh}
-                    setRefresh={setRefresh}
-                />
+                <ManageCategory />
+                <CreatePost categories={categories} refresh={refresh} setRefresh={setRefresh} />
             </div>
             <Table
                 aria-label="Example table with client side pagination"
@@ -143,7 +118,6 @@ export default function PostsAdmin() {
                                     oldSubCategory={item.subcategory_name}
                                     img={'/imgs/avatar.jpg'}
                                     categories={categories}
-                                    subCategories={subCategories}
                                     refresh={refresh}
                                     setRefresh={setRefresh}
                                 />

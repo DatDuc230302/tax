@@ -31,7 +31,6 @@ export default function UpdatePost({
     oldSubCategory,
     img,
     categories,
-    subCategories,
     refresh,
     setRefresh,
 }: {
@@ -41,7 +40,6 @@ export default function UpdatePost({
     oldSubCategory: string;
     img: string;
     categories: object[];
-    subCategories: object[];
     refresh: boolean;
     setRefresh: any;
 }) {
@@ -140,34 +138,6 @@ export default function UpdatePost({
                                     {categories.map((item: any, index: number) => (
                                         <DropdownItem onClick={() => setCategory(item.name)} key={index}>
                                             {item.name}
-                                        </DropdownItem>
-                                    ))}
-                                </DropdownMenu>
-                            </Dropdown>
-                            <Dropdown>
-                                <DropdownTrigger>
-                                    <div className="relative w-full h-[50px]">
-                                        <Input
-                                            label="Thể loại cha"
-                                            type="text"
-                                            className="flex pb-4 justify-start cursor-pointer"
-                                            value={category}
-                                        />
-                                        <div className="absolute cursor-pointer justify-end top-0 items-center px-4 w-full h-full z-10 flex">
-                                            <BsChevronDown fontSize={18} />
-                                        </div>
-                                    </div>
-                                </DropdownTrigger>
-                                <DropdownMenu
-                                    aria-label="Multiple selection example"
-                                    variant="flat"
-                                    closeOnSelect={false}
-                                    disallowEmptySelection
-                                    selectionMode="single"
-                                >
-                                    {subCategories.map((item: any, index: number) => (
-                                        <DropdownItem onClick={() => setSubCategory(item.subcategory_name)} key={index}>
-                                            {item.subcategory_name}
                                         </DropdownItem>
                                     ))}
                                 </DropdownMenu>
