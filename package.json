@@ -8,26 +8,6 @@
         "start": "next start",
         "lint": "next lint"
     },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "proxy": "http://localhost",
-    "secure": false,
     "dependencies": {
         "@ckbox/components": "^2.1.2",
         "@ckbox/core": "^2.1.2",
@@ -41,7 +21,6 @@
         "axios": "^1.5.1",
         "ckbox": "^2.1.2",
         "ckeditor4": "^4.23.0",
-        "ckeditor5-custom-build": "file:ckeditor5",
         "framer-motion": "^10.16.4",
         "next": "latest",
         "react": "latest",

@@ -1,28 +1,24 @@
-import React from 'react';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+'use client';
+
+import React, { useState } from 'react';
 
 export default function Video() {
-    const arr = [1, 2, 3, 4, 5];
+    const arr = [1, 2, 3, 4];
+    const [content, setContent] = useState<string>('');
+
     return (
-        <div className="flex justify-center py-6">
-            <div className="bg-white w-[1200px] h-max overflow-hidden">
+        <div className="flex justify-center py-6 px-4">
+            <div className="flex flex-col bg-white w-[1200px] h-max">
                 <div className="py-4 flex justify-between border-b-[2px] boder-[#ccc]">
                     <h2 className="font-bold">THƯ VIỆN VIDEO</h2>
-                    <div className="flex h-full items-center gap-2">
-                        <i className="cursor-pointer text-[#ccc] hover:text-black duration-200 ease-linear">
-                            <FiChevronLeft fontSize={22} />
-                        </i>
-                        <i className="cursor-pointer text-[#ccc] hover:text-black duration-200 ease-linear">
-                            <FiChevronRight fontSize={22} />
-                        </i>
-                    </div>
                 </div>
-                <div className="flex gap-3 mt-3">
+                <div className="flex w-full gap-3 mt-3">
                     {arr.map((item) => (
-                        <div key={item} className="w-[290px] flex flex-col gap-2">
+                        <div key={item} className="w-[292px] flex flex-col gap-2">
                             <iframe
+                                className="select-none"
                                 allowFullScreen={true}
-                                width="290"
+                                width="291"
                                 height="150"
                                 src="https://www.youtube.com/embed/N8IdPStv7gk"
                             ></iframe>
