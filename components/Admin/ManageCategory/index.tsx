@@ -24,7 +24,7 @@ import CreateSubCategory from '../CreateSubCategory';
 import axios from 'axios';
 
 export default function ManageCategory() {
-    const [turn, setTurn] = useState<boolean>(true);
+    const [turn, setTurn] = useState<boolean>(false);
     const [parentCategories, setParentCategories] = useState<object[]>([]);
     const [categories, setCategories] = useState<object[]>([]);
     const [refresh, setRefresh] = useState<boolean>(false);
@@ -45,7 +45,6 @@ export default function ManageCategory() {
     const getCategories = async () => {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/category`);
-            console.log(result);
             if (result.data.message === 'success') {
                 setCategories(result.data.data);
             }

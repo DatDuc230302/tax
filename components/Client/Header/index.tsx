@@ -23,8 +23,8 @@ export default function Header() {
                             <Image src={'/imgs/logo.png'} fill sizes="100000px" alt="" />
                         </div>
                         <div className="hidden lg:flex h-full justify-center flex-col text-white font-bold text-[26px]">
-                            <span>CỔNG THÔNG TIN ĐIỆN TỬ</span>
-                            <span>CHI CỤC THUẾ QUẬN 8 - TP. HỒ CHÍ MINH</span>
+                            <span>CỤC THUẾ TP. HỒ CHÍ MINH</span>
+                            <span>CHI CỤC THUẾ QUẬN 8</span>
                         </div>
                     </div>
                 </div>
