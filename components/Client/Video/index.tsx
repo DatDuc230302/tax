@@ -7,10 +7,10 @@ export default function Video() {
     const arr = [1, 2, 3, 4];
 
     return (
-        <div className="flex justify-center py-6 px-4">
+        <div className="flex justify-center py-6 px-4 font-merriweather">
             <div className="flex flex-col bg-white w-[1200px] h-max">
                 <div className="py-4 flex justify-between border-b-[2px] boder-[#ccc]">
-                    <h2 className="font-bold">THƯ VIỆN VIDEO</h2>
+                    <h2 className="text-[26px]">Thư viện video</h2>
                     <Link
                         href="/thu-vien-video"
                         className="hover:text-[#5d88ff] duration-150 ease-linear cursor-pointer"
@@ -31,8 +31,8 @@ export default function Video() {
                                             height="150"
                                             src="https://www.youtube.com/embed/N8IdPStv7gk"
                                         ></iframe>
-                                        <span className="flex justify-center w-full text-center text-[13px]">
-                                            NTTU Kết Nối _Học thạc sỹ Công nghệ Thông tin để đón đầu thế giới Công nghệ
+                                        <span className="text-[#505050] flex justify-center w-full text-center text-[13px]">
+                                            NTTU Kết Nối học thạc sỹ Công nghệ Thông tin để đón đầu thế giới Công nghệ
                                             hiện đại
                                         </span>
                                     </div>
@@ -52,8 +52,8 @@ export default function Video() {
                                             height="150"
                                             src="https://www.youtube.com/embed/N8IdPStv7gk"
                                         ></iframe>
-                                        <span className="flex justify-center w-full text-center text-[13px]">
-                                            NTTU Kết Nối _Học thạc sỹ Công nghệ Thông tin để đón đầu thế giới Công nghệ
+                                        <span className="text-[#505050] flex justify-center w-full text-center text-[13px]">
+                                            NTTU Kết Nối học thạc sỹ Công nghệ Thông tin để đón đầu thế giới Công nghệ
                                             hiện đại
                                         </span>
                                     </div>

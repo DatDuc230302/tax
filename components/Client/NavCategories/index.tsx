@@ -19,10 +19,6 @@ export const listNav: items[] = [
         href: '/',
     },
     {
-        title: 'NỘP THUẾ',
-        href: '/nop-thue',
-    },
-    {
         title: 'TIỆN ÍCH',
         href: '/tien-ich',
     },

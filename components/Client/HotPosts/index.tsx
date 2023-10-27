@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import css from './News.module.scss';
+import css from './HotPosts.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import axios from 'axios';
@@ -10,6 +10,7 @@ import { Card, Skeleton } from '@nextui-org/react';
 import { loadingApi } from '@/functions/loadingApi';
 import { removeDuplicates } from '@/functions/removeDuplicates';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
+import { AiOutlineEye } from 'react-icons/ai';
 
 const data = [
     {
@@ -29,10 +30,9 @@ const data = [
     },
 ];
 
-export default function News() {
+export default function HotPosts() {
     const [news, setNews] = useState<object[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [subCategories, setSubCategories] = useState<object[]>([]);
     const [networkError, setNetworkError] = useState<boolean>(false);
 
     useEffect(() => {
@@ -44,7 +44,6 @@ export default function News() {
             const result = await axios.get(`${serverBackend}/api/v1/postByCategory/2`);
             if (result.data.message === 'success') {
                 setNews(result.data.data);
-                setSubCategories(removeDuplicates(result.data.data, 'subcategory_name'));
             }
         } catch (err: any) {
             if (err.message === 'Network Error') {
@@ -77,17 +76,7 @@ export default function News() {
                 ) : (
                     <>
                         <div className="flex justify-between border-b-[2px] pb-3 border-[#eaeaea]">
-                            <h1 className="text-[30px]">Tin tức</h1>
-                            <div className="flex gap-3 items-center">
-                                {subCategories.map((item: any, index) => (
-                                    <span
-                                        key={index}
-                                        className="cursor-pointer text-[14px] hover:text-red-500 duration-100 ease-linear"
-                                    >
-                                        {item.subcategory_name}
-                                    </span>
-                                ))}
-                            </div>
+                            <h1 className="text-[26px] line-clamp-2">Bài viết nổi bật</h1>
                         </div>
                         <div className="flex flex-col lg:flex-row mt-3 w-full gap-3">
                             {data.map(
@@ -109,7 +98,20 @@ export default function News() {
                                                     sizes="1000000px"
                                                 />
                                             </div>
-                                            <h3 className={`${css.title} text-[30px] line-clamp-2`}>{item.title}</h3>
+                                            <div className="flex flex-col gap-2">
+                                                <h3 className={`${css.title} text-[26px] line-clamp-2`}>
+                                                    {item.title}
+                                                </h3>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                        Tin tức
+                                                    </span>
+                                                    <span className="text-[12px]">12 ngày trước</span>
+                                                    <span className="flex gap-1 items-center text-[14px]">
+                                                        <AiOutlineEye fontSize={18} />0
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </Link>
                                     ),
                             )}
@@ -138,9 +140,20 @@ export default function News() {
                                                         alt=""
                                                     />
                                                 </div>
-                                                <h3 className={`${css.title}  text-[16px] line-clamp-2 max-w-[400px]`}>
-                                                    {item.title}
-                                                </h3>
+                                                <div className="flex flex-col gap-2">
+                                                    <h3 className={`${css.title} text-[14px] line-clamp-2`}>
+                                                        {item.title}
+                                                    </h3>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                            Tin tức
+                                                        </span>
+                                                        <span className="text-[12px]">12 ngày trước</span>
+                                                        <span className="flex gap-1 items-center text-[14px]">
+                                                            <AiOutlineEye fontSize={18} />0
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </Link>
                                         ),
                                 )}

@@ -22,7 +22,7 @@ export default function Asking() {
             <div
                 className={`${
                     turn ? 'right-0' : 'right-[-320px]'
-                } duration-250 ease-linear fixed w-[320px] bottom-0 top-0 flex-col flex bg-white`}
+                } shadow-2xl duration-250 ease-linear fixed w-[320px] bottom-0 top-0 flex-col flex bg-white`}
             >
                 <div className="shrink-0 h-[40px] px-4 items-center gap-[100px] flex border-b-[1px] border-[#ccc]">
                     <i onClick={() => setTurn(false)} className="cursor-pointer">
