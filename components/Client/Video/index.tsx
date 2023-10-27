@@ -11,6 +11,7 @@ export default function Video() {
             <div className="flex flex-col bg-white w-[1200px] h-max">
                 <div className="py-4 flex justify-between border-b-[2px] boder-[#ccc]">
                     <h2 className="font-bold">THƯ VIỆN VIDEO</h2>
+                    <span>Xem thêmcls</span>
                 </div>
                 <div className="flex w-full gap-3 mt-3">
                     {arr.map((item) => (

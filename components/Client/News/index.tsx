@@ -11,6 +11,24 @@ import { loadingApi } from '@/functions/loadingApi';
 import { removeDuplicates } from '@/functions/removeDuplicates';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
 
+const data = [
+    {
+        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
+    },
+    {
+        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
+    },
+    {
+        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
+    },
+    {
+        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
+    },
+    {
+        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
+    },
+];
+
 export default function News() {
     const [news, setNews] = useState<object[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -59,7 +77,7 @@ export default function News() {
                 ) : (
                     <>
                         <div className="flex justify-between border-b-[2px] pb-3 border-[#eaeaea]">
-                            <h1 className="text-[30px]">Tin tức sự kiện</h1>
+                            <h1 className="text-[30px]">Tin tức</h1>
                             <div className="flex gap-3 items-center">
                                 {subCategories.map((item: any, index) => (
                                     <span
@@ -72,7 +90,7 @@ export default function News() {
                             </div>
                         </div>
                         <div className="flex flex-col lg:flex-row mt-3 w-full gap-3">
-                            {news.map(
+                            {data.map(
                                 (item: any, index: number) =>
                                     index === 0 && (
                                         <Link
@@ -96,9 +114,10 @@ export default function News() {
                                     ),
                             )}
                             <div className="flex flex-col w-full gap-3">
-                                {news.map(
+                                {data.map(
                                     (item: any, index: number) =>
-                                        index > 0 && (
+                                        index > 0 &&
+                                        index < 5 && (
                                             <Link
                                                 href={`/bai-dang/tin-tuc/${item.id}`}
                                                 key={index}

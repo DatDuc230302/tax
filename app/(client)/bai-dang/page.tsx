@@ -1,4 +1,3 @@
-import Document from '@/components/Client/Document';
 import React from 'react';
 
 export default function Page() {

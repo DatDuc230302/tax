@@ -84,7 +84,6 @@ export default function NavCategories() {
                     } text-white select-none gap-1 h-full items-center px-4 hover:bg-[#52B6FF] duration-100 ease-linear flex shrink-0 cursor-pointer font-bold`}
                 >
                     {item.icon ? item.icon : item.title}
-                    <IoIosArrowDown fontSize={16} />
                 </Link>
             ))}
         </div>
