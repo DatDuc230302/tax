@@ -54,7 +54,7 @@ export default function News() {
     }, setLoading);
 
     return (
-        <div className="flex justify-center pt-10 px-4">
+        <div className="flex justify-center pt-8 px-4">
             {networkError && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
             <div className="flex w-[1200px] flex-col my-2 font-merriweather">
                 {loading ? (

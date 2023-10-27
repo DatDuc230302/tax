@@ -5,6 +5,7 @@ import css from './Sidebar.module.scss';
 import { listNav } from '../NavCategories';
 import { AiOutlineClose } from 'react-icons/ai';
 import Search from '../Search';
+import { FaBars } from 'react-icons/fa';
 
 interface items {
     icon?: ReactElement;
@@ -12,12 +13,14 @@ interface items {
     href: string;
 }
 
-export default function Sidebar({ children }: { children: React.ReactNode }) {
+export default function Sidebar() {
     const [turn, setTurn] = useState<boolean>(false);
 
     return (
         <>
-            <button onClick={() => setTurn(!turn)}>{children}</button>
+            <button onClick={() => setTurn(!turn)}>
+                <FaBars className={'cursor-pointer'} color="white" fontSize={20} />
+            </button>
             <div className={`${css.modal} ${turn ? 'visible' : 'invisible'}`}>
                 <div onClick={() => setTurn(false)} className={`${css.overlay}`}></div>
                 <div className={`${css.box} ${turn && 'left-[0px]'}`}>

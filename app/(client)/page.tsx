@@ -8,7 +8,7 @@ export default function Page() {
         <div className="flex flex-col">
             <Slide />
             <News />
-            <Service />
+            {/* <Service /> */}
             <Video />
         </div>
     );

@@ -14,6 +14,7 @@ export default function Search({ className }: { className?: string }) {
 
     const handleSearch = () => {
         if (valueInput.length > 0) {
+            router.push(`/search/${valueInput}`);
         }
     };
 

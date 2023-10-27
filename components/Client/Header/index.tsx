@@ -3,9 +3,7 @@
 import Image from 'next/image';
 
 import React from 'react';
-import { FaBars } from 'react-icons/fa';
 
-import Search from '../Search';
 import Sidebar from '../Sidebar';
 import NavCategories from '../NavCategories';
 import CurrentDate from '../CurrentDate';
@@ -31,21 +29,11 @@ export default function Header() {
             </div>
             <div className="flex bg-[#0B80FF] justify-center">
                 <div className="flex w-[1200px] justify-between h-[70px] lg:h-[42px]">
-                    <div className="h-full flex w-full lg:hidden items-center">
-                        <Sidebar>
-                            <FaBars className={'cursor-pointer'} color="white" fontSize={20} />
-                        </Sidebar>
-                        <div className="flex gap-3">
-                            <div className="h-[100px] relative">
-                                <Image src={'/imgs/logo.png'} sizes="100000px" fill alt="" />
-                            </div>
-                            <h1 className="flex items-center text-white font-bold">Chi cục thuế quận 8</h1>
-                        </div>
+                    <div className="h-full gap-2 flex w-full lg:hidden items-center">
+                        <Sidebar />
+                        <h1 className="flex items-center text-white font-bold">CHI CỤC THUẾ QUẬN 8</h1>
                     </div>
                     <NavCategories />
-                    <div className="hidden lg:flex">
-                        <Search />
-                    </div>
                 </div>
             </div>
             <CurrentDate />

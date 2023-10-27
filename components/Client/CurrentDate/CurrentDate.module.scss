@@ -1,0 +1,9 @@
+.backTitle {
+    &:hover .backIcon {
+        transform: translateX(-5px);
+    }
+}
+
+.backIcon {
+    transition: all linear 0.2s;
+}
