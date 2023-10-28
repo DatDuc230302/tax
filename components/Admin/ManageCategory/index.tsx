@@ -30,7 +30,7 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
     useEffect(() => {
         getParentCategories();
         getCategories();
-    }, []);
+    }, [refresh]);
 
     const getParentCategories = async () => {
         try {
