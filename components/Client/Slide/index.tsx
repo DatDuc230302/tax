@@ -22,7 +22,7 @@ export default function Slide() {
     return (
         <div className="flex justify-center">
             <div className="flex w-[1200px] justify-center">
-                {/* <Slider
+                <Slider
                     className="flex md1:w-full md:w-[700px] w-[350px] xs:w-[450px] flex-col items-center"
                     {...settings}
                 >
@@ -31,7 +31,7 @@ export default function Slide() {
                             <Image className="object-cover" src={item} sizes="100000px" fill alt="" />
                         </div>
                     ))}
-                </Slider> */}
+                </Slider>
             </div>
         </div>
     );

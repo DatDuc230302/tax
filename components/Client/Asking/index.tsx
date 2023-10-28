@@ -14,7 +14,7 @@ export default function Asking() {
             <Tooltip content="Đặt câu hỏi">
                 <div
                     onClick={() => setTurn(true)}
-                    className="duration-200 ease-linear hover:bg-opacity-60 fixed bg-[#0B80FF] bottom-[40px] cursor-pointer p-3 rounded-[50%] right-[70px]"
+                    className="duration-200 ease-linear hover:bg-opacity-60 fixed bg-[#0B80FF] bottom-[40px] cursor-pointer p-3 rounded-[50%] right-[30px] lg:right-[70px]"
                 >
                     <TbMessageCircle2Filled fontSize={32} color="white" />
                 </div>
