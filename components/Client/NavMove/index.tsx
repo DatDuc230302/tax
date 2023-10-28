@@ -11,7 +11,7 @@ export default function NavMove() {
     const pathName = usePathname();
 
     return (
-        <div className="flex justify-center lg:px-0 px-4 bg-[#F2F2F2] h-[40px] ">
+        <div className="flex justify-center px-4 bg-[#F2F2F2] h-[40px] ">
             <div className="text-[14px] w-[1200px] flex items-center justify-between">
                 <div>
                     {pathName !== '/' && (
@@ -26,9 +26,7 @@ export default function NavMove() {
                         </span>
                     )}
                 </div>
-                <div className="flex gap-2">
-                    <GetDateTimeVI />
-                </div>
+                <GetDateTimeVI />
             </div>
         </div>
     );

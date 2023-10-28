@@ -111,7 +111,7 @@ input {
 
 /* Custom Scroll */
 
-/* html::-webkit-scrollbar {
+html::-webkit-scrollbar {
     width: 10px;
 }
 
@@ -122,4 +122,4 @@ html::-webkit-scrollbar-track {
 html::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 8px;
-} */
+}

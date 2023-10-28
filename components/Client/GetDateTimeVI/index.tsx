@@ -28,9 +28,9 @@ export default function GetDateTimeVI() {
     }, [time]);
 
     return (
-        <div className="flex gap-1 font-bold">
-            <span className="flex">{getDateVI()}</span>
-            <span className="w-[55px]">{time}</span>
+        <div className="flex w-full justify-end font-bold gap-1">
+            <span>{getDateVI()}</span>
+            <span>{time}</span>
         </div>
     );
 }
