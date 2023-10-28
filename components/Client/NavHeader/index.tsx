@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { FaBars, FaHome } from 'react-icons/fa';
-import { IoIosArrowDown } from 'react-icons/io';
 import Search from '../Search';
 
 interface items {
@@ -19,12 +18,12 @@ export const listNav: items[] = [
         href: '/',
     },
     {
-        title: 'TIỆN ÍCH',
-        href: '/tien-ich',
+        title: 'BÀI ĐĂNG',
+        href: '/bai-dang',
     },
     {
-        title: 'VẤN ĐỀ THƯỜNG GẶP',
-        href: '/van-de',
+        title: 'TIỆN ÍCH',
+        href: '/tien-ich',
     },
     {
         title: 'HƯỚNG DẪN',
@@ -36,7 +35,7 @@ export const listNav: items[] = [
     },
 ];
 
-export default function NavCategories() {
+export default function NavHeader() {
     const [active, setActive] = useState<number>(0);
 
     const pathName = usePathname();
@@ -48,20 +47,17 @@ export default function NavCategories() {
             case '/':
                 setActive(0);
                 break;
-            case '/nop-thue':
+            case '/bai-dang':
                 setActive(1);
                 break;
             case '/tien-ich':
                 setActive(2);
                 break;
-            case '/van-de':
+            case '/huong-dan':
                 setActive(3);
                 break;
-            case '/huong-dan':
-                setActive(4);
-                break;
             case '/lien-he':
-                setActive(5);
+                setActive(4);
                 break;
             case '/search':
                 break;

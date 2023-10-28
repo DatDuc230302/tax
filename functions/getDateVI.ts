@@ -1,4 +1,4 @@
-export const formatDateVI = () => {
+export const getDateVI = () => {
     // Tạo một đối tượng Date từ chuỗi ngày tháng
     const date = new Date();
 

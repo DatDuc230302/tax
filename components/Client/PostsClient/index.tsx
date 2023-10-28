@@ -1,77 +1,81 @@
 'use client';
 
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Pagination, usePagination } from '@nextui-org/react';
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import { AiOutlineEye } from 'react-icons/ai';
-import { FaFlag } from 'react-icons/fa';
+import PostsCategories from '../PostsCategories';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Pagination } from '@nextui-org/react';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
+import { FaFlag } from 'react-icons/fa';
+import Image from 'next/image';
+import { AiOutlineEye } from 'react-icons/ai';
+import { useSearchParams } from 'next/navigation';
 
-export default function CurrentPosts() {
+export default function PostsClient() {
     const list = [
         {
-            title: '1',
+            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
             img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
             content:
                 ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
         },
         {
-            title: '2',
+            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
             img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
             content:
                 ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
         },
         {
-            title: '3',
+            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
             img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
             content:
                 ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
         },
         {
-            title: '4',
+            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
             img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
             content:
                 ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
         },
         {
-            title: '5',
+            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
             img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
             content:
                 ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
         },
         {
-            title: '6',
+            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 20236',
             img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
             content:
                 ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
         },
         {
-            title: '7',
+            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
             img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
             content:
                 ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
         },
         {
-            title: '8',
+            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
             img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
             content:
                 ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
         },
         {
-            title: '9',
+            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
             img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
             content:
                 ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
         },
         {
-            title: '10',
+            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
             img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
             content:
                 ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
         },
     ];
 
-    const itemsPerPage: number = 4;
+    const searchParams: any = useSearchParams();
+
+    const itemsPerPage: number = 5;
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [start, setStart] = useState<number>(0);
     const [end, setEnd] = useState<number>(itemsPerPage);
@@ -84,16 +88,21 @@ export default function CurrentPosts() {
     }, [currentPage]);
 
     return (
-        <div className="flex justify-center my-2 font-merriweather px-4">
-            <div className="flex w-[1200px] flex-col gap-2">
-                <h2 className="text-[26px]">Bài viết gần đây</h2>
-                <div className="flex w-full gap-3 flex-wrap md:justify-center lg:justify-start lg:flex-nowrap">
+        <div className="flex gap-6 px-4">
+            <PostsCategories />
+            <div className="w-full flex flex-col gap-2 pb-[20px]">
+                <h2 className="font-roboto font-bold text-[26px]">Tất cả bài đăng</h2>
+                <div className="flex flex-col gap-4">
                     {list.slice(start, end).map((item: any, index: number) => (
                         <div
                             key={index}
-                            className="cursor-pointer flex gap-3 justify-center p-4 md:w-[40%] lg:w-[25%] h-max flex-col rounded-[16px] border-[2px] border-[#e8e8e8]"
+                            className="border-[2px] cursor-pointer border-[#eaeaea] w-full rounded-[16px] p-4 flex flex-col"
                         >
-                            <div className="flex justify-end">
+                            <div className="flex w-full justify-between items-center">
+                                <div className="flex gap-2 text-[14px]">
+                                    <span>Trần Đức Đạt</span>
+                                    <span>Người quản lý</span>
+                                </div>
                                 <Dropdown placement="bottom-end">
                                     <DropdownTrigger>
                                         <i className="p-2 cursor-pointer">
@@ -110,20 +119,14 @@ export default function CurrentPosts() {
                                     </DropdownMenu>
                                 </Dropdown>
                             </div>
-                            <div className="flex flex-col gap-2 items-center">
-                                <div className="w-full relative h-[150px]">
-                                    <Image
-                                        src={item.img}
-                                        alt=""
-                                        fill
-                                        sizes="100000px"
-                                        className="object-cover rounded-[4px]"
-                                    />
+                            <div className="flex gap-2">
+                                <div className="flex flex-col justify-center">
+                                    <h2 className="text-[20px] font-bold line-clamp-2">{item.title}</h2>
+                                    <p className="text-[#505050] text-[15px] line-clamp-2">{item.content}</p>
                                 </div>
-                                <h3 className="line-clamp-2 font-bold">{item.title}</h3>
-                                <span className="text-[14px] text-[#505050] line-clamp-2 max-w-[800px]">
-                                    {item.content}
-                                </span>
+                                <div className="shrink-0 relative w-[200px] h-[120px]">
+                                    <Image className="rounded-[15px]" src={item.img} fill alt="" sizes="100000px" />
+                                </div>
                             </div>
                             <div className="flex w-full whitespace-nowrap items-center gap-2">
                                 <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
@@ -141,7 +144,7 @@ export default function CurrentPosts() {
                     <Pagination
                         onChange={setCurrentPage}
                         showControls
-                        total={Math.ceil(list.length / 4)}
+                        total={Math.ceil(list.length / 5)}
                         initialPage={1}
                     />
                 </div>

@@ -15,6 +15,7 @@ const config: Config = {
                 sansSerif: ['sans-serif'],
                 openSans: ['Open Sans'],
                 merriweather: ['Merriweather'],
+                roboto: ['roboto'],
             },
         },
         screens: {

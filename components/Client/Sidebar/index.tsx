@@ -2,7 +2,7 @@
 
 import React, { useState, ReactElement } from 'react';
 import css from './Sidebar.module.scss';
-import { listNav } from '../NavCategories';
+import { listNav } from '../NavHeader';
 import { AiOutlineClose } from 'react-icons/ai';
 import Search from '../Search';
 import { FaBars } from 'react-icons/fa';

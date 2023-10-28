@@ -1,17 +1,17 @@
 'use client';
 
-import { formatDateVI } from '@/functions/formatDateVI';
 import React from 'react';
 import { HiOutlineChevronLeft } from 'react-icons/hi';
-import css from './CurrentDate.module.scss';
+import css from './NavMove.module.scss';
 import { usePathname, useRouter } from 'next/navigation';
+import GetDateTimeVI from '../GetDateTimeVI';
 
-export default function CurrentDate() {
+export default function NavMove() {
     const router = useRouter();
     const pathName = usePathname();
 
     return (
-        <div className="flex justify-center bg-[#F2F2F2] h-[40px] ">
+        <div className="flex justify-center lg:px-0 px-4 bg-[#F2F2F2] h-[40px] ">
             <div className="text-[14px] w-[1200px] flex items-center justify-between">
                 <div>
                     {pathName !== '/' && (
@@ -26,7 +26,9 @@ export default function CurrentDate() {
                         </span>
                     )}
                 </div>
-                <span>{formatDateVI()}</span>
+                <div className="flex gap-2">
+                    <GetDateTimeVI />
+                </div>
             </div>
         </div>
     );

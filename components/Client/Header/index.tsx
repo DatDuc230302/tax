@@ -5,8 +5,8 @@ import Image from 'next/image';
 import React from 'react';
 
 import Sidebar from '../Sidebar';
-import NavCategories from '../NavCategories';
-import CurrentDate from '../CurrentDate';
+import NavHeader from '../NavHeader';
+import NavMove from '../NavMove';
 
 export default function Header() {
     return (
@@ -29,14 +29,19 @@ export default function Header() {
             </div>
             <div className="flex bg-[#0B80FF] justify-center">
                 <div className="flex w-[1200px] justify-between h-[70px] lg:h-[42px]">
-                    <div className="h-full gap-2 flex w-full lg:hidden items-center">
-                        <Sidebar />
-                        <h1 className="flex items-center text-white font-bold">CHI CỤC THUẾ QUẬN 8</h1>
+                    <div className="h-full px-4 flex w-full lg:hidden items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <Sidebar />
+                            <h1 className="flex items-center text-white font-bold">CHI CỤC THUẾ QUẬN 8</h1>
+                        </div>
+                        <div className="relative w-[45px] h-[45px]">
+                            <Image src={'/imgs/logo.png'} sizes="10000px" fill alt="" />
+                        </div>
                     </div>
-                    <NavCategories />
+                    <NavHeader />
                 </div>
             </div>
-            <CurrentDate />
+            <NavMove />
         </header>
     );
 }

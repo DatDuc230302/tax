@@ -1,0 +1,11 @@
+.category {
+    &:hover {
+        .subCategories {
+            visibility: visible;
+        }
+    }
+}
+
+.subCategories {
+    visibility: hidden;
+}

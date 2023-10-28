@@ -77,6 +77,7 @@ export default function HotPosts() {
                     <>
                         <div className="flex justify-between border-b-[2px] pb-3 border-[#eaeaea]">
                             <h1 className="text-[26px] line-clamp-2">Bài viết nổi bật</h1>
+                            <span className="cursor-pointer">Xem tất cả</span>
                         </div>
                         <div className="flex flex-col lg:flex-row mt-3 w-full gap-3">
                             {data.map(
@@ -106,7 +107,7 @@ export default function HotPosts() {
                                                     <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
                                                         Tin tức
                                                     </span>
-                                                    <span className="text-[12px]">12 ngày trước</span>
+                                                    <span className="text-[12px]">23/01/2023</span>
                                                     <span className="flex gap-1 items-center text-[14px]">
                                                         <AiOutlineEye fontSize={18} />0
                                                     </span>
