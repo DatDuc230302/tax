@@ -24,14 +24,17 @@ import { isDate } from '@/functions/isDate';
 import axios from 'axios';
 import { AdminContext } from '@/app/admin/layout';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
-import Ckeditor from '@/components/Common/Ckeditor';
 import UploadFiles from '../UploadFiles';
-
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 export default function CreatePost({
+    categories,
+    parentCategories,
     refresh,
     setRefresh,
 }: {
     categories: object[];
+    parentCategories: object[];
     refresh: boolean;
     setRefresh: any;
 }) {
@@ -60,8 +63,9 @@ export default function CreatePost({
     const [require, setRequire] = useState<boolean>(false);
     // Trạng thái sau khi thêm bài viết
     const [status, setStatus] = useState<string>('');
-    // Mảng chưa đường dẫn files
+    //
     const [filesArr, setFilesArr] = useState<string[]>([]);
+    const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
 
     const handleSubmit = async () => {
         try {
@@ -81,6 +85,7 @@ export default function CreatePost({
                 formData.append('image', image, image.name);
                 formData.append('serial_number', serial);
                 formData.append('Issuance_date', issuance);
+                formData.append('file', filesArr);
                 const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
                 if (result.data.message === 'success') {
                     setTurn(false);
@@ -107,6 +112,19 @@ export default function CreatePost({
         } else {
             setImage(null);
         }
+    };
+
+    useEffect(() => {
+        if (category.length === 0) {
+            setShowSubCategories(categories);
+        } else {
+            setShowSubCategories(categories.filter((item: any) => item.parent_name === category));
+        }
+    }, [category]);
+
+    const handleCkeditor = (event: any, editor: any) => {
+        const data: any = editor.getData();
+        setContent(data);
     };
 
     return (
@@ -153,35 +171,37 @@ export default function CreatePost({
                                     </Button>
                                 </DropdownTrigger>
                                 <DropdownMenu aria-label="Static Actions">
-                                    {/* {categories.map((item: any, index: number) => (
+                                    {parentCategories.map((item: any, index: number) => (
                                         <SelectItem onClick={() => setCategory(item.name)} key={index}>
                                             {item.name}
                                         </SelectItem>
-                                    ))} */}
-                                    <SelectItem key={'text'}>Dat</SelectItem>
+                                    ))}
                                 </DropdownMenu>
                             </Dropdown>
                             <Dropdown>
                                 <DropdownTrigger>
-                                    <Button className="w-full h-full px-0" variant="flat">
+                                    <Button
+                                        isDisabled={category.length === 0}
+                                        className="w-full h-full px-0"
+                                        variant="flat"
+                                    >
                                         <Input
                                             errorMessage={
                                                 require && subCategory.length === 0 && 'Vui lòng chọn thể loại con'
                                             }
                                             label="Thể loại con"
                                             type="text"
-                                            value={category}
+                                            value={subCategory}
                                         />
                                         <i className="absolute cursor-pointer left-0 right-0 bottom-0 top-0"></i>
                                     </Button>
                                 </DropdownTrigger>
                                 <DropdownMenu aria-label="Static Actions">
-                                    {/* {categories.map((item: any, index: number) => (
-                                        <SelectItem onClick={() => setCategory(item.name)} key={index}>
+                                    {showSubCategories.map((item: any, index: number) => (
+                                        <DropdownItem onClick={() => setSubCategory(item.name)} key={index}>
                                             {item.name}
-                                        </SelectItem>
-                                    ))} */}
-                                    <SelectItem key={'text'}>Dat</SelectItem>
+                                        </DropdownItem>
+                                    ))}
                                 </DropdownMenu>
                             </Dropdown>
                         </div>
@@ -220,9 +240,18 @@ export default function CreatePost({
                                 {image && <Image src={showImage} alt="" sizes="300px" fill={true} />}
                             </div>
                         </div>
-                        <Ckeditor content={content} setContent={setContent} />
+                        <CKEditor
+                            config={{
+                                ckfinder: {
+                                    uploadUrl: `${serverBackend}/api/v1/upload-images`,
+                                },
+                            }}
+                            data={content}
+                            onChange={handleCkeditor}
+                            editor={ClassicEditor}
+                        />
                         <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
-                        <UploadFiles filesArr={filesArr} />
+                        <UploadFiles filesArr={filesArr} setFilesArr={setFilesArr} />
                     </ModalBody>
                     <ModalFooter>
                         <Button color="danger" variant="light" onClick={() => setTurn(false)}>

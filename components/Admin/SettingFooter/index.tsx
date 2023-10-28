@@ -1,10 +1,10 @@
+import { serverBackend } from '@/server';
 import { Button, Input, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
 import { SketchPicker } from 'react-color';
 
 export default function SettingFooter() {
-    const [themeColor, setThemeColor] = useState<string>('ffff');
-    const [data, setData] = useState<object>({
+    const [data, setData] = useState<any>({
         theme_color: '',
         footer_color: '',
         footer_owner: '',
@@ -15,6 +15,9 @@ export default function SettingFooter() {
         footer_website: '',
     });
 
+    const [themeColor, setThemeColor] = useState(); // Default color
+    const [footerColor, setFooterColor] = useState(); // Default color
+
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
         setData({
@@ -24,7 +27,7 @@ export default function SettingFooter() {
     };
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/v1/ReadSetting')
+        fetch(`${serverBackend}/api/v1/ReadSetting`)
             .then((response) => response.json())
             .then((json) => {
                 setData(json);
@@ -35,7 +38,7 @@ export default function SettingFooter() {
     }, []);
 
     const handleSave = () => {
-        fetch('http://localhost:8000/api/v1/UpdateSetting', {
+        fetch(`${serverBackend}/api/v1/UpdateSetting`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,6 +49,7 @@ export default function SettingFooter() {
             .then((response) => {
                 if (response.message === 'success') {
                     console.log('Config updated successfully');
+                    window.location.reload();
                 } else {
                     console.error('Config update failed:', response.error);
                 }
@@ -55,8 +59,12 @@ export default function SettingFooter() {
             });
     };
 
-    const handleColorChange = (newColor: any) => {
+    const handleThemeColor = (newColor: any) => {
         setThemeColor(newColor.hex);
+    };
+
+    const handleFooterColor = (newColor: any) => {
+        setFooterColor(newColor.hex);
     };
 
     return (
@@ -65,32 +73,70 @@ export default function SettingFooter() {
                 <Popover placement="right">
                     <PopoverTrigger>
                         <Button className="relative p-0">
-                            <Input type="text" value={themeColor} label="Màu nền Footer" />
+                            <Input type="text" value={data['theme_color']} label="Màu nền Theme" />
                             <div className="absolute w-full h-full cursor-pointer"></div>
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent>
-                        <SketchPicker color={themeColor} onChange={handleColorChange} />
+                        <SketchPicker color={themeColor} onChange={handleThemeColor} />
                     </PopoverContent>
                 </Popover>
                 <Popover placement="right">
                     <PopoverTrigger>
                         <Button className="relative p-0">
-                            <Input type="text" value={themeColor} label="Màu nền Footer" />
+                            <Input type="text" value={data['footer_color']} label="Màu nền Footer" />
                             <div className="absolute w-full h-full cursor-pointer"></div>
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent>
-                        <SketchPicker color={themeColor} onChange={handleColorChange} />
+                        <SketchPicker color={footerColor} onChange={handleFooterColor} />
                     </PopoverContent>
                 </Popover>
-                <Input type="text" placeholder="Người sỡ hữu" />
-                <Input type="text" placeholder="Địa chỉ" />
-                <Input type="text" placeholder="Số điện thoại" />
-                <Input type="text" placeholder="Email" />
-                <Input type="text" placeholder="Giờ làm việc" />
-                <Input type="text" placeholder="Website" />
-                <Button color="primary">Cập nhật</Button>
+                <Input
+                    type="text"
+                    placeholder="Người sỡ hữu"
+                    name="footer_owner"
+                    value={data['footer_owner']}
+                    onChange={handleInputChange}
+                />
+                <Input
+                    type="text"
+                    placeholder="Địa chỉ"
+                    name="footer_address"
+                    value={data['footer_address']}
+                    onChange={handleInputChange}
+                />
+                <Input
+                    type="text"
+                    placeholder="Số điện thoại"
+                    name="footer_phone"
+                    value={data['footer_phone']}
+                    onChange={handleInputChange}
+                />
+                <Input
+                    type="text"
+                    placeholder="Email"
+                    name="footer_email"
+                    value={data['footer_email']}
+                    onChange={handleInputChange}
+                />
+                <Input
+                    type="text"
+                    placeholder="Giờ làm việc"
+                    name="footer_working_hours"
+                    value={data['footer_working_hours']}
+                    onChange={handleInputChange}
+                />
+                <Input
+                    type="text"
+                    placeholder="Website"
+                    name="footer_website"
+                    value={data['footer_website']}
+                    onChange={handleInputChange}
+                />
+                <Button color="primary" onClick={handleSave}>
+                    Cập nhật
+                </Button>
             </div>
         </div>
     );

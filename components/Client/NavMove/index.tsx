@@ -4,7 +4,7 @@ import React from 'react';
 import { HiOutlineChevronLeft } from 'react-icons/hi';
 import css from './NavMove.module.scss';
 import { usePathname, useRouter } from 'next/navigation';
-import GetDateTimeVI from '../GetDateTimeVI';
+import { getDateVI } from '@/functions/getDateVI';
 
 export default function NavMove() {
     const router = useRouter();
@@ -26,7 +26,7 @@ export default function NavMove() {
                         </span>
                     )}
                 </div>
-                <GetDateTimeVI />
+                <span className="font-bold">{getDateVI()}</span>
             </div>
         </div>
     );

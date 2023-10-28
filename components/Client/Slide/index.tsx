@@ -23,7 +23,7 @@ export default function Slide() {
         <div className="flex justify-center">
             <div className="flex w-[1200px] justify-center">
                 <Slider
-                    className="flex md1:w-full md:w-[700px] w-[350px] xs:w-[450px] flex-col items-center"
+                    className="flex md1:w-full md:w-[700px] w-[320px] xs:w-[420px] flex-col items-center"
                     {...settings}
                 >
                     {slides.map((item: string, index: number) => (

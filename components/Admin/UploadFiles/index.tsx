@@ -6,31 +6,25 @@ import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
 import { BsFileEarmarkPlus, BsTrash } from 'react-icons/bs';
 import { LuFileText } from 'react-icons/lu';
 
-export default function UploadFiles({ filesArr }: { filesArr: string[] }) {
+export default function UploadFiles({ filesArr, setFilesArr }: { filesArr: string[]; setFilesArr: any }) {
     const [files, setFiles] = useState<object[]>([]);
     const handleGetFile = async (e: any) => {
         try {
             const file = e.target.files[0];
             if (file) {
-                // const formData = new FormData();
-                // formData.append('files', file);
-                // const result = await axios.post(`${serverBackend}/api/v1/uploadPostFile`, formData);
-                // if (result.data.message === 'success') {
-                //     const name: string = file.name;
-                //     setFiles([
-                //         ...files,
-                //         {
-                //             nameFile: name,
-                //         },
-                //     ]);
-                // }
-                const name: string = file.name;
-                setFiles([
-                    ...files,
-                    {
-                        nameFile: name,
-                    },
-                ]);
+                const formData = new FormData();
+                formData.append('files', file);
+                const result = await axios.post(`${serverBackend}/api/v1/uploadPostFile`, formData);
+                if (result.data.message === 'success') {
+                    const name: string = file.name;
+                    setFiles([
+                        ...files,
+                        {
+                            nameFile: name,
+                        },
+                    ]);
+                    setFilesArr([...filesArr, result.data.data]);
+                }
             }
         } catch (err) {
             console.log(err);
