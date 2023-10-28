@@ -7,78 +7,76 @@ import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 import { FaFlag } from 'react-icons/fa';
 import Image from 'next/image';
 import { AiOutlineEye } from 'react-icons/ai';
-import { useSearchParams } from 'next/navigation';
+const list = [
+    {
+        title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
+        img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
+        content:
+            ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
+    },
+    {
+        title: 'Đạt',
+        img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
+        content:
+            ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
+    },
+    {
+        title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
+        img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
+        content:
+            ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
+    },
+    {
+        title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
+        img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
+        content:
+            ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
+    },
+    {
+        title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
+        img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
+        content:
+            ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
+    },
+    {
+        title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 20236',
+        img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
+        content:
+            ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
+    },
+    {
+        title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
+        img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
+        content:
+            ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
+    },
+    {
+        title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
+        img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
+        content:
+            ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
+    },
+    {
+        title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
+        img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
+        content:
+            ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
+    },
+    {
+        title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
+        img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
+        content:
+            ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
+    },
+];
 
 export default function PostsClient() {
-    const list = [
-        {
-            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
-            img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
-            content:
-                ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
-        },
-        {
-            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
-            img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
-            content:
-                ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
-        },
-        {
-            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
-            img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
-            content:
-                ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
-        },
-        {
-            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
-            img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
-            content:
-                ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
-        },
-        {
-            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
-            img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
-            content:
-                ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
-        },
-        {
-            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 20236',
-            img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
-            content:
-                ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
-        },
-        {
-            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
-            img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
-            content:
-                ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
-        },
-        {
-            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
-            img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
-            content:
-                ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
-        },
-        {
-            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
-            img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
-            content:
-                ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
-        },
-        {
-            title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
-            img: 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg',
-            content:
-                ' Authentication và Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp chúng ta xác thực và phân quyền AutheAuthentication và  Authorization là một phần quan trọng trong việc phát triển phần mềm, giúp',
-        },
-    ];
-
-    const searchParams: any = useSearchParams();
-
     const itemsPerPage: number = 5;
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [start, setStart] = useState<number>(0);
     const [end, setEnd] = useState<number>(itemsPerPage);
+    const [searchValue, setSearchValue] = useState<string>('');
+    const [posts, setPosts] = useState<object[]>(list);
 
     useEffect(() => {
         const newStart = (currentPage - 1) * itemsPerPage;
@@ -87,13 +85,31 @@ export default function PostsClient() {
         setEnd(newEnd);
     }, [currentPage]);
 
+    useEffect(() => {
+        if (searchValue.length > 0) {
+            setPosts(
+                list.filter((item: any) => item.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())),
+            );
+        } else {
+            setPosts(list);
+        }
+    }, [searchValue]);
+
     return (
-        <div className="flex gap-6 px-4">
+        <div className="flex gap-6 px-4 font-roboto min-h-[700px]">
             <PostsCategories />
             <div className="w-full flex flex-col gap-2 pb-[20px]">
-                <h2 className="font-roboto font-bold text-[26px]">Tất cả bài đăng</h2>
+                <div className="justify-between flex">
+                    <h2 className="font-bold text-[26px]">Tất cả bài đăng</h2>
+                    <input
+                        placeholder="Tìm kiếm tên bài đăng"
+                        className="border-[1px] border-[#ccc] rounded-[16px] px-4"
+                        type="text"
+                        onChange={(e) => setSearchValue(String(e.target.value))}
+                    />
+                </div>
                 <div className="flex flex-col gap-4">
-                    {list.slice(start, end).map((item: any, index: number) => (
+                    {posts.slice(start, end).map((item: any, index: number) => (
                         <div
                             key={index}
                             className="border-[2px] cursor-pointer border-[#eaeaea] w-full rounded-[16px] p-4 flex flex-col"
