@@ -75,9 +75,9 @@ export default function HotPosts() {
                     </Card>
                 ) : (
                     <>
-                        <div className="flex justify-between border-b-[2px] pb-3 border-[#eaeaea]">
+                        <div className="flex justify-between border-b-[2px] items-center pb-3 border-[#eaeaea]">
                             <h1 className="text-[26px] line-clamp-2">Bài viết nổi bật</h1>
-                            <span className="cursor-pointer">Xem tất cả</span>
+                            <span className="cursor-pointer text-[13px]">Xem thêm</span>
                         </div>
                         <div className="flex flex-col lg:flex-row mt-3 w-full gap-3">
                             {data.map(
@@ -88,7 +88,7 @@ export default function HotPosts() {
                                             key={index}
                                             className={`${css.hover} flex w-full flex-col gap-3`}
                                         >
-                                            <div className="flex relative w-full overflow-hidden h-[300px]">
+                                            <div className="flex relative w-full overflow-hidden h-[420px]">
                                                 <Image
                                                     src={
                                                         'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202308/Images/infographic-cv-2749-20230801030536-e.jpeg'

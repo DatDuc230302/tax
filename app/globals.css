@@ -111,18 +111,15 @@ input {
 
 /* Custom Scroll */
 
-/* custom scrollbar */
-html::-webkit-scrollbar {
+/* html::-webkit-scrollbar {
     width: 10px;
 }
 
-/* Track */
 html::-webkit-scrollbar-track {
     background: transparent;
 }
 
-/* Handle */
 html::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 8px;
-}
+} */

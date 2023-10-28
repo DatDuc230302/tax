@@ -22,9 +22,9 @@ export default function Asking() {
             <div
                 className={`${
                     turn ? 'right-0' : 'right-[-320px]'
-                } shadow-2xl duration-250 ease-linear fixed w-[320px] bottom-0 top-0 flex-col flex bg-white`}
+                } shadow-2xl z-[1000000000000] w-[250px] w duration-250 ease-linear fixed lg:w-[320px] bottom-0 top-0 flex-col flex bg-white`}
             >
-                <div className="shrink-0 h-[40px] px-4 items-center gap-[100px] flex border-b-[1px] border-[#ccc]">
+                <div className="shrink-0 h-[40px] px-4 items-center justify-between flex border-b-[1px] border-[#ccc]">
                     <i onClick={() => setTurn(false)} className="cursor-pointer">
                         <AiOutlineClose fontSize={18} />
                     </i>
@@ -32,6 +32,7 @@ export default function Asking() {
                         <span>Hỏi đáp</span>
                         <div className="bg-[#00c853] w-[10px] h-[10px] rounded-[50%]"></div>
                     </div>
+                    <div></div>
                 </div>
                 <div className="flex p-4 flex-col justify-between h-full">
                     <div></div>
