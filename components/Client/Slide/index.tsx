@@ -21,7 +21,7 @@ export default function Slide() {
 
     return (
         <div className="flex justify-center">
-            <div className="flex w-[1200px] justify-center">
+            <div className="flex w-wMain justify-center">
                 <Slider
                     className="flex md1:w-full md:w-[700px] w-[320px] xs:w-[420px] flex-col items-center"
                     {...settings}

@@ -85,7 +85,7 @@ export default function CurrentPosts() {
 
     return (
         <div className="flex justify-center my-2 font-merriweather px-4">
-            <div className="flex w-[1200px] flex-col gap-2">
+            <div className="flex w-wMain flex-col gap-2">
                 <h2 className="text-[26px]">Bài viết gần đây</h2>
                 <div className="flex w-full gap-3 flex-wrap md:justify-center lg:justify-start lg:flex-nowrap">
                     {list.slice(start, end).map((item: any, index: number) => (

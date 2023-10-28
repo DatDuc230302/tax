@@ -127,6 +127,8 @@ export default function CreatePost({
         setContent(data);
     };
 
+    console.log(filesArr);
+
     return (
         <>
             {status === 'success' && <SnackbarMessage type={1} title="Thêm bài đăng thành công" />}

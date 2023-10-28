@@ -55,7 +55,7 @@ export default function HotPosts() {
     return (
         <div className="flex justify-center pt-8 px-4">
             {networkError && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
-            <div className="flex w-[1200px] flex-col my-2 font-merriweather">
+            <div className="flex w-wMain flex-col my-2 font-merriweather">
                 {loading ? (
                     <Card className="w-full space-y-5 p-4" radius="lg">
                         <Skeleton className="rounded-lg h-[300px]">

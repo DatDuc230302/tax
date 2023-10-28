@@ -20,6 +20,12 @@ export default function Asking() {
             </Tooltip>
             <div
                 className={`${
+                    turn ? 'visible' : 'invisible'
+                } z-50 bg-black bg-opacity-50 fixed left-0 right-0 top-0 bottom-0`}
+                onClick={() => setTurn(false)}
+            ></div>
+            <div
+                className={`${
                     turn ? 'right-0' : 'right-[-320px]'
                 } shadow-2xl z-[1000000000000] w-[250px] w duration-250 ease-linear fixed lg:w-[320px] bottom-0 top-0 flex-col flex bg-white`}
             >
