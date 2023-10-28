@@ -103,15 +103,15 @@ export default function HotPosts() {
                                                 <h3 className={`${css.title} text-[26px] line-clamp-2`}>
                                                     {item.title}
                                                 </h3>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
-                                                        Tin tức
-                                                    </span>
-                                                    <span className="text-[12px]">23/01/2023</span>
-                                                    <span className="flex gap-1 items-center text-[14px]">
-                                                        <AiOutlineEye fontSize={18} />0
-                                                    </span>
-                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                    Tin tức
+                                                </span>
+                                                <span className="text-[12px]">23/01/2023</span>
+                                                <span className="flex gap-1 items-center text-[14px]">
+                                                    <AiOutlineEye fontSize={18} />0
+                                                </span>
                                             </div>
                                         </Link>
                                     ),
@@ -124,36 +124,38 @@ export default function HotPosts() {
                                             <Link
                                                 href={`/bai-dang/tin-tuc/${item.id}`}
                                                 key={index}
-                                                className={`${css.hover} items-center flex w-full h-max p-4 gap-3 bg-[#F9F9F9]`}
+                                                className={`${css.hover} flex w-full h-max p-4 flex-col gap-3 bg-[#F9F9F9]`}
                                             >
-                                                <div
-                                                    className={
-                                                        'flex shrink-0 w-[123px] overflow-hidden  h-[76px] relative'
-                                                    }
-                                                >
-                                                    <Image
-                                                        sizes="100000000000000px"
-                                                        className={`${css.img} object-cover`}
-                                                        fill
-                                                        src={
-                                                            'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202308/Images/infographic-cv-2749-20230801030536-e.jpeg'
+                                                <div className="flex gap-3 items-center">
+                                                    <div
+                                                        className={
+                                                            'flex shrink-0 w-[123px] overflow-hidden  h-[76px] relative'
                                                         }
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <div className="flex flex-col gap-2">
-                                                    <h3 className={`${css.title} text-[14px] line-clamp-2`}>
-                                                        {item.title}
-                                                    </h3>
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
-                                                            Tin tức
-                                                        </span>
-                                                        <span className="text-[12px]">12 ngày trước</span>
-                                                        <span className="flex gap-1 items-center text-[14px]">
-                                                            <AiOutlineEye fontSize={18} />0
-                                                        </span>
+                                                    >
+                                                        <Image
+                                                            sizes="100000000000000px"
+                                                            className={`${css.img} object-cover`}
+                                                            fill
+                                                            src={
+                                                                'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202308/Images/infographic-cv-2749-20230801030536-e.jpeg'
+                                                            }
+                                                            alt=""
+                                                        />
                                                     </div>
+                                                    <div className="flex flex-col gap-2">
+                                                        <h3 className={`${css.title} text-[14px] line-clamp-2`}>
+                                                            {item.title}
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center justify-start gap-2">
+                                                    <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                        Tin tức
+                                                    </span>
+                                                    <span className="text-[12px]">23/01/2023</span>
+                                                    <span className="flex gap-1 items-center text-[14px]">
+                                                        <AiOutlineEye fontSize={18} />0
+                                                    </span>
                                                 </div>
                                             </Link>
                                         ),
