@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Tooltip } from '@nextui-org/react';
 import { TbMessageCircle2Filled } from 'react-icons/tb';
 import { AiOutlineClose } from 'react-icons/ai';
-import { HiOutlineArrowNarrowUp } from 'react-icons/hi';
 
 export default function Asking() {
     const [turn, setTurn] = useState<boolean>(false);

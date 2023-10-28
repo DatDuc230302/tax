@@ -56,7 +56,7 @@ export default function PostsAdmin() {
             {alert && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
             <div className="flex gap-3">
                 <SortPosts />
-                <ManageCategory />
+                <ManageCategory refresh={refresh} setRefresh={setRefresh} />
                 <CreatePost categories={categories} refresh={refresh} setRefresh={setRefresh} />
             </div>
             <Table

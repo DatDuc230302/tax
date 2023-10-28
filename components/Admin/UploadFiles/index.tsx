@@ -6,7 +6,7 @@ import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
 import { BsFileEarmarkPlus, BsTrash } from 'react-icons/bs';
 import { LuFileText } from 'react-icons/lu';
 
-export default function UploadFiles() {
+export default function UploadFiles({ filesArr }: { filesArr: string[] }) {
     const [files, setFiles] = useState<object[]>([]);
     const handleGetFile = async (e: any) => {
         try {

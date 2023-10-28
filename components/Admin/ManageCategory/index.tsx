@@ -23,11 +23,10 @@ import { AiOutlineClose } from 'react-icons/ai';
 import CreateSubCategory from '../CreateSubCategory';
 import axios from 'axios';
 
-export default function ManageCategory() {
+export default function ManageCategory({ refresh, setRefresh }: { refresh: boolean; setRefresh: any }) {
     const [turn, setTurn] = useState<boolean>(false);
     const [parentCategories, setParentCategories] = useState<object[]>([]);
     const [categories, setCategories] = useState<object[]>([]);
-    const [refresh, setRefresh] = useState<boolean>(false);
     useEffect(() => {
         getParentCategories();
         getCategories();

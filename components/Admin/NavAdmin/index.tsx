@@ -3,7 +3,7 @@
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import Link from 'next/link';
 import React from 'react';
-import { AiFillDashboard, AiFillSliders } from 'react-icons/ai';
+import { AiFillDashboard, AiFillSetting, AiFillSliders } from 'react-icons/ai';
 import { BiCategory, BiSolidDashboard } from 'react-icons/bi';
 import { BsClockHistory, BsFillPostcardFill } from 'react-icons/bs';
 import { FaBars, FaUserFriends } from 'react-icons/fa';
@@ -37,8 +37,13 @@ const listItems: items[] = [
     },
     {
         icon: <AiFillSliders fontSize={20} />,
-        title: 'Quản lý slides',
-        href: '/admin/slides',
+        title: 'Quản lý Banners',
+        href: '/admin/banners',
+    },
+    {
+        icon: <AiFillSetting fontSize={20} />,
+        title: 'Quản lý trang',
+        href: '/admin/settingWeb',
     },
 ];
 

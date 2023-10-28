@@ -25,8 +25,6 @@ import axios from 'axios';
 import { AdminContext } from '@/app/admin/layout';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
 import Ckeditor from '@/components/Common/Ckeditor';
-import { FaTrash } from 'react-icons/fa';
-import { LuFileText } from 'react-icons/lu';
 import UploadFiles from '../UploadFiles';
 
 export default function CreatePost({
@@ -38,7 +36,7 @@ export default function CreatePost({
     setRefresh: any;
 }) {
     // Cho phép bật tắt creatPost
-    const [turn, setTurn] = useState<boolean>(true);
+    const [turn, setTurn] = useState<boolean>(false);
 
     const dataContext: any = useContext(AdminContext);
 
@@ -62,6 +60,8 @@ export default function CreatePost({
     const [require, setRequire] = useState<boolean>(false);
     // Trạng thái sau khi thêm bài viết
     const [status, setStatus] = useState<string>('');
+    // Mảng chưa đường dẫn files
+    const [filesArr, setFilesArr] = useState<string[]>([]);
 
     const handleSubmit = async () => {
         try {
@@ -138,7 +138,7 @@ export default function CreatePost({
                             errorMessage={require && title.length === 0 && 'Vui lòng nhập tiêu đề bài viết'}
                         />
                         <div className="flex gap-4 relative">
-                            {/* <Dropdown>
+                            <Dropdown>
                                 <DropdownTrigger>
                                     <Button className="w-full h-full px-0" variant="flat">
                                         <Input
@@ -153,13 +153,37 @@ export default function CreatePost({
                                     </Button>
                                 </DropdownTrigger>
                                 <DropdownMenu aria-label="Static Actions">
-                                    {categories.map((item: any, index: number) => (
+                                    {/* {categories.map((item: any, index: number) => (
                                         <SelectItem onClick={() => setCategory(item.name)} key={index}>
                                             {item.name}
                                         </SelectItem>
-                                    ))}
+                                    ))} */}
+                                    <SelectItem key={'text'}>Dat</SelectItem>
                                 </DropdownMenu>
-                            </Dropdown> */}
+                            </Dropdown>
+                            <Dropdown>
+                                <DropdownTrigger>
+                                    <Button className="w-full h-full px-0" variant="flat">
+                                        <Input
+                                            errorMessage={
+                                                require && subCategory.length === 0 && 'Vui lòng chọn thể loại con'
+                                            }
+                                            label="Thể loại con"
+                                            type="text"
+                                            value={category}
+                                        />
+                                        <i className="absolute cursor-pointer left-0 right-0 bottom-0 top-0"></i>
+                                    </Button>
+                                </DropdownTrigger>
+                                <DropdownMenu aria-label="Static Actions">
+                                    {/* {categories.map((item: any, index: number) => (
+                                        <SelectItem onClick={() => setCategory(item.name)} key={index}>
+                                            {item.name}
+                                        </SelectItem>
+                                    ))} */}
+                                    <SelectItem key={'text'}>Dat</SelectItem>
+                                </DropdownMenu>
+                            </Dropdown>
                         </div>
                         <div className="flex gap-4 relative">
                             <Input
@@ -198,7 +222,7 @@ export default function CreatePost({
                         </div>
                         <Ckeditor content={content} setContent={setContent} />
                         <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
-                        <UploadFiles />
+                        <UploadFiles filesArr={filesArr} />
                     </ModalBody>
                     <ModalFooter>
                         <Button color="danger" variant="light" onClick={() => setTurn(false)}>
