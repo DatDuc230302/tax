@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: false,
     images: {
-        domains: ['media.hcmtax.gov.vn', 'files.fullstack.edu.vn'],
+        domains: ['media.hcmtax.gov.vn', 'media.npr.org'],
     },
 };
 

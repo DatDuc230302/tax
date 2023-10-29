@@ -32,7 +32,7 @@ export default function LoginAdmin() {
     const [wrongAccount, setWrongAccount] = useState<boolean>(false);
     const [networkError, setNetworkError] = useState<boolean>(false);
     const [inactive, setInactive] = useState<boolean>(false);
-    const [loginSuccess, setLoginSuccess] = useState<boolean>(true);
+    const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
     const router = useRouter();
 
     const handleSubmit = loadingApi(async () => {

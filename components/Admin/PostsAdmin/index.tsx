@@ -65,7 +65,7 @@ export default function PostsAdmin() {
     return (
         <div className="flex flex-col w-full px-4 gap-4 mt-4">
             {alert && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-col lg:flex-row">
                 <SortPosts />
                 <ManageCategory refresh={refresh} setRefresh={setRefresh} />
                 <CreatePost

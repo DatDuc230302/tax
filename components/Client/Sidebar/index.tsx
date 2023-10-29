@@ -42,18 +42,21 @@ export default function Sidebar() {
                         />
                     </div>
                     <div className="flex flex-col px-4">
-                        {listNav.map((item: items, index: number) => (
-                            <div key={index}>
-                                {item.href && (
-                                    <Link
-                                        href={item.href}
-                                        className="items-center flex border-b-[1px] cursor-pointer border-[#ccc] h-[49px]"
-                                    >
-                                        {item.title}
-                                    </Link>
-                                )}
-                            </div>
-                        ))}
+                        {listNav.map(
+                            (item: items, index: number) =>
+                                index > 0 && (
+                                    <div key={index}>
+                                        {item.href && (
+                                            <Link
+                                                href={item.href}
+                                                className="items-center flex border-b-[1px] cursor-pointer border-[#ccc] h-[49px]"
+                                            >
+                                                {item.title}
+                                            </Link>
+                                        )}
+                                    </div>
+                                ),
+                        )}
                         <SearchTool className="border-[2px] border-[#ccc] mt-2 w-full" />
                     </div>
                 </div>

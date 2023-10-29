@@ -18,6 +18,16 @@ export default function BannersAdmin() {
         try {
             const response = await axios.get(`${serverBackend}/api/v1/banner-images`);
             setBanners(response.data);
+    const [banners, setBanners] = useState<any>([]);
+    const [imageUrl, setImageUrl] = useState<any>('');
+    const [status, setStatus] = useState<any>('active');
+
+    // Function to fetch banner images from the API
+    const fetchBannerImages = async () => {
+        try {
+            const response = await fetch('/api/v1/banner-images');
+            const data = await response.json();
+            setImageUrl(data);
         } catch (error) {
             console.error('Error fetching banner images:', error);
         }
@@ -72,6 +82,22 @@ export default function BannersAdmin() {
             };
             reader.readAsDataURL(file);
         }
+    const handleAddBanner = () => {
+        // Gửi yêu cầu POST để thêm banner vào API
+        // Thực hiện gửi yêu cầu POST vào đây
+        // Sau khi thêm thành công, cập nhật danh sách banner
+    };
+
+    const handleDeleteBanner = (id: any) => {
+        // Gửi yêu cầu DELETE để xóa banner với ID cụ thể
+        // Thực hiện gửi yêu cầu DELETE vào đây
+        // Sau khi xóa thành công, cập nhật danh sách banner
+    };
+
+    const handleUpdateBanner = (id: any) => {
+        // Gửi yêu cầu PUT để cập nhật thông tin banner với ID cụ thể
+        // Thực hiện gửi yêu cầu PUT vào đây
+        // Sau khi cập nhật thành công, cập nhật danh sách banner
     };
     return (
          <div className="flex w-full px-4 mt-4 justify-center">
@@ -101,7 +127,7 @@ export default function BannersAdmin() {
                         <TableColumn>TOOLS</TableColumn>
                     </TableHeader>
                     <TableBody>
-                        {banners.map((banner) => (
+                        {banners.map((banner: any) => (
                             <TableRow key={banner.id}>
                                 <TableCell>
                                     <div className="w-[100px] h-[100px] relative">
@@ -111,7 +137,10 @@ export default function BannersAdmin() {
                                 <TableCell className="whitespace-nowrap">
                                     <div className="flex gap-2">
                                         <i>
-                                            <BsFillTrashFill fontSize={20} onClick={() => handleDeleteBanner(banner.id)} />
+                                            <BsFillTrashFill
+                                                fontSize={20}
+                                                onClick={() => handleDeleteBanner(banner.id)}
+                                            />
                                         </i>
                                         <i>
                                             <MdRestore fontSize={20} onClick={() => handleUpdateBanner(banner.id)} />
@@ -126,4 +155,3 @@ export default function BannersAdmin() {
         </div>
     );
 }
-
