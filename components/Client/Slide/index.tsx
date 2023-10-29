@@ -22,11 +22,9 @@ export default function Slide() {
         }
     };
 
-    console.log(banners);
-
     return (
         <div className="flex justify-center px-4">
-            <div className="flex w-wMain justify-center">
+            {/* <div className="flex w-wMain justify-center">
                 <Carousel
                     autoPlay={true}
                     infiniteLoop={true}
@@ -44,7 +42,7 @@ export default function Slide() {
                         </div>
                     ))}
                 </Carousel>
-            </div>
+            </div> */}
         </div>
     );
 }

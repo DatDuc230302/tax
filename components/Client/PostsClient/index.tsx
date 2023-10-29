@@ -102,7 +102,7 @@ export default function PostsClient() {
     return (
         <div className="flex gap-6 px-4 font-roboto min-h-[700px]">
             {searchParams.get('postId') ? (
-                <PostClient />
+                <PostClient postId={searchParams.get('postId')} />
             ) : (
                 <>
                     <PostsCategories />
