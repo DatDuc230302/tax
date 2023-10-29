@@ -63,6 +63,7 @@ export default function CreatePost({
     const [require, setRequire] = useState<boolean>(false);
     // Trạng thái sau khi thêm bài viết
     const [status, setStatus] = useState<string>('');
+    const [categoryID, setcategoryID] = useState<string>('');
     //
     const [filesArr, setFilesArr] = useState<string[]>([]);
     const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
@@ -85,6 +86,7 @@ export default function CreatePost({
                 formData.append('image', image, image.name);
                 formData.append('serial_number', serial);
                 formData.append('Issuance_date', issuance);
+                formData.append('category_id', categoryID);
                 formData.append('file', filesArr);
                 const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
                 if (result.data.message === 'success') {
@@ -126,7 +128,10 @@ export default function CreatePost({
         const data: any = editor.getData();
         setContent(data);
     };
-
+const handleSubCategoryChange = (item: any) => {
+        setSubCategory(item.name);
+        setcategoryID(item.id);
+    };
     return (
         <>
             {status === 'success' && <SnackbarMessage type={1} title="Thêm bài đăng thành công" />}
@@ -149,7 +154,7 @@ export default function CreatePost({
                     <ModalHeader className="flex flex-col gap-1">Thêm bài viết</ModalHeader>
                     <ModalBody>
                         <Input
-                            onChange={(e) => setTitle(String(e.target.value))}
+                            onChange={(e: any) => setTitle(String(e.target.value))}
                             type="text"
                             value={title}
                             label="Tiêu đề bài viết"
@@ -198,7 +203,7 @@ export default function CreatePost({
                                 </DropdownTrigger>
                                 <DropdownMenu aria-label="Static Actions">
                                     {showSubCategories.map((item: any, index: number) => (
-                                        <DropdownItem onClick={() => setSubCategory(item.name)} key={index}>
+                                        <DropdownItem onClick={() => handleSubCategoryChange(item)} key={index}>
                                             {item.name}
                                         </DropdownItem>
                                     ))}
@@ -207,14 +212,14 @@ export default function CreatePost({
                         </div>
                         <div className="flex gap-4 relative">
                             <Input
-                                onChange={(e) => setSerial(String(e.target.value))}
+                                onChange={(e: any) => setSerial(String(e.target.value))}
                                 type="text"
                                 value={serial}
                                 label="Số hiệu"
                                 errorMessage={require && serial.length === 0 && 'Vui lòng nhập số hiệu'}
                             />
                             <Input
-                                onChange={(e) => setIssuance(String(e.target.value))}
+                                onChange={(e: any) => setIssuance(String(e.target.value))}
                                 type="text"
                                 value={issuance}
                                 label="Ngày ban hành VD: 13\10\2022"
