@@ -26,30 +26,29 @@ export default function BannersAdmin() {
     const [status, setStatus] = useState<any>('active');
     const [imageFile, setImageFile] = useState<any>(null);
     const [imageShow, setImageShow] = useState<any>(null);
+    const [refresh, setRefresh] = useState<boolean>(false);
 
     // Function to fetch banner images from the API
-    const fetchBannerImages = async () => {
+    const getBanners = async () => {
         try {
-            const response = await fetch('/api/v1/banner-images');
-            const data = await response.json();
-            setImageUrl(data);
+            const result = await axios.get(`${serverBackend}/api/v1/banner-images`);
+            console.log(result);
         } catch (error) {
             console.error('Error fetching banner images:', error);
         }
     };
 
     useEffect(() => {
-        fetchBannerImages();
+        getBanners();
     }, []);
 
     const handleAddBanner = async () => {
         try {
-            const newBanner = {
-                image_url: imageUrl,
-            };
-
-            await axios.post(serverBackend, newBanner);
-            fetchBannerImages(); // Sau khi thêm thành công, cập nhật danh sách banner
+            const formData = new FormData();
+            formData.append('file', imageFile);
+            formData.append('status', status);
+            const result = await axios.post(`${serverBackend}/api/v1/banner-images`, formData);
+            console.log(result);
         } catch (error) {
             console.error('Error adding banner:', error);
         }
@@ -57,8 +56,7 @@ export default function BannersAdmin() {
 
     const handleDeleteBanner = async (id: any) => {
         try {
-            await axios.delete(`${serverBackend}/api/v1/banner-images/${id}`);
-            fetchBannerImages(); // Sau khi xóa thành công, cập nhật danh sách banner
+            const resutl = await axios.delete(`${serverBackend}/api/v1/banner-images/${id}`);
         } catch (error) {
             console.error('Error deleting banner:', error);
         }
@@ -71,8 +69,8 @@ export default function BannersAdmin() {
                 status: status,
             };
 
-            await axios.put(`${serverBackend}/api/v1/banner-images/${id}`, updatedBanner);
-            fetchBannerImages(); // Sau khi cập nhật thành công, cập nhật danh sách banner
+            const formData = new FormData();
+            const resutl = await axios.put(`${serverBackend}/api/v1/banner-images/${id}`, updatedBanner);
         } catch (error) {
             console.error('Error updating banner:', error);
         }
@@ -82,18 +80,12 @@ export default function BannersAdmin() {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = (event: any) => {
-                setImageUrl(event.target.result);
-            };
             reader.onloadend = () => {
+                setImageFile(file);
                 setImageShow(reader.result);
             };
             reader.readAsDataURL(file);
         }
-    };
-
-    const handleDeleteImage = () => {
-        setImageShow('');
     };
 
     return (
@@ -138,8 +130,8 @@ export default function BannersAdmin() {
                                 <Image src={imageShow} alt="" fill sizes="10000000px" />
                             </div>
                             <div className="flex gap-2 justify-center">
-                                <Button>Tải lên</Button>
-                                <Button onClick={() => handleDeleteImage()}>Hủy</Button>
+                                <Button onClick={() => handleAddBanner()}>Tải lên</Button>
+                                <Button>Hủy</Button>
                             </div>
                         </div>
                     )}
