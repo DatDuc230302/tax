@@ -23,11 +23,11 @@ export default function Slide() {
         <div className="flex justify-center">
             <div className="flex w-wMain justify-center">
                 <Slider
-                    className="flex md1:w-full md:w-[700px] w-[320px] xs:w-[420px] flex-col items-center"
+                    className="flex md1:w-full md:w-[700px] w-[280px] xs:w-[420px] flex-col items-center"
                     {...settings}
                 >
                     {slides.map((item: string, index: number) => (
-                        <div key={index} className="flex relative md1:w-full md1:h-[600px] md:h-[500px] h-[400px]">
+                        <div key={index} className="flex relative md1:w-full md1:h-[600px] md:h-[500px] h-[300px]">
                             <Image className="object-cover" src={item} sizes="100000px" fill alt="" />
                         </div>
                     ))}

@@ -16,6 +16,7 @@
         "@mui/icons-material": "^5.14.12",
         "@mui/material": "^5.14.12",
         "@nextui-org/react": "^2.1.13",
+        "@react-google-maps/api": "^2.19.2",
         "@tinymce/tinymce-react": "^4.3.0",
         "axios": "^1.5.1",
         "ckeditor4": "^4.23.0",
