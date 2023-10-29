@@ -6,6 +6,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { FaBars, FaHome } from 'react-icons/fa';
 import { HiChevronDown } from 'react-icons/hi';
 import SearchTool from '../SearchTool';
+import css from './NavHeader.module.scss';
 
 interface items {
     icon?: ReactElement;
@@ -72,11 +73,13 @@ export default function NavHeader() {
         }
     }, [path]);
 
+    const subNews = ['Tin kinh tế', 'Tin chính trị', 'Tin thuế'];
+
     return (
         <div className="hidden lg:flex w-full justify-between h-full items-center font-sansSerif">
             <div className="flex h-full">
                 {listNav.map((item: any, index: number) => (
-                    <div key={index}>
+                    <div>
                         {item.href.length > 0 && (
                             <Link
                                 href={`${item.href}`}
@@ -89,12 +92,22 @@ export default function NavHeader() {
                         )}
                         {!item.href && (
                             <span
-                                className={`${
-                                    active === index && `bg-[#52b6ff]`
-                                } text-white select-none gap-1 h-full items-center px-4 hover:bg-[#52B6FF] duration-100 ease-linear flex shrink-0 cursor-pointer font-bold`}
+                                className={`${active === index && `bg-[#52b6ff]`} ${
+                                    css.news
+                                } text-white cursor-default relative select-none gap-1 h-full items-center px-4 hover:bg-[#52B6FF] duration-100 ease-linear flex shrink-0 font-bold`}
                             >
                                 {item.title}
                                 {item.icon}
+                                <div className={`${css.subNews} flex flex-col gap-2`}>
+                                    {subNews.map((item) => (
+                                        <span
+                                            key={item}
+                                            className="py-2 px-4 text-[#363636] hover:bg-[#e4e4e4] cursor-pointer"
+                                        >
+                                            {item}
+                                        </span>
+                                    ))}
+                                </div>
                             </span>
                         )}
                     </div>

@@ -14,7 +14,7 @@ export default function News() {
             <div className="w-wMain flex flex-col gap-4">
                 <div className="flex justify-between items-center border-b-[2px] border-[#EAEAEA]">
                     <h2 className="text-[26px]">Tin tức</h2>
-                    <div className="flex gap-3 text-[14px]">
+                    <div className="hidden sm:flex gap-3 text-[14px]">
                         {arr.map((item: any) => (
                             <h4
                                 key={item}
@@ -77,9 +77,6 @@ export default function News() {
                             </div>
                         </div>
                     ))}
-                </div>
-                <div className="flex justify-end">
-                    <Pagination showControls total={100} initialPage={1} />
                 </div>
             </div>
         </div>
