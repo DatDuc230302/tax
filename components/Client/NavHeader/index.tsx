@@ -99,12 +99,12 @@ export default function NavHeader() {
                                 {item.title}
                                 {item.icon}
                                 <div className={`${css.subNews} flex flex-col gap-2`}>
-                                    {subNews.map((subNew) => (
+                                    {subNews.map((subNew: any) => (
                                         <span
                                             key={subNew}
                                             className="py-2 px-4 text-[#363636] hover:bg-[#e4e4e4] cursor-pointer"
                                         >
-                                            {item}
+                                            {subNew}
                                         </span>
                                     ))}
                                 </div>
