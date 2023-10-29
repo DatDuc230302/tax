@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import {
     Button,
+    Chip,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -19,9 +20,10 @@ import { BsFillTrashFill, BsPlusCircle } from 'react-icons/bs';
 import { MdRestore } from 'react-icons/md';
 import axios from 'axios';
 import { serverBackend } from '@/server';
+import { formatTime } from '@/functions/formatTime';
 
 export default function BannersAdmin() {
-    const [banners, setBanners] = useState<any>([]);
+    const [banners, setBanners] = useState<object[]>([]);
     const [imageUrl, setImageUrl] = useState<any>('');
     const [status, setStatus] = useState<any>('active');
     const [imageFile, setImageFile] = useState<any>(null);
@@ -31,8 +33,10 @@ export default function BannersAdmin() {
     // Function to fetch banner images from the API
     const getBanners = async () => {
         try {
-            const result = await axios.get(`${serverBackend}/api/v1/banner-images`);
-            console.log(result);
+            const result = await axios.get(`${serverBackend}/api/v1/bannerImages`);
+            if (result.data.message === 'success') {
+                setBanners(result.data.data);
+            }
         } catch (error) {
             console.error('Error fetching banner images:', error);
         }
@@ -40,7 +44,7 @@ export default function BannersAdmin() {
 
     useEffect(() => {
         getBanners();
-    }, []);
+    }, [refresh]);
 
     const handleAddBanner = async () => {
         try {
@@ -48,7 +52,9 @@ export default function BannersAdmin() {
             formData.append('file', imageFile);
             formData.append('status', status);
             const result = await axios.post(`${serverBackend}/api/v1/bannerImages`, formData);
-            window.location.reload();
+            if (result.data.message === 'success') {
+                setRefresh(!refresh);
+            }
         } catch (error) {
             console.error('Error adding banner:', error);
         }
@@ -138,27 +144,38 @@ export default function BannersAdmin() {
                 </div>
                 <Table aria-label="Example static collection table">
                     <TableHeader>
-                        <TableColumn>BANNER</TableColumn>
-                        <TableColumn>TOOLS</TableColumn>
+                        <TableColumn>Banner</TableColumn>
+                        <TableColumn>Trạng thái</TableColumn>
+                        <TableColumn>Ngày tạo</TableColumn>
+                        <TableColumn>Công cụ</TableColumn>
                     </TableHeader>
                     <TableBody>
-                        {banners.map((banner: any) => (
-                            <TableRow key={banner.id}>
+                        {banners.map((item: any, index: number) => (
+                            <TableRow key={index}>
                                 <TableCell>
-                                    <div className="w-[100px] h-[100px] relative">
-                                        <Image src={banner.image_url} alt={banner.image_url} fill sizes="100000px" />
-                                    </div>
+                                    {/* <div className="w-[100px] h-[100px] relative">
+                                        <Image src={`${serverBackend}item.image_url`} alt={item.image_url} fill sizes="100000px" />
+                                    </div> */}
+                                    {item.image_url}
                                 </TableCell>
+                                <TableCell>
+                                    {item.status === 'active' ? (
+                                        <Chip color="primary">Hoạt động</Chip>
+                                    ) : (
+                                        <Chip>Không hoạt động</Chip>
+                                    )}
+                                </TableCell>
+                                <TableCell>{formatTime(item.created_at)}</TableCell>
                                 <TableCell className="whitespace-nowrap">
                                     <div className="flex gap-2">
                                         <i>
                                             <BsFillTrashFill
                                                 fontSize={20}
-                                                onClick={() => handleDeleteBanner(banner.id)}
+                                                onClick={() => handleDeleteBanner(item.id)}
                                             />
                                         </i>
                                         <i>
-                                            <MdRestore fontSize={20} onClick={() => handleUpdateBanner(banner.id)} />
+                                            <MdRestore fontSize={20} onClick={() => handleUpdateBanner(item.id)} />
                                         </i>
                                     </div>
                                 </TableCell>
@@ -170,4 +187,3 @@ export default function BannersAdmin() {
         </div>
     );
 }
-        

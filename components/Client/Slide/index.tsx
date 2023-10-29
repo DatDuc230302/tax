@@ -8,6 +8,8 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 export default function Slide() {
     const slides = ['/imgs/slides/slide1.jpg', '/imgs/slides/slide2.jpg', '/imgs/slides/slide3.jpg'];
 
+    const getBanners = async () => {};
+
     return (
         <div className="flex justify-center px-4">
             <div className="flex w-wMain justify-center">
