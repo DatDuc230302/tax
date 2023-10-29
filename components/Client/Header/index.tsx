@@ -7,6 +7,7 @@ import React from 'react';
 import Sidebar from '../Sidebar';
 import NavHeader from '../NavHeader';
 import NavMove from '../NavMove';
+import Link from 'next/link';
 
 export default function Header() {
     return (
@@ -37,9 +38,9 @@ export default function Header() {
                                 <h3 className="flex items-center text-white font-bold">CHI CỤC THUẾ QUẬN 8</h3>
                             </div>
                         </div>
-                        <div className="relative w-[45px] h-[45px]">
+                        <Link href="/" className="relative w-[45px] h-[45px]">
                             <Image src={'/imgs/logo.png'} sizes="10000px" fill alt="" />
-                        </div>
+                        </Link>
                     </div>
                     <NavHeader />
                 </div>

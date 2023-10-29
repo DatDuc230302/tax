@@ -50,7 +50,7 @@ export default function Asking() {
                                 placeholder="Đặt câu hỏi"
                             />
                             {valueInput.length > 0 && (
-                                <span className="flex top-[-20px] right-[10px] absolute cursor-pointer font-sansSerif text-[#4d7cff]">
+                                <span className="select-none flex top-[-20px] right-[10px] absolute cursor-pointer font-sansSerif text-[#4d7cff]">
                                     GỬI
                                 </span>
                             )}

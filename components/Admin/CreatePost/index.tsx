@@ -128,7 +128,7 @@ export default function CreatePost({
         const data: any = editor.getData();
         setContent(data);
     };
-const handleSubCategoryChange = (item: any) => {
+    const handleSubCategoryChange = (item: any) => {
         setSubCategory(item.name);
         setcategoryID(item.id);
     };
