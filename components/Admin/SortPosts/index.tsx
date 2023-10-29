@@ -1,7 +1,7 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@nextui-org/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-export default function SortPosts() {
+export default function SortPosts({ parentCategories, categories }: { parentCategories: any; categories: any }) {
     const [selection, setSelection] = useState<string>('Tiêu đề');
     const [searchValue, setSearchValue] = useState<string>('');
     const [sortStatus, setSortStatus] = useState<string>('Sắp xếp trạng thái');
@@ -21,9 +21,14 @@ export default function SortPosts() {
                         </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Single selection example" variant="flat">
-                        <DropdownItem onClick={() => setSortCategory('Sắp xếp thể loại cha')} key="text">
+                        <DropdownItem onClick={() => setSortCategory('Sắp xếp thể loại cha')} key={'all'}>
                             Tất cả
                         </DropdownItem>
+                        {parentCategories.map((item: any, index: number) => (
+                            <DropdownItem onClick={() => setSortCategory(item.name)} key={index}>
+                                {item.name}
+                            </DropdownItem>
+                        ))}
                     </DropdownMenu>
                 </Dropdown>
                 <Dropdown>
@@ -36,9 +41,17 @@ export default function SortPosts() {
                         </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Single selection example" variant="flat">
-                        <DropdownItem onClick={() => setSortSubCategory('Sắp xếp thể loại con')} key="text">
+                        <DropdownItem onClick={() => setSortSubCategory('Sắp xếp thể loại con')} key={'all'}>
                             Tất cả
                         </DropdownItem>
+                        {categories.map(
+                            (item: any, index: number) =>
+                                item.parent_name === sortCategory && (
+                                    <DropdownItem onClick={() => setSortSubCategory(item.name)} key={index}>
+                                        {item.name}
+                                    </DropdownItem>
+                                ),
+                        )}
                     </DropdownMenu>
                 </Dropdown>
                 <Dropdown>
