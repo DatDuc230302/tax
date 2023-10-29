@@ -99,11 +99,11 @@ export default function PostsClient() {
         <div className="flex gap-6 px-4 font-roboto min-h-[700px]">
             <PostsCategories />
             <div className="w-full flex flex-col gap-2 pb-[20px]">
-                <div className="justify-between flex">
+                <div className="justify-between flex flex-col md:flex-row">
                     <h2 className="font-bold text-[26px]">Tất cả bài đăng</h2>
                     <input
                         placeholder="Tìm kiếm tên bài đăng"
-                        className="border-[1px] border-[#ccc] rounded-[16px] px-4"
+                        className="border-[1px] border-[#ccc] rounded-[16px] p-2"
                         type="text"
                         onChange={(e) => setSearchValue(String(e.target.value))}
                     />

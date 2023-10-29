@@ -10,7 +10,7 @@ export default function News() {
     const list = [1, 2, 3, 4];
 
     return (
-        <div className="flex justify-center font-merriweather min-h-[950px] px-4">
+        <div className="flex justify-center font-merriweather min-h-[950px] px-4 py-2">
             <div className="w-wMain flex flex-col gap-4">
                 <div className="flex justify-between items-center border-b-[2px] border-[#EAEAEA]">
                     <h2 className="text-[26px]">Tin tức</h2>
