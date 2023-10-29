@@ -1,4 +1,4 @@
-import BannersAdmin from '@/components/Admin/BannerAdmin';
+import BannersAdmin from '@/components/Admin/SlidesAdmin';
 import React from 'react';
 
 export default function Page() {
