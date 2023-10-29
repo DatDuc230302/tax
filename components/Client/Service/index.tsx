@@ -48,7 +48,7 @@ const list2: items[] = [
 export default function Service() {
     return (
         <div className="w-full justify-center flex bg-[#F3F3F3] p-4">
-            <div className="flex w-[1200px] flex-col select-none my-2 ">
+            <div className="flex w-wMain flex-col select-none my-2 ">
                 <div className="flex w-full justify-center text-[30px]">
                     <h3 className="border-b-[3px] border-[#E64558] pb-1 font-merriweather font-bold">DỊCH VỤ CÔNG</h3>
                 </div>

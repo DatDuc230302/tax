@@ -9,8 +9,6 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@ckbox/components": "^2.1.2",
-        "@ckbox/core": "^2.1.2",
         "@ckeditor/ckeditor5-build-classic": "^40.0.0",
         "@ckeditor/ckeditor5-react": "^6.1.0",
         "@emotion/react": "^11.11.1",
@@ -18,9 +16,9 @@
         "@mui/icons-material": "^5.14.12",
         "@mui/material": "^5.14.12",
         "@nextui-org/react": "^2.1.13",
+        "@react-google-maps/api": "^2.19.2",
         "@tinymce/tinymce-react": "^4.3.0",
         "axios": "^1.5.1",
-        "ckbox": "^2.1.2",
         "ckeditor4": "^4.23.0",
         "diacritic": "^0.0.2",
         "framer-motion": "^10.16.4",
@@ -28,10 +26,9 @@
         "next": "latest",
         "react": "latest",
         "react-color": "^2.19.3",
-        "react-colorful": "^5.6.1",
         "react-dom": "latest",
         "react-icons": "^4.11.0",
-        "react-slick": "^0.29.0",
+        "react-responsive-carousel": "^3.2.23",
         "recharts": "^2.8.0",
         "sass": "^1.68.0",
         "slick-carousel": "^1.8.1"

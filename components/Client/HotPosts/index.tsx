@@ -52,10 +52,12 @@ export default function HotPosts() {
         }
     }, setLoading);
 
+    const handleClick = () => {};
+
     return (
-        <div className="flex justify-center pt-8 px-4">
+        <div className="flex justify-center px-4">
             {networkError && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
-            <div className="flex w-[1200px] flex-col my-2 font-merriweather">
+            <div className="flex w-wMain flex-col my-2 font-merriweather">
                 {loading ? (
                     <Card className="w-full space-y-5 p-4" radius="lg">
                         <Skeleton className="rounded-lg h-[300px]">
@@ -77,17 +79,15 @@ export default function HotPosts() {
                     <>
                         <div className="flex justify-between border-b-[2px] items-center pb-3 border-[#eaeaea]">
                             <h1 className="text-[26px] line-clamp-2">Bài viết nổi bật</h1>
-                            <span className="cursor-pointer text-[13px]">Xem thêm</span>
+                            <Link href={'/bai-dang'} className="cursor-pointer text-[13px]">
+                                Xem thêm
+                            </Link>
                         </div>
                         <div className="flex flex-col lg:flex-row mt-3 w-full gap-3">
                             {data.map(
                                 (item: any, index: number) =>
                                     index === 0 && (
-                                        <Link
-                                            href={`/bai-dang/tin-tuc/${item.id}`}
-                                            key={index}
-                                            className={`${css.hover} flex w-full flex-col gap-3`}
-                                        >
+                                        <span key={index} className={`${css.hover} flex w-full flex-col gap-3`}>
                                             <div className="flex relative w-full overflow-hidden h-[420px]">
                                                 <Image
                                                     src={
@@ -113,7 +113,7 @@ export default function HotPosts() {
                                                     <AiOutlineEye fontSize={18} />0
                                                 </span>
                                             </div>
-                                        </Link>
+                                        </span>
                                     ),
                             )}
                             <div className="flex flex-col w-full gap-3">
@@ -121,8 +121,7 @@ export default function HotPosts() {
                                     (item: any, index: number) =>
                                         index > 0 &&
                                         index < 5 && (
-                                            <Link
-                                                href={`/bai-dang/tin-tuc/${item.id}`}
+                                            <span
                                                 key={index}
                                                 className={`${css.hover} flex w-full h-max p-4 flex-col gap-3 bg-[#F9F9F9]`}
                                             >
@@ -157,7 +156,7 @@ export default function HotPosts() {
                                                         <AiOutlineEye fontSize={18} />0
                                                     </span>
                                                 </div>
-                                            </Link>
+                                            </span>
                                         ),
                                 )}
                             </div>

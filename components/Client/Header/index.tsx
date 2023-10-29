@@ -16,7 +16,7 @@ export default function Header() {
                     <Image className="object-cover" src={'/imgs/bg_header.jpg'} fill sizes="1000000px" alt="" />
                 </div>
                 <div className="flex absolute w-full justify-center h-full">
-                    <div className="flex w-[1200px] items-center gap-3">
+                    <div className="flex w-wMain items-center gap-3">
                         <div className="w-[110px] h-[110px] relative">
                             <Image src={'/imgs/logo.png'} fill sizes="100000px" alt="" />
                         </div>
@@ -28,9 +28,9 @@ export default function Header() {
                 </div>
             </div>
             <div className="flex bg-[#0B80FF] justify-center">
-                <div className="flex w-[1200px] justify-between h-[70px] lg:h-[42px]">
+                <div className="flex w-wMain justify-between h-[70px] lg:h-[42px]">
                     <div className="h-full px-4 flex w-full lg:hidden items-center justify-between">
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
                             <Sidebar />
                             <div className="flex flex-col text-[13px]">
                                 <h3 className="flex items-center text-white font-bold">CỤC THUẾ TP. HỒ CHÍ MINH</h3>

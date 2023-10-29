@@ -1,5 +1,9 @@
 import React from 'react';
 
 export default function Page() {
-    return <div>Uilities</div>;
+    return (
+        <div className="flex justify-center min-h-[700px]">
+            <div className="w-wMain">d</div>
+        </div>
+    );
 }

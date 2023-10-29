@@ -4,21 +4,21 @@ import { FaLocationDot } from 'react-icons/fa6';
 
 export default function Page() {
     return (
-        <div className="flex justify-center min-h-[700px]">
-            <div className="flex w-[1200px] flex-col gap-4">
+        <div className="flex justify-center min-h-[700px] px-4">
+            <div className="flex w-wMain flex-col gap-4">
                 <h2 className="text-[#0B80FF] font-bold text-[25px] mt-2 w-full">Thông tin liên hệ</h2>
                 <div className="flex w-full gap-4 flex-col rounded-[16px] bg-[#F6F6F6] p-4">
                     <div className="flex gap-2 items-center">
                         <i>
                             <FaLocationDot fontSize={22} />
                         </i>
-                        <span>63 Vũ Tông Phan, phường An Phú, thành phố Thủ Đức, Thành phố Hồ Chí Minh</span>
+                        <span>Số 1079 Phạm Thế Hiển, Phường 5, Quận 8, TP Hồ Chí Minh</span>
                     </div>
                     <div className="flex gap-2 items-center">
                         <i>
                             <BsFillTelephoneFill fontSize={22} />
                         </i>
-                        <span>028.37702288</span>
+                        <span>(028) 38 501 032</span>
                     </div>
                     <div className="flex gap-2 items-center">
                         <i>

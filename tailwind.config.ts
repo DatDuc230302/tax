@@ -17,10 +17,12 @@ const config: Config = {
                 merriweather: ['Merriweather'],
                 roboto: ['roboto'],
             },
+            width: {
+                wMain: '1270px',
+            },
         },
         screens: {
             xs: '475px',
-            md1: '1270px',
             '3xl': '2200px',
             ...defaultTheme.screens,
         },
