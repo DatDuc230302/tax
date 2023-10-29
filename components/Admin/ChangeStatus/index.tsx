@@ -56,7 +56,9 @@ export default function ChangeStatus({
                 setTurn(false);
                 setRefresh(!refresh);
             }
-        } catch {}
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (

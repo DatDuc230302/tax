@@ -1,14 +1,28 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import axios from 'axios';
+import { serverBackend } from '@/server';
 
 export default function Slide() {
     const slides = ['/imgs/slides/slide1.jpg', '/imgs/slides/slide2.jpg', '/imgs/slides/slide3.jpg'];
+    const [banners, setBanners] = useState<object[]>([]);
 
-    const getBanners = async () => {};
+    const getBanners = async () => {
+        try {
+            const result = await axios.get(`${serverBackend}/api/v1/bannerImages`);
+            if (result.data.message === 'success') {
+                setBanners(result.data.data);
+            }
+        } catch (error) {
+            console.error('Error fetching banner images:', error);
+        }
+    };
+
+    console.log(banners);
 
     return (
         <div className="flex justify-center px-4">

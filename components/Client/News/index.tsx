@@ -29,7 +29,7 @@ export default function News() {
                     {list.map((item, index) => (
                         <div
                             key={index}
-                            className="cursor-pointer flex-col-reverse md:flex-row flex justify-between gap-4"
+                            className="cursor-pointer rounded-[12px] flex-col-reverse md:flex-row flex justify-between gap-4 bg-[#f2f2f2] p-3"
                         >
                             <div className="flex flex-col gap-5">
                                 <div className="flex">
@@ -69,7 +69,7 @@ export default function News() {
                                     src={
                                         'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202310/Images/dth-1077-20231023104509-e.jpg'
                                     }
-                                    className="object-cover"
+                                    className="object-cover rounded-[12px]"
                                     alt=""
                                     fill
                                     sizes="100000px"
