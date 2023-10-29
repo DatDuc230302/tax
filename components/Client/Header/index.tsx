@@ -12,9 +12,9 @@ import Link from 'next/link';
 export default function Header() {
     return (
         <header className="flex flex-col select-none">
-            <div className="hidden lg:flex relative h-[135px]">
-                <div className="flex w-full h-[135px] relative">
-                    <Image className="object-cover" src={'/imgs/bg_header.jpg'} fill sizes="1000000px" alt="" />
+            <div className="hidden lg:flex relative h-[240px]">
+                <div className="flex w-full h-full relative">
+                    <Image src={'/imgs/bg_header.jpg'} fill sizes="1000000px" alt="" />
                 </div>
                 <div className="flex absolute w-full justify-center h-full">
                     <div className="flex w-wMain items-center gap-3">

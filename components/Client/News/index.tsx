@@ -64,7 +64,7 @@ export default function News() {
                                     </span>
                                 </div>
                             </div>
-                            <div className="w-full md:w-[420px] shrink-0 h-[220px] relative">
+                            <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
                                 <Image
                                     src={
                                         'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202310/Images/dth-1077-20231023104509-e.jpg'
