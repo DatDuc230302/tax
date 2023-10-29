@@ -1,18 +1,28 @@
 'use client';
 
+import { serverBackend } from '@/server';
 import { Pagination } from '@nextui-org/react';
+import axios from 'axios';
 import Image from 'next/image';
-import React from 'react';
+import Link from 'next/link';
+import React, { useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 
 export default function News() {
     const arr = ['Tin bài về thuế', 'Tin kinh tế', 'Tin chính trị'];
     const list = [1, 2, 3, 4];
+    const [news, setNews] = useState<object[]>([]);
+
+    const getNews = async () => {
+        try {
+            const result = await axios.get(`${serverBackend}/api/v1/post`);
+        } catch (err) {}
+    };
 
     return (
         <div className="flex justify-center font-merriweather min-h-[950px] px-4 py-2">
             <div className="w-wMain flex flex-col gap-4">
-                <div className="flex justify-between items-center border-b-[2px] border-[#EAEAEA]">
+                <div className="flex justify-between items-center border-b-[2px] border-[#f5f5f5]">
                     <h2 className="text-[26px]">Tin tức</h2>
                     <div className="hidden sm:flex gap-3 text-[14px]">
                         {arr.map((item: any) => (
@@ -27,16 +37,12 @@ export default function News() {
                 </div>
                 <div className="flex flex-col gap-4">
                     {list.map((item, index) => (
-                        <div
+                        <Link
+                            href={'/bai-dang?postId=1'}
                             key={index}
                             className="cursor-pointer rounded-[12px] flex-col-reverse md:flex-row flex justify-between gap-4 bg-[#f2f2f2] p-3"
                         >
-                            <div className="flex flex-col gap-5">
-                                <div className="flex">
-                                    <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
-                                        Tin tức
-                                    </span>
-                                </div>
+                            <div className="flex flex-col gap-4 justify-center">
                                 <div className="flex flex-col pr-[20px] gap-2">
                                     <h3 className="line-clamp-2 font-bold">
                                         Chống thất thu thương mại điện tử: ngành thuế đã thực hiện đồng bộ nhiều giải
@@ -75,7 +81,7 @@ export default function News() {
                                     sizes="100000px"
                                 />
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
