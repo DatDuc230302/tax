@@ -106,8 +106,8 @@ export default function PostsAdmin() {
                                     Nội dung
                                 </Chip>
                             </TableCell>
+                            <TableCell className="w-[200px] whitespace-nowrap">{item.parent_name}</TableCell>
                             <TableCell className="w-[200px] whitespace-nowrap">{item.category_name}</TableCell>
-                            <TableCell className="w-[200px] whitespace-nowrap">{item.subcategory_name}</TableCell>
                             <TableCell className="w-[200px] whitespace-nowrap">
                                 {item.serial_number ? item.serial_number : 'null'}
                             </TableCell>

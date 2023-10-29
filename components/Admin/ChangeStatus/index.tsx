@@ -1,9 +1,10 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure, Tooltip } from '@nextui-org/react';
 import axios from 'axios';
 import { serverBackend } from '@/server';
 import { LiaExchangeAltSolid } from 'react-icons/lia';
+import { AdminContext } from '@/app/admin/layout';
 
 export default function ChangeStatus({
     type,
@@ -21,7 +22,7 @@ export default function ChangeStatus({
     setRefresh: any;
 }) {
     const [turn, setTurn] = useState<boolean>(false);
-
+    const dataContext = useContext(AdminContext);
     const handeSubmit = () => {
         switch (type) {
             case 'account':
@@ -50,6 +51,7 @@ export default function ChangeStatus({
     const changeStatusPost = async () => {
         try {
             const result = await axios.post(`${serverBackend}/api/v1/postStatus`, {
+                user_id: Number(dataContext.id),
                 id: idPost,
             });
             if (result.data.message === 'success') {
