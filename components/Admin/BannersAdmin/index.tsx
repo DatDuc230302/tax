@@ -47,8 +47,8 @@ export default function BannersAdmin() {
             const formData = new FormData();
             formData.append('file', imageFile);
             formData.append('status', status);
-            const result = await axios.post(`${serverBackend}/api/v1/banner-images`, formData);
-            console.log(result);
+            const result = await axios.post(`${serverBackend}/api/v1/bannerImages`, formData);
+            window.location.reload();
         } catch (error) {
             console.error('Error adding banner:', error);
         }
@@ -170,3 +170,4 @@ export default function BannersAdmin() {
         </div>
     );
 }
+        
