@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Tooltip } from '@nextui-org/react';
+import { Divider, Tooltip } from '@nextui-org/react';
 import { TbMessageCircle2Filled } from 'react-icons/tb';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -40,17 +40,21 @@ export default function Asking() {
                     <div></div>
                 </div>
                 <div className="flex p-4 flex-col justify-between h-full">
-                    <div></div>
-                    <div className="w-full bg-[#dddddd] flex items-center px-4 py-2 rounded-[12px] ">
-                        <input
-                            onChange={(e) => setValueInput(String(e.target.value))}
-                            className="bg-transparent pr-1"
-                            placeholder="Đặt câu hỏi"
-                            type="text"
-                        />
-                        {valueInput.length > 0 && (
-                            <span className="flex cursor-pointer font-sansSerif text-[#4d7cff]">GỬI</span>
-                        )}
+                    <div className="flex flex-col"> </div>
+                    <div className="w-full flex flex-col gap-5">
+                        <Divider />
+                        <div className="relative bg-[#dddddd] flex items-center px-4 py-2 rounded-[14px] ">
+                            <textarea
+                                onChange={(e) => setValueInput(String(e.target.value))}
+                                className="bg-transparent w-full outline-none min-h-[10px]"
+                                placeholder="Đặt câu hỏi"
+                            />
+                            {valueInput.length > 0 && (
+                                <span className="flex top-[-20px] right-[10px] absolute cursor-pointer font-sansSerif text-[#4d7cff]">
+                                    GỬI
+                                </span>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

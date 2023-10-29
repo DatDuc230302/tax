@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { FaBars, FaHome } from 'react-icons/fa';
-import Search from '../Search';
 import { HiChevronDown } from 'react-icons/hi';
+import SearchTool from '../SearchTool';
 
 interface items {
     icon?: ReactElement;
@@ -104,7 +104,7 @@ export default function NavHeader() {
                 </i>
             </div>
             <div className="flex">
-                <Search />
+                <SearchTool />
             </div>
         </div>
     );

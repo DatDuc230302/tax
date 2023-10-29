@@ -7,12 +7,12 @@ export default function NotFound() {
         <div className="flex w-full h-[100vh] select-none ">
             <div className="w-full h-full pb-[200px] flex justify-center items-center bg-black">
                 <div className="w-[500px] relative flex-col text-white flex justify-center items-center">
-                    <h2 className="text-[200px] font-bold text-[#ccc] ">404</h2>
+                    <h2 className="text-[100px] lg:text-[200px] font-bold text-[#ccc] ">404</h2>
                     <div className="flex flex-col gap-5">
                         <div className="flex justify-center w-full">Trang này không tồn tại trên hệ thống.</div>
-                        <div className="flex gap-3">
+                        <div className="flex gap-3 flex-col sm:flex-row">
                             <Link href={'/'}>
-                                <Button size="large" className="bg-white" variant="contained">
+                                <Button size="large" className="w-full" variant="contained">
                                     Trở về trang chủ
                                 </Button>
                             </Link>

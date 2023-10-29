@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
-export default function Search({ className }: { className?: string }) {
+export default function SearchTool({ className }: { className?: string }) {
     const router = useRouter();
     const [valueInput, setValueInput] = useState<string>('');
 
@@ -14,7 +14,7 @@ export default function Search({ className }: { className?: string }) {
 
     const handleSearch = () => {
         if (valueInput.length > 0) {
-            router.push(`/search/${valueInput}`);
+            router.push(`/search?key=${valueInput}`);
         }
     };
 

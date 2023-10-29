@@ -23,7 +23,6 @@ const config: Config = {
         },
         screens: {
             xs: '475px',
-            md1: '1270px',
             '3xl': '2200px',
             ...defaultTheme.screens,
         },

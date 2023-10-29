@@ -3,9 +3,9 @@
 import React, { useState, ReactElement } from 'react';
 import { listNav } from '../NavHeader';
 import { AiOutlineClose } from 'react-icons/ai';
-import Search from '../Search';
 import { FaBars } from 'react-icons/fa';
 import Link from 'next/link';
+import SearchTool from '../SearchTool';
 
 interface items {
     icon?: ReactElement;
@@ -54,7 +54,7 @@ export default function Sidebar() {
                                 )}
                             </div>
                         ))}
-                        <Search className="border-[2px] border-[#ccc] mt-2 w-full" />
+                        <SearchTool className="border-[2px] border-[#ccc] mt-2 w-full" />
                     </div>
                 </div>
             </div>
