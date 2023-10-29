@@ -10,7 +10,7 @@ import Link from 'next/link';
 interface items {
     icon?: ReactElement;
     title?: string;
-    href: string;
+    href?: string;
 }
 
 export default function Sidebar() {
@@ -42,18 +42,18 @@ export default function Sidebar() {
                         />
                     </div>
                     <div className="flex flex-col px-4">
-                        {listNav.map(
-                            (item: items, index: number) =>
-                                index > 0 && (
+                        {listNav.map((item: items, index: number) => (
+                            <div key={index}>
+                                {item.href && (
                                     <Link
                                         href={item.href}
-                                        key={index}
                                         className="items-center flex border-b-[1px] cursor-pointer border-[#ccc] h-[49px]"
                                     >
                                         {item.title}
                                     </Link>
-                                ),
-                        )}
+                                )}
+                            </div>
+                        ))}
                         <Search className="border-[2px] border-[#ccc] mt-2 w-full" />
                     </div>
                 </div>

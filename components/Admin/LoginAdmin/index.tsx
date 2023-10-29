@@ -32,6 +32,7 @@ export default function LoginAdmin() {
     const [wrongAccount, setWrongAccount] = useState<boolean>(false);
     const [networkError, setNetworkError] = useState<boolean>(false);
     const [inactive, setInactive] = useState<boolean>(false);
+    const [loginSuccess, setLoginSuccess] = useState<boolean>(true);
     const router = useRouter();
 
     const handleSubmit = loadingApi(async () => {
@@ -54,6 +55,7 @@ export default function LoginAdmin() {
                         const valueEncrypt: any = encrypt(JSON.stringify(currentUser), 'DucDat2303');
                         sessionStorage.setItem('currentUser', valueEncrypt);
                         router.push('/admin');
+                        setLoginSuccess(true);
                     } else {
                         setInactive(true);
                     }
@@ -95,6 +97,7 @@ export default function LoginAdmin() {
                 title="Thông báo"
                 content="Tài khoản của bạn đã bị khóa, vui lòng liên hệ quản trị viên"
             />
+            {loginSuccess && <SnackbarMessage title="Đăng nhập thành công" type={1} />}
             <Modal backdrop="blur" hideCloseButton isOpen placement="top-center">
                 <ModalContent>
                     {loading ? (
