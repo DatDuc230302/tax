@@ -30,6 +30,10 @@ export default function AccountsAdmin() {
     const dataContext = useContext(AdminContext);
 
     useEffect(() => {
+        document.title = 'Quản lý người dùng';
+    }, []);
+
+    useEffect(() => {
         getUser();
     }, [refresh]);
 

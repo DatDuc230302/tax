@@ -26,6 +26,10 @@ export default function PostsAdmin() {
         getParentCategories();
     }, [refresh]);
 
+    useEffect(() => {
+        document.title = 'Quản lý bài viết';
+    }, []);
+
     const getPosts = async () => {
         try {
             const result: any = await axios.get(`${serverBackend}/api/v1/post`);
@@ -130,10 +134,11 @@ export default function PostsAdmin() {
                                 <UpdatePost
                                     oldTitle={item.title}
                                     oldContent={item.content}
-                                    oldCategory={item.category_name}
-                                    oldSubCategory={item.subcategory_name}
+                                    oldCategory={item.parent_name}
+                                    oldSubCategory={item.category_name}
                                     img={'/imgs/avatar.jpg'}
                                     categories={categories}
+                                    parentCategories={parentCategories}
                                     refresh={refresh}
                                     setRefresh={setRefresh}
                                 />

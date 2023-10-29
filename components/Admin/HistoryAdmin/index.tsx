@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AdminContext } from '@/app/admin/layout';
 import NoneRole from '@/components/Admin/NoneRole';
 import { Tab, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tabs, Tooltip } from '@nextui-org/react';
@@ -24,6 +24,10 @@ const data = [
 
 export default function HistoryAdmin() {
     const dataContext = useContext(AdminContext);
+
+    useEffect(() => {
+        document.title = 'Lịch sử hoạt động';
+    }, []);
 
     const showAction = (id: string) => {
         alert(id);

@@ -12,7 +12,7 @@ import {
     Spinner,
 } from '@nextui-org/react';
 import Link from 'next/link';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
