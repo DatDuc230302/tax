@@ -79,7 +79,7 @@ export default function NavHeader() {
         <div className="hidden lg:flex w-full justify-between h-full items-center font-sansSerif">
             <div className="flex h-full">
                 {listNav.map((item: any, index: number) => (
-                    <div>
+                    <div key={index}>
                         {item.href.length > 0 && (
                             <Link
                                 href={`${item.href}`}
@@ -99,9 +99,9 @@ export default function NavHeader() {
                                 {item.title}
                                 {item.icon}
                                 <div className={`${css.subNews} flex flex-col gap-2`}>
-                                    {subNews.map((item) => (
+                                    {subNews.map((subNew) => (
                                         <span
-                                            key={item}
+                                            key={subNew}
                                             className="py-2 px-4 text-[#363636] hover:bg-[#e4e4e4] cursor-pointer"
                                         >
                                             {item}
