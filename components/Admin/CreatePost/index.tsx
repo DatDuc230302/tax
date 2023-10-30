@@ -128,16 +128,18 @@ export default function CreatePost({
         const data: any = editor.getData();
         setContent(data);
     };
+
     const handleSubCategoryChange = (item: any) => {
         setSubCategory(item.name);
         setcategoryID(item.id);
     };
+
     return (
         <>
             {status === 'success' && <SnackbarMessage type={1} title="Thêm bài đăng thành công" />}
             <Button
                 onClick={() => setTurn(true)}
-                className="shrink-0 w-[180px] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e] p-0"
+                className="shrink-0 lg:w-[180px] w-[100%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e] p-0"
                 color="primary"
             >
                 <AiOutlinePlusCircle fontSize={20} />

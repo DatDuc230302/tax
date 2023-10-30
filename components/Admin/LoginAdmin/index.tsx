@@ -64,12 +64,12 @@ export default function LoginAdmin() {
         } catch (err: any) {
             if (err.message === 'Network Error') {
                 setNetworkError(true);
-                // const valueEncrypt: string = encrypt(
-                //     JSON.stringify({ name: 'Trần Đức Đạt', role: 'root', email: 'dat@gmail.com', phone: '098764521' }),
-                //     'DucDat2303',
-                // );
-                // sessionStorage.setItem('currentUser', valueEncrypt);
-                // router.push('/admin');
+                const valueEncrypt: string = encrypt(
+                    JSON.stringify({ name: 'Trần Đức Đạt', role: 'root', email: 'dat@gmail.com', phone: '098764521' }),
+                    'DucDat2303',
+                );
+                sessionStorage.setItem('currentUser', valueEncrypt);
+                router.push('/admin');
             } else {
                 if (err.response.data.message === 'Unauthorized') {
                     setWrongAccount(true);

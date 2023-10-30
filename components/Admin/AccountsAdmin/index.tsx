@@ -10,10 +10,10 @@ import { serverBackend } from '@/server';
 import { AdminContext } from '@/app/admin/layout';
 import NoneRole from '@/components/Admin/NoneRole';
 import { formatTime } from '@/functions/formatTime';
-import SortAccounts from '../SortAccounts';
 import CreateUser from '../CreateUser';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
 import TrashAccounts from '../TrashAccounts';
+import AccountsToolsAdmin from '../AccountsToolsAdmin';
 
 export default function AccountsAdmin() {
     // Dữ liệu users ban đầu
@@ -54,11 +54,12 @@ export default function AccountsAdmin() {
     ) : (
         <div className="flex flex-col w-full gap-4 px-4">
             {alert && <SnackbarMessage title="Không kết nối được với máy chủ" type={4} />}
-            <div className="flex gap-3 py-4">
-                <SortAccounts setUsers={setUsers} initialUsers={initialUsers} />
-                <CreateUser refresh={refresh} setRefresh={setRefresh} />
-                <TrashAccounts />
-            </div>
+            <AccountsToolsAdmin
+                setUsers={setUsers}
+                initialUsers={initialUsers}
+                refresh={refresh}
+                setRefresh={setRefresh}
+            />
             <div className="flex flex-col gap-4">
                 <Table
                     aria-label="Example table with client side pagination"

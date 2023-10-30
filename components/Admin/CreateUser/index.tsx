@@ -75,7 +75,7 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
         <>
             {networkError && <SnackbarMessage title="Không kết nối được đến máy chủ" type={4} />}
             <Button
-                className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
+                className="shrink-0 h-[40px] text-white lg:w-[180px] w-[100%] xs:w-[48%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
                 onClick={() => setTurn(true)}
             >
                 <AiOutlinePlusCircle fontSize={20} />
