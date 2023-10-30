@@ -1,10 +1,9 @@
 'use client';
 
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled, createTheme } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -13,6 +12,9 @@ import Deposits from './Deposits';
 import Orders from './Orders';
 
 export default function DashboardAdmin() {
+    useEffect(() => {
+        document.title = 'Dashboard Admin';
+    }, []);
     return (
         <Box component="main" className="flex justify-center w-full h-full">
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>

@@ -5,6 +5,7 @@ import NavAdmin from '@/components/Admin/NavAdmin';
 import CurrentUser from '@/components/Admin/CurrentUser';
 import React, { useEffect, useState, createContext } from 'react';
 import { decrypt } from '@/functions/crypto';
+import LoginAdmin from '@/components/Admin/LoginAdmin';
 
 interface typeContext {
     id: string;

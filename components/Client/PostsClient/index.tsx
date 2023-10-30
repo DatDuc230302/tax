@@ -7,6 +7,8 @@ import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 import { FaFlag } from 'react-icons/fa';
 import Image from 'next/image';
 import { AiOutlineEye } from 'react-icons/ai';
+import { useParams, useSearchParams } from 'next/navigation';
+import PostClient from '../PostClient';
 const list = [
     {
         title: 'Giảm thuế Giá trị gia tăng từ ngày 01 tháng 07 năm 2023 đến hết ngày 31 tháng 12 năm 2023',
@@ -78,6 +80,8 @@ export default function PostsClient() {
     const [searchValue, setSearchValue] = useState<string>('');
     const [posts, setPosts] = useState<object[]>(list);
 
+    const searchParams = useSearchParams();
+
     useEffect(() => {
         const newStart = (currentPage - 1) * itemsPerPage;
         const newEnd = newStart + itemsPerPage;
@@ -97,74 +101,86 @@ export default function PostsClient() {
 
     return (
         <div className="flex gap-6 px-4 font-roboto min-h-[700px]">
-            <PostsCategories />
-            <div className="w-full flex flex-col gap-2 pb-[20px]">
-                <div className="justify-between flex flex-col md:flex-row">
-                    <h2 className="font-bold text-[26px]">Tất cả bài đăng</h2>
-                    <input
-                        placeholder="Tìm kiếm tên bài đăng"
-                        className="border-[1px] border-[#ccc] rounded-[16px] p-2"
-                        type="text"
-                        onChange={(e) => setSearchValue(String(e.target.value))}
-                    />
-                </div>
-                <div className="flex flex-col gap-4">
-                    {posts.slice(start, end).map((item: any, index: number) => (
-                        <div
-                            key={index}
-                            className="border-[2px] cursor-pointer border-[#eaeaea] w-full rounded-[16px] p-4 flex flex-col"
-                        >
-                            <div className="flex w-full justify-between items-center">
-                                <div className="flex gap-2 text-[14px]">
-                                    <span>Trần Đức Đạt</span>
-                                    <span>Người quản lý</span>
-                                </div>
-                                <Dropdown placement="bottom-end">
-                                    <DropdownTrigger>
-                                        <i className="p-2 cursor-pointer">
-                                            <IoEllipsisHorizontalSharp fontSize={18} />
-                                        </i>
-                                    </DropdownTrigger>
-                                    <DropdownMenu aria-label="Static Actions">
-                                        <DropdownItem key="report">
-                                            <div className="flex gap-2 items-center">
-                                                <FaFlag fontSize={16} />
-                                                Báo cáo
-                                            </div>
-                                        </DropdownItem>
-                                    </DropdownMenu>
-                                </Dropdown>
-                            </div>
-                            <div className="flex gap-2">
-                                <div className="flex flex-col justify-center">
-                                    <h2 className="text-[20px] font-bold line-clamp-2">{item.title}</h2>
-                                    <p className="text-[#505050] text-[15px] line-clamp-2">{item.content}</p>
-                                </div>
-                                <div className="shrink-0 relative w-[200px] h-[120px]">
-                                    <Image className="rounded-[15px]" src={item.img} fill alt="" sizes="100000px" />
-                                </div>
-                            </div>
-                            <div className="flex w-full whitespace-nowrap items-center gap-2">
-                                <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
-                                    Tin tức
-                                </span>
-                                <span className="text-[12px]">12 ngày trước</span>
-                                <span className="flex gap-1 items-center text-[14px]">
-                                    <AiOutlineEye fontSize={18} />0
-                                </span>
-                            </div>
+            {searchParams.get('postId') ? (
+                <PostClient postId={searchParams.get('postId')} />
+            ) : (
+                <>
+                    <PostsCategories />
+                    <div className="w-full flex flex-col gap-2 pb-[20px]">
+                        <div className="justify-between flex flex-col md:flex-row">
+                            <h2 className="font-bold text-[26px]">Tất cả bài đăng</h2>
+                            <input
+                                placeholder="Tìm kiếm tên bài đăng"
+                                className="border-[1px] border-[#ccc] rounded-[16px] p-2"
+                                type="text"
+                                onChange={(e) => setSearchValue(String(e.target.value))}
+                            />
                         </div>
-                    ))}
-                </div>
-                <div className="flex justify-end">
-                    <Pagination
-                        onChange={setCurrentPage}
-                        showControls
-                        total={Math.ceil(list.length / 5)}
-                        initialPage={1}
-                    />
-                </div>
-            </div>
+                        <div className="flex flex-col gap-4">
+                            {posts.slice(start, end).map((item: any, index: number) => (
+                                <div
+                                    key={index}
+                                    className="border-[2px] cursor-pointer border-[#eaeaea] w-full rounded-[16px] p-4 flex flex-col"
+                                >
+                                    <div className="flex w-full justify-between items-center">
+                                        <div className="flex gap-2 text-[14px]">
+                                            <span>Trần Đức Đạt</span>
+                                            <span>Người quản lý</span>
+                                        </div>
+                                        <Dropdown placement="bottom-end">
+                                            <DropdownTrigger>
+                                                <i className="p-2 cursor-pointer">
+                                                    <IoEllipsisHorizontalSharp fontSize={18} />
+                                                </i>
+                                            </DropdownTrigger>
+                                            <DropdownMenu aria-label="Static Actions">
+                                                <DropdownItem key="report">
+                                                    <div className="flex gap-2 items-center">
+                                                        <FaFlag fontSize={16} />
+                                                        Báo cáo
+                                                    </div>
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <div className="flex flex-col justify-center">
+                                            <h2 className="text-[20px] font-bold line-clamp-2">{item.title}</h2>
+                                            <p className="text-[#505050] text-[15px] line-clamp-2">{item.content}</p>
+                                        </div>
+                                        <div className="shrink-0 relative w-[200px] h-[120px]">
+                                            <Image
+                                                className="rounded-[15px]"
+                                                src={item.img}
+                                                fill
+                                                alt=""
+                                                sizes="100000px"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="flex w-full whitespace-nowrap items-center gap-2">
+                                        <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                            Tin tức
+                                        </span>
+                                        <span className="text-[12px]">12 ngày trước</span>
+                                        <span className="flex gap-1 items-center text-[14px]">
+                                            <AiOutlineEye fontSize={18} />0
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="flex justify-end">
+                            <Pagination
+                                onChange={setCurrentPage}
+                                showControls
+                                total={Math.ceil(list.length / 5)}
+                                initialPage={1}
+                            />
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

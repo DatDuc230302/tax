@@ -56,7 +56,10 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
 
     return (
         <>
-            <Button className="bg-[#2FBD5E] w-[170px] text-white text-[16px]" onClick={() => setTurn(true)}>
+            <Button
+                className="bg-[#2FBD5E] lg:w-[180px] w-[100%] shrink-0 text-white text-[16px]"
+                onClick={() => setTurn(true)}
+            >
                 Quản lý thể loại
             </Button>
             {turn && (
@@ -117,7 +120,7 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                     >
                                         <TableHeader>
                                             <TableColumn key="name">Thể loại con</TableColumn>
-                                            <TableColumn key="parent">Thể loại con</TableColumn>
+                                            <TableColumn key="parent">Thể loại cha</TableColumn>
                                             <TableColumn key="created">Ngày tạo</TableColumn>
                                             <TableColumn key="updated">Ngày cập nhật</TableColumn>
                                             <TableColumn key="tools">Công cụ</TableColumn>

@@ -10,12 +10,14 @@ export default function Delete({
     type,
     idUser,
     idPost,
+    idBanner,
     refresh,
     setRefresh,
 }: {
     type: string;
     idUser?: string;
     idPost?: string;
+    idBanner?: string;
     refresh: boolean;
     setRefresh: any;
 }) {
@@ -27,6 +29,8 @@ export default function Delete({
                 return deleteAccount();
             case 'post':
                 return deletePost();
+            case 'banner':
+                return deleteBanner();
             default:
                 return;
         }
@@ -52,11 +56,27 @@ export default function Delete({
         }
     };
 
+    const deleteBanner = async () => {
+        try {
+            const resutl = await axios.delete(`${serverBackend}/api/v1/bannerImages/${idBanner}`);
+            if (resutl.data.message === 'success') {
+                setRefresh(!refresh);
+                setTurn(false);
+            }
+        } catch (error) {
+            console.error('Error deleting banner:', error);
+        }
+    };
+
     return (
         <>
             <Tooltip
                 color="primary"
-                content={(type === 'account' && 'Xóa tài khoản') || (type === 'post' && 'Xóa bài đăng')}
+                content={
+                    (type === 'account' && 'Xóa tài khoản') ||
+                    (type === 'post' && 'Xóa bài đăng') ||
+                    (type === 'banner' && 'Xóa banner')
+                }
             >
                 <div className="cursor-pointer" onClick={() => setTurn(true)} color="primary">
                     <BsFillTrashFill fontSize={20} />
@@ -70,7 +90,10 @@ export default function Delete({
                                 <span className="flex gap-1">Bạn có muốn xóa bài đăng này không ?</span>
                             )}
                             {type === 'account' && (
-                                <span className="flex gap-1">Bạn có muốn tài khoản này không ?</span>
+                                <span className="flex gap-1">Bạn có muốn xóa tài khoản này không ?</span>
+                            )}
+                            {type === 'banner' && (
+                                <span className="flex gap-1">Bạn có muốn xóa Banner này không ?</span>
                             )}
                         </div>
                     </ModalBody>

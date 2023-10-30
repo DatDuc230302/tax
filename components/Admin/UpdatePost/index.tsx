@@ -31,6 +31,7 @@ export default function UpdatePost({
     oldSubCategory,
     img,
     categories,
+    parentCategories,
     refresh,
     setRefresh,
 }: {
@@ -40,6 +41,7 @@ export default function UpdatePost({
     oldSubCategory: string;
     img: string;
     categories: object[];
+    parentCategories: object[];
     refresh: boolean;
     setRefresh: any;
 }) {
@@ -135,11 +137,41 @@ export default function UpdatePost({
                                     closeOnSelect={false}
                                     selectionMode="single"
                                 >
-                                    {categories.map((item: any, index: number) => (
+                                    {parentCategories.map((item: any, index: number) => (
                                         <DropdownItem onClick={() => setCategory(item.name)} key={index}>
                                             {item.name}
                                         </DropdownItem>
                                     ))}
+                                </DropdownMenu>
+                            </Dropdown>
+                            <Dropdown>
+                                <DropdownTrigger>
+                                    <div className="relative w-full h-[50px]">
+                                        <Input
+                                            label="Thể loại con"
+                                            type="text"
+                                            className="flex pb-4 justify-start cursor-pointer"
+                                            value={subCategory}
+                                        />
+                                        <div className="absolute cursor-pointer justify-end top-0 items-center px-4 w-full h-full z-10 flex">
+                                            <BsChevronDown fontSize={18} />
+                                        </div>
+                                    </div>
+                                </DropdownTrigger>
+                                <DropdownMenu
+                                    aria-label="Multiple selection example"
+                                    variant="flat"
+                                    closeOnSelect={false}
+                                    selectionMode="single"
+                                >
+                                    {categories.map(
+                                        (item: any, index: number) =>
+                                            item.parent_name && (
+                                                <DropdownItem onClick={() => setSubCategory(item.name)} key={index}>
+                                                    {item.name}
+                                                </DropdownItem>
+                                            ),
+                                    )}
                                 </DropdownMenu>
                             </Dropdown>
                         </div>

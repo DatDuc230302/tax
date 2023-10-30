@@ -1,16 +1,30 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import axios from 'axios';
+import { serverBackend } from '@/server';
 
 export default function Slide() {
     const slides = ['/imgs/slides/slide1.jpg', '/imgs/slides/slide2.jpg', '/imgs/slides/slide3.jpg'];
+    const [banners, setBanners] = useState<object[]>([]);
+
+    const getBanners = async () => {
+        try {
+            const result = await axios.get(`${serverBackend}/api/v1/bannerImages`);
+            if (result.data.message === 'success') {
+                setBanners(result.data.data);
+            }
+        } catch (error) {
+            console.error('Error fetching banner images:', error);
+        }
+    };
 
     return (
         <div className="flex justify-center px-4">
-            <div className="flex w-wMain justify-center">
+            {/* <div className="flex w-wMain justify-center">
                 <Carousel
                     autoPlay={true}
                     infiniteLoop={true}
@@ -28,7 +42,7 @@ export default function Slide() {
                         </div>
                     ))}
                 </Carousel>
-            </div>
+            </div> */}
         </div>
     );
 }
