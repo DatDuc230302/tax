@@ -13,6 +13,7 @@ export default function PostClient({ postId }: { postId: any }) {
     const getPost = async () => {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/post/${postId}`);
+            console.log(result);
             if (result.data.message === 'success') {
                 setPost(result.data.data);
             }

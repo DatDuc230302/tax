@@ -10,6 +10,8 @@ import { formatTime } from '@/functions/formatTime';
 import Delete from '../Delete';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
 import PostsToolsAdmin from '../PostsToolsAdmin';
+import DialogLoading from '@/components/Common/DialogLoading';
+import { loadingApi } from '@/functions/loadingApi';
 
 export default function PostsAdmin() {
     const [initialPosts, setInitialPosts] = useState<object[]>([]);
@@ -18,6 +20,7 @@ export default function PostsAdmin() {
     const [categories, setCategories] = useState<object[]>([]);
     const [parentCategories, setParentCategories] = useState<object[]>([]);
     const [alert, setAlert] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         getPosts();
@@ -29,7 +32,7 @@ export default function PostsAdmin() {
         document.title = 'Quản lý bài viết';
     }, []);
 
-    const getPosts = async () => {
+    const getPosts = loadingApi(async () => {
         try {
             const result: any = await axios.get(`${serverBackend}/api/v1/post`);
 
@@ -42,7 +45,7 @@ export default function PostsAdmin() {
                 setAlert(true);
             }
         }
-    };
+    }, setLoading);
 
     const getCategories = async () => {
         try {
@@ -66,7 +69,9 @@ export default function PostsAdmin() {
         } catch {}
     };
 
-    return (
+    return loading ? (
+        <DialogLoading content="Đang tải dữ liệu, vui lòng đợi." />
+    ) : (
         <div className="flex flex-col w-full px-4 gap-4 mt-4">
             {alert && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
             <div className="flex gap-3 flex-col-reverse lg:flex-row">
