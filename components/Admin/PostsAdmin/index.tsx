@@ -2,16 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Button } from '@nextui-org/react';
-import ManageCategory from '@/components/Admin/ManageCategory';
 import ChangeStatus from '@/components/Admin/ChangeStatus';
-import CreatePost from '@/components/Admin/CreatePost';
 import UpdatePost from '@/components/Admin/UpdatePost';
 import { serverBackend } from '@/server';
 import axios from 'axios';
 import { formatTime } from '@/functions/formatTime';
 import Delete from '../Delete';
-import SortPosts from '../SortPosts';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
+import PostsToolsAdmin from '../PostsToolsAdmin';
 
 export default function PostsAdmin() {
     const [posts, setPosts] = useState<object[]>([]);
@@ -25,6 +23,10 @@ export default function PostsAdmin() {
         getCategories();
         getParentCategories();
     }, [refresh]);
+
+    useEffect(() => {
+        document.title = 'Quản lý bài viết';
+    }, []);
 
     const getPosts = async () => {
         try {
@@ -65,14 +67,12 @@ export default function PostsAdmin() {
     return (
         <div className="flex flex-col w-full px-4 gap-4 mt-4">
             {alert && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
-            <div className="flex gap-3 flex-col lg:flex-row">
-                <SortPosts />
-                <ManageCategory refresh={refresh} setRefresh={setRefresh} />
-                <CreatePost
-                    categories={categories}
+            <div className="flex gap-3 flex-col-reverse lg:flex-row">
+                <PostsToolsAdmin
                     parentCategories={parentCategories}
+                    categories={categories}
                     refresh={refresh}
-                    setRefresh={setRefresh}
+                    setRefresh={refresh}
                 />
             </div>
             <Table
@@ -130,10 +130,11 @@ export default function PostsAdmin() {
                                 <UpdatePost
                                     oldTitle={item.title}
                                     oldContent={item.content}
-                                    oldCategory={item.category_name}
-                                    oldSubCategory={item.subcategory_name}
+                                    oldCategory={item.parent_name}
+                                    oldSubCategory={item.category_name}
                                     img={'/imgs/avatar.jpg'}
                                     categories={categories}
+                                    parentCategories={parentCategories}
                                     refresh={refresh}
                                     setRefresh={setRefresh}
                                 />

@@ -1,7 +1,19 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
+import CreateUser from '../CreateUser';
+import TrashAccounts from '../TrashAccounts';
 
-export default function Sort({ setUsers, initialUsers }: { setUsers: any; initialUsers: object[] }) {
+export default function AccountsToolsAdmin({
+    setUsers,
+    initialUsers,
+    refresh,
+    setRefresh,
+}: {
+    setUsers: any;
+    initialUsers: object[];
+    refresh: boolean;
+    setRefresh: any;
+}) {
     const [sortUsers, setSortUsers] = useState<object[]>([]);
     const [selection, setSelection] = useState<string>('Tên');
     const [searchValue, setSearchValue] = useState<string>('');
@@ -64,50 +76,56 @@ export default function Sort({ setUsers, initialUsers }: { setUsers: any; initia
     }, [sortStatus, sortRole, initialUsers]);
 
     return (
-        <div className="flex flex-col h-max gap-3">
-            <div className="flex w-full gap-3 justify-between">
-                <Dropdown>
-                    <DropdownTrigger>
-                        <Button
-                            className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
-                            variant="flat"
-                        >
-                            {sortStatus}
-                        </Button>
-                    </DropdownTrigger>
-                    <DropdownMenu aria-label="Single selection example" variant="flat">
-                        <DropdownItem onClick={() => setSortStatus('Sắp xếp trạng thái')} key="text">
-                            Tất cả
-                        </DropdownItem>
-                        <DropdownItem onClick={() => setSortStatus('Hoạt động')} key="text">
-                            Hoạt động
-                        </DropdownItem>
-                        <DropdownItem onClick={() => setSortStatus('Không hoạt động')} key="text">
-                            Không hoạt động
-                        </DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
-                <Dropdown>
-                    <DropdownTrigger>
-                        <Button
-                            className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
-                            variant="flat"
-                        >
-                            {sortRole}
-                        </Button>
-                    </DropdownTrigger>
-                    <DropdownMenu aria-label="Single selection example" variant="flat">
-                        <DropdownItem onClick={() => setSortRole('Sắp xếp quyền')} key="text">
-                            Tất cả
-                        </DropdownItem>
-                        <DropdownItem onClick={() => setSortRole('Quản trị viên')} key="text">
-                            Quản trị viên
-                        </DropdownItem>
-                        <DropdownItem onClick={() => setSortRole('Người quản lý')} key="text">
-                            Người quản lý
-                        </DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
+        <div className="flex flex-col h-max gap-3 py-4">
+            <div className="flex w-full flex-col lg:flex-row gap-3">
+                <div className="flex flex-col xs:flex-row lg:justify-start justify-between gap-3">
+                    <Dropdown>
+                        <DropdownTrigger>
+                            <Button
+                                className="shrink-0 h-[40px] text-white lg:w-[180px] w-[100%] xs:w-[48%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
+                                variant="flat"
+                            >
+                                {sortStatus}
+                            </Button>
+                        </DropdownTrigger>
+                        <DropdownMenu aria-label="Single selection example" variant="flat">
+                            <DropdownItem onClick={() => setSortStatus('Sắp xếp trạng thái')} key="text">
+                                Tất cả
+                            </DropdownItem>
+                            <DropdownItem onClick={() => setSortStatus('Hoạt động')} key="text">
+                                Hoạt động
+                            </DropdownItem>
+                            <DropdownItem onClick={() => setSortStatus('Không hoạt động')} key="text">
+                                Không hoạt động
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                    <Dropdown>
+                        <DropdownTrigger>
+                            <Button
+                                className="shrink-0 h-[40px] text-white lg:w-[180px] w-[100%] xs:w-[48%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
+                                variant="flat"
+                            >
+                                {sortRole}
+                            </Button>
+                        </DropdownTrigger>
+                        <DropdownMenu aria-label="Single selection example" variant="flat">
+                            <DropdownItem onClick={() => setSortRole('Sắp xếp quyền')} key="text">
+                                Tất cả
+                            </DropdownItem>
+                            <DropdownItem onClick={() => setSortRole('Quản trị viên')} key="text">
+                                Quản trị viên
+                            </DropdownItem>
+                            <DropdownItem onClick={() => setSortRole('Người quản lý')} key="text">
+                                Người quản lý
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                </div>
+                <div className="flex flex-col xs:flex-row lg:justify-start justify-between gap-[6px]">
+                    <CreateUser refresh={refresh} setRefresh={setRefresh} />
+                    <TrashAccounts />
+                </div>
             </div>
             <div className="flex items-center h-full flex-1 relative ">
                 <Input

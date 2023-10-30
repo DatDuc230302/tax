@@ -25,7 +25,7 @@ export default function TrashAccounts() {
         <>
             <Button
                 onClick={() => setTurn(true)}
-                className="shrink-0 lg:w-[180px] w-[100%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e] p-0"
+                className="h-[40px] text-white lg:w-[180px] w-[100%] xs:w-[48%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
                 color="primary"
             >
                 <BsTrashFill fontSize={20} />

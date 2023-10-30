@@ -10,6 +10,7 @@ export default function ChangeStatus({
     type,
     idUser,
     idPost,
+    idBanner,
     status,
     refresh,
     setRefresh,
@@ -17,6 +18,7 @@ export default function ChangeStatus({
     type: string;
     idUser?: string;
     idPost?: string;
+    idBanner?: string;
     status: string;
     refresh: boolean;
     setRefresh: any;
@@ -29,6 +31,8 @@ export default function ChangeStatus({
                 return changeStatusAccount();
             case 'post':
                 return changeStatusPost();
+            case 'banner':
+                return changeStatusBanner();
             default:
                 return;
         }
@@ -58,7 +62,24 @@ export default function ChangeStatus({
                 setTurn(false);
                 setRefresh(!refresh);
             }
-        } catch {}
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const changeStatusBanner = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('id', String(idBanner));
+            formData.append('user_id', dataContext.id);
+            const resutl = await axios.post(`${serverBackend}/api/v1/bannerStatus`, formData);
+            if (resutl.data.message === 'success') {
+                setRefresh(!refresh);
+                setTurn(false);
+            }
+        } catch (error) {
+            console.error('Error updating banner:', error);
+        }
     };
 
     return (

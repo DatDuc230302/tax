@@ -1,7 +1,19 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@nextui-org/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import ManageCategory from '../ManageCategory';
+import CreatePost from '../CreatePost';
 
-export default function SortPosts() {
+export default function PostsToolsAdmin({
+    parentCategories,
+    categories,
+    refresh,
+    setRefresh,
+}: {
+    parentCategories: any;
+    categories: any;
+    refresh: boolean;
+    setRefresh: any;
+}) {
     const [selection, setSelection] = useState<string>('Tiêu đề');
     const [searchValue, setSearchValue] = useState<string>('');
     const [sortStatus, setSortStatus] = useState<string>('Sắp xếp trạng thái');
@@ -10,41 +22,54 @@ export default function SortPosts() {
 
     return (
         <div className="flex flex-col h-max gap-3">
-            <div className="flex w-full gap-3 justify-between">
+            <div className="flex flex-col lg:flex-row w-full gap-3">
                 <Dropdown>
                     <DropdownTrigger>
                         <Button
-                            className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
+                            className="shrink-0 h-[40px] text-white lg:w-[180px] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
                             variant="flat"
                         >
                             {sortCategory}
                         </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Single selection example" variant="flat">
-                        <DropdownItem onClick={() => setSortCategory('Sắp xếp thể loại cha')} key="text">
+                        <DropdownItem onClick={() => setSortCategory('Sắp xếp thể loại cha')} key={'all'}>
                             Tất cả
                         </DropdownItem>
+                        {parentCategories.map((item: any, index: number) => (
+                            <DropdownItem onClick={() => setSortCategory(item.name)} key={index}>
+                                {item.name}
+                            </DropdownItem>
+                        ))}
                     </DropdownMenu>
                 </Dropdown>
                 <Dropdown>
                     <DropdownTrigger>
                         <Button
-                            className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
+                            className="shrink-0 h-[40px] text-white lg:w-[180px] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
                             variant="flat"
                         >
                             {sortSubCategory}
                         </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Single selection example" variant="flat">
-                        <DropdownItem onClick={() => setSortSubCategory('Sắp xếp thể loại con')} key="text">
+                        <DropdownItem onClick={() => setSortSubCategory('Sắp xếp thể loại con')} key={'all'}>
                             Tất cả
                         </DropdownItem>
+                        {categories.map(
+                            (item: any, index: number) =>
+                                item.parent_name === sortCategory && (
+                                    <DropdownItem onClick={() => setSortSubCategory(item.name)} key={index}>
+                                        {item.name}
+                                    </DropdownItem>
+                                ),
+                        )}
                     </DropdownMenu>
                 </Dropdown>
                 <Dropdown>
                     <DropdownTrigger>
                         <Button
-                            className="shrink-0 h-[40px] text-white lg:w-[180px] w-[45%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
+                            className="shrink-0 h-[40px] text-white lg:w-[180px] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
                             variant="flat"
                         >
                             {sortStatus}
@@ -62,6 +87,13 @@ export default function SortPosts() {
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
+                <ManageCategory refresh={refresh} setRefresh={setRefresh} />
+                <CreatePost
+                    categories={categories}
+                    parentCategories={parentCategories}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                />
             </div>
             <div className="flex items-center h-full flex-1 relative ">
                 <Input
