@@ -1,10 +1,11 @@
 'use client';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext,useEffect, useState } from 'react';
 import { AdminContext } from '@/app/admin/layout';
 import NoneRole from '@/components/Admin/NoneRole';
 import { Tab, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tabs, Tooltip } from '@nextui-org/react';
 import { BsInfoCircle } from 'react-icons/bs';
-
+import axios from 'axios';
+import { serverBackend } from '@/server';
 const data = [
     {
         id: '1',
@@ -24,15 +25,29 @@ const data = [
 
 export default function HistoryAdmin() {
     const dataContext = useContext(AdminContext);
+    const [postHistory, setPostHistory] = useState([]);
+    const [userHistory, setUserHistory] = useState([]);
 
-    useEffect(() => {
-        document.title = 'Lịch sử hoạt động';
-    }, []);
+  useEffect(() => {
+    axios.get(`${serverBackend}/api/v1/post_history`)
+      .then(response => {
+        setPostHistory(response.data.data);
+      })
+      .catch(error => {
+        console.error('Error fetching post history:', error);
+      });
 
+    axios.get(`${serverBackend}/api/v1/user_history`)
+      .then(response => {
+        setUserHistory(response.data.data);
+      })
+      .catch(error => {
+        console.error('Error fetching user history:', error);
+      });
+  }, []);
     const showAction = (id: string) => {
         alert(id);
     };
-
     return dataContext.role !== 'root' ? (
         <NoneRole />
     ) : (
@@ -46,34 +61,28 @@ export default function HistoryAdmin() {
                         }}
                     >
                         <TableHeader>
-                            <TableColumn key="name">Tên tài khoản</TableColumn>
-                            <TableColumn key="email">Tên bài đăng</TableColumn>
+                            <TableColumn key="name">title bài viết</TableColumn>
+                            <TableColumn key="email">Tên người dùng</TableColumn>
+                            <TableColumn key="email">Dữ liệu cũ</TableColumn>
+                            <TableColumn key="email">Dữ liệu mới</TableColumn>
                             <TableColumn key="phone">Hành động</TableColumn>
                             <TableColumn key="role">Ngày thực hiện</TableColumn>
                         </TableHeader>
                         <TableBody>
-                            {data.map((item: any, index: number) => (
+                            {postHistory.map((item: any, index: number) => (
                                 <TableRow key={index}>
-                                    <TableCell className="w-[25%] whitespace-nowrap">{item.nameAccount}</TableCell>
-                                    <TableCell className="w-[25%] whitespace-nowrap">{item.namePost}</TableCell>
-                                    <TableCell className="w-[25%] whitespace-nowrap flex gap-2">
-                                        {item.action}
-                                        <Tooltip content="Xem chi tiết hành động" placement="bottom">
-                                            <i
-                                                onClick={() => showAction(item.id)}
-                                                className="w-[20px] flex cursor-pointer"
-                                            >
-                                                <BsInfoCircle fontSize={20} />
-                                            </i>
-                                        </Tooltip>
-                                    </TableCell>
-                                    <TableCell className="w-[25%] whitespace-nowrap">{item.date}</TableCell>
+                                    <TableCell className="w-[25%] whitespace-nowrap">{item.post_title}</TableCell>
+                                    <TableCell className="w-[25%] whitespace-nowrap">{item.user_name}</TableCell>
+                                    <TableCell className="w-[25%] whitespace-nowrap">{item.previous_data}</TableCell>
+                                    <TableCell className="w-[25%] whitespace-nowrap">{item.updated_data}</TableCell>
+                                    <TableCell className="w-[25%] whitespace-nowrap">{item.action}</TableCell>
+                                    <TableCell className="w-[25%] whitespace-nowrap">{item.action_time}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </Tab>
-                <Tab key="time" title="Thời gian truy cập">
+                <Tab key="time" title="Hoạt động">
                     <Table
                         aria-label="Example table with client side pagination"
                         classNames={{
