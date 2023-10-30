@@ -35,25 +35,6 @@ export default function HotPosts() {
     const [loading, setLoading] = useState<boolean>(false);
     const [networkError, setNetworkError] = useState<boolean>(false);
 
-    useEffect(() => {
-        getNews();
-    }, []);
-
-    const getNews = loadingApi(async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/postByCategory/2`);
-            if (result.data.message === 'success') {
-                setNews(result.data.data);
-            }
-        } catch (err: any) {
-            if (err.message === 'Network Error') {
-                setNetworkError(true);
-            }
-        }
-    }, setLoading);
-
-    const handleClick = () => {};
-
     return (
         <div className="flex justify-center px-4">
             {networkError && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}

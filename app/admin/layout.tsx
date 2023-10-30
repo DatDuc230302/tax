@@ -48,6 +48,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         const valueDecrypt: any = sessionStorage.getItem('currentUser');
         const currentUser: any =
             sessionStorage.getItem('currentUser') && JSON.parse(decrypt(valueDecrypt, 'DucDat2303'));
+
         const id: string = currentUser && currentUser.id ? currentUser.id : '0';
         const name: string = currentUser && currentUser.name ? currentUser.name : 'Anonymous';
         const role: string = currentUser && currentUser.role ? currentUser.role : 'default';

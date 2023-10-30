@@ -68,7 +68,8 @@ export default function News() {
 
     const getNews = async () => {
         try {
-            const result = await axios.get(`${serverBackend}/api/v1/post/3`);
+            const result = await axios.get(`${serverBackend}/api/v1/postByCategory/1`);
+            console.log(result);
             if (result.data.message === 'success') {
                 setNews(result.data.data);
             }
@@ -82,7 +83,7 @@ export default function News() {
 
     return (
         <div className="flex justify-center font-merriweather min-h-[950px] px-4 py-2">
-            <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />
+            {networkError && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
             <div className="w-wMain flex flex-col gap-4">
                 <div className="flex justify-between items-center border-b-[2px] border-[#f5f5f5]">
                     <h2 className="text-[26px]">Tin tức</h2>

@@ -50,6 +50,8 @@ export default function LoginAdmin() {
                             id: result.data.user.id,
                             name: result.data.user.name,
                             role: result.data.user.role,
+                            email: result.data.user.email,
+                            phone: result.data.user.phone,
                             token: result.data.authorization.token,
                         };
                         const valueEncrypt: any = encrypt(JSON.stringify(currentUser), 'DucDat2303');

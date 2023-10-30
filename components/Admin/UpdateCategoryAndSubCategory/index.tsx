@@ -28,7 +28,6 @@ export default function UpdateCategoryAndSubCategory({
         switch (type) {
             case 'category':
                 return updateCategory();
-                return;
             case 'subCategory':
                 return updateSubCategory();
             default:
