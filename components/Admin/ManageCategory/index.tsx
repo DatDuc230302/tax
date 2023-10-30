@@ -16,7 +16,6 @@ import {
     Tooltip,
 } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
-import { BsPencilSquare } from 'react-icons/bs';
 import { AiOutlineClose } from 'react-icons/ai';
 import CreateSubCategory from '../CreateSubCategory';
 import axios from 'axios';
@@ -103,12 +102,14 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                                         {formatTime(item.updated_at)}
                                                     </TableCell>
                                                     <TableCell className="flex w-[80px] items-center h-full justify-between">
-                                                        <UpdateCategoryAndSubCategory
-                                                            type="category"
-                                                            idCategory={item.id}
-                                                            refresh={refresh}
-                                                            setRefresh={setRefresh}
-                                                        />
+                                                        {item.name !== 'Tin tức' && (
+                                                            <UpdateCategoryAndSubCategory
+                                                                type="category"
+                                                                idCategory={item.id}
+                                                                refresh={refresh}
+                                                                setRefresh={setRefresh}
+                                                            />
+                                                        )}
                                                     </TableCell>
                                                 </TableRow>
                                             ))}
@@ -158,13 +159,17 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                                                 {formatTime(item.updated_at)}
                                                             </TableCell>
                                                             <TableCell className="flex w-[80px] items-center h-full justify-between">
-                                                                <UpdateCategoryAndSubCategory
-                                                                    type="subCategory"
-                                                                    idSubCategory={item.id}
-                                                                    parentIDSubCategory={item.parent_id}
-                                                                    refresh={refresh}
-                                                                    setRefresh={setRefresh}
-                                                                />
+                                                                {item.name !== 'Tin kinh tế' &&
+                                                                    item.name !== 'Tin chính trị' &&
+                                                                    item.name !== 'Tin về thuế' && (
+                                                                        <UpdateCategoryAndSubCategory
+                                                                            type="subCategory"
+                                                                            idSubCategory={item.id}
+                                                                            parentIDSubCategory={item.parent_id}
+                                                                            refresh={refresh}
+                                                                            setRefresh={setRefresh}
+                                                                        />
+                                                                    )}
                                                             </TableCell>
                                                         </TableRow>
                                                     ),

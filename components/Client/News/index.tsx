@@ -69,7 +69,6 @@ export default function News() {
     const getNews = async () => {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/postByCategory/1`);
-            console.log(result);
             if (result.data.message === 'success') {
                 setNews(result.data.data);
             }
