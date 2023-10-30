@@ -12,6 +12,7 @@ import SnackbarMessage from '@/components/Common/SnackbarMessage';
 import PostsToolsAdmin from '../PostsToolsAdmin';
 
 export default function PostsAdmin() {
+    const [initialPosts, setInitialPosts] = useState<object[]>([]);
     const [posts, setPosts] = useState<object[]>([]);
     const [refresh, setRefresh] = useState<boolean>(false);
     const [categories, setCategories] = useState<object[]>([]);
@@ -34,6 +35,7 @@ export default function PostsAdmin() {
 
             if (result.data.message === 'success') {
                 setPosts(result.data.data);
+                setInitialPosts(result.data.data);
             }
         } catch (err: any) {
             if (err.message === 'Network Error') {
@@ -69,10 +71,12 @@ export default function PostsAdmin() {
             {alert && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
             <div className="flex gap-3 flex-col-reverse lg:flex-row">
                 <PostsToolsAdmin
+                    setPosts={setPosts}
+                    initialPosts={initialPosts}
                     parentCategories={parentCategories}
                     categories={categories}
                     refresh={refresh}
-                    setRefresh={refresh}
+                    setRefresh={setRefresh}
                 />
             </div>
             <Table

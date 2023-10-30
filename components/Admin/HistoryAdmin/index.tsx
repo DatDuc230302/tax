@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext,useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AdminContext } from '@/app/admin/layout';
 import NoneRole from '@/components/Admin/NoneRole';
 import { Tab, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tabs, Tooltip } from '@nextui-org/react';
@@ -28,26 +28,29 @@ export default function HistoryAdmin() {
     const [postHistory, setPostHistory] = useState([]);
     const [userHistory, setUserHistory] = useState([]);
 
-  useEffect(() => {
-    axios.get(`${serverBackend}/api/v1/post_history`)
-      .then(response => {
-        setPostHistory(response.data.data);
-      })
-      .catch(error => {
-        console.error('Error fetching post history:', error);
-      });
+    useEffect(() => {
+        axios
+            .get(`${serverBackend}/api/v1/post_history`)
+            .then((response) => {
+                setPostHistory(response.data.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching post history:', error);
+            });
 
-    axios.get(`${serverBackend}/api/v1/user_history`)
-      .then(response => {
-        setUserHistory(response.data.data);
-      })
-      .catch(error => {
-        console.error('Error fetching user history:', error);
-      });
-  }, []);
+        axios
+            .get(`${serverBackend}/api/v1/user_history`)
+            .then((response) => {
+                setUserHistory(response.data.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching user history:', error);
+            });
+    }, []);
     const showAction = (id: string) => {
         alert(id);
     };
+
     return dataContext.role !== 'root' ? (
         <NoneRole />
     ) : (
@@ -61,22 +64,39 @@ export default function HistoryAdmin() {
                         }}
                     >
                         <TableHeader>
-                            <TableColumn key="name">title bài viết</TableColumn>
-                            <TableColumn key="email">Tên người dùng</TableColumn>
+                            <TableColumn key="name">Tiêu đề bài viết</TableColumn>
+                            <TableColumn key="email">Người thực hiện</TableColumn>
                             <TableColumn key="email">Dữ liệu cũ</TableColumn>
                             <TableColumn key="email">Dữ liệu mới</TableColumn>
                             <TableColumn key="phone">Hành động</TableColumn>
                             <TableColumn key="role">Ngày thực hiện</TableColumn>
+                            <TableColumn key="role">Công cụ</TableColumn>
                         </TableHeader>
                         <TableBody>
                             {postHistory.map((item: any, index: number) => (
                                 <TableRow key={index}>
-                                    <TableCell className="w-[25%] whitespace-nowrap">{item.post_title}</TableCell>
-                                    <TableCell className="w-[25%] whitespace-nowrap">{item.user_name}</TableCell>
-                                    <TableCell className="w-[25%] whitespace-nowrap">{item.previous_data}</TableCell>
-                                    <TableCell className="w-[25%] whitespace-nowrap">{item.updated_data}</TableCell>
-                                    <TableCell className="w-[25%] whitespace-nowrap">{item.action}</TableCell>
-                                    <TableCell className="w-[25%] whitespace-nowrap">{item.action_time}</TableCell>
+                                    <TableCell>
+                                        <span className="w-[280px] line-clamp-1">{item.post_title}</span>
+                                    </TableCell>
+                                    <TableCell className="w-[170px] whitespace-nowrap">{item.user_name}</TableCell>
+                                    <TableCell className="w-[170px] whitespace-nowrap">d</TableCell>
+                                    <TableCell className="w-[170px] whitespace-nowrap">d</TableCell>
+                                    <TableCell className="w-[170px] whitespace-nowrap">{item.action}</TableCell>
+                                    <TableCell className="w-[170px] whitespace-nowrap">{item.action_time}</TableCell>
+                                    <TableCell>
+                                        <div className='className="w-[170px] text-center whitespace-nowrap flex gap-2'>
+                                            <Tooltip content="Xem chi tiết dữ liệu">
+                                                <i className="cursor-pointer">
+                                                    <BsInfoCircle fontSize={20} />
+                                                </i>
+                                            </Tooltip>
+                                            <Tooltip content="Xem chi tiết dữ liệu">
+                                                <i className="cursor-pointer">
+                                                    <BsInfoCircle fontSize={20} />
+                                                </i>
+                                            </Tooltip>
+                                        </div>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

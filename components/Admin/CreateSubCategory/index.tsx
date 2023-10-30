@@ -19,12 +19,19 @@ import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { serverBackend } from '@/server';
 import axios from 'axios';
 
-export default function CreateSubCategory({ refresh, setRefresh }: { refresh: boolean; setRefresh: any }) {
+export default function CreateSubCategory({
+    parentCategories,
+    refresh,
+    setRefresh,
+}: {
+    parentCategories: object[];
+    refresh: boolean;
+    setRefresh: any;
+}) {
     const [turn, setTurn] = useState<boolean>(false);
     const [subCategory, setSubCategory] = useState<string>('');
     const [showSubCategory, setShowSubCategory] = useState<string>('Chọn thể loại cha');
     const [parentIDCategory, setParentIDCategory] = useState<number>(0);
-    const [parentCategories, setParentCategories] = useState<object[]>([]);
     const [require, setRequire] = useState<boolean>(false);
 
     const handleSubmit = async () => {
@@ -51,19 +58,6 @@ export default function CreateSubCategory({ refresh, setRefresh }: { refresh: bo
         if (e.key === 'Enter') {
             handleSubmit();
         }
-    };
-
-    useEffect(() => {
-        getParentCategories();
-    }, []);
-
-    const getParentCategories = async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/getParentCategory`);
-            if (result.data.message === 'success') {
-                setParentCategories(result.data.data);
-            }
-        } catch {}
     };
 
     return (

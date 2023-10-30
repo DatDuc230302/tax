@@ -5,8 +5,6 @@ import { formatTime } from '@/functions/formatTime';
 import { serverBackend } from '@/server';
 import {
     Button,
-    Input,
-    Skeleton,
     Tab,
     Table,
     TableBody,
@@ -22,11 +20,13 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { AiOutlineClose } from 'react-icons/ai';
 import CreateSubCategory from '../CreateSubCategory';
 import axios from 'axios';
+import UpdateCategoryAndSubCategory from '../UpdateCategoryAndSubCategory';
 
 export default function ManageCategory({ refresh, setRefresh }: { refresh: boolean; setRefresh: any }) {
     const [turn, setTurn] = useState<boolean>(false);
     const [parentCategories, setParentCategories] = useState<object[]>([]);
     const [categories, setCategories] = useState<object[]>([]);
+
     useEffect(() => {
         getParentCategories();
         getCategories();
@@ -101,7 +101,12 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                                         {formatTime(item.updated_at)}
                                                     </TableCell>
                                                     <TableCell className="flex w-[80px] items-center h-full justify-between">
-                                                        <BsPencilSquare fontSize={20} />
+                                                        <UpdateCategoryAndSubCategory
+                                                            type="category"
+                                                            idCategory={item.id}
+                                                            refresh={refresh}
+                                                            setRefresh={setRefresh}
+                                                        />
                                                     </TableCell>
                                                 </TableRow>
                                             ))}
@@ -110,7 +115,11 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                 </Tab>
                                 <Tab key={'subCategories'} title={'Thể loại con'}>
                                     <div className="flex w-full justify-end mb-2">
-                                        <CreateSubCategory refresh={refresh} setRefresh={setRefresh} />
+                                        <CreateSubCategory
+                                            parentCategories={parentCategories}
+                                            refresh={refresh}
+                                            setRefresh={setRefresh}
+                                        />
                                     </div>
                                     <Table
                                         aria-label="Example table with client side pagination"
@@ -143,7 +152,13 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                                                 {formatTime(item.updated_at)}
                                                             </TableCell>
                                                             <TableCell className="flex w-[80px] items-center h-full justify-between">
-                                                                <BsPencilSquare fontSize={20} />
+                                                                <UpdateCategoryAndSubCategory
+                                                                    type="subCategory"
+                                                                    idSubCategory={item.id}
+                                                                    parentIDSubCategory={item.parent_id}
+                                                                    refresh={refresh}
+                                                                    setRefresh={setRefresh}
+                                                                />
                                                             </TableCell>
                                                         </TableRow>
                                                     ),

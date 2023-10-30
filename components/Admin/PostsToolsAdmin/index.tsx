@@ -1,24 +1,88 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@nextui-org/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ManageCategory from '../ManageCategory';
 import CreatePost from '../CreatePost';
 
 export default function PostsToolsAdmin({
+    setPosts,
+    initialPosts,
     parentCategories,
     categories,
     refresh,
     setRefresh,
 }: {
+    setPosts: any;
+    initialPosts: object[];
     parentCategories: any;
     categories: any;
     refresh: boolean;
     setRefresh: any;
 }) {
-    const [selection, setSelection] = useState<string>('Tiêu đề');
     const [searchValue, setSearchValue] = useState<string>('');
     const [sortStatus, setSortStatus] = useState<string>('Sắp xếp trạng thái');
     const [sortCategory, setSortCategory] = useState<string>('Sắp xếp thể loại cha');
     const [sortSubCategory, setSortSubCategory] = useState<string>('Sắp xếp thể loại con');
+    const [sortPosts, setSortPosts] = useState<object[]>([]);
+
+    useEffect(() => {
+        const key: string = searchValue;
+        if (key.length > 0) {
+            setPosts(sortPosts.filter((item: any) => item.title.toLocaleLowerCase().includes(key.toLocaleLowerCase())));
+        }
+    }, [searchValue]);
+
+    useEffect(() => {
+        let sortData: object[] = [];
+        if (sortStatus === 'Sắp xếp trạng thái') {
+            if (sortCategory !== 'Sắp xếp thể loại cha') {
+                if (sortSubCategory !== 'Sắp xếp thể loại con') {
+                    sortData = initialPosts.filter(
+                        (item: any) => item.parent_name === sortCategory && item.category_name === sortSubCategory,
+                    );
+                } else {
+                    sortData = initialPosts.filter((item: any) => item.parent_name === sortCategory);
+                }
+            } else {
+                sortData = initialPosts;
+            }
+        } else if (sortStatus === 'Hoạt động') {
+            if (sortCategory !== 'Sắp xếp thể loại cha') {
+                if (sortSubCategory !== 'Sắp xếp thể loại con') {
+                    sortData = initialPosts.filter(
+                        (item: any) =>
+                            item.parent_name === sortCategory &&
+                            item.category_name === sortSubCategory &&
+                            item.status === 'active',
+                    );
+                } else {
+                    sortData = initialPosts.filter(
+                        (item: any) => item.parent_name === sortCategory && item.status === 'active',
+                    );
+                }
+            } else {
+                sortData = initialPosts.filter((item: any) => item.status === 'active');
+            }
+        } else if (sortStatus === 'Không hoạt động') {
+            if (sortCategory !== 'Sắp xếp thể loại cha') {
+                if (sortSubCategory !== 'Sắp xếp thể loại con') {
+                    sortData = initialPosts.filter(
+                        (item: any) =>
+                            item.parent_name === sortCategory &&
+                            item.category_name === sortSubCategory &&
+                            item.status === 'inactive',
+                    );
+                } else {
+                    sortData = initialPosts.filter(
+                        (item: any) => item.parent_name === sortCategory && item.status === 'inactive',
+                    );
+                }
+            } else {
+                sortData = initialPosts.filter((item: any) => item.status === 'inactive');
+            }
+        }
+        setPosts(sortData);
+        setSortPosts(sortData);
+    }, [sortStatus, initialPosts, sortCategory, sortSubCategory]);
 
     return (
         <div className="flex flex-col h-max gap-3">
@@ -33,11 +97,23 @@ export default function PostsToolsAdmin({
                         </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Single selection example" variant="flat">
-                        <DropdownItem onClick={() => setSortCategory('Sắp xếp thể loại cha')} key={'all'}>
+                        <DropdownItem
+                            onClick={() => {
+                                setSortCategory('Sắp xếp thể loại cha');
+                                setSortSubCategory('Sắp xếp thể loại con');
+                            }}
+                            key={'all'}
+                        >
                             Tất cả
                         </DropdownItem>
                         {parentCategories.map((item: any, index: number) => (
-                            <DropdownItem onClick={() => setSortCategory(item.name)} key={index}>
+                            <DropdownItem
+                                onClick={() => {
+                                    setSortCategory(item.name);
+                                    setSortSubCategory('Sắp xếp thể loại con');
+                                }}
+                                key={index}
+                            >
                                 {item.name}
                             </DropdownItem>
                         ))}
@@ -100,29 +176,9 @@ export default function PostsToolsAdmin({
                     onChange={(e) => setSearchValue(String(e.target.value))}
                     className="rounded-none"
                     type="text"
-                    placeholder={`Tìm kiếm theo ${selection}`}
+                    placeholder={`Tìm kiếm theo tên bài viết`}
                     value={searchValue}
                 />
-                <div className="absolute right-0">
-                    <Dropdown>
-                        <DropdownTrigger>
-                            <Button variant="flat">{selection}</Button>
-                        </DropdownTrigger>
-                        <DropdownMenu
-                            aria-label="Single selection example"
-                            variant="flat"
-                            disallowEmptySelection
-                            selectionMode="single"
-                        >
-                            <DropdownItem onClick={() => setSelection('Tiêu đề')} key="title">
-                                Tiêu đề
-                            </DropdownItem>
-                            <DropdownItem onClick={() => setSelection('Nội dung')} key="content">
-                                Nội dung
-                            </DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
-                </div>
             </div>
         </div>
     );
