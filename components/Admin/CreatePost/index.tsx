@@ -16,14 +16,13 @@ import {
     DropdownMenu,
     DropdownItem,
 } from '@nextui-org/react';
-import { AiFillFileAdd, AiOutlineClose, AiOutlinePlusCircle } from 'react-icons/ai';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { serverBackend } from '@/server';
 import { BiUpload } from 'react-icons/bi';
 import Image from 'next/image';
 import { isDate } from '@/functions/isDate';
 import axios from 'axios';
 import { AdminContext } from '@/app/admin/layout';
-import SnackbarMessage from '@/components/Common/SnackbarMessage';
 import UploadFiles from '../UploadFiles';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -40,9 +39,8 @@ export default function CreatePost({
 }) {
     // Cho phép bật tắt creatPost
     const [turn, setTurn] = useState<boolean>(false);
-
+    // Dữ liệu từ DataContext
     const dataContext: any = useContext(AdminContext);
-
     // State cho phép hiển thị ảnh khi người dùng tải lên
     const [showImage, setShowImage] = useState<any>(null);
     // State cho phép gữi file ảnh lên server
@@ -92,7 +90,7 @@ export default function CreatePost({
                 if (result.data.message === 'success') {
                     setTurn(false);
                     setRefresh(!refresh);
-                    setStatus('success');
+                    emptyValue();
                 }
             }
         } catch {
@@ -134,9 +132,20 @@ export default function CreatePost({
         setcategoryID(item.id);
     };
 
+    const emptyValue = () => {
+        setTitle('');
+        setContent('Nội dung bài viết');
+        setIssuance('');
+        setSerial('');
+        setCategory('');
+        setSubCategory('');
+        setShowImage(null);
+        setImage(null);
+        setFilesArr([]);
+    };
+
     return (
         <>
-            {status === 'success' && <SnackbarMessage type={1} title="Thêm bài đăng thành công" />}
             <Button
                 onClick={() => setTurn(true)}
                 className="shrink-0 lg:w-[180px] w-[100%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e] p-0"

@@ -12,8 +12,6 @@ import { GrAttachment } from 'react-icons/gr';
 export default function PostClient({ postId }: { postId: any }) {
     const [post, setPost] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [notFound, setNotFound] = useState<boolean>(false);
-    const [networkError, setNetworkError] = useState<boolean>(false);
     useEffect(() => {
         getPost();
     }, []);
@@ -25,12 +23,7 @@ export default function PostClient({ postId }: { postId: any }) {
                 setPost(result.data.data);
             }
         } catch (err: any) {
-            if (err.message === 'Network Error') {
-                setNetworkError(true);
-            }
-            if (err.response.data.message === 'error') {
-                setNotFound(true);
-            }
+            console.log(err);
         }
     }, setLoading);
 
@@ -38,10 +31,8 @@ export default function PostClient({ postId }: { postId: any }) {
         <SkeletonLoading h={400} />
     ) : (
         <>
-            {networkError && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
-            {notFound && <SnackbarMessage title="Không tìm thấy bài đăng" type={2} />}
             {post && (
-                <div className="flex flex-col font-roboto gap-3">
+                <div className="flex flex-col font-roboto gap-3 py-4">
                     <h2 className="font-bold text-[26px]">{post.title}</h2>
                     <div className="flex items-center gap-2">
                         <span>

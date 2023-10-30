@@ -30,7 +30,6 @@ export default function LoginAdmin() {
     const [loading, setLoading] = useState<boolean>(false);
     const [require, setRequire] = useState<boolean>(false);
     const [wrongAccount, setWrongAccount] = useState<boolean>(false);
-    const [networkError, setNetworkError] = useState<boolean>(false);
     const [inactive, setInactive] = useState<boolean>(false);
     const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
     const router = useRouter();
@@ -65,7 +64,6 @@ export default function LoginAdmin() {
             }
         } catch (err: any) {
             if (err.message === 'Network Error') {
-                setNetworkError(true);
                 const valueEncrypt: string = encrypt(
                     JSON.stringify({ name: 'Trần Đức Đạt', role: 'root', email: 'dat@gmail.com', phone: '098764521' }),
                     'DucDat2303',
@@ -86,7 +84,6 @@ export default function LoginAdmin() {
 
     return (
         <div>
-            {networkError && <SnackbarMessage title="Không kết nối được với máy chủ" type={4} />}
             <AlertDialog
                 turn={wrongAccount}
                 setTurn={setWrongAccount}

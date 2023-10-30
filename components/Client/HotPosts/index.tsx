@@ -33,11 +33,9 @@ const data = [
 export default function HotPosts() {
     const [news, setNews] = useState<object[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [networkError, setNetworkError] = useState<boolean>(false);
 
     return (
         <div className="flex justify-center px-4">
-            {networkError && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
             <div className="flex w-wMain flex-col my-2 font-merriweather">
                 {loading ? (
                     <Card className="w-full space-y-5 p-4" radius="lg">

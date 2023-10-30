@@ -23,9 +23,6 @@ export default function AccountsAdmin() {
     const [loading, setLoading] = useState<boolean>(false);
     // Refresh lại component khi thay đổi
     const [refresh, setRefresh] = useState<boolean>(false);
-    // Khi kết nối mạng không thành công thì sẽ gọi
-    const [alert, setAlert] = useState<boolean>(false);
-
     // Lấy dữ liệu context từ Layout Admin
     const dataContext = useContext(AdminContext);
 
@@ -43,9 +40,7 @@ export default function AccountsAdmin() {
             setInitialUsers(result.data.data);
             setUsers(result.data.data);
         } catch (err: any) {
-            if (err.message === 'Network Error') {
-                setAlert(true);
-            }
+            console.log(err);
         }
     };
 
@@ -53,7 +48,6 @@ export default function AccountsAdmin() {
         <NoneRole />
     ) : (
         <div className="flex flex-col w-full gap-4 px-4">
-            {alert && <SnackbarMessage title="Không kết nối được với máy chủ" type={4} />}
             <AccountsToolsAdmin
                 setUsers={setUsers}
                 initialUsers={initialUsers}

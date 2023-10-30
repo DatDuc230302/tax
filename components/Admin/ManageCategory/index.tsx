@@ -47,9 +47,7 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                 setCategories(result.data.data);
             }
         } catch (err: any) {
-            // if (err.message === 'Network Error') {
-            //     setAlert(true);
-            // }
+            console.log(err);
         }
     };
 
