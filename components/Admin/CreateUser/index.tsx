@@ -10,6 +10,8 @@ import { isEmail } from '@/functions/isEmail';
 import AlertDialog from '../../Common/AlertMessage';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
+import { Alert, Snackbar } from '@mui/material';
+import SnackbarTimeout from '@/components/Common/SnackbarTimeout';
 
 export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; setRefresh: any }) {
     const [turn, setTurn] = useState<boolean>(false);
@@ -22,6 +24,7 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
     const [require, setRequire] = useState<boolean>(false);
     const [existEmail, setExistEmail] = useState<boolean>(false);
 
+    const [successCreated, setSuccessCreated] = useState<boolean>(false);
     const clearAllInputs = () => {
         setName('');
         setEmail('');
@@ -51,10 +54,11 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
                     setRefresh(!refresh);
                     setTurn(false);
                     clearAllInputs();
+                    setSuccessCreated(true);
                 }
             }
         } catch (err: any) {
-            if (err.response.data.message === 'The email has already been taken.') {
+            if (err.response.data.message === 'email has already been taken.') {
                 setExistEmail(true);
             }
         }
@@ -68,6 +72,7 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
 
     return (
         <>
+            <SnackbarTimeout turn={successCreated} setTurn={setSuccessCreated} title="Thêm tài khoản thành công" />
             <Button
                 className="shrink-0 h-[40px] text-white lg:w-[180px] w-[100%] xs:w-[48%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
                 onClick={() => setTurn(true)}

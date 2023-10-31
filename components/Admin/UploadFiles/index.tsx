@@ -1,3 +1,4 @@
+import { getNameFiles } from '@/functions/getNameFiles';
 import { serverBackend } from '@/server';
 import { Tooltip } from '@nextui-org/react';
 import axios from 'axios';
@@ -7,7 +8,7 @@ import { BsFileEarmarkPlus, BsTrash } from 'react-icons/bs';
 import { LuFileText } from 'react-icons/lu';
 
 export default function UploadFiles({ filesArr, setFilesArr }: { filesArr: string[]; setFilesArr: any }) {
-    const [files, setFiles] = useState<object[]>([]);
+    const [files, setFiles] = useState<object[]>(filesArr.length > 0 ? getNameFiles(filesArr) : []);
     const handleGetFile = async (e: any) => {
         try {
             const file = e.target.files[0];
@@ -38,6 +39,7 @@ export default function UploadFiles({ filesArr, setFilesArr }: { filesArr: strin
     const deleteFile = (nameFile: string) => {
         setFiles(files.filter((item: any) => item.nameFile !== nameFile));
     };
+
     return (
         <div className="flex w-full border-[1px] p-2 border-[#ccc] h-[250px] flex-col">
             <div className="flex border-b-[1px] border-[#ccc] justify-between">

@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
-import { MdOutlineRestore } from 'react-icons/md';
 import RestoreTrash from '../RestoreTrash';
 import DeletePermanent from '../DeletePermanent';
 
