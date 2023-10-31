@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import {
     Modal,
@@ -23,7 +23,9 @@ import Image from 'next/image';
 import { HiMiniPencilSquare } from 'react-icons/hi2';
 import { BsChevronDown } from 'react-icons/bs';
 import axios from 'axios';
+import { isDate } from '@/functions/isDate';
 import UploadFiles from '../UploadFiles';
+import { AdminContext } from '@/app/admin/layout';
 
 export default function UpdatePost({
     oldTitle,
@@ -31,6 +33,8 @@ export default function UpdatePost({
     oldCategory,
     oldSubCategory,
     oldFilesArr,
+    oldserial,
+    oldissuance,
     img,
     categories,
     parentCategories,
@@ -41,6 +45,8 @@ export default function UpdatePost({
     oldContent: string;
     oldCategory: string;
     oldSubCategory: string;
+    oldserial: string,
+    oldissuance: string,
     oldFilesArr: any;
     img: string;
     categories: object[];
@@ -57,21 +63,35 @@ export default function UpdatePost({
     const [require, setRequire] = useState<boolean>(false);
     const [imageFile, setImageFile] = useState<any>(null);
     const [filesArr, setFilesArr] = useState<any>(oldFilesArr);
-
+    const [serial, setSerial] = useState<string>(oldserial);
+    const [issuance, setIssuance] = useState<string>(oldissuance);
+    const [categoryID, setcategoryID] = useState<string>('');
+    const dataContext: any = useContext(AdminContext);
+    const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
     const handleSubmit = async () => {
         if (
             title.length === 0 ||
-            category.length === 0 ||
-            subCategory.length === 0 ||
             content.length === 0 ||
             image === null
         ) {
             setRequire(true);
         } else {
-            console.log(filesArr);
+             const formData: any = new FormData();
+                formData.append('user_id', dataContext.id);
+                formData.append('title', title);
+                formData.append('content', content);
+                formData.append('imagelink', image, image.name);
+                formData.append('serial_number', serial);
+                formData.append('Issuance_date', issuance);
+                formData.append('category_id', categoryID);
+                formData.append('file', filesArr);
+                const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
+                if (result.data.message === 'success') {
+                    setTurn(false);
+                    setRefresh(!refresh);
+                }
         }
     };
-
     const handleCkeditor = (event: any, editor: any) => {
         const data: any = editor.getData();
         setContent(data);
@@ -92,7 +112,17 @@ export default function UpdatePost({
             setImage(null);
         }
     };
-
+    useEffect(() => {
+        if (category.length === 0) {
+            setShowSubCategories(categories);
+        } else {
+            setShowSubCategories(categories.filter((item: any) => item.parent_name === category));
+        }
+    }, [category]);
+    const handleSubCategoryChange = (item: any) => {
+        setSubCategory(item.name);
+        setcategoryID(item.id);
+    };
     return (
         <>
             <Tooltip color="primary" content="Cập nhật bài viết">
@@ -168,13 +198,34 @@ export default function UpdatePost({
                                     {categories.map(
                                         (item: any, index: number) =>
                                             item.parent_name && (
-                                                <DropdownItem onClick={() => setSubCategory(item.name)} key={index}>
+                                                <DropdownItem onClick={() => handleSubCategoryChange(item)} key={index}>
                                                     {item.name}
                                                 </DropdownItem>
                                             ),
                                     )}
                                 </DropdownMenu>
                             </Dropdown>
+                        </div>
+                        <div className="flex gap-4 relative">
+                            <Input
+                                onChange={(e: any) => setSerial(String(e.target.value))}
+                                type="text"
+                                value={serial}
+                                label="Số hiệu"
+                                errorMessage={require && serial.length === 0 && 'Vui lòng nhập số hiệu'}
+                            />
+                            <Input
+                                onChange={(e: any) => setIssuance(String(e.target.value))}
+                                type="text"
+                                value={issuance}
+                                label="Ngày ban hành VD: 13\10\2022"
+                                errorMessage={
+                                    require &&
+                                    (issuance.length === 0
+                                        ? 'Vui lòng nhập ngày phát hành'
+                                        : !isDate(issuance) && 'Vui lòng nhập đúng định dạng thời gian')
+                                }
+                            />
                         </div>
                         <div className="flex items-center gap-3">
                             <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">

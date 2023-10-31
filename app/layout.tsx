@@ -2,7 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import CheckNetwork from '@/components/Common/CheckNextwork';
-
+import Script from 'next/script'
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -13,7 +13,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <head></head>
+            <head>
+                <script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
+            </head>
             <body className={inter.className}>
                 <div className="w-full">{children}</div>
                 <CheckNetwork />

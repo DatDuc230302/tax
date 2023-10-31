@@ -26,6 +26,7 @@ import { AdminContext } from '@/app/admin/layout';
 import UploadFiles from '../UploadFiles';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
+
 export default function CreatePost({
     categories,
     parentCategories,
@@ -61,9 +62,11 @@ export default function CreatePost({
     const [require, setRequire] = useState<boolean>(false);
     // Trạng thái sau khi thêm bài viết
     const [status, setStatus] = useState<string>('');
+    
     const [categoryID, setcategoryID] = useState<string>('');
     //
     const [filesArr, setFilesArr] = useState<string[]>([]);
+
     const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
     
     const handleSubmit = async () => {
