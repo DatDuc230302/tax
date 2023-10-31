@@ -48,15 +48,15 @@ export default function PostsCategories() {
             </h2>
             {list.map((category: any, index: number) => (
                 <>
-                        <span
-                            key={index}
-                            onMouseOver={() => setCategory(category.title)}
-                            onClick={() => handleCategory(category.title)}
-                            className={`categorys-center justify-between flex cursor-pointer p-2 hover:bg-[#e1e1e1] duration-200 ease-linear`}
-                        >
-                            {category.title}
-                            {category.icon && <FiChevronRight fontSize={18} />}
-                        </span>
+                    <span
+                        key={index}
+                        onMouseOver={() => setCategory(category.title)}
+                        onClick={() => handleCategory(category.title)}
+                        className={`categorys-center justify-between flex cursor-pointer p-2 hover:bg-[#e1e1e1] duration-200 ease-linear`}
+                    >
+                        {category.title}
+                        {category.icon && <FiChevronRight fontSize={18} />}
+                    </span>
                 </>
             ))}
             {subCategories.length > 0 && (
