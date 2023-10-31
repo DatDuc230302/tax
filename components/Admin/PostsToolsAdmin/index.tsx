@@ -28,6 +28,8 @@ export default function PostsToolsAdmin({
         const key: string = searchValue;
         if (key.length > 0) {
             setPosts(sortPosts.filter((item: any) => item.title.toLocaleLowerCase().includes(key.toLocaleLowerCase())));
+        } else {
+            setPosts(initialPosts);
         }
     }, [searchValue]);
 

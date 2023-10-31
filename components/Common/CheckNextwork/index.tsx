@@ -14,7 +14,7 @@ export default function CheckNetwork() {
 
     const check = async () => {
         try {
-            const result: any = await axios.get(`${serverBackend}/api/v1/post/1`);
+            const result: any = await axios.get(`${serverBackend}/api/v1/post`);
         } catch (err: any) {
             if (err.message === 'Network Error') {
                 setTurn(true);
