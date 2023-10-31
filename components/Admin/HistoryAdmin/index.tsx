@@ -111,27 +111,17 @@ export default function HistoryAdmin() {
                     >
                         <TableHeader>
                             <TableColumn key="name">Tên tài khoản</TableColumn>
-                            <TableColumn key="email">Thời gian đăng nhập</TableColumn>
-                            <TableColumn key="phone">Thời gian đăng xuất</TableColumn>
-                            <TableColumn key="role">Tổng thời gian truy cập</TableColumn>
+                            <TableColumn key="email">Đã thay đổi</TableColumn>
+                            <TableColumn key="phone">Thời gian thay đổi</TableColumn>
                         </TableHeader>
                         <TableBody>
-                            {data.map((item: any, index: number) => (
+                            {userHistory.map((item: any, index: number) => (
                                 <TableRow key={index}>
-                                    <TableCell className="w-[25%] whitespace-nowrap">{item.nameAccount}</TableCell>
-                                    <TableCell className="w-[25%] whitespace-nowrap">{item.namePost}</TableCell>
+                                    <TableCell className="w-[25%] whitespace-nowrap">{item.user_name}</TableCell>
+                                    <TableCell className="w-[25%] whitespace-nowrap">{item.activity_type}</TableCell>
                                     <TableCell className="w-[25%] whitespace-nowrap flex gap-2">
-                                        {item.action}
-                                        <Tooltip content="Xem chi tiết hành động" placement="bottom">
-                                            <i
-                                                onClick={() => showAction(item.id)}
-                                                className="w-[20px] flex cursor-pointer"
-                                            >
-                                                <BsInfoCircle fontSize={20} />
-                                            </i>
-                                        </Tooltip>
+                                        {item.activity_time}
                                     </TableCell>
-                                    <TableCell className="w-[25%] whitespace-nowrap">{item.date}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
