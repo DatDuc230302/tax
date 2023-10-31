@@ -82,6 +82,7 @@ export default function PostsAdmin() {
                 }}
             >
                 <TableHeader>
+                    <TableColumn key="id">ID</TableColumn>
                     <TableColumn key="name">Tiêu đề bài viết</TableColumn>
                     <TableColumn key="content">Nội dung</TableColumn>
                     <TableColumn key="category">Thể loại cha</TableColumn>
@@ -96,6 +97,7 @@ export default function PostsAdmin() {
                 <TableBody>
                     {posts.map((item: any, index: number) => (
                         <TableRow key={index}>
+                            <TableCell className="whitespace-nowrap w-[170px]">{item.id}</TableCell>
                             <TableCell>
                                 <div className="w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
                                     {item.title}
@@ -148,7 +150,14 @@ export default function PostsAdmin() {
                                     refresh={refresh}
                                     setRefresh={setRefresh}
                                 />
-                                <Delete type="post" idPost={item.id} refresh={refresh} setRefresh={setRefresh}></Delete>
+                                {item.status === 'inactive' && (
+                                    <Delete
+                                        type="post"
+                                        idPost={item.id}
+                                        refresh={refresh}
+                                        setRefresh={setRefresh}
+                                    ></Delete>
+                                )}
                             </TableCell>
                         </TableRow>
                     ))}
