@@ -132,6 +132,7 @@ export default function PostsAdmin() {
                                     oldContent={item.content}
                                     oldCategory={item.parent_name}
                                     oldSubCategory={item.category_name}
+                                    oldFilesArr={item.file.split(',')}
                                     img={'/imgs/avatar.jpg'}
                                     categories={categories}
                                     parentCategories={parentCategories}

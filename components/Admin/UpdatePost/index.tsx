@@ -23,12 +23,14 @@ import Image from 'next/image';
 import { HiMiniPencilSquare } from 'react-icons/hi2';
 import { BsChevronDown } from 'react-icons/bs';
 import axios from 'axios';
+import UploadFiles from '../UploadFiles';
 
 export default function UpdatePost({
     oldTitle,
     oldContent,
     oldCategory,
     oldSubCategory,
+    oldFilesArr,
     img,
     categories,
     parentCategories,
@@ -39,6 +41,7 @@ export default function UpdatePost({
     oldContent: string;
     oldCategory: string;
     oldSubCategory: string;
+    oldFilesArr: any;
     img: string;
     categories: object[];
     parentCategories: object[];
@@ -53,6 +56,7 @@ export default function UpdatePost({
     const [content, setContent] = useState<string>(oldContent);
     const [require, setRequire] = useState<boolean>(false);
     const [imageFile, setImageFile] = useState<any>(null);
+    const [filesArr, setFilesArr] = useState<any>(oldFilesArr);
 
     const handleSubmit = async () => {
         if (
@@ -64,11 +68,8 @@ export default function UpdatePost({
         ) {
             setRequire(true);
         } else {
-            if (imageFile === null) {
-                console.log('Dat');
-            }
+            console.log(filesArr);
         }
-        // const result = await axios.put(`${serverBackend}/api/v1/post`, {});
     };
 
     const handleCkeditor = (event: any, editor: any) => {
@@ -180,18 +181,20 @@ export default function UpdatePost({
                                 {image && <Image src={image} alt="" fill sizes="10000px" />}
                             </div>
                         </div>
-                        <CKEditor
-                            config={{
-                                ckfinder: {
-                                    uploadUrl: `${serverImages}/upload`,
-                                },
-                            }}
-                            data={content}
-                            onChange={handleCkeditor}
-                            editor={ClassicEditor}
-                        />
-
-                        <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
+                        <>
+                            <CKEditor
+                                config={{
+                                    ckfinder: {
+                                        uploadUrl: `${serverImages}/upload`,
+                                    },
+                                }}
+                                data={content}
+                                onChange={handleCkeditor}
+                                editor={ClassicEditor}
+                            />
+                            <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
+                        </>
+                        <UploadFiles filesArr={filesArr} setFilesArr={setFilesArr} />
                     </ModalBody>
                     <ModalFooter>
                         <Button color="danger" variant="light" onClick={() => setTurn(false)}>

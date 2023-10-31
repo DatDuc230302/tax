@@ -4,22 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { Tab, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tabs, Tooltip } from '@nextui-org/react';
 import { serverBackend } from '@/server';
 import axios from 'axios';
-const data = [
-    {
-        id: '1',
-        nameAccount: 'Đạt',
-        namePost: 'Báo cáo tài chính',
-        action: 'Cập nhật',
-        date: '15/5',
-    },
-    {
-        id: '2',
-        nameAccount: 'Hào',
-        namePost: 'Văn bản hành chính',
-        action: 'Chuyển trạng thái',
-        date: '15/5',
-    },
-];
 export default function TrashAdmin() {
     const [postTrash, setPostTrash] = useState([]);
     const [userTrash, setUserTrash] = useState([]);
@@ -44,7 +28,7 @@ export default function TrashAdmin() {
             });
     }, []);
     return (
-        <div className="flex flex-col p-4">
+        <div className="flex w-full flex-col p-4">
             <Tabs aria-label="Dynamic tabs">
                 <Tab key={'Accounts'} title={'Bài đăng'}>
                      <Table
