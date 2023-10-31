@@ -3,8 +3,7 @@
 import React, { useContext, useEffect } from 'react';
 import { AdminContext } from '@/app/admin/layout';
 import { MdSecurity } from 'react-icons/md';
-import { Card, Chip, Skeleton, Tooltip } from '@nextui-org/react';
-import { HiMiniPencilSquare } from 'react-icons/hi2';
+import { Chip } from '@nextui-org/react';
 import UpdateProfile from '../UpdateProfile';
 
 export default function ProfileAdmin() {
@@ -12,6 +11,7 @@ export default function ProfileAdmin() {
     useEffect(() => {
         document.title = 'Hồ sơ cá nhân';
     }, []);
+
     return (
         <div className="flex w-full mt-4 justify-center px-10">
             <div className="w-full flex-col lg:flex-row flex gap-4">

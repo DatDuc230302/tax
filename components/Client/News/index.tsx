@@ -9,90 +9,68 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 
-const fakeApi = [
-    {
-        id: '1',
-        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
-        content:
-            'Sáng 23/10, tại Cục Thuế TP Hồ Chí Minh, Tổng cục Thuế tổ chức Hội nghị công bố quyết định điều động, bổ nhiệm đồng chí Nguyễn Nam Bình, Cục trưởng Cục Thuế tỉnh Bà Rịa - Vũng Tàu giữ chức Cục trưởng Cục Thuế TP Hồ Chí Minh. Tổng cục trưởng Tổng cục Thuế Mai Xuân Thành chủ trì hội nghị.',
-        Issuance_date: '13/02/2012',
-        serial_number: '13/4/2012',
-        status: 'active',
-    },
-    {
-        id: '2',
-        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
-        content:
-            'Sáng 23/10, tại Cục Thuế TP Hồ Chí Minh, Tổng cục Thuế tổ chức Hội nghị công bố quyết định điều động, bổ nhiệm đồng chí Nguyễn Nam Bình, Cục trưởng Cục Thuế tỉnh Bà Rịa - Vũng Tàu giữ chức Cục trưởng Cục Thuế TP Hồ Chí Minh. Tổng cục trưởng Tổng cục Thuế Mai Xuân Thành chủ trì hội nghị.',
-        Issuance_date: '13/02/2012',
-        serial_number: '13/4/2012',
-        status: 'active',
-    },
-    {
-        id: '3',
-        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
-        content:
-            'Sáng 23/10, tại Cục Thuế TP Hồ Chí Minh, Tổng cục Thuế tổ chức Hội nghị công bố quyết định điều động, bổ nhiệm đồng chí Nguyễn Nam Bình, Cục trưởng Cục Thuế tỉnh Bà Rịa - Vũng Tàu giữ chức Cục trưởng Cục Thuế TP Hồ Chí Minh. Tổng cục trưởng Tổng cục Thuế Mai Xuân Thành chủ trì hội nghị.',
-        Issuance_date: '13/02/2012',
-        serial_number: '13/4/2012',
-        status: 'active',
-    },
-    {
-        id: '4',
-        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
-        content:
-            'Sáng 23/10, tại Cục Thuế TP Hồ Chí Minh, Tổng cục Thuế tổ chức Hội nghị công bố quyết định điều động, bổ nhiệm đồng chí Nguyễn Nam Bình, Cục trưởng Cục Thuế tỉnh Bà Rịa - Vũng Tàu giữ chức Cục trưởng Cục Thuế TP Hồ Chí Minh. Tổng cục trưởng Tổng cục Thuế Mai Xuân Thành chủ trì hội nghị.',
-        Issuance_date: '13/02/2012',
-        serial_number: '13/4/2012',
-        status: 'active',
-    },
-    {
-        id: '5',
-        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
-        content:
-            'Sáng 23/10, tại Cục Thuế TP Hồ Chí Minh, Tổng cục Thuế tổ chức Hội nghị công bố quyết định điều động, bổ nhiệm đồng chí Nguyễn Nam Bình, Cục trưởng Cục Thuế tỉnh Bà Rịa - Vũng Tàu giữ chức Cục trưởng Cục Thuế TP Hồ Chí Minh. Tổng cục trưởng Tổng cục Thuế Mai Xuân Thành chủ trì hội nghị.',
-        Issuance_date: '13/02/2012',
-        serial_number: '13/4/2012',
-        status: 'active',
-    },
-];
-
 export default function News() {
-    const arr = ['Tin bài về thuế', 'Tin kinh tế', 'Tin chính trị'];
     const [news, setNews] = useState<object[]>([]);
-    const [networkError, setNewworkError] = useState<boolean>(false);
+    const [initialNews, setInitialNews] = useState<object[]>([]);
+    const [subCategory, setSubCategory] = useState<string>('');
+    const [active, setActive] = useState<number>(-1);
 
     useEffect(() => {
         getNews();
     }, []);
 
+    useEffect(() => {
+        let sortNews: object[];
+        if (subCategory === 'Tất cả') {
+            sortNews = initialNews;
+        } else {
+            sortNews = initialNews.filter((item: any) => item.category_name === subCategory);
+        }
+        setNews(sortNews);
+    }, [subCategory]);
+
     const getNews = async () => {
         try {
-            const result = await axios.get(`${serverBackend}/api/v1/post/3`);
+            const result = await axios.get(`${serverBackend}/api/v1/postByCategory/1`);
             if (result.data.message === 'success') {
-                setNews(result.data.data);
+                setNews(result.data.data.filter((item: any) => item.status !== 'inactive'));
+                setInitialNews(result.data.data.filter((item: any) => item.status !== 'inactive'));
             }
         } catch (err: any) {
             if (err.message === 'Network Error') {
-                setNews(fakeApi);
-                setNewworkError(true);
+                console.log(err.message);
             }
         }
     };
 
+    const onclickSubCategory = (name: string, indexActive: number) => {
+        setSubCategory(name);
+        setActive(indexActive);
+    };
+
     return (
-        <div className="flex justify-center font-merriweather min-h-[950px] px-4 py-2">
-            <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />
+        <div className="flex justify-center font-merriweather min-h-[500px] px-4 py-2">
             <div className="w-wMain flex flex-col gap-4">
                 <div className="flex justify-between items-center border-b-[2px] border-[#f5f5f5]">
                     <h2 className="text-[26px]">Tin tức</h2>
                     <div className="hidden sm:flex gap-3 text-[14px]">
-                        {arr.map((item: any) => (
+                        <h4
+                            onClick={() => onclickSubCategory('Tất cả', -1)}
+                            className={`${
+                                active === -1 && 'text-red-500'
+                            } cursor-pointer text-[#414141] hover:text-red-500 duration-200 ease-linear`}
+                        >
+                            Tất cả
+                        </h4>
+                        {removeDuplicates(initialNews, 'category_name').map((item: any, index: number) => (
                             <h4
-                                key={item}
-                                className="cursor-pointer text-[#414141] hover:text-red-500 duration-200 ease-linear "
+                                onClick={() => onclickSubCategory(item.category_name, index)}
+                                key={index}
+                                className={`${
+                                    active === index && 'text-red-500'
+                                } cursor-pointer text-[#414141] hover:text-red-500 duration-200 ease-linear `}
                             >
-                                {item}
+                                {item.category_name}
                             </h4>
                         ))}
                     </div>
@@ -100,7 +78,8 @@ export default function News() {
                 <div className="flex flex-col gap-4">
                     {news.map(
                         (item: any, index: number) =>
-                            item.status === 'active' && (
+                            item.status === 'active' &&
+                            index < 4 && (
                                 <Link
                                     href={`/bai-dang?postId=${item.id}`}
                                     key={index}

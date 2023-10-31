@@ -24,8 +24,9 @@ export default function Slide() {
 
     return (
         <div className="flex justify-center px-4">
-            {/* <div className="flex w-wMain justify-center">
+            <div className="flex w-wMain justify-center">
                 <Carousel
+                    showThumbs={false}
                     autoPlay={true}
                     infiniteLoop={true}
                     transitionTime={500}
@@ -37,12 +38,12 @@ export default function Slide() {
                     swipeable={true}
                 >
                     {slides.map((item: any) => (
-                        <div className="w-full h-[400px] md:h-[600px] lg:h-[750px]" key={item}>
+                        <div className="w-full h-[400px] md:h-[600px] lg:h-[750px] relative" key={item}>
                             <Image src={item} fill sizes="100000px" alt="Slide 1" />
                         </div>
                     ))}
                 </Carousel>
-            </div> */}
+            </div>
         </div>
     );
 }

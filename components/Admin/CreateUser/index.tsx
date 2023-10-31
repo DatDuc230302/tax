@@ -21,7 +21,6 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
     const [confirmPass, setConfirmPass] = useState<string>('');
     const [require, setRequire] = useState<boolean>(false);
     const [existEmail, setExistEmail] = useState<boolean>(false);
-    const [networkError, setNetworkError] = useState<boolean>(false);
 
     const clearAllInputs = () => {
         setName('');
@@ -55,12 +54,8 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
                 }
             }
         } catch (err: any) {
-            if (err.message === 'Network Error') {
-                setNetworkError(true);
-            } else {
-                if (err.response.data.message === 'The email has already been taken.') {
-                    setExistEmail(true);
-                }
+            if (err.response.data.message === 'The email has already been taken.') {
+                setExistEmail(true);
             }
         }
     };
@@ -73,7 +68,6 @@ export default function CreateUser({ refresh, setRefresh }: { refresh: boolean; 
 
     return (
         <>
-            {networkError && <SnackbarMessage title="Không kết nối được đến máy chủ" type={4} />}
             <Button
                 className="shrink-0 h-[40px] text-white lg:w-[180px] w-[100%] xs:w-[48%] text-[16px] hover:bg-opacity-80 duration-100 ease-linear bg-[#2fbd5e]"
                 onClick={() => setTurn(true)}

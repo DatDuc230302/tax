@@ -33,30 +33,9 @@ const data = [
 export default function HotPosts() {
     const [news, setNews] = useState<object[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [networkError, setNetworkError] = useState<boolean>(false);
-
-    useEffect(() => {
-        getNews();
-    }, []);
-
-    const getNews = loadingApi(async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/postByCategory/2`);
-            if (result.data.message === 'success') {
-                setNews(result.data.data);
-            }
-        } catch (err: any) {
-            if (err.message === 'Network Error') {
-                setNetworkError(true);
-            }
-        }
-    }, setLoading);
-
-    const handleClick = () => {};
 
     return (
         <div className="flex justify-center px-4">
-            {networkError && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
             <div className="flex w-wMain flex-col my-2 font-merriweather">
                 {loading ? (
                     <Card className="w-full space-y-5 p-4" radius="lg">

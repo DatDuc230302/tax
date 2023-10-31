@@ -16,7 +16,6 @@ import {
     Tooltip,
 } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
-import { BsPencilSquare } from 'react-icons/bs';
 import { AiOutlineClose } from 'react-icons/ai';
 import CreateSubCategory from '../CreateSubCategory';
 import axios from 'axios';
@@ -48,9 +47,7 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                 setCategories(result.data.data);
             }
         } catch (err: any) {
-            // if (err.message === 'Network Error') {
-            //     setAlert(true);
-            // }
+            console.log(err);
         }
     };
 
@@ -85,6 +82,7 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                         }}
                                     >
                                         <TableHeader>
+                                            <TableColumn key="name">ID</TableColumn>
                                             <TableColumn key="name">Thể loại cha</TableColumn>
                                             <TableColumn key="created">Ngày tạo</TableColumn>
                                             <TableColumn key="updated">Ngày cập nhật</TableColumn>
@@ -93,6 +91,7 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                         <TableBody>
                                             {parentCategories.map((item: any, index: number) => (
                                                 <TableRow key={index}>
+                                                    <TableCell className="whitespace-nowrap">{item.id}</TableCell>
                                                     <TableCell className="whitespace-nowrap">{item.name}</TableCell>
                                                     <TableCell className="whitespace-nowrap">
                                                         {formatTime(item.created_at)}
@@ -101,12 +100,14 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                                         {formatTime(item.updated_at)}
                                                     </TableCell>
                                                     <TableCell className="flex w-[80px] items-center h-full justify-between">
-                                                        <UpdateCategoryAndSubCategory
-                                                            type="category"
-                                                            idCategory={item.id}
-                                                            refresh={refresh}
-                                                            setRefresh={setRefresh}
-                                                        />
+                                                        {item.name !== 'Tin tức' && (
+                                                            <UpdateCategoryAndSubCategory
+                                                                type="category"
+                                                                idCategory={item.id}
+                                                                refresh={refresh}
+                                                                setRefresh={setRefresh}
+                                                            />
+                                                        )}
                                                     </TableCell>
                                                 </TableRow>
                                             ))}
@@ -128,6 +129,7 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                         }}
                                     >
                                         <TableHeader>
+                                            <TableColumn key="name">ID</TableColumn>
                                             <TableColumn key="name">Thể loại con</TableColumn>
                                             <TableColumn key="parent">Thể loại cha</TableColumn>
                                             <TableColumn key="created">Ngày tạo</TableColumn>
@@ -139,6 +141,9 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                                 (item: any, index: number) =>
                                                     item.parent_name && (
                                                         <TableRow key={index}>
+                                                            <TableCell className="whitespace-nowrap">
+                                                                {item.id}
+                                                            </TableCell>
                                                             <TableCell className="whitespace-nowrap">
                                                                 {item.name}
                                                             </TableCell>
@@ -152,13 +157,17 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                                                 {formatTime(item.updated_at)}
                                                             </TableCell>
                                                             <TableCell className="flex w-[80px] items-center h-full justify-between">
-                                                                <UpdateCategoryAndSubCategory
-                                                                    type="subCategory"
-                                                                    idSubCategory={item.id}
-                                                                    parentIDSubCategory={item.parent_id}
-                                                                    refresh={refresh}
-                                                                    setRefresh={setRefresh}
-                                                                />
+                                                                {item.name !== 'Tin kinh tế' &&
+                                                                    item.name !== 'Tin chính trị' &&
+                                                                    item.name !== 'Tin về thuế' && (
+                                                                        <UpdateCategoryAndSubCategory
+                                                                            type="subCategory"
+                                                                            idSubCategory={item.id}
+                                                                            parentIDSubCategory={item.parent_id}
+                                                                            refresh={refresh}
+                                                                            setRefresh={setRefresh}
+                                                                        />
+                                                                    )}
                                                             </TableCell>
                                                         </TableRow>
                                                     ),

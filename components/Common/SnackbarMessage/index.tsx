@@ -1,7 +1,19 @@
+'use client';
+
 import { Alert, Snackbar } from '@mui/material';
 import React, { useState } from 'react';
 
-export default function SnackbarMessage({ type, title }: { type: number; title: string }) {
+export default function SnackbarMessage({
+    type,
+    title,
+    alwaysTurn = false,
+    position = 'r',
+}: {
+    type: number;
+    title: string;
+    alwaysTurn?: boolean;
+    position?: string;
+}) {
     const [turn, setTurn] = useState<boolean>(true);
 
     const renderUI = () => {
@@ -26,7 +38,7 @@ export default function SnackbarMessage({ type, title }: { type: number; title: 
                 );
             case 4:
                 return (
-                    <Alert onClose={() => setTurn(false)} severity="error" sx={{ width: '100%' }}>
+                    <Alert severity="error" sx={{ width: '100%' }}>
                         {title}
                     </Alert>
                 );
@@ -36,14 +48,29 @@ export default function SnackbarMessage({ type, title }: { type: number; title: 
     };
 
     return (
-        <Snackbar
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            open={turn}
-            autoHideDuration={2000}
-            onClose={() => setTurn(false)}
-            message={title}
-        >
-            {renderUI()}
-        </Snackbar>
+        <>
+            {!alwaysTurn && (
+                <Snackbar
+                    className="select-none"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: position === 'r' ? 'right' : 'left' }}
+                    open={turn}
+                    autoHideDuration={2000}
+                    onClose={() => setTurn(false)}
+                    message={title}
+                >
+                    {renderUI()}
+                </Snackbar>
+            )}
+            {alwaysTurn && (
+                <Snackbar
+                    className="select-none"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: position === 'r' ? 'right' : 'left' }}
+                    open={turn}
+                    message={title}
+                >
+                    {renderUI()}
+                </Snackbar>
+            )}
+        </>
     );
 }

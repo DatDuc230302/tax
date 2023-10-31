@@ -17,7 +17,6 @@ export default function PostsAdmin() {
     const [refresh, setRefresh] = useState<boolean>(false);
     const [categories, setCategories] = useState<object[]>([]);
     const [parentCategories, setParentCategories] = useState<object[]>([]);
-    const [alert, setAlert] = useState<boolean>(false);
 
     useEffect(() => {
         getPosts();
@@ -38,9 +37,7 @@ export default function PostsAdmin() {
                 setInitialPosts(result.data.data);
             }
         } catch (err: any) {
-            if (err.message === 'Network Error') {
-                setAlert(true);
-            }
+            console.log(err);
         }
     };
 
@@ -51,9 +48,7 @@ export default function PostsAdmin() {
                 setCategories(result.data.data);
             }
         } catch (err: any) {
-            if (err.message === 'Network Error') {
-                setAlert(true);
-            }
+            console.log(err);
         }
     };
 
@@ -63,12 +58,13 @@ export default function PostsAdmin() {
             if (result.data.message === 'success') {
                 setParentCategories(result.data.data);
             }
-        } catch {}
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
         <div className="flex flex-col w-full px-4 gap-4 mt-4">
-            {alert && <SnackbarMessage title="Không thể kết nối đến máy chủ" type={4} />}
             <div className="flex gap-3 flex-col-reverse lg:flex-row">
                 <PostsToolsAdmin
                     setPosts={setPosts}
