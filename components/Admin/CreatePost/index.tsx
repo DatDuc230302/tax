@@ -67,7 +67,7 @@ export default function CreatePost({
     //
     const [filesArr, setFilesArr] = useState<string[]>([]);
     const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
-
+    
     const handleSubmit = async () => {
         try {
             if (
@@ -247,16 +247,54 @@ export default function CreatePost({
                                 {image && <Image src={showImage} alt="" sizes="300px" fill={true} />}
                             </div>
                         </div>
+                        
                         <CKEditor
+                            data={content}
+                            onChange={handleCkeditor}
+                            editor={ClassicEditor}
+                            onReady={(editor) => {
+                                console.log('Editor is ready to use!', editor);
+                            }}
+                            onBlur={(event, editor) => {
+                                console.log('Blur.', editor);
+                            }}
+                            onFocus={(event, editor) => {
+                                console.log('Focus.', editor);
+                            }}
                             config={{
                                 ckfinder: {
                                     uploadUrl: `${serverBackend}/api/v1/upload-images`,
                                 },
+                                toolbar: {
+                                items: [
+                                    'heading',
+                                    '|',
+                                    'bold',
+                                    'italic',
+                                    'link',
+                                    'importWord',
+                                    '|',
+                                    'bulletedList',
+                                    'numberedList',
+                                    'blockQuote',
+                                    '|',
+                                    'imageTextAlternative',
+                                    'imageUpload',
+                                    'imageStyle:full',
+                                    'imageStyle:side',
+                                    '|',
+                                    'mediaEmbed',
+                                    'insertTable',
+                                    'tableColumn',
+                                    'tableRow',
+                                    'mergeTableCells',
+                                    '|',
+                                    'undo',
+                                    'redo',
+                                ],
+                                },
                             }}
-                            data={content}
-                            onChange={handleCkeditor}
-                            editor={ClassicEditor}
-                        />
+                            />
                         <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                         <UploadFiles filesArr={filesArr} setFilesArr={setFilesArr} />
                     </ModalBody>
