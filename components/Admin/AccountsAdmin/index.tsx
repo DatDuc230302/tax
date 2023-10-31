@@ -12,7 +12,6 @@ import NoneRole from '@/components/Admin/NoneRole';
 import { formatTime } from '@/functions/formatTime';
 import CreateUser from '../CreateUser';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
-import TrashAccounts from '../TrashAccounts';
 import AccountsToolsAdmin from '../AccountsToolsAdmin';
 
 export default function AccountsAdmin() {

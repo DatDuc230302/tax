@@ -1,7 +1,6 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
 import CreateUser from '../CreateUser';
-import TrashAccounts from '../TrashAccounts';
 
 export default function AccountsToolsAdmin({
     setUsers,
@@ -124,7 +123,6 @@ export default function AccountsToolsAdmin({
                 </div>
                 <div className="flex flex-col xs:flex-row lg:justify-start justify-between gap-[6px]">
                     <CreateUser refresh={refresh} setRefresh={setRefresh} />
-                    <TrashAccounts />
                 </div>
             </div>
             <div className="flex items-center h-full flex-1 relative ">

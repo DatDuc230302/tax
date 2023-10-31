@@ -29,6 +29,10 @@ export const listNav: items[] = [
         href: '/bai-dang',
     },
     {
+        title: 'VIDEO',
+        href: '/thu-vien-video',
+    },
+    {
         title: 'TIỆN ÍCH',
         href: '/tien-ich',
     },
@@ -57,14 +61,17 @@ export default function NavHeader() {
             case '/bai-dang':
                 setActive(2);
                 break;
-            case '/tien-ich':
+            case '/thu-vien-video':
                 setActive(3);
                 break;
-            case '/huong-dan':
+            case '/tien-ich':
                 setActive(4);
                 break;
-            case '/lien-he':
+            case '/huong-dan':
                 setActive(5);
+                break;
+            case '/lien-he':
+                setActive(6);
                 break;
             case '/search':
                 break;
@@ -73,7 +80,11 @@ export default function NavHeader() {
         }
     }, [path]);
 
-    const subNews = ['Tin kinh tế', 'Tin chính trị', 'Tin thuế'];
+    const subNews = [
+        { title: 'Tin kinh tế', slug: 'tin-kinh-te' },
+        { title: 'Tin chính trị', slug: 'tin-chinh-trị' },
+        { title: 'Tin về thuế', slug: 'tin-ve-thue' },
+    ];
 
     return (
         <div className="hidden lg:flex w-full justify-between h-full items-center font-sansSerif">
@@ -100,12 +111,13 @@ export default function NavHeader() {
                                 {item.icon}
                                 <div className={`${css.subNews} flex flex-col gap-2`}>
                                     {subNews.map((subNew: any) => (
-                                        <span
+                                        <Link
+                                            href={`/bai-dang?category=${subNew.slug}`}
                                             key={subNew}
                                             className="py-2 px-4 text-[#363636] hover:bg-[#e4e4e4] cursor-pointer"
                                         >
-                                            {subNew}
-                                        </span>
+                                            {subNew.title}
+                                        </Link>
                                     ))}
                                 </div>
                             </span>

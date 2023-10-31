@@ -6,7 +6,7 @@ import React from 'react';
 import { AiFillDashboard, AiFillSetting, AiFillSliders } from 'react-icons/ai';
 import { BiCategory, BiSolidDashboard } from 'react-icons/bi';
 import { BsClockHistory, BsFillPostcardFill } from 'react-icons/bs';
-import { FaBars, FaUserFriends } from 'react-icons/fa';
+import { FaBars, FaTrash, FaUserFriends } from 'react-icons/fa';
 
 interface items {
     icon: React.ReactElement;
@@ -44,6 +44,11 @@ const listItems: items[] = [
         icon: <AiFillSetting fontSize={20} />,
         title: 'Quản lý trang',
         href: '/admin/settingWeb',
+    },
+    {
+        icon: <FaTrash fontSize={20} />,
+        title: 'Thùng rác',
+        href: '/admin/trash',
     },
 ];
 
