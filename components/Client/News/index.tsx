@@ -9,54 +9,6 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 
-const fakeApi = [
-    {
-        id: '1',
-        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
-        content:
-            'Sáng 23/10, tại Cục Thuế TP Hồ Chí Minh, Tổng cục Thuế tổ chức Hội nghị công bố quyết định điều động, bổ nhiệm đồng chí Nguyễn Nam Bình, Cục trưởng Cục Thuế tỉnh Bà Rịa - Vũng Tàu giữ chức Cục trưởng Cục Thuế TP Hồ Chí Minh. Tổng cục trưởng Tổng cục Thuế Mai Xuân Thành chủ trì hội nghị.',
-        Issuance_date: '13/02/2012',
-        serial_number: '13/4/2012',
-        status: 'active',
-    },
-    {
-        id: '2',
-        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
-        content:
-            'Sáng 23/10, tại Cục Thuế TP Hồ Chí Minh, Tổng cục Thuế tổ chức Hội nghị công bố quyết định điều động, bổ nhiệm đồng chí Nguyễn Nam Bình, Cục trưởng Cục Thuế tỉnh Bà Rịa - Vũng Tàu giữ chức Cục trưởng Cục Thuế TP Hồ Chí Minh. Tổng cục trưởng Tổng cục Thuế Mai Xuân Thành chủ trì hội nghị.',
-        Issuance_date: '13/02/2012',
-        serial_number: '13/4/2012',
-        status: 'active',
-    },
-    {
-        id: '3',
-        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
-        content:
-            'Sáng 23/10, tại Cục Thuế TP Hồ Chí Minh, Tổng cục Thuế tổ chức Hội nghị công bố quyết định điều động, bổ nhiệm đồng chí Nguyễn Nam Bình, Cục trưởng Cục Thuế tỉnh Bà Rịa - Vũng Tàu giữ chức Cục trưởng Cục Thuế TP Hồ Chí Minh. Tổng cục trưởng Tổng cục Thuế Mai Xuân Thành chủ trì hội nghị.',
-        Issuance_date: '13/02/2012',
-        serial_number: '13/4/2012',
-        status: 'active',
-    },
-    {
-        id: '4',
-        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
-        content:
-            'Sáng 23/10, tại Cục Thuế TP Hồ Chí Minh, Tổng cục Thuế tổ chức Hội nghị công bố quyết định điều động, bổ nhiệm đồng chí Nguyễn Nam Bình, Cục trưởng Cục Thuế tỉnh Bà Rịa - Vũng Tàu giữ chức Cục trưởng Cục Thuế TP Hồ Chí Minh. Tổng cục trưởng Tổng cục Thuế Mai Xuân Thành chủ trì hội nghị.',
-        Issuance_date: '13/02/2012',
-        serial_number: '13/4/2012',
-        status: 'active',
-    },
-    {
-        id: '5',
-        title: 'Công bố quyết định điều động, bổ nhiệm Cục trưởng Cục Thuế TP. Hồ Chí Minh',
-        content:
-            'Sáng 23/10, tại Cục Thuế TP Hồ Chí Minh, Tổng cục Thuế tổ chức Hội nghị công bố quyết định điều động, bổ nhiệm đồng chí Nguyễn Nam Bình, Cục trưởng Cục Thuế tỉnh Bà Rịa - Vũng Tàu giữ chức Cục trưởng Cục Thuế TP Hồ Chí Minh. Tổng cục trưởng Tổng cục Thuế Mai Xuân Thành chủ trì hội nghị.',
-        Issuance_date: '13/02/2012',
-        serial_number: '13/4/2012',
-        status: 'active',
-    },
-];
-
 export default function News() {
     const [news, setNews] = useState<object[]>([]);
     const [initialNews, setInitialNews] = useState<object[]>([]);
@@ -86,7 +38,7 @@ export default function News() {
             }
         } catch (err: any) {
             if (err.message === 'Network Error') {
-                setNews(fakeApi);
+                console.log(err.message);
             }
         }
     };

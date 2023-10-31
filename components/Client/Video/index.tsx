@@ -30,7 +30,7 @@ export default function Video() {
                     <h2 className="text-[26px]">Thư viện video</h2>
                     <Link
                         href="/thu-vien-video"
-                        className="hover:text-[#5d88ff] duration-150 text-[13px] ease-linear cursor-pointer"
+                        className="hover:text-[#64a1fb] duration-150 text-[13px] ease-linear cursor-pointer"
                     >
                         Xem thêm
                     </Link>
