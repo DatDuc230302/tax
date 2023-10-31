@@ -27,6 +27,8 @@ export default function PostClient({ postId }: { postId: any }) {
         }
     }, setLoading);
 
+    console.log(post);
+
     return loading ? (
         <SkeletonLoading h={400} />
     ) : (
