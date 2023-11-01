@@ -1,3 +1,3 @@
 export const serverImages: string = 'http://localhost:5000';
 // export const serverBackend: string = 'http://localhost:8000';
-export const serverBackend: string = 'http://0.tcp.ap.ngrok.io:19772';
+export const serverBackend: string = 'http://0.tcp.ap.ngrok.io:13521';
