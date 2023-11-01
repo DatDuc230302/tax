@@ -127,7 +127,6 @@ export default function UpdatePost({
             setImage(null);
         }
     };
-
     const handleSubCategoryChange = (item: any) => {
         setSubCategory(item.name);
         setcategoryID(item.id);
@@ -240,7 +239,7 @@ export default function UpdatePost({
                         <div className="flex items-center gap-3">
                             <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">
                                 {/* {image && <Image src={image} alt="" fill sizes="10000px" />} */}
-                                {/* {image && <Image src={`${serverBackend}/${image}`} alt={image} fill sizes="10000px" />} */}
+                                {image && <Image src={`${serverBackend}${image}`} alt={image} fill sizes="10000px" />}
                             </div>
                         </div>
                         <>
