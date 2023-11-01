@@ -71,6 +71,8 @@ export default function UpdatePost({
     const handleSubmit = async () => {
         if (
             title.length === 0 ||
+            category.length === 0 ||
+            subCategory.length === 0 ||
             content.length === 0 ||
             image === null
         ) {
@@ -112,13 +114,13 @@ export default function UpdatePost({
             setImage(null);
         }
     };
-    useEffect(() => {
-        if (category.length === 0) {
-            setShowSubCategories(categories);
-        } else {
-            setShowSubCategories(categories.filter((item: any) => item.parent_name === category));
-        }
-    }, [category]);
+    // useEffect(() => {
+    //     if (category.length === 0) {
+    //         setShowSubCategories(categories);
+    //     } else {
+    //         setShowSubCategories(categories.filter((item: any) => item.parent_name === category));
+    //     }
+    // }, [category]);
     const handleSubCategoryChange = (item: any) => {
         setSubCategory(item.name);
         setcategoryID(item.id);
