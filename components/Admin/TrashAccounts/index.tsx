@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import RestoreTrash from '../RestoreTrash';
-import DeletePermanent from '../DeletePermanent';
 import axios from 'axios';
 import { serverBackend } from '@/server';
 import { formatTime } from '@/functions/formatTime';
@@ -61,12 +60,6 @@ export default function TrashAccounts() {
                         <TableCell className="whitespace-nowrap w-[170px]">
                             <div className="flex gap-2">
                                 <RestoreTrash
-                                    type={'account'}
-                                    idTrashUser={item.id}
-                                    refresh={refresh}
-                                    setRefresh={setRefresh}
-                                />
-                                <DeletePermanent
                                     type={'account'}
                                     idTrashUser={item.id}
                                     refresh={refresh}
