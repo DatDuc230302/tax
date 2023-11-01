@@ -37,7 +37,7 @@ export default function UpdatePost({
     oldFilesArr,
     oldserial,
     oldissuance,
-    img,
+    oldAvatar,
     categories,
     parentCategories,
     refresh,
@@ -52,7 +52,7 @@ export default function UpdatePost({
     oldserial: string;
     oldissuance: string;
     oldFilesArr: any;
-    img: string;
+    oldAvatar: string;
     categories: object[];
     parentCategories: object[];
     refresh: boolean;
@@ -64,7 +64,7 @@ export default function UpdatePost({
     const [category, setCategory] = useState<string>(oldCategory);
     const [subCategory, setSubCategory] = useState<string>(oldSubCategory);
     const [content, setContent] = useState<string>(oldContent);
-    const [image, setImage] = useState<any>(img);
+    const [avatar, setAvatar] = useState<any>(oldAvatar);
     const [imageFile, setImageFile] = useState<any>(null);
     const [filesArr, setFilesArr] = useState<any>(oldFilesArr);
     const [serial, setSerial] = useState<string>(oldserial);
@@ -74,7 +74,7 @@ export default function UpdatePost({
 
     const handleSubmit = async () => {
         try {
-            if (title.length === 0 || content.length === 0 || image === null) {
+            if (title.length === 0 || content.length === 0 || avatar === null) {
                 setRequire(true);
             } else {
                 // const formData: any = new FormData();
@@ -82,20 +82,12 @@ export default function UpdatePost({
                     user_id: dataContext.id,
                     title: title,
                     content: content,
-                    imagelink: image,
+                    imagelink: avatar,
                     serial_number: serial,
                     Issuance_date: issuance,
                     category_id: categoryID,
                     file: filesArr,
                 };
-                // formData.append('user_id', dataContext.id);
-                // formData.append('title', title);
-                // formData.append('content', content);
-                // formData.append('imagelink', image);
-                // formData.append('serial_number', serial);
-                // formData.append('Issuance_date', issuance);
-                // formData.append('category_id', categoryID);
-                // formData.append('file', filesArr);
                 const result = await axios.put(`${serverBackend}/api/v1/post/${id}`, formData);
                 if (result.data.message === 'success') {
                     setTurn(false);
@@ -117,14 +109,14 @@ export default function UpdatePost({
         const reader: any = new FileReader();
 
         reader.onloadend = () => {
-            setImage(reader.result);
+            setAvatar(reader.result);
             setImageFile(file);
         };
 
         if (file) {
             reader.readAsDataURL(file);
         } else {
-            setImage(null);
+            setAvatar(null);
         }
     };
     const handleSubCategoryChange = (item: any) => {
@@ -238,8 +230,8 @@ export default function UpdatePost({
                         </div>
                         <div className="flex items-center gap-3">
                             <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">
-                                {/* {image && <Image src={image} alt="" fill sizes="10000px" />} */}
-                                {image && <Image src={`${serverBackend}${image}`} alt={image} fill sizes="10000px" />}
+                                {avatar && <Image src="" alt={avatar} fill sizes="10000px" />}
+                                {/* {avatar && <Image src={`${serverBackend}${avatar}`} alt={avatar} fill sizes="10000px" />} */}
                             </div>
                         </div>
                         <>
