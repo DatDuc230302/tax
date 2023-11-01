@@ -7,22 +7,27 @@ import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 import { FaFlag } from 'react-icons/fa';
 import Image from 'next/image';
 import { AiOutlineEye } from 'react-icons/ai';
-import { useParams, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import PostClient from '../PostClient';
 import axios from 'axios';
 import { serverBackend } from '@/server';
 import { getDays } from '@/functions/getDays';
 import Link from 'next/link';
+import { BiChevronRight } from 'react-icons/bi';
+import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces';
 
 export default function PostsClient() {
+    const searchParams: any = useSearchParams();
     const itemsPerPage: number = 5;
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [start, setStart] = useState<number>(0);
     const [end, setEnd] = useState<number>(itemsPerPage);
-    const [searchValue, setSearchValue] = useState<string>('');
     const [posts, setPosts] = useState<object[]>([]);
+    const [initialPost, setInitialPost] = useState<object[]>([]);
+    const category = searchParams.get('category') ? searchParams.get('category') : null;
+    const subCategory = searchParams.get('subCategory') ? searchParams.get('subCategory') : null;
 
-    const searchParams = useSearchParams();
+    
 
     useEffect(() => {
         const newStart = (currentPage - 1) * itemsPerPage;
@@ -32,14 +37,22 @@ export default function PostsClient() {
     }, [currentPage]);
 
     useEffect(() => {
-        if (searchValue.length > 0) {
-            setPosts(
-                posts.filter((item: any) => item.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())),
-            );
+        if (category) {
+            if (subCategory) {
+                setPosts(
+                    initialPost.filter(
+                        (item: any) =>
+                            removeDiacriticsAndSpaces(item.parent_name) === category &&
+                            removeDiacriticsAndSpaces(item.category_name) === subCategory,
+                    ),
+                );
+            } else {
+                setPosts(initialPost.filter((item: any) => removeDiacriticsAndSpaces(item.parent_name) === category));
+            }
         } else {
-            setPosts(posts);
+            setPosts(initialPost);
         }
-    }, [searchValue]);
+    }, [searchParams.get('category'), searchParams.get('subCategory')]);
 
     useEffect(() => {
         getPosts();
@@ -50,6 +63,7 @@ export default function PostsClient() {
             const result = await axios.get(`${serverBackend}/api/v1/post`);
             if (result.data.message === 'success') {
                 setPosts(result.data.data);
+                setInitialPost(result.data.data);
             }
         } catch (err) {
             console.log(err);
@@ -66,12 +80,6 @@ export default function PostsClient() {
                     <div className="w-full flex flex-col gap-2 pb-[20px]">
                         <div className="justify-between flex flex-col md:flex-row">
                             <h2 className="font-bold text-[26px]">Tất cả bài đăng</h2>
-                            <input
-                                placeholder="Tìm kiếm bài đăng"
-                                className="border-[1px] border-[#ccc] rounded-[16px] p-2"
-                                type="text"
-                                onChange={(e) => setSearchValue(String(e.target.value))}
-                            />
                         </div>
                         <div className="flex flex-col gap-4">
                             {posts.slice(start, end).map(
@@ -121,9 +129,17 @@ export default function PostsClient() {
                                                 </div>
                                             </Link>
                                             <div className="flex w-full whitespace-nowrap items-center gap-2">
-                                                <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
-                                                    {item.parent_name}
-                                                </span>
+                                                <div className="flex gap-2 items-center">
+                                                    <span className="rounded-[16px] cursor-pointer hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                        {item.parent_name}
+                                                    </span>
+                                                    <BiChevronRight fontSize={14} />
+                                                    {item.category_name && (
+                                                        <span className="rounded-[16px] cursor-pointer hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                            {item.category_name}
+                                                        </span>
+                                                    )}
+                                                </div>
                                                 <span className="text-[12px]">
                                                     {getDays(item.created_at)} ngày trước
                                                 </span>

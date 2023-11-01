@@ -4,38 +4,28 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
 import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces';
-
-const list = [
-    { title: 'Tin tức', icon: true },
-    { title: 'Văn bản', icon: true },
-    { title: 'Sự kiện', icon: false },
-];
-
-const list2 = [
-    { title: 'con1', parent: 'Tin tức' },
-    { title: 'con2', parent: 'Văn bản' },
-    { title: 'con3', parent: 'Tin tức' },
-];
+import axios from 'axios';
+import { serverBackend } from '@/server';
+import css from './PostsCategories.module.scss';
+import Link from 'next/link';
 
 export default function PostsCategories() {
     const router = useRouter();
-    const [category, setCategory] = useState<string>('');
-    const [subCategories, setCategories] = useState<object[]>([]);
+    const [categories, setCategories] = useState<object[]>([]);
 
     useEffect(() => {
-        setCategories(list2.filter((subCategory: any) => subCategory.parent === category));
-    }, [category]);
+        getCategories();
+    }, []);
 
-    const handleCategory = (category: string) => {
-        router.push(`/bai-dang?category=${removeDiacriticsAndSpaces(category)}`);
-    };
-
-    const handleSubCategory = (subCategory: string) => {
-        router.push(
-            `/bai-dang?category=${removeDiacriticsAndSpaces(category)}&subCategory=${removeDiacriticsAndSpaces(
-                subCategory,
-            )}`,
-        );
+    const getCategories = async () => {
+        try {
+            const result = await axios.get(`${serverBackend}/api/v1/category`);
+            if (result.data.message === 'success') {
+                setCategories(result.data.data);
+            }
+        } catch (err: any) {
+            console.log(err);
+        }
     };
 
     return (
@@ -46,34 +36,39 @@ export default function PostsCategories() {
             >
                 Thể loại
             </h2>
-            {list.map((category: any, index: number) => (
-                <>
-                    <span
-                        key={index}
-                        onMouseOver={() => setCategory(category.title)}
-                        onClick={() => handleCategory(category.title)}
-                        className={`categorys-center justify-between flex cursor-pointer p-2 hover:bg-[#e1e1e1] duration-200 ease-linear`}
-                    >
-                        {category.title}
-                        {category.icon && <FiChevronRight fontSize={18} />}
-                    </span>
-                </>
-            ))}
-            {subCategories.length > 0 && (
-                <div
-                    className={`shadow-xl h-full flex-col flex right-[-200px] top-[-1px] pb-1 w-[200px] bg-white absolute`}
-                    onMouseLeave={() => setCategory('')}
-                >
-                    {subCategories.map((subCategory: any, index: number) => (
-                        <span
-                            key={index}
-                            onClick={() => handleSubCategory(subCategory.title)}
-                            className="items-cente justify-between flex cursor-pointer p-2 hover:underline text-[14px]"
-                        >
-                            {subCategory.title}
-                        </span>
-                    ))}
-                </div>
+            {categories.map(
+                (item: any, index: number) =>
+                    !item.parent_name && (
+                        <div key={index} className={`${css.category} relative`}>
+                            <Link
+                                href={`/bai-dang?category=${removeDiacriticsAndSpaces(item.name)}`}
+                                className={`categorys-center justify-between flex cursor-pointer p-2 hover:bg-[#e1e1e1] duration-200 ease-linear`}
+                            >
+                                {item.name}
+                                {categories.filter((it: any) => it.parent_name === item.name).length > 0 && (
+                                    <FiChevronRight fontSize={18} />
+                                )}
+                            </Link>
+                            <div
+                                className={`${css.subCategory} shadow-xl flex flex-col absolute w-[80%] h-max bg-white right-[-200px] top-0`}
+                            >
+                                {categories.map(
+                                    (subCategory: any, index: number) =>
+                                        subCategory.parent_name === item.name && (
+                                            <Link
+                                                href={`/bai-dang?category=${removeDiacriticsAndSpaces(
+                                                    item.name,
+                                                )}&subCategory=${removeDiacriticsAndSpaces(subCategory.name)}`}
+                                                className="categorys-center justify-between flex cursor-pointer p-2 hover:bg-[#e1e1e1]"
+                                                key={index}
+                                            >
+                                                {subCategory.name}
+                                            </Link>
+                                        ),
+                                )}
+                            </div>
+                        </div>
+                    ),
             )}
         </div>
     );
