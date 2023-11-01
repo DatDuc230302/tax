@@ -2,6 +2,8 @@
 
 import SkeletonLoading from '@/components/Common/SkeletonLoading';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
+import { getNameFile } from '@/functions/getNameFile';
+import { getNameFiles } from '@/functions/getNameFiles';
 import { loadingApi } from '@/functions/loadingApi';
 import { serverBackend } from '@/server';
 import axios from 'axios';
@@ -53,7 +55,7 @@ export default function PostClient({ postId }: { postId: any }) {
                         {post.file.split(',').map((file: any, index: number) => (
                             <span className="cursor-pointer flex gap-1 items-center" key={index}>
                                 <BsFileEarmarkText fontSize={16} />
-                                {file}
+                                {getNameFile(file)}
                             </span>
                         ))}
                     </div>

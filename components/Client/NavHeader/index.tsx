@@ -7,6 +7,7 @@ import { FaBars, FaHome } from 'react-icons/fa';
 import { HiChevronDown } from 'react-icons/hi';
 import SearchTool from '../SearchTool';
 import css from './NavHeader.module.scss';
+import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces';
 
 interface items {
     icon?: ReactElement;
@@ -50,7 +51,6 @@ export default function NavHeader() {
     const [active, setActive] = useState<number>(0);
 
     const pathName = usePathname();
-
     const path: string = '/' + pathName.split('/')[1];
 
     useEffect(() => {
@@ -80,11 +80,7 @@ export default function NavHeader() {
         }
     }, [path]);
 
-    const subNews = [
-        { title: 'Tin kinh tế', slug: 'tin-kinh-te' },
-        { title: 'Tin chính trị', slug: 'tin-chinh-trị' },
-        { title: 'Tin về thuế', slug: 'tin-ve-thue' },
-    ];
+    const subNews = [{ title: 'Tin kinh tế' }, { title: 'Tin chính trị' }, { title: 'Tin về thuế' }];
 
     return (
         <div className="hidden lg:flex w-full justify-between h-full items-center font-sansSerif">
@@ -112,7 +108,9 @@ export default function NavHeader() {
                                 <div className={`${css.subNews} flex flex-col gap-2`}>
                                     {subNews.map((subNew: any) => (
                                         <Link
-                                            href={`/bai-dang?category=${subNew.slug}`}
+                                            href={`/bai-dang?category=tin-tuc&subCategory=${removeDiacriticsAndSpaces(
+                                                subNew.title,
+                                            )}`}
                                             key={subNew}
                                             className="py-2 px-4 text-[#363636] hover:bg-[#e4e4e4] cursor-pointer"
                                         >
