@@ -130,19 +130,22 @@ export default function PostsAdmin() {
                             </TableCell>
                             <TableCell className="w-[200px] flex gap-3 whitespace-nowrap">
                                 <UpdatePost
-                                    oldTitle={item.title}
-                                    oldContent={item.content}
-                                    oldCategory={item.parent_name}
-                                    oldSubCategory={item.category_name}
-                                    oldserial={item.serial_number}
-                                    oldissuance={item.Issuance_date}
-                                    oldFilesArr={item.file.split(',')}
-                                    img={'/imgs/avatar.jpg'}
-                                    categories={categories}
-                                    parentCategories={parentCategories}
-                                    refresh={refresh}
-                                    setRefresh={setRefresh}
+                                id={item.id}
+                                oldTitle={item.title}
+                                oldContent={item.content}
+                                oldCategoryID={item.parent_id}
+                                oldCategory={item.parent_name}
+                                oldSubCategory={item.category_name}
+                                oldserial={item.serial_number}
+                                oldissuance={item.Issuance_date}
+                                oldFilesArr={item.file ? item.file.split(',') : []} 
+                                img={item.images}
+                                categories={categories}
+                                parentCategories={parentCategories}
+                                refresh={refresh}
+                                setRefresh={setRefresh}
                                 />
+
                                 <ChangeStatus
                                     type="post"
                                     idPost={item.id}
