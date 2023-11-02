@@ -73,7 +73,6 @@ export default function CreatePost({
                 category.length === 0 ||
                 subCategory.length === 0 ||
                 image === null ||
-                isDate(issuance) === false ||
                 content.length === 0
             ) {
                 setRequire(true);
