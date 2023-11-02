@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from 
 import RestoreTrash from '../RestoreTrash';
 import { serverBackend } from '@/server';
 import axios from 'axios';
+// import Placeholder from 'ckeditor5-placeholder/src/placeholder';
 import { formatTime } from '@/functions/formatTime';
 
 export default function TrashPosts() {
@@ -16,7 +17,7 @@ export default function TrashPosts() {
 
     const getTrashPosts = async () => {
         try {
-            const result = await axios.get(`${serverBackend}/api/v1/posts/trashed`);
+            const result = await axios.get(`${serverBackend}/api/v1/trashed-posts`);
             if (result.data.message === 'success') {
                 setTrashPosts(result.data.data);
             }

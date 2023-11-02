@@ -11,7 +11,7 @@ import { AiOutlineEye } from 'react-icons/ai';
 import { FaFlag } from 'react-icons/fa';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 
-export default function CurrentPosts() {
+export default function RecentPosts() {
     const [posts, setPosts] = useState<object[]>([]);
 
     useEffect(() => {
@@ -30,9 +30,17 @@ export default function CurrentPosts() {
     };
 
     return (
-        <div className="flex justify-center my-2 font-merriweather px-4 min-h-[400px]">
+        <div className="flex justify-center my-2 font-merriweather px-4 min-h-[450px]">
             <div className="flex w-wMain flex-col gap-2">
-                <h2 className="text-[26px]">Bài viết gần đây</h2>
+                <div className="flex justify-between border-b-[2px]">
+                    <h2 className="text-[26px]">Bài viết gần đây</h2>
+                    <Link
+                        href={`/bai-dang?sort=recent`}
+                        className="text-[13px] cursor-pointer hover:text-colorLink duration-100 ease-linear"
+                    >
+                        Xem thêm
+                    </Link>
+                </div>
                 <div className="flex w-full gap-3 flex-wrap md:justify-center lg:justify-start lg:flex-nowrap">
                     {posts.map(
                         (item: any, index: number) =>

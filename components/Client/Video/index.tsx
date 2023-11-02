@@ -26,11 +26,11 @@ export default function Video() {
     return (
         <div className="flex justify-center py-6 px-4 font-merriweather">
             <div className="flex flex-col bg-white w-wMain h-max">
-                <div className="pb-2 flex items-center justify-between border-b-[2px] boder-[#ccc]">
+                <div className="flex items-center justify-between border-b-[2px] boder-[#ccc]">
                     <h2 className="text-[26px]">Thư viện video</h2>
                     <Link
-                        href="/thu-vien-video"
-                        className="hover:text-[#64a1fb] duration-150 text-[13px] ease-linear cursor-pointer"
+                        href="/bai-dang?category=video"
+                        className="hover:text-colorLink duration-150 text-[13px] ease-linear cursor-pointer"
                     >
                         Xem thêm
                     </Link>

@@ -20,6 +20,9 @@ const config: Config = {
             width: {
                 wMain: '1270px',
             },
+            colors: {
+                colorLink: '#64a1fb',
+            },
         },
         screens: {
             xs: '475px',

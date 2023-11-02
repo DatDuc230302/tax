@@ -22,6 +22,7 @@ export default function UploadFiles({ filesArr, setFilesArr }: { filesArr: strin
                 formData.append('files', file);
                 const result = await axios.post(`${serverBackend}/api/v1/uploadPostFile`, formData);
                 if (result.data.message === 'success') {
+                    console.log(result.data.data);
                     setFilesArr([...filesArr, result.data.data]);
                     setFiles([
                         ...files,
