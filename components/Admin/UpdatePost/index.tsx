@@ -15,6 +15,7 @@ import {
     DropdownTrigger,
     DropdownMenu,
     DropdownItem,
+    SelectItem,
 } from '@nextui-org/react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -53,8 +54,8 @@ export default function UpdatePost({
     oldissuance: string;
     oldFilesArr: any;
     oldAvatar: string;
-    categories: object[];
-    parentCategories: object[];
+    categories: any;
+    parentCategories: any;
     refresh: boolean;
     setRefresh: any;
 }) {
@@ -72,12 +73,21 @@ export default function UpdatePost({
     const [categoryID, setcategoryID] = useState<string>(String(oldCategoryID));
     const dataContext: any = useContext(AdminContext);
 
+    const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
+
+    useEffect(() => {
+        if (category.length === 0) {
+            setShowSubCategories(categories);
+        } else {
+            setShowSubCategories(categories.filter((item: any) => item.parent_name === category));
+        }
+    }, [category]);
+
     const handleSubmit = async () => {
         try {
             if (title.length === 0 || content.length === 0 || avatar === null) {
                 setRequire(true);
             } else {
-                // const formData: any = new FormData();
                 const formData: any = {
                     user_id: dataContext.id,
                     title: title,
@@ -85,7 +95,7 @@ export default function UpdatePost({
                     imagelink: avatar,
                     serial_number: serial,
                     Issuance_date: issuance,
-                    category_id: categoryID,
+                    category_id: String(categoryID),
                     file: filesArr,
                 };
                 const result = await axios.put(`${serverBackend}/api/v1/post/${id}`, formData);
@@ -119,6 +129,7 @@ export default function UpdatePost({
             setAvatar(null);
         }
     };
+
     const handleSubCategoryChange = (item: any) => {
         setSubCategory(item.name);
         setcategoryID(item.id);
@@ -148,62 +159,55 @@ export default function UpdatePost({
                             label="Tiêu đề bài viết"
                             errorMessage={require && title.length === 0 && 'Vui lòng nhập tiêu đề bài viết'}
                         />
-                        <div className="flex gap-4 h-[50px]">
+                        <div className="flex gap-4 relative">
                             <Dropdown>
                                 <DropdownTrigger>
-                                    <div className="relative w-full h-[50px]">
+                                    <Button className="w-full h-full px-0" variant="flat">
                                         <Input
+                                            errorMessage={
+                                                require && subCategory.length === 0 && 'Vui lòng chọn thể loại con'
+                                            }
                                             label="Thể loại cha"
                                             type="text"
-                                            className="flex pb-4 justify-start cursor-pointer"
                                             value={category}
                                         />
-                                        <div className="absolute cursor-pointer justify-end top-0 items-center px-4 w-full h-full z-10 flex">
-                                            <BsChevronDown fontSize={18} />
-                                        </div>
-                                    </div>
+                                        <i className="absolute cursor-pointer left-0 right-0 bottom-0 top-0"></i>
+                                    </Button>
                                 </DropdownTrigger>
-                                <DropdownMenu
-                                    aria-label="Multiple selection example"
-                                    variant="flat"
-                                    closeOnSelect={false}
-                                    selectionMode="single"
-                                >
+                                <DropdownMenu aria-label="Static Actions">
                                     {parentCategories.map((item: any, index: number) => (
-                                        <DropdownItem onClick={() => setCategory(item.name)} key={index}>
+                                        <SelectItem
+                                            onClick={() => {
+                                                setCategory(item.name);
+                                                setSubCategory('');
+                                            }}
+                                            key={index}
+                                        >
                                             {item.name}
-                                        </DropdownItem>
+                                        </SelectItem>
                                     ))}
                                 </DropdownMenu>
                             </Dropdown>
                             <Dropdown>
                                 <DropdownTrigger>
-                                    <div className="relative w-full h-[50px]">
+                                    <Button className="w-full h-full px-0" variant="flat">
                                         <Input
+                                            errorMessage={
+                                                require && subCategory.length === 0 && 'Vui lòng chọn thể loại con'
+                                            }
                                             label="Thể loại con"
                                             type="text"
-                                            className="flex pb-4 justify-start cursor-pointer"
                                             value={subCategory}
                                         />
-                                        <div className="absolute cursor-pointer justify-end top-0 items-center px-4 w-full h-full z-10 flex">
-                                            <BsChevronDown fontSize={18} />
-                                        </div>
-                                    </div>
+                                        <i className="absolute cursor-pointer left-0 right-0 bottom-0 top-0"></i>
+                                    </Button>
                                 </DropdownTrigger>
-                                <DropdownMenu
-                                    aria-label="Multiple selection example"
-                                    variant="flat"
-                                    closeOnSelect={false}
-                                    selectionMode="single"
-                                >
-                                    {categories.map(
-                                        (item: any, index: number) =>
-                                            item.parent_name && (
-                                                <DropdownItem onClick={() => handleSubCategoryChange(item)} key={index}>
-                                                    {item.name}
-                                                </DropdownItem>
-                                            ),
-                                    )}
+                                <DropdownMenu aria-label="Static Actions">
+                                    {showSubCategories.map((item: any, index: number) => (
+                                        <DropdownItem onClick={() => handleSubCategoryChange(item)} key={index}>
+                                            {item.name}
+                                        </DropdownItem>
+                                    ))}
                                 </DropdownMenu>
                             </Dropdown>
                         </div>
