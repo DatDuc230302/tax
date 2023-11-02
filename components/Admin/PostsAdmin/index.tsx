@@ -62,6 +62,8 @@ export default function PostsAdmin() {
         }
     };
 
+    console.log(posts);
+
     return (
         <div className="flex flex-col w-full px-4 gap-4 mt-4">
             <div className="flex gap-3 flex-col-reverse lg:flex-row">
@@ -110,9 +112,11 @@ export default function PostsAdmin() {
                             <TableCell className="w-[200px] whitespace-nowrap">{item.parent_name}</TableCell>
                             <TableCell className="w-[200px] whitespace-nowrap">{item.category_name}</TableCell>
                             <TableCell className="w-[200px] whitespace-nowrap">
-                                {item.serial_number ? item.serial_number : 'null'}
+                                {item.serial_number ? item.serial_number : 'Trống'}
                             </TableCell>
-                            <TableCell className="w-[200px] whitespace-nowrap">{item.Issuance_date}</TableCell>
+                            <TableCell className="w-[200px] whitespace-nowrap">
+                                {item.Issuance_date ? item.Issuance_date : 'Trống'}
+                            </TableCell>
                             <TableCell className="w-[200px] whitespace-nowrap">{formatTime(item.created_at)}</TableCell>
                             <TableCell className="w-[200px] whitespace-nowrap">{formatTime(item.updated_at)}</TableCell>
                             <TableCell className="w-[200px] whitespace-nowrap">

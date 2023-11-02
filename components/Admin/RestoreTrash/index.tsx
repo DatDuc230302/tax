@@ -47,7 +47,7 @@ export default function RestoreTrash({
 
     const restorePost = async () => {
         try {
-            const result = await axios.put(`${serverBackend}/api/v1/posts/restore/${idTrashPost}`);
+            const result = await axios.put(`${serverBackend}/api/v1/restore-posts/${idTrashPost}`);
             if (result.data.message === 'success') {
                 setTurn(false);
                 setRefresh(!refresh);

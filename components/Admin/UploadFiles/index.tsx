@@ -9,7 +9,7 @@ import { BsFileEarmarkPlus, BsTrash } from 'react-icons/bs';
 import { LuFileText } from 'react-icons/lu';
 
 export default function UploadFiles({ filesArr, setFilesArr }: { filesArr: string[]; setFilesArr: any }) {
-    const [files, setFiles] = useState<object[]>(filesArr.length > 0 ? getNameFiles(filesArr) : []);
+    const [files, setFiles] = useState<any>(filesArr.length > 0 || filesArr !== null ? getNameFiles(filesArr) : null);
     const [preFiles, setPreFiles] = useState<object[]>([]);
     const [preFilesArr, setPreFilesArr] = useState<any>([]);
     const [restore, setRestore] = useState<boolean>(false);
@@ -73,7 +73,7 @@ export default function UploadFiles({ filesArr, setFilesArr }: { filesArr: strin
                 </div>
             </div>
             <div className="flex flex-col h-full">
-                {files.length > 0 ? (
+                {files.length > 0 && files !== null ? (
                     files.map((item: any, index: number) => (
                         <div key={index} className="flex justify-between gap-2 py-2">
                             <div className="flex items-center gap-1 text-[13px]">

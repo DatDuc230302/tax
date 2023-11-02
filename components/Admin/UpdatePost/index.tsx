@@ -95,7 +95,7 @@ export default function UpdatePost({
                     serial_number: serial,
                     Issuance_date: issuance,
                     category_id: String(categoryID),
-                    file: filesArr,
+                    file: filesArr[0] === '[]' || filesArr.length === 0 ? null : filesArr,
                 };
                 const result = await axios.put(`${serverBackend}/api/v1/post/${id}`, formData);
                 if (result.data.message === 'success') {
@@ -149,7 +149,7 @@ export default function UpdatePost({
                         {/* Thêm tiêu đề */}
                         <>
                             <Input
-                                onChange={(e) => setTitle(String(e.target.value))}
+                                onChange={(e: any) => setTitle(String(e.target.value))}
                                 type="text"
                                 value={title}
                                 label="Tiêu đề bài viết"
@@ -234,8 +234,8 @@ export default function UpdatePost({
                         {/* Thêm avatar */}
                         <div className="flex items-center gap-3">
                             <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">
-                                {/* {avatar && <Image src="" alt={avatar} fill sizes="10000px" />} */}
-                                {avatar && <Image src={`${serverBackend}${avatar}`} alt={avatar} fill sizes="10000px" />}
+                                {avatar && <Image src="" alt={avatar} fill sizes="10000px" />}
+                                {/* {avatar && <Image src={`${serverBackend}${avatar}`} alt={avatar} fill sizes="10000px" />} */}
                             </div>
                         </div>
                         {/* Thêm content */}
