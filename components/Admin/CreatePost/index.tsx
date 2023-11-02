@@ -68,38 +68,37 @@ export default function CreatePost({
     const [filesArr, setFilesArr] = useState<string[]>([]);
 
     const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
-
+    
     const handleSubmit = async () => {
-        console.log(filesArr);
-        // try {
-        //     if (
-        //         title.length === 0 ||
-        //         category.length === 0 ||
-        //         subCategory.length === 0 ||
-        //         isDate(issuance) === false ||
-        //         content.length === 0
-        //     ) {
-        //         setRequire(true);
-        //     } else {
-        //         const formData: any = new FormData();
-        //         formData.append('user_id', dataContext.id);
-        //         formData.append('title', title);
-        //         formData.append('content', content);
-        //         formData.append('image', image, image.name);
-        //         formData.append('serial_number', serial);
-        //         formData.append('Issuance_date', issuance);
-        //         formData.append('category_id', categoryID);
-        //         formData.append('file', filesArr);
-        //         const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
-        //         if (result.data.message === 'success') {
-        //             setTurn(false);
-        //             setRefresh(!refresh);
-        //             emptyValue();
-        //         }
-        //     }
-        // } catch {
-        //     alert('Khong the post');
-        // }
+        try {
+            if (
+                title.length === 0 ||
+                category.length === 0 ||
+                subCategory.length === 0 ||
+                isDate(issuance) === false ||
+                content.length === 0
+            ) {
+                setRequire(true);
+            } else {
+                const formData: any = new FormData();
+                formData.append('user_id', dataContext.id);
+                formData.append('title', title);
+                formData.append('content', content);
+                formData.append('image', image, image.name);
+                formData.append('serial_number', serial);
+                formData.append('Issuance_date', issuance);
+                formData.append('category_id', categoryID);
+                formData.append('file', filesArr);
+                const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
+                if (result.data.message === 'success') {
+                    setTurn(false);
+                    setRefresh(!refresh);
+                    emptyValue();
+                }
+            }
+        } catch {
+            alert('Khong the post');
+        }
     };
 
     const handleUploadImg = (e: any) => {

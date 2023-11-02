@@ -33,7 +33,7 @@ export default function Footer() {
               <Image src={'/imgs/logo.png'} fill sizes="100000px" alt="" />
             </div>
             <div className="flex flex-col">
-                <h3 className="font-bold text-[18px]">CỤC THUẾ THÀNH PHỐ HỒ CHÍ MINH</h3>
+                <h3 className="font-bold text-[15px]">CỤC THUẾ THÀNH PHỐ HỒ CHÍ MINH</h3>
               <h3 className="font-bold text-[18px]">{settingData.footer_owner}</h3>
               
             </div>

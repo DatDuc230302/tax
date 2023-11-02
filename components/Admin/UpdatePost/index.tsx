@@ -230,21 +230,59 @@ export default function UpdatePost({
                         </div>
                         <div className="flex items-center gap-3">
                             <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">
-                                {avatar && <Image src="" alt={avatar} fill sizes="10000px" />}
-                                {/* {avatar && <Image src={`${serverBackend}${avatar}`} alt={avatar} fill sizes="10000px" />} */}
+                                {/* {avatar && <Image src="" alt={avatar} fill sizes="10000px" />} */}
+                                {avatar && <Image src={`${serverBackend}${avatar}`} alt={avatar} fill sizes="10000px" />}
                             </div>
                         </div>
                         <>
-                            <CKEditor
-                                config={{
-                                    ckfinder: {
-                                        uploadUrl: `${serverImages}/upload`,
-                                    },
-                                }}
-                                data={content}
-                                onChange={handleCkeditor}
-                                editor={ClassicEditor}
-                            />
+                           <CKEditor
+                            data={content}
+                            onChange={handleCkeditor}
+                            editor={ClassicEditor}
+                            onReady={(editor) => {
+                                console.log('Editor is ready to use!', editor);
+                            }}
+                            onBlur={(event, editor) => {
+                                console.log('Blur.', editor);
+                            }}
+                            onFocus={(event, editor) => {
+                                console.log('Focus.', editor);
+                            }}
+                            config={{
+                                ckfinder: {
+                                    uploadUrl: `${serverBackend}/api/v1/upload-images`,
+                                  
+                                },
+                                toolbar: {
+                                    items: [
+                                        'heading',
+                                        '|',
+                                        'bold',
+                                        'italic',
+                                        'link',
+                                        'importWord',
+                                        '|',
+                                        'bulletedList',
+                                        'numberedList',
+                                        'blockQuote',
+                                        '|',
+                                        'imageTextAlternative',
+                                        'imageUpload',
+                                        'imageStyle:full',
+                                        'imageStyle:side',
+                                        '|',
+                                        'mediaEmbed',
+                                        'insertTable',
+                                        'tableColumn',
+                                        'tableRow',
+                                        'mergeTableCells',
+                                        '|',
+                                        'undo',
+                                        'redo',
+                                    ],
+                                },
+                            }}
+                        />
                             <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                         </>
                         <UploadFiles filesArr={filesArr} setFilesArr={setFilesArr} />
