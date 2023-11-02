@@ -27,12 +27,12 @@ export default function Footer() {
         <div className="w-full flex justify-center bg-[#0B80FF] p-4 min-h-[200px]">
             {settingData ? (
                 <div className="flex w-wMain flex-col lg:flex-row justify-between text-white">
-                    <div className="flex h-[60px] gap-2 items-center">
+                    <div className="flex h-[60px] gap-2 items-center pt-7">
                         <div className="w-[60px] h-[60px] relative">
                             <Image src={'/imgs/logo.png'} fill sizes="100000px" alt="" />
                         </div>
-                        <div className="flex flex-col">
-                            <h3 className="font-bold text-[18px]">CỤC THUẾ THÀNH PHỐ HỒ CHÍ MINH</h3>
+                        <div className="flex flex-col ">
+                            <h3 className="font-bold text-[18px]">CỤC THUẾ TP. HỒ CHÍ MINH</h3>
                             <h3 className="font-bold text-[18px]">{settingData.footer_owner}</h3>
                         </div>
                     </div>

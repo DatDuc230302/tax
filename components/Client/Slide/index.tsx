@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -8,8 +8,11 @@ import axios from 'axios';
 import { serverBackend } from '@/server';
 
 export default function Slide() {
-    const slides = ['/imgs/slides/slide1.jpg', '/imgs/slides/slide2.jpg', '/imgs/slides/slide3.jpg'];
     const [banners, setBanners] = useState<object[]>([]);
+
+    useEffect(() => {
+        getBanners();
+    }, []);
 
     const getBanners = async () => {
         try {
@@ -23,7 +26,7 @@ export default function Slide() {
     };
 
     return (
-        <div className="flex justify-center px-4">
+        <div className="flex justify-center px-4 min-h-[450px]">
             <div className="flex w-wMain justify-center">
                 <Carousel
                     showThumbs={false}
@@ -37,9 +40,9 @@ export default function Slide() {
                     emulateTouch={true}
                     swipeable={true}
                 >
-                    {slides.map((item: any) => (
-                        <div className="w-full h-[250px] xs:h-[400px] md:h-[600px] lg:h-[750px] relative" key={item}>
-                            <Image src={item} fill sizes="100000px" alt="Slide 1" />
+                    {banners.map((item: any, index: number) => (
+                        <div className="w-full h-[250px] xs:h-[400px] md:h-[600px] lg:h-[750px] relative" key={index}>
+                            <Image src={''} fill sizes="100000px" alt={item.id} />
                         </div>
                     ))}
                 </Carousel>
