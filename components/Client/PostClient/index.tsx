@@ -29,8 +29,6 @@ export default function PostClient({ postId }: { postId: any }) {
         }
     }, setLoading);
 
-    console.log(post);
-
     return loading ? (
         <SkeletonLoading h={400} />
     ) : (
@@ -47,18 +45,20 @@ export default function PostClient({ postId }: { postId: any }) {
                         </span>
                     </div>
                     <h2 dangerouslySetInnerHTML={{ __html: post.content }}></h2>
-                    <div className="flex gap-2 items-center">
-                        <span className="flex items-center gap-1">
-                            <GrAttachment fontSize={16} />
-                            Tệp đính kèm:
-                        </span>
-                        {post.file.split(',').map((file: any, index: number) => (
-                            <span className="cursor-pointer flex gap-1 items-center" key={index}>
-                                <BsFileEarmarkText fontSize={16} />
-                                {getNameFile(file)}
+                    {post.file !== null && (
+                        <div className="flex gap-2 items-center">
+                            <span className="flex items-center gap-1">
+                                <GrAttachment fontSize={16} />
+                                Tệp đính kèm:
                             </span>
-                        ))}
-                    </div>
+                            {post.file.split(',').map((file: any, index: number) => (
+                                <span className="cursor-pointer flex gap-1 items-center" key={index}>
+                                    <BsFileEarmarkText fontSize={16} />
+                                    {getNameFile(file)}
+                                </span>
+                            ))}
+                        </div>
+                    )}
                 </div>
             )}
             {!post && <span>Bài đăng không tồn tại</span>}

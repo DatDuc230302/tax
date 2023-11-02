@@ -39,22 +39,12 @@ export default function PostsClient() {
     }, [currentPage]);
 
     useEffect(() => {
-        if (category) {
-            if (subCategory) {
-                setPosts(
-                    initialPost.filter(
-                        (item: any) =>
-                            removeDiacriticsAndSpaces(item.parent_name) === category &&
-                            removeDiacriticsAndSpaces(item.category_name) === subCategory,
-                    ),
-                );
-            } else {
-                setPosts(initialPost.filter((item: any) => removeDiacriticsAndSpaces(item.parent_name) === category));
-            }
+        if (subCategory) {
+            setPosts(initialPost.filter((item: any) => removeDiacriticsAndSpaces(item.category_name) === subCategory));
         } else {
             setPosts(initialPost);
         }
-    }, [category, subCategory]);
+    }, [subCategory]);
 
     useEffect(() => {
         getPosts();
@@ -64,6 +54,7 @@ export default function PostsClient() {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/post`);
             if (result.data.message === 'success') {
+                setInitialPost(result.data.data);
                 if (subCategory) {
                     setPosts(
                         result.data.data.filter(
@@ -80,7 +71,7 @@ export default function PostsClient() {
     };
 
     return (
-        <div className="flex gap-6 px-4 font-roboto min-h-[700px]">
+        <div className="flex w-full gap-6 px-4 font-roboto min-h-[700px]">
             {searchParams.get('postId') ? (
                 <PostClient postId={searchParams.get('postId')} />
             ) : (
@@ -118,21 +109,40 @@ export default function PostsClient() {
                                             </div>
                                             <Link
                                                 href={`/bai-dang?postId=${item.id}`}
-                                                className="flex gap-2 cursor-pointer"
+                                                key={index}
+                                                className="cursor-pointer rounded-[12px] flex-col-reverse md:flex-row flex justify-between gap-4 bg-[#F9F9F9] p-3"
                                             >
-                                                <div className="flex flex-col gap-2">
-                                                    <h2 className="text-[20px] font-bold line-clamp-2">{item.title}</h2>
-                                                    <span
-                                                        dangerouslySetInnerHTML={{ __html: item.content }}
-                                                        className="font-light line-clamp-3 text-[14px] text-[#767676]"
-                                                    ></span>
+                                                <div className="flex flex-col gap-4 justify-center">
+                                                    <div className="flex flex-col pr-[20px] gap-2">
+                                                        <h3 className="line-clamp-2 font-bold">{item.title}</h3>
+                                                        <div
+                                                            // dangerouslySetInnerHTML={{ __html: item.content }}
+                                                            className="font-light line-clamp-3 text-[14px] text-[#767676]"
+                                                        >
+                                                            Mới đây, Bộ Tài chính đã có Văn bản số 14246/BTC-CST báo cáo
+                                                            Thủ tướng Chính phủ và Công văn số 14247/BTC-CST xin ý kiến
+                                                            các bộ, ngành về việc rà soát giảm phí, lệ phí để tháo gỡ
+                                                            khó khăn cho đối tượng chịu ảnh hưởng bởi dịch Covid-19 nhằm
+                                                            gia hạn thêm 06 tháng đối với các khoản phí, lệ phí đã điều
+                                                            chỉnh giảm tại 21 Thông tư ban hành trong năm 2020
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex w-full whdivtespace-nowrap items-center gap-2">
+                                                        <span className="text-[12px]">{item.Issuance_date}</span>
+                                                        <span className="text-[12px]">Mã: {item.serial_number}</span>
+                                                        <span className="flex gap-1 items-center text-[14px]">
+                                                            <AiOutlineEye fontSize={18} />0
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                                <div className="shrink-0 relative w-[200px] h-[120px]">
+                                                <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
                                                     <Image
-                                                        className="rounded-[15px]"
-                                                        src={''}
+                                                        src={
+                                                            'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202310/Images/dth-1077-20231023104509-e.jpg'
+                                                        }
+                                                        className="object-cover rounded-[12px]"
+                                                        alt=""
                                                         fill
-                                                        alt={item.images}
                                                         sizes="100000px"
                                                     />
                                                 </div>
