@@ -6,12 +6,12 @@ import { FiChevronRight } from 'react-icons/fi';
 import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces';
 import axios from 'axios';
 import { serverBackend } from '@/server';
-import css from './PostsCategories.module.scss';
 import Link from 'next/link';
+import { Accordion, AccordionItem } from '@nextui-org/react';
 
 export default function PostsCategories() {
     const router = useRouter();
-    const [categories, setCategories] = useState<object[]>([]);
+    const [categories, setCategories] = useState<any>([]);
 
     useEffect(() => {
         getCategories();
@@ -29,47 +29,49 @@ export default function PostsCategories() {
     };
 
     return (
-        <div className="hidden lg:flex shrink-0 flex-col w-[250px] h-max shadow-xl relative">
-            <h2
-                onClick={() => router.push('/bai-dang')}
-                className="cursor-pointer flex bg-[#0B80FF] text-white justify-center p-2"
-            >
-                Thể loại
-            </h2>
-            {categories.map(
-                (item: any, index: number) =>
-                    !item.parent_name && (
-                        <div key={index} className={`${css.category} relative`}>
-                            <Link
-                                href={`/bai-dang?category=${removeDiacriticsAndSpaces(item.name)}`}
-                                className={`categorys-center justify-between flex cursor-pointer p-2 hover:bg-[#e1e1e1] duration-200 ease-linear`}
-                            >
-                                {item.name}
-                                {categories.filter((it: any) => it.parent_name === item.name).length > 0 && (
-                                    <FiChevronRight fontSize={18} />
-                                )}
-                            </Link>
-                            <div
-                                className={`${css.subCategory} shadow-xl flex flex-col absolute w-[80%] h-max bg-white right-[-200px] top-0`}
-                            >
-                                {categories.map(
-                                    (subCategory: any, index: number) =>
-                                        subCategory.parent_name === item.name && (
-                                            <Link
-                                                href={`/bai-dang?category=${removeDiacriticsAndSpaces(
-                                                    item.name,
-                                                )}&subCategory=${removeDiacriticsAndSpaces(subCategory.name)}`}
-                                                className="categorys-center justify-between flex cursor-pointer p-2 hover:bg-[#e1e1e1]"
-                                                key={index}
-                                            >
-                                                {subCategory.name}
-                                            </Link>
-                                        ),
-                                )}
-                            </div>
-                        </div>
-                    ),
-            )}
+        <div className="flex flex-col gap-2 sticky top-[200px]">
+            <div className="w-[250px] shadow-2xl rounded-[8px] overflow-hidden h-max">
+                <h2
+                    onClick={() => router.push('/bai-dang')}
+                    className="cursor-pointer flex bg-[#0B80FF] text-white justify-center p-2"
+                >
+                    Thể loại
+                </h2>
+                <Accordion selectionMode="multiple">
+                    {categories
+                        .map(
+                            (category: any, index: number) =>
+                                category.parent_name === null && (
+                                    <AccordionItem
+                                        className="p-0 m-0"
+                                        classNames={{ title: 'text-[16px]' }}
+                                        key={index}
+                                        title={category.name}
+                                    >
+                                        <div className="flex flex-col">
+                                            {categories.map(
+                                                (subCategory: any, index: number) =>
+                                                    subCategory.parent_name === category.name && (
+                                                        <Link
+                                                            href={`/bai-dang?category=${removeDiacriticsAndSpaces(
+                                                                category.name,
+                                                            )}&subCategory=${removeDiacriticsAndSpaces(
+                                                                subCategory.name,
+                                                            )}`}
+                                                            key={index}
+                                                            className="p-1 rounded-[8px] w-full h-full hover:bg-[#ccc] cursor-pointer duration-100 ease-linear"
+                                                        >
+                                                            {subCategory.name}
+                                                        </Link>
+                                                    ),
+                                            )}
+                                        </div>
+                                    </AccordionItem>
+                                ),
+                        )
+                        .filter(Boolean)}
+                </Accordion>
+            </div>
         </div>
     );
 }

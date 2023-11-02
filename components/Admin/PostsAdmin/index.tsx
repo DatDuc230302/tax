@@ -133,9 +133,9 @@ export default function PostsAdmin() {
                                     id={item.id}
                                     oldTitle={item.title}
                                     oldContent={item.content}
-                                    oldCategoryID={item.parent_id}
                                     oldCategory={item.parent_name}
                                     oldSubCategory={item.category_name}
+                                    oldCategoryID={item.category_id}
                                     oldserial={item.serial_number}
                                     oldissuance={item.Issuance_date}
                                     oldFilesArr={item.file ? item.file.split(',') : []}

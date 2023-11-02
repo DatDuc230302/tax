@@ -34,6 +34,6 @@
         "components/Admin/CreatePost/index.js",
         "ckeditor5/src/Components/TextEditor.jsx",
         "components/Admin/CreatePost/index.jsx"
-, "functions/removeDiacriticsAndSpaces.js"    ],
+, "functions/removeDiacriticsAndSpaces.js", "components/Common/Ckeditor/index.js"    ],
     "exclude": ["node_modules"]
 }

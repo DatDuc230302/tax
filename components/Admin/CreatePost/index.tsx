@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useContext, useEffect, useState, useRef, useMemo } from 'react';
+// import Placeholder from 'ckeditor5-placeholder/src/placeholder';
 
 import {
     Modal,
@@ -24,8 +25,7 @@ import { isDate } from '@/functions/isDate';
 import axios from 'axios';
 import { AdminContext } from '@/app/admin/layout';
 import UploadFiles from '../UploadFiles';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
+import Ckeditor from '@/components/Common/Ckeditor';
 
 export default function CreatePost({
     categories,
@@ -57,12 +57,9 @@ export default function CreatePost({
     // State ngày phát hành bài đăng
     const [issuance, setIssuance] = useState<string>('');
     // State nội dung bài đăng
-    const [content, setContent] = useState<string>('Nội dung bài viết');
+    const [content, setContent] = useState<string>('');
     // State check validate
     const [require, setRequire] = useState<boolean>(false);
-    // Trạng thái sau khi thêm bài viết
-    const [status, setStatus] = useState<string>('');
-
     const [categoryID, setcategoryID] = useState<string>('');
     //
     const [filesArr, setFilesArr] = useState<string[]>([]);
@@ -75,6 +72,7 @@ export default function CreatePost({
                 title.length === 0 ||
                 category.length === 0 ||
                 subCategory.length === 0 ||
+                image === null ||
                 isDate(issuance) === false ||
                 content.length === 0
             ) {
@@ -230,7 +228,6 @@ export default function CreatePost({
                                 type="text"
                                 value={serial}
                                 label="Số hiệu"
-                                errorMessage={require && serial.length === 0 && 'Vui lòng nhập số hiệu'}
                             />
                             <Input
                                 onChange={(e: any) => setIssuance(String(e.target.value))}
@@ -238,77 +235,42 @@ export default function CreatePost({
                                 value={issuance}
                                 label="Ngày ban hành VD: 13\10\2022"
                                 errorMessage={
-                                    require &&
-                                    (issuance.length === 0
-                                        ? 'Vui lòng nhập ngày phát hành'
-                                        : !isDate(issuance) && 'Vui lòng nhập đúng định dạng thời gian')
+                                    issuance.length > 0 && !isDate(issuance) && 'Vui lòng nhập đúng định dạng thời gian'
                                 }
                             />
                         </div>
-                        <div className="flex items-center gap-3">
-                            <Button color="default" className="w-[250px] p-4">
-                                <label
-                                    className="w-full h-full flex items-center cursor-pointer justify-center"
-                                    htmlFor="uploadImg"
+                        {/* Tải hình đại diện */}
+                        <>
+                            <div className="flex items-center gap-3">
+                                <Button color="default" className="w-[250px] p-4">
+                                    <label
+                                        className="w-full h-full flex items-center cursor-pointer justify-center"
+                                        htmlFor="uploadImg"
+                                    >
+                                        <BiUpload color={'black'} fontSize={20} />
+                                        Tải hình đại diện
+                                    </label>
+                                </Button>
+                                <div
+                                    style={{ height: 300 }}
+                                    className="flex border-[1px] relative border-[#ccc] w-full"
                                 >
-                                    <BiUpload color={'black'} fontSize={20} />
-                                    Tải hình đại diện
-                                </label>
-                            </Button>
-                            <div style={{ height: 300 }} className="flex border-[1px] relative border-[#ccc] w-full">
-                                {image && <Image src={showImage} alt="" sizes="300px" fill={true} />}
+                                    {image && <Image src={showImage} alt="" sizes="300px" fill={true} />}
+                                </div>
                             </div>
-                        </div>
-
-                        <CKEditor
-                            data={content}
-                            onChange={handleCkeditor}
-                            editor={ClassicEditor}
-                            onReady={(editor) => {
-                                console.log('Editor is ready to use!', editor);
-                            }}
-                            onBlur={(event, editor) => {
-                                console.log('Blur.', editor);
-                            }}
-                            onFocus={(event, editor) => {
-                                console.log('Focus.', editor);
-                            }}
-                            config={{
-                                ckfinder: {
-                                    uploadUrl: `${serverBackend}/api/v1/upload-images`,
-                                },
-                                toolbar: {
-                                    items: [
-                                        'heading',
-                                        '|',
-                                        'bold',
-                                        'italic',
-                                        'link',
-                                        'importWord',
-                                        '|',
-                                        'bulletedList',
-                                        'numberedList',
-                                        'blockQuote',
-                                        '|',
-                                        'imageTextAlternative',
-                                        'imageUpload',
-                                        'imageStyle:full',
-                                        'imageStyle:side',
-                                        '|',
-                                        'mediaEmbed',
-                                        'insertTable',
-                                        'tableColumn',
-                                        'tableRow',
-                                        'mergeTableCells',
-                                        '|',
-                                        'undo',
-                                        'redo',
-                                    ],
-                                },
-                            }}
-                        />
-                        <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
-                        <UploadFiles filesArr={filesArr} setFilesArr={setFilesArr} />
+                            {require && image === null && (
+                                <div className="flex text-[red] justify-end text-[14px]">Vui lòng chọn ảnh</div>
+                            )}
+                        </>
+                        {/* Nội dung bài viết */}
+                        <>
+                            <Ckeditor content={content} setContent={setContent} />
+                        </>
+                        {/* Tải file lên */}
+                        <>
+                            <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
+                            <UploadFiles filesArr={filesArr} setFilesArr={setFilesArr} />
+                        </>
                     </ModalBody>
                     <ModalFooter>
                         <Button color="danger" variant="light" onClick={() => setTurn(false)}>
