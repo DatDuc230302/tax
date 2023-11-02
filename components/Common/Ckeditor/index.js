@@ -9,7 +9,6 @@ export default function Ckeditor({ content, setContent }) {
         toolbarSticky: false,
         uploader: {
             insertImageAsBase64URI: true,
-            url: `${serverBackend}/api/v1/upload-images`, 
             defaultHandlerSuccess: (data) => {
                 return {
                     files: [data], 
