@@ -8,7 +8,6 @@ import { serverBackend } from '@/server';
 import axios from 'axios';
 import { formatTime } from '@/functions/formatTime';
 import Delete from '../Delete';
-import SnackbarMessage from '@/components/Common/SnackbarMessage';
 import PostsToolsAdmin from '../PostsToolsAdmin';
 
 export default function PostsAdmin() {
@@ -62,8 +61,6 @@ export default function PostsAdmin() {
             console.log(err);
         }
     };
-
-    console.log(pos)
 
     return (
         <div className="flex flex-col w-full px-4 gap-4 mt-4">
