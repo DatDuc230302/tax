@@ -51,9 +51,9 @@ export default function News() {
     return (
         <div className="flex justify-center font-merriweather min-h-[450px] px-4 py-2">
             <div className="w-wMain flex flex-col gap-4">
-                <div className="flex justify-between items-center border-b-[2px] border-[#f5f5f5]">
+                <div className="flex justify-between items-center border-b-[2px]">
                     <h2 className="text-[26px]">Tin tức</h2>
-                    <div className="hidden sm:flex gap-3 text-[14px]">
+                    <div className="hidden sm:flex gap-3 text-[13px]">
                         <h4
                             onClick={() => onclickSubCategory('Tất cả', -1)}
                             className={`${

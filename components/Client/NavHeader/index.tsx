@@ -47,6 +47,10 @@ export const listNav: items[] = [
     },
 ];
 
+interface subNewItems {
+    title: string;
+}
+
 export default function NavHeader() {
     const [active, setActive] = useState<number>(0);
 
@@ -64,17 +68,14 @@ export default function NavHeader() {
             case '/dich-vu-cong':
                 setActive(3);
                 break;
-            case '/tien-ich':
+            case '/van-ban':
                 setActive(4);
                 break;
-            case '/van-ban':
+            case 'tien-ich':
                 setActive(5);
                 break;
-            case 'tien-ich':
-                setActive(6);
-                break;
             case '/lien-he':
-                setActive(7);
+                setActive(6);
                 break;
             case '/search':
                 break;
@@ -83,7 +84,7 @@ export default function NavHeader() {
         }
     }, [path]);
 
-    const subNews = [{ title: 'Tin kinh tế' }, { title: 'Tin chính trị' }, { title: 'Tin về thuế' }];
+    const subNews: subNewItems[] = [{ title: 'Tin kinh tế' }, { title: 'Tin chính trị' }, { title: 'Tin về thuế' }];
 
     return (
         <div className="hidden lg:flex w-full justify-between h-full items-center font-sansSerif">
@@ -108,7 +109,7 @@ export default function NavHeader() {
                             >
                                 {item.title}
                                 {item.icon}
-                                <div className={`${css.subNews} flex flex-col gap-2`}>
+                                <div className={`${css.subNews} flex flex-col`}>
                                     {subNews.map((subNew: any) => (
                                         <Link
                                             href={`/bai-dang?category=tin-tuc&subCategory=${removeDiacriticsAndSpaces(

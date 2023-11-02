@@ -27,9 +27,12 @@ export default function HotPosts() {
         <div className="flex justify-center px-4 py-4 min-h-[450px]">
             <div className="flex w-wMain flex-col my-2 font-merriweather">
                 <>
-                    <div className="flex justify-between border-b-[2px] items-center border-[#eaeaea]">
+                    <div className="flex justify-between border-b-[2px] items-center">
                         <h1 className="text-[26px] line-clamp-2">Bài viết nổi bật</h1>
-                        <Link href={'/bai-dang'} className="cursor-pointer text-[13px]">
+                        <Link
+                            href={'/bai-dang?sort=hot'}
+                            className="cursor-pointer text-[13px] hover:text-colorLink duration-100 ease-linear"
+                        >
                             Xem thêm
                         </Link>
                     </div>

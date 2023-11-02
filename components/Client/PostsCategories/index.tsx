@@ -8,6 +8,7 @@ import axios from 'axios';
 import { serverBackend } from '@/server';
 import css from './PostsCategories.module.scss';
 import Link from 'next/link';
+import { Accordion, AccordionItem } from '@nextui-org/react';
 
 export default function PostsCategories() {
     const router = useRouter();
@@ -36,7 +37,7 @@ export default function PostsCategories() {
             >
                 Thể loại
             </h2>
-            {categories.map(
+            {/* {categories.map(
                 (item: any, index: number) =>
                     !item.parent_name && (
                         <div key={index} className={`${css.category} relative`}>
@@ -69,7 +70,25 @@ export default function PostsCategories() {
                             </div>
                         </div>
                     ),
-            )}
+            )} */}
+            <Accordion selectionMode="multiple">
+                <AccordionItem className="p-0 m-0" classNames={{ title: 'text-[16px]' }} key="1" title="Tin tức">
+                    <span className="hover:bg-[#ccc] py-1 px-2 rounded-[4px] duration-100 ease-linear w-full flex h-full cursor-pointer text-[14px]">
+                        Dat
+                    </span>
+                    <span className="hover:bg-[#ccc] py-1 px-2 rounded-[4px] duration-100 ease-linear w-full flex h-full cursor-pointer text-[14px]">
+                        Dat
+                    </span>
+                </AccordionItem>
+                <AccordionItem className="p-0 m-0" classNames={{ title: 'text-[16px]' }} key="2" title="Tin tức">
+                    <span className="hover:bg-[#ccc] py-1 px-2 rounded-[4px] duration-100 ease-linear w-full flex h-full cursor-pointer text-[14px]">
+                        Dat
+                    </span>
+                    <span className="hover:bg-[#ccc] py-1 px-2 rounded-[4px] duration-100 ease-linear w-full flex h-full cursor-pointer text-[14px]">
+                        Dat
+                    </span>
+                </AccordionItem>
+            </Accordion>
         </div>
     );
 }
