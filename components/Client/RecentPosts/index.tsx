@@ -41,7 +41,7 @@ export default function RecentPosts() {
                         Xem thêm
                     </Link>
                 </div>
-                <div className="flex w-full gap-3 flex-wrap md:justify-center lg:justify-start lg:flex-nowrap">
+                <div className="mt-2 flex w-full gap-3 flex-wrap md:justify-center lg:justify-start lg:flex-nowrap">
                     {posts.map(
                         (item: any, index: number) =>
                             index < 4 &&
@@ -90,17 +90,21 @@ export default function RecentPosts() {
                                             ></div>
                                         </div>
                                     </Link>
-                                    <div className="flex w-full whitespace-nowrap items-center gap-2">
-                                        <Link
-                                            href={`/bai-dang?category=${item.parent_name}`}
-                                            className="cursor-pointer rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]"
-                                        >
-                                            {item.parent_name}
-                                        </Link>
-                                        <span className="text-[12px]">{getDays(item.created_at)} ngày trước</span>
-                                        <span className="flex gap-1 items-center text-[14px]">
-                                            <AiOutlineEye fontSize={18} />0
-                                        </span>
+                                    <div className="flex w-full flex-col whitespace-nowrap gap-2">
+                                        <div className="flex gap-2 items-center">
+                                            <span className="text-[12px]">{getDays(item.created_at)} ngày trước</span>
+                                            <span className="flex gap-1 items-center text-[14px]">
+                                                <AiOutlineEye fontSize={18} />0
+                                            </span>
+                                        </div>
+                                        <div className="flex gap-2 items-center">
+                                            <span className="cursor-pointer rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                {item.parent_name}
+                                            </span>
+                                            <span className="cursor-pointer rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                {item.category_name}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             ),

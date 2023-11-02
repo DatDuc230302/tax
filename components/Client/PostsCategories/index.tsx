@@ -29,7 +29,7 @@ export default function PostsCategories() {
     };
 
     return (
-        <div className="flex flex-col gap-2 sticky top-[200px]">
+        <div className="hidden lg:flex flex-col gap-2 sticky top-[200px]">
             <div className="w-[250px] shadow-2xl rounded-[8px] overflow-hidden h-max">
                 <h2
                     onClick={() => router.push('/bai-dang')}
@@ -37,7 +37,7 @@ export default function PostsCategories() {
                 >
                     Thể loại
                 </h2>
-                <Accordion selectionMode="multiple">
+                <Accordion selectionMode="single">
                     {categories
                         .map(
                             (category: any, index: number) =>
