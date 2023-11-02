@@ -17,17 +17,19 @@ import { BiChevronRight } from 'react-icons/bi';
 import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces';
 
 export default function PostsClient() {
+    // Lấy Categroy và SubCategory trên URL
     const searchParams: any = useSearchParams();
+    const category: any = searchParams.get('category') ? searchParams.get('category') : null;
+    const subCategory: any = searchParams.get('subCategory') ? searchParams.get('subCategory') : null;
+
+    // Phân trang
     const itemsPerPage: number = 5;
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [start, setStart] = useState<number>(0);
     const [end, setEnd] = useState<number>(itemsPerPage);
     const [posts, setPosts] = useState<object[]>([]);
     const [initialPost, setInitialPost] = useState<object[]>([]);
-    const category = searchParams.get('category') ? searchParams.get('category') : null;
-    const subCategory = searchParams.get('subCategory') ? searchParams.get('subCategory') : null;
-
-    
+    //
 
     useEffect(() => {
         const newStart = (currentPage - 1) * itemsPerPage;
@@ -52,7 +54,7 @@ export default function PostsClient() {
         } else {
             setPosts(initialPost);
         }
-    }, [searchParams.get('category'), searchParams.get('subCategory')]);
+    }, [category, subCategory]);
 
     useEffect(() => {
         getPosts();
@@ -62,8 +64,15 @@ export default function PostsClient() {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/post`);
             if (result.data.message === 'success') {
-                setPosts(result.data.data);
-                setInitialPost(result.data.data);
+                if (subCategory) {
+                    setPosts(
+                        result.data.data.filter(
+                            (item: any) => removeDiacriticsAndSpaces(item.category_name) === subCategory,
+                        ),
+                    );
+                } else {
+                    setPosts(result.data.data);
+                }
             }
         } catch (err) {
             console.log(err);
@@ -79,7 +88,7 @@ export default function PostsClient() {
                     <PostsCategories />
                     <div className="w-full flex flex-col gap-2 pb-[20px]">
                         <div className="justify-between flex flex-col md:flex-row">
-                            <h2 className="font-bold text-[26px]">Tất cả bài đăng</h2>
+                            <h2 className="font-bold text-[26px]">Bài đăng</h2>
                         </div>
                         <div className="flex flex-col gap-4">
                             {posts.slice(start, end).map(
@@ -111,19 +120,19 @@ export default function PostsClient() {
                                                 href={`/bai-dang?postId=${item.id}`}
                                                 className="flex gap-2 cursor-pointer"
                                             >
-                                                <div className="flex flex-col justify-center">
+                                                <div className="flex flex-col gap-2">
                                                     <h2 className="text-[20px] font-bold line-clamp-2">{item.title}</h2>
-                                                    <div
+                                                    <span
                                                         dangerouslySetInnerHTML={{ __html: item.content }}
                                                         className="font-light line-clamp-3 text-[14px] text-[#767676]"
-                                                    ></div>
+                                                    ></span>
                                                 </div>
                                                 <div className="shrink-0 relative w-[200px] h-[120px]">
                                                     <Image
                                                         className="rounded-[15px]"
-                                                        src={item.img}
+                                                        src={''}
                                                         fill
-                                                        alt=""
+                                                        alt={item.images}
                                                         sizes="100000px"
                                                     />
                                                 </div>

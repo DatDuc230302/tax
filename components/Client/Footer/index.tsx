@@ -12,22 +12,15 @@ export default function Footer() {
         if (storedData) {
             setSettingData(JSON.parse(storedData));
         } else {
-            // axios
-            //     .get(`${serverBackend}/api/v1/ReadSetting`)
-            //     .then((response) => {
-            //         setSettingData(response.data);
-            //         localStorage.setItem('settingData', JSON.stringify(response.data));
-            //     })
-            //     .catch((error) => {
-            //         console.error('Lỗi khi gọi API:', error);
-            //     });
             getFooter();
         }
     }, []);
 
     const getFooter = async () => {
         try {
-            const result = await axios.get(`${serverBackend}/ap1/v1/ReadSetting`);
+            const result = await axios.get(`${serverBackend}/api/v1/ReadSetting`);
+            setSettingData(result.data);
+            localStorage.setItem('settingData', JSON.stringify(result.data));
         } catch (err) {}
     };
     return (

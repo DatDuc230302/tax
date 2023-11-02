@@ -64,12 +64,7 @@ export default function LoginAdmin() {
             }
         } catch (err: any) {
             if (err.message === 'Network Error') {
-                const valueEncrypt: string = encrypt(
-                    JSON.stringify({ name: 'Trần Đức Đạt', role: 'root', email: 'dat@gmail.com', phone: '098764521' }),
-                    'DucDat2303',
-                );
-                sessionStorage.setItem('currentUser', valueEncrypt);
-                router.push('/admin');
+                console.log(err);
             } else {
                 if (err.response.data.message === 'Unauthorized') {
                     setWrongAccount(true);

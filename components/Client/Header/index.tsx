@@ -28,7 +28,7 @@ export default function Header() {
                     </div>
                 </div>
             </div>
-            <div className="flex bg-[#0B80FF] justify-center">
+            <div className="flex bg-[#0B80FF] justify-center px-4">
                 <div className="flex w-wMain justify-between h-[70px] lg:h-[42px]">
                     <div className="h-full px-4 flex w-full lg:hidden items-center justify-between">
                         <div className="flex items-center gap-2">

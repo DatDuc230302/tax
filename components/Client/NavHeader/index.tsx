@@ -13,6 +13,7 @@ interface items {
     icon?: ReactElement;
     title?: string;
     href?: string;
+    isBlank?: boolean;
 }
 
 export const listNav: items[] = [
@@ -31,7 +32,8 @@ export const listNav: items[] = [
     },
     {
         title: 'DỊCH VỤ CÔNG',
-        href: '/dich-vu-cong',
+        href: 'https://dichvucong.hochiminhcity.gov.vn/vi/',
+        isBlank: true,
     },
     {
         title: 'VĂN BẢN',
@@ -51,6 +53,8 @@ interface subNewItems {
     title: string;
 }
 
+const subNews: subNewItems[] = [{ title: 'Tin kinh tế' }, { title: 'Tin chính trị' }, { title: 'Tin về thuế' }];
+
 export default function NavHeader() {
     const [active, setActive] = useState<number>(0);
 
@@ -65,17 +69,14 @@ export default function NavHeader() {
             case '/bai-dang':
                 setActive(2);
                 break;
-            case '/dich-vu-cong':
+            case '/van-ban':
                 setActive(3);
                 break;
-            case '/van-ban':
+            case '/tien-ich':
                 setActive(4);
                 break;
-            case 'tien-ich':
-                setActive(5);
-                break;
             case '/lien-he':
-                setActive(6);
+                setActive(5);
                 break;
             case '/search':
                 break;
@@ -84,22 +85,26 @@ export default function NavHeader() {
         }
     }, [path]);
 
-    const subNews: subNewItems[] = [{ title: 'Tin kinh tế' }, { title: 'Tin chính trị' }, { title: 'Tin về thuế' }];
-
     return (
         <div className="hidden lg:flex w-full justify-between h-full items-center font-sansSerif">
             <div className="flex h-full">
                 {listNav.map((item: any, index: number) => (
                     <div key={index}>
                         {item.href.length > 0 && (
-                            <Link
-                                href={`${item.href}`}
+                            <div
                                 className={`${
                                     active === index && `bg-[#52b6ff]`
                                 } text-white select-none gap-1 h-full items-center px-4 hover:bg-[#52B6FF] duration-100 ease-linear flex shrink-0 cursor-pointer font-bold`}
                             >
-                                {item.icon ? item.icon : item.title}
-                            </Link>
+                                {!item.isBlank && (
+                                    <Link href={`${item.href}`}>{item.icon ? item.icon : item.title}</Link>
+                                )}
+                                {item.isBlank && (
+                                    <a target="blank" href={`${item.href}`}>
+                                        {item.icon ? item.icon : item.title}
+                                    </a>
+                                )}
+                            </div>
                         )}
                         {!item.href && (
                             <span
@@ -126,9 +131,6 @@ export default function NavHeader() {
                         )}
                     </div>
                 ))}
-                <i className="flex h-full cursor-pointer items-center pb-[2px] px-4 hover:bg-[#52B6FF] duration-100 ease-linea">
-                    <FaBars fontSize={20} color="white" />
-                </i>
             </div>
             <div className="flex">
                 <SearchTool />

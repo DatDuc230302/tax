@@ -100,7 +100,7 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                                         {formatTime(item.updated_at)}
                                                     </TableCell>
                                                     <TableCell className="flex w-[80px] items-center h-full justify-between">
-                                                        {item.name !== 'Tin tức' && (
+                                                        {item.name !== 'Tin tức' && item.name !== 'Văn bản' && (
                                                             <UpdateCategoryAndSubCategory
                                                                 type="category"
                                                                 idCategory={item.id}
