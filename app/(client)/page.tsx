@@ -9,9 +9,8 @@ export default function Page() {
     return (
         <div className="flex flex-col">
             <Slide />
-            <News />
             <HotPosts />
-            {/* <Service /> */}
+            <News />
             <CurrentPosts />
             <Video />
         </div>

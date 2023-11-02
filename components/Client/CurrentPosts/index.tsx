@@ -30,7 +30,7 @@ export default function CurrentPosts() {
     };
 
     return (
-        <div className="flex justify-center my-2 font-merriweather px-4 min-h-[400px]">
+        <div className="flex justify-center my-2 font-merriweather px-4 min-h-[450px]">
             <div className="flex w-wMain flex-col gap-2">
                 <h2 className="text-[26px]">Bài viết gần đây</h2>
                 <div className="flex w-full gap-3 flex-wrap md:justify-center lg:justify-start lg:flex-nowrap">

@@ -38,7 +38,7 @@ export default function Slide() {
                     swipeable={true}
                 >
                     {slides.map((item: any) => (
-                        <div className="w-full h-[400px] md:h-[600px] lg:h-[750px] relative" key={item}>
+                        <div className="w-full h-[250px] xs:h-[400px] md:h-[600px] lg:h-[750px] relative" key={item}>
                             <Image src={item} fill sizes="100000px" alt="Slide 1" />
                         </div>
                     ))}

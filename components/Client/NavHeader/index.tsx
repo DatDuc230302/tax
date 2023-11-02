@@ -30,16 +30,16 @@ export const listNav: items[] = [
         href: '/bai-dang',
     },
     {
-        title: 'VIDEO',
-        href: '/thu-vien-video',
+        title: 'DỊCH VỤ CÔNG',
+        href: '/dich-vu-cong',
+    },
+    {
+        title: 'VĂN BẢN',
+        href: '/van-ban',
     },
     {
         title: 'TIỆN ÍCH',
         href: '/tien-ich',
-    },
-    {
-        title: 'HƯỚNG DẪN',
-        href: '/huong-dan',
     },
     {
         title: 'LIÊN HỆ',
@@ -61,17 +61,20 @@ export default function NavHeader() {
             case '/bai-dang':
                 setActive(2);
                 break;
-            case '/thu-vien-video':
+            case '/dich-vu-cong':
                 setActive(3);
                 break;
             case '/tien-ich':
                 setActive(4);
                 break;
-            case '/huong-dan':
+            case '/van-ban':
                 setActive(5);
                 break;
-            case '/lien-he':
+            case 'tien-ich':
                 setActive(6);
+                break;
+            case '/lien-he':
+                setActive(7);
                 break;
             case '/search':
                 break;
