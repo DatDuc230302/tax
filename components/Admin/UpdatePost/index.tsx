@@ -234,8 +234,8 @@ export default function UpdatePost({
                         {/* Thêm avatar */}
                         <div className="flex items-center gap-3">
                             <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">
-                                {avatar && <Image src="" alt={avatar} fill sizes="10000px" />}
-                                {/* {avatar && <Image src={`${serverBackend}${avatar}`} alt={avatar} fill sizes="10000px" />} */}
+                                {/* {avatar && <Image src="" alt={avatar} fill sizes="10000px" />} */}
+                                {avatar && <Image src={`${serverBackend}${avatar}`} alt={avatar} fill sizes="10000px" />}
                             </div>
                         </div>
                         {/* Thêm content */}

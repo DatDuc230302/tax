@@ -65,7 +65,7 @@ export default function CreatePost({
     const [filesArr, setFilesArr] = useState<string[]>([]);
 
     const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
-
+    
     const handleSubmit = async () => {
         try {
             if (
