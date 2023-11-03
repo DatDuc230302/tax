@@ -12,17 +12,17 @@ import { FaFlag } from 'react-icons/fa';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 
 export default function RecentPosts() {
-    const [posts, setPosts] = useState<object[]>([]);
+    const [recentPosts, setRecentPosts] = useState<object[]>([]);
 
     useEffect(() => {
-        getPosts();
+        getRecentPosts();
     }, []);
 
-    const getPosts = async () => {
+    const getRecentPosts = async () => {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/post`);
             if (result.data.message === 'success') {
-                setPosts(result.data.data.filter((item: any) => item.status !== 'inactive'));
+                setRecentPosts(result.data.data.filter((item: any) => item.status !== 'inactive'));
             }
         } catch (err: any) {
             console.log(err);
@@ -35,14 +35,14 @@ export default function RecentPosts() {
                 <div className="flex justify-between border-b-[2px]">
                     <h2 className="text-[26px]">Bài viết gần đây</h2>
                     <Link
-                        href={`/bai-dang?sort=recent`}
+                        href={`/bai-dang`}
                         className="text-[13px] cursor-pointer hover:text-colorLink duration-100 ease-linear"
                     >
                         Xem thêm
                     </Link>
                 </div>
                 <div className="mt-2 flex w-full gap-3 flex-wrap md:justify-center lg:justify-start lg:flex-nowrap">
-                    {posts.map(
+                    {recentPosts.map(
                         (item: any, index: number) =>
                             index < 4 &&
                             item.status === 'active' && (
@@ -94,7 +94,8 @@ export default function RecentPosts() {
                                         <div className="flex gap-2 items-center">
                                             <span className="text-[12px]">{getDays(item.created_at)} ngày trước</span>
                                             <span className="flex gap-1 items-center text-[14px]">
-                                                <AiOutlineEye fontSize={18} />0
+                                                <AiOutlineEye fontSize={18} />
+                                                {item.view}
                                             </span>
                                         </div>
                                         <div className="flex gap-2 items-center">
