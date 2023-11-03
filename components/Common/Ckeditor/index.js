@@ -1,12 +1,16 @@
-import React from 'react';
+import React,{useMemo,useRef} from 'react';
 import JoditEditor from 'jodit-react';
 import { serverBackend } from '@/server';
 
 export default function Ckeditor({ content, setContent }) {
+    const editor = useRef(null)
+
     const config = {
     readonly: false,
     toolbarAdaptive: false,
     toolbarSticky: false,
+    fullsize: true,
+    globalFullSize: false,
     uploader: {
         insertImageAsBase64URI: true,
     },
@@ -16,5 +20,7 @@ export default function Ckeditor({ content, setContent }) {
     },
 };
 
-return <JoditEditor value={content} config={config} onChange={(newContent) => setContent(newContent)} />;
+  return useMemo( () => ( 
+                          <JoditEditor ref={editor} value={content} config={config} onChange={content => setContent(content)} /> 
+                        ), [] )
 }
