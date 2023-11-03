@@ -30,14 +30,16 @@ export default function AccountsAdmin() {
     }, []);
 
     useEffect(() => {
-        getUser();
+        getUsers();
     }, [refresh]);
 
-    const getUser = async () => {
+    const getUsers = async () => {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/user`);
-            setInitialUsers(result.data.data);
-            setUsers(result.data.data);
+            if (result.data.message === 'success') {
+                setInitialUsers(result.data.data);
+                setUsers(result.data.data);
+            }
         } catch (err: any) {
             console.log(err);
         }

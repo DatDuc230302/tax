@@ -18,6 +18,7 @@ export default function TrashPosts() {
     const getTrashPosts = async () => {
         try {
             const result = await axios.get(`${serverBackend}/api/v1/trashed-posts`);
+            console.log(result);
             if (result.data.message === 'success') {
                 setTrashPosts(result.data.data);
             }
