@@ -94,6 +94,9 @@ export default function News() {
                                             ></div>
                                         </div>
                                         <div className="flex w-full whdivtespace-nowrap items-center gap-2">
+                                            <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                {item.category_name}
+                                            </span>
                                             <span className="text-[12px]">{item.Issuance_date}</span>
                                             <span className="text-[12px]">Mã: {item.serial_number}</span>
                                             <span className="flex gap-1 items-center text-[14px]">

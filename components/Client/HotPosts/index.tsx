@@ -7,10 +7,10 @@ import Link from 'next/link';
 import axios from 'axios';
 import { serverBackend } from '@/server';
 import { AiOutlineEye } from 'react-icons/ai';
+import { descViews } from '@/functions/descViews';
 
 export default function HotPosts() {
     const [hotPosts, setHotPosts] = useState<object[]>([]);
-    const [news, setNews] = useState<object[]>([]);
 
     useEffect(() => {
         getHotPosts();
@@ -18,6 +18,10 @@ export default function HotPosts() {
 
     const getHotPosts = async () => {
         try {
+            const result = await axios.get(`${serverBackend}/api/v1/post`);
+            if (result.data.message === 'success') {
+                setHotPosts(descViews(result.data.data));
+            }
         } catch (err) {
             console.log(err);
         }
@@ -30,7 +34,7 @@ export default function HotPosts() {
                     <div className="flex justify-between border-b-[2px] items-center">
                         <h1 className="text-[26px] line-clamp-2">Bài viết nổi bật</h1>
                         <Link
-                            href={'/bai-dang?sort=hot'}
+                            href={'/bai-dang'}
                             className="cursor-pointer text-[13px] hover:text-colorLink duration-100 ease-linear"
                         >
                             Xem thêm
@@ -40,7 +44,11 @@ export default function HotPosts() {
                         {hotPosts.map(
                             (item: any, index: number) =>
                                 index === 0 && (
-                                    <span key={index} className={`${css.hover} flex w-full flex-col gap-3`}>
+                                    <Link
+                                        href={`/bai-dang?postId=${item.id}`}
+                                        key={index}
+                                        className={`${css.hover} flex w-full flex-col gap-3`}
+                                    >
                                         <div className="flex relative w-full overflow-hidden h-[420px]">
                                             <Image
                                                 src={
@@ -57,14 +65,18 @@ export default function HotPosts() {
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
-                                                Tin tức
+                                                {item.parent_name}
                                             </span>
-                                            <span className="text-[12px]">23/01/2023</span>
+                                            <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                {item.category_name}
+                                            </span>
+                                            <span className="text-[12px]">{item.Issuance_date}</span>
                                             <span className="flex gap-1 items-center text-[14px]">
-                                                <AiOutlineEye fontSize={18} />0
+                                                <AiOutlineEye fontSize={18} />
+                                                {item.view}
                                             </span>
                                         </div>
-                                    </span>
+                                    </Link>
                                 ),
                         )}
                         <div className="flex flex-col w-full gap-3">
@@ -72,7 +84,8 @@ export default function HotPosts() {
                                 (item: any, index: number) =>
                                     index > 0 &&
                                     index < 5 && (
-                                        <span
+                                        <Link
+                                            href={`/bai-dang?postId=${item.id}`}
                                             key={index}
                                             className={`${css.hover} flex w-full h-max p-4 flex-col gap-3 bg-[#F9F9F9]`}
                                         >
@@ -100,14 +113,18 @@ export default function HotPosts() {
                                             </div>
                                             <div className="flex items-center justify-start gap-2">
                                                 <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
-                                                    Tin tức
+                                                    {item.parent_name}
                                                 </span>
-                                                <span className="text-[12px]">23/01/2023</span>
+                                                <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                    {item.category_name}
+                                                </span>
+                                                <span className="text-[12px]">{item.Issuance_date}</span>
                                                 <span className="flex gap-1 items-center text-[14px]">
-                                                    <AiOutlineEye fontSize={18} />0
+                                                    <AiOutlineEye fontSize={18} />
+                                                    {item.view}
                                                 </span>
                                             </div>
-                                        </span>
+                                        </Link>
                                     ),
                             )}
                         </div>

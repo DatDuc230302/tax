@@ -8,9 +8,9 @@ export default function Footer() {
     const [settingData, setSettingData] = useState<any>(null);
 
     useEffect(() => {
-        const storedData = localStorage.getItem('settingData');
-        if (storedData) {
-            setSettingData(JSON.parse(storedData));
+        const footerData: any = localStorage.getItem('settingData');
+        if (footerData) {
+            setSettingData(JSON.parse(footerData));
         } else {
             getFooter();
         }
@@ -21,7 +21,9 @@ export default function Footer() {
             const result = await axios.get(`${serverBackend}/api/v1/ReadSetting`);
             setSettingData(result.data);
             localStorage.setItem('settingData', JSON.stringify(result.data));
-        } catch (err) {}
+        } catch (err) {
+            console.log(err);
+        }
     };
     return (
         <div className="w-full flex justify-center bg-[#0B80FF] p-4 min-h-[200px]">

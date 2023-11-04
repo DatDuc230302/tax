@@ -29,7 +29,7 @@ export default function PostsCategories() {
     };
 
     return (
-        <div className="hidden lg:flex flex-col gap-2 sticky top-[200px]">
+        <div className="flex flex-col gap-2">
             <div className="w-[250px] shadow-2xl rounded-[8px] overflow-hidden h-max">
                 <h2
                     onClick={() => router.push('/bai-dang')}

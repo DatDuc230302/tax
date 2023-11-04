@@ -70,13 +70,13 @@ export default function NavHeader() {
                 setActive(2);
                 break;
             case '/van-ban':
-                setActive(3);
-                break;
-            case '/tien-ich':
                 setActive(4);
                 break;
-            case '/lien-he':
+            case '/tien-ich':
                 setActive(5);
+                break;
+            case '/lien-he':
+                setActive(6);
                 break;
             case '/search':
                 break;
@@ -114,7 +114,7 @@ export default function NavHeader() {
                             >
                                 {item.title}
                                 {item.icon}
-                                <div className={`${css.subNews} flex flex-col`}>
+                                <div className={`${css.subNews} shadow-2xl flex flex-col`}>
                                     {subNews.map((subNew: any) => (
                                         <Link
                                             href={`/bai-dang?category=tin-tuc&subCategory=${removeDiacriticsAndSpaces(

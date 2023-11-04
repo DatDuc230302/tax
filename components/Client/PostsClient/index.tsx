@@ -19,6 +19,7 @@ import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces
 export default function PostsClient() {
     // Lấy Categroy và SubCategory trên URL
     const searchParams: any = useSearchParams();
+    const sort: any = searchParams.get('sort') ? searchParams.get('category') : null;
     const category: any = searchParams.get('category') ? searchParams.get('category') : null;
     const subCategory: any = searchParams.get('subCategory') ? searchParams.get('subCategory') : null;
 
@@ -71,7 +72,7 @@ export default function PostsClient() {
     };
 
     return (
-        <div className="flex w-full gap-6 px-4 font-roboto min-h-[700px]">
+        <div className="flex flex-col lg:flex-row w-full gap-6 px-4 font-roboto min-h-[700px]">
             {searchParams.get('postId') ? (
                 <PostClient postId={searchParams.get('postId')} />
             ) : (
@@ -163,7 +164,8 @@ export default function PostsClient() {
                                                     {getDays(item.created_at)} ngày trước
                                                 </span>
                                                 <span className="flex gap-1 items-center text-[14px]">
-                                                    <AiOutlineEye fontSize={18} />0
+                                                    <AiOutlineEye fontSize={18} />
+                                                    {item.view}
                                                 </span>
                                             </div>
                                         </div>
