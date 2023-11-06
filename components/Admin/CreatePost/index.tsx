@@ -155,7 +155,8 @@ export default function CreatePost({
                 Thêm bài viết
             </Button>
             <Modal
-                className="h-[750px] w-wMain overflow-y-auto"
+                className="h-[750px] overflow-y-auto"
+                size="5xl"
                 isOpen={turn}
                 onOpenChange={() => setTurn(false)}
                 isDismissable={false}
