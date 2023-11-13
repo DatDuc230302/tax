@@ -37,7 +37,7 @@ export const listNav: items[] = [
     },
     {
         title: 'VĂN BẢN',
-        href: '/van-ban',
+        href: '/bai-dang?category=van-ban',
     },
     {
         title: 'TIỆN ÍCH',

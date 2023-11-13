@@ -137,13 +137,12 @@ export default function UpdatePost({
                 </i>
             </Tooltip>
             <Modal
-                className="h-[600px] overflow-y-auto"
-                size="3xl"
+                className="h-[750px] flex overflow-y-auto"
                 isOpen={turn}
                 onOpenChange={() => setTurn(false)}
                 isDismissable={false}
             >
-                <ModalContent>
+                <ModalContent className="w-wMain">
                     <ModalHeader className="flex flex-col gap-1">Cập nhật bài viết</ModalHeader>
                     <ModalBody>
                         {/* Thêm tiêu đề */}
