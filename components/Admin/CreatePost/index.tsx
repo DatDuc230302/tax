@@ -65,7 +65,7 @@ export default function CreatePost({
     const [filesArr, setFilesArr] = useState<string[]>([]);
 
     const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
-    
+
     const handleSubmit = async () => {
         try {
             if (
@@ -155,8 +155,8 @@ export default function CreatePost({
                 Thêm bài viết
             </Button>
             <Modal
-                style={{ height: 700, overflow: 'auto' }}
-                size="3xl"
+                className="h-[750px] overflow-y-auto"
+                size="5xl"
                 isOpen={turn}
                 onOpenChange={() => setTurn(false)}
                 isDismissable={false}
