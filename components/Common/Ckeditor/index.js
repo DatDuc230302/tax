@@ -21,6 +21,6 @@ export default function Ckeditor({ content, setContent }) {
 };
 
   return useMemo( () => ( 
-                          <JoditEditor ref={editor} value={content} config={config} onChange={content => setContent(content)} /> 
-                        ), [] )
+<JoditEditor ref={editor} value={content} config={config} onChange={content => setContent(content)} /> 
+), [] )
 }

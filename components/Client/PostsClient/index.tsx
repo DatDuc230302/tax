@@ -139,7 +139,7 @@ export default function PostsClient() {
                                                 <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
                                                     <Image
                                                         src={
-                                                            'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202310/Images/dth-1077-20231023104509-e.jpg'
+                                                            `${serverBackend}${item.images}`
                                                         }
                                                         className="object-cover rounded-[12px]"
                                                         alt=""

@@ -52,7 +52,7 @@ export default function HotPosts() {
                                         <div className="flex relative w-full overflow-hidden h-[420px]">
                                             <Image
                                                 src={
-                                                    'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202308/Images/infographic-cv-2749-20230801030536-e.jpeg'
+                                                   `${serverBackend}${item.images}`
                                                 }
                                                 alt=""
                                                 className={`${css.img} object-cover`}
@@ -100,7 +100,7 @@ export default function HotPosts() {
                                                         className={`${css.img} object-cover`}
                                                         fill
                                                         src={
-                                                            'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202308/Images/infographic-cv-2749-20230801030536-e.jpeg'
+                                                           `${serverBackend}${item.images}`
                                                         }
                                                         alt=""
                                                     />

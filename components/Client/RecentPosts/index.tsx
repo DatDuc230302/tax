@@ -75,7 +75,7 @@ export default function RecentPosts() {
                                             <div className="w-full select-none relative h-[150px]">
                                                 <Image
                                                     src={
-                                                        'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202303/Images/123-20230313111341-e.jpg'
+                                                        `${serverBackend}${item.images}`
                                                     }
                                                     alt=""
                                                     fill
