@@ -33,7 +33,7 @@ export default function Header() {
                     <div className="h-full px-4 flex w-full lg:hidden items-center justify-between">
                         <div className="flex items-center gap-2">
                             <Sidebar />
-                            <div className="hidden xs:flex flex-col text-[13px]">
+                            <div className="flex flex-col text-[13px]">
                                 <h3 className="flex items-center text-white font-bold">CỤC THUẾ TP. HỒ CHÍ MINH</h3>
                                 <h3 className="flex items-center text-white font-bold">CHI CỤC THUẾ QUẬN 8</h3>
                             </div>
