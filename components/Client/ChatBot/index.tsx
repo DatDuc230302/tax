@@ -7,6 +7,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { FiSend } from 'react-icons/fi';
 import { IoEllipsisVertical } from 'react-icons/io5';
 import css from './ChatBot.module.scss';
+import { BsRobot, BsTelephoneFill } from 'react-icons/bs';
 
 interface typeQuestions {
     question: string;
@@ -14,7 +15,7 @@ interface typeQuestions {
 }
 
 export default function ChatBot() {
-    const [turn, setTurn] = useState<boolean>(true);
+    const [turn, setTurn] = useState<boolean>(false);
     const [turnBox, setTurnBox] = useState<boolean>(false);
     const [valueInput, setValueInput] = useState<string>('');
     const [questions, setQuestions] = useState<typeQuestions[]>([{ question: 'Bạn cần hỗ trợ gì ?', type: 'bot' }]);
@@ -42,6 +43,10 @@ export default function ChatBot() {
         setValueInput('');
     };
 
+    const handleCall = () => {
+        window.location.href = 'tel:+84962862925';
+    };
+
     return (
         <>
             <Tooltip content="Đặt câu hỏi">
@@ -57,8 +62,10 @@ export default function ChatBot() {
                     turn ? 'visible opacity-100' : 'invisible opacity-0'
                 } flex shadow-2xl z-[1000000000000] font-sansSerif border-[1px] border-[#ccc] duration-100 ease-linear w-full h-full bottom-0 right-0 fixed md:h-[512px] md:w-[410px] md:bottom-4 md:right-4 rounded-[14px] flex-col bg-white`}
             >
-                <div className="shrink-0 h-[50px] px-4 items-center justify-between flex border-b-[1px] border-[#ccc]">
-                    <div></div>
+                <div className="select-none shrink-0 h-[50px] px-4 items-center justify-between flex border-b-[1px] border-[#ccc]">
+                    <i onClick={() => handleCall()} className="cursor-pointer">
+                        <BsTelephoneFill fontSize={20} />
+                    </i>
                     <div className="flex items-center h-full gap-1">
                         <span>Hỏi đáp</span>
                         <div className="bg-[#00c853] w-[10px] h-[10px] rounded-[50%]"></div>
@@ -67,15 +74,18 @@ export default function ChatBot() {
                         <AiOutlineClose fontSize={18} />
                     </i>
                 </div>
-                <div className={`${css.scroll} flex flex-col p-4 h-full`}>
+                <div className={`${css.scroll} flex flex-col bg-[#ebeced] p-4 h-full`}>
                     {questions.map((item: typeQuestions, index: number) => (
                         <>
                             {item.type === 'bot' && (
                                 <div className="flex">
-                                    <div className="flex w-[300px]">
+                                    <div className="flex w-[300px] items-center gap-2">
+                                        <i className="rounded-[50%] shadow-lg bg-white p-3">
+                                            <BsRobot fontSize={20} />
+                                        </i>
                                         <span
                                             key={index}
-                                            className="flex p-[10px] bg-[#E5EFFF] text-[15px] rounded-[8px] my-2"
+                                            className="flex p-[10px] bg-white shadow-lg text-[15px] rounded-[8px] my-2"
                                         >
                                             {item.question}
                                         </span>
@@ -87,7 +97,7 @@ export default function ChatBot() {
                                     <div className="flex w-[300px] justify-end">
                                         <span
                                             key={index}
-                                            className="flex p-[10px] bg-[#E5EFFF] text-[15px] rounded-[8px] my-2"
+                                            className="flex p-[10px] shadow-lg bg-[#E5EFFF] text-[15px] rounded-[8px] my-2"
                                         >
                                             {item.question}
                                         </span>
@@ -102,7 +112,7 @@ export default function ChatBot() {
                         <i onClick={() => setTurnBox(!turnBox)} className="cursor-pointer">
                             <IoEllipsisVertical fontSize={20} />
                         </i>
-                        <div className="bg-[#dddddd] w-full flex items-center py-2 rounded-[14px] pr-4 ">
+                        <div className="bg-[#dddddd] select-none w-full flex items-center py-2 rounded-[14px] pr-4 ">
                             <input
                                 onChange={(e) => handleOnchange(e.target.value)}
                                 className="bg-transparent w-full outline-none min-h-[10px] px-4"
