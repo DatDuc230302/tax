@@ -8,17 +8,22 @@ import { FiSend } from 'react-icons/fi';
 import { IoEllipsisVertical } from 'react-icons/io5';
 import css from './ChatBot.module.scss';
 import { BsRobot, BsTelephoneFill } from 'react-icons/bs';
+import { formatTime } from '@/functions/formatTime';
+import { getTime } from '@/functions/getTime';
 
 interface typeQuestions {
     question: string;
     type: string;
+    time: string;
 }
 
 export default function ChatBot() {
     const [turn, setTurn] = useState<boolean>(false);
     const [turnBox, setTurnBox] = useState<boolean>(false);
     const [valueInput, setValueInput] = useState<string>('');
-    const [questions, setQuestions] = useState<typeQuestions[]>([{ question: 'Bạn cần hỗ trợ gì ?', type: 'bot' }]);
+    const [questions, setQuestions] = useState<typeQuestions[]>([
+        { question: 'Bạn cần hỗ trợ gì ?', type: 'bot', time: getTime() },
+    ]);
     const [boxQuestions, setBoxQuestion] = useState<string[]>(['Đóng tiền diện', 'Đóng thuế']);
 
     const handleOnchange = (value: string) => {
@@ -27,7 +32,7 @@ export default function ChatBot() {
 
     const handleSend = () => {
         if (valueInput.length > 0) {
-            setQuestions([...questions, { question: valueInput, type: 'user' }]);
+            setQuestions([...questions, { question: valueInput, type: 'user', time: getTime() }]);
             setValueInput('');
         }
     };
@@ -39,7 +44,7 @@ export default function ChatBot() {
     };
 
     const onChoose = (value: string) => {
-        setQuestions([...questions, { question: value, type: 'user' }]);
+        setQuestions([...questions, { question: value, type: 'user', time: getTime() }]);
         setValueInput('');
     };
 
@@ -85,22 +90,26 @@ export default function ChatBot() {
                                         </i>
                                         <span
                                             key={index}
-                                            className="flex p-[10px] bg-white shadow-lg text-[15px] rounded-[8px] my-2"
+                                            className="flex p-[10px] bg-white shadow-lg flex-col text-[15px] rounded-[8px] my-2"
                                         >
                                             {item.question}
+                                            {index !== 0 && (
+                                                <span className="text-[12px] text-[#476285]">{item.time}</span>
+                                            )}
                                         </span>
                                     </div>
                                 </div>
                             )}
                             {item.type === 'user' && (
                                 <div className="flex justify-end">
-                                    <div className="flex w-[300px] justify-end">
-                                        <span
+                                    <div className="flex w-[300px] justify-end items-end flex-col">
+                                        <div
                                             key={index}
-                                            className="flex p-[10px] shadow-lg bg-[#E5EFFF] text-[15px] rounded-[8px] my-2"
+                                            className="flex flex-col p-[12px] shadow-lg bg-[#E5EFFF] text-[15px] rounded-[8px] my-2"
                                         >
                                             {item.question}
-                                        </span>
+                                            <span className="text-[12px] text-[#476285]">{item.time}</span>
+                                        </div>
                                     </div>
                                 </div>
                             )}
