@@ -9,7 +9,7 @@ export default function Ckeditor({ content, setContent }) {
         readonly: false,
         toolbarAdaptive: false,
         toolbarSticky: false,
-        fullsize: true,
+        fullsize: false,
         globalFullSize: false,
         uploader: {
             insertImageAsBase64URI: true,
