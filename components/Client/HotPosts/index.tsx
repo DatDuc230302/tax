@@ -50,7 +50,7 @@ export default function HotPosts() {
                                         className={`${css.hover} flex w-full flex-col gap-3`}
                                     >
                                         <div className="flex relative w-full overflow-hidden h-[420px]">
-                                            <Image
+                                            {/* <Image
                                                 src={
                                                    `${serverBackend}${item.images}`
                                                 }
@@ -58,7 +58,7 @@ export default function HotPosts() {
                                                 className={`${css.img} object-cover`}
                                                 fill
                                                 sizes="1000000px"
-                                            />
+                                            /> */}
                                         </div>
                                         <div className="flex flex-col gap-2">
                                             <h3 className={`${css.title} text-[26px] line-clamp-2`}>{item.title}</h3>
@@ -99,9 +99,7 @@ export default function HotPosts() {
                                                         sizes="100000000000000px"
                                                         className={`${css.img} object-cover`}
                                                         fill
-                                                        src={
-                                                           `${serverBackend}${item.images}`
-                                                        }
+                                                        src={`${serverBackend}${item.images}`}
                                                         alt=""
                                                     />
                                                 </div>

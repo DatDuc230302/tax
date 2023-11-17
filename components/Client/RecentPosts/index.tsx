@@ -73,7 +73,7 @@ export default function RecentPosts() {
                                     >
                                         <div className="flex flex-col gap-2 items-center">
                                             <div className="w-full select-none relative h-[150px]">
-                                                <Image
+                                                {/* <Image
                                                     src={
                                                         `${serverBackend}${item.images}`
                                                     }
@@ -81,13 +81,12 @@ export default function RecentPosts() {
                                                     fill
                                                     sizes="100000px"
                                                     className="object-cover rounded-[4px]"
-                                                />
+                                                /> */}
                                             </div>
                                             <h3 className="line-clamp-2 font-bold">{item.title}</h3>
-                                            <div
-                                                dangerouslySetInnerHTML={{ __html: item.content }}
-                                                className="overflow-hidden font-light line-clamp-3 text-[14px] text-[#767676]"
-                                            ></div>
+                                            <div className="overflow-hidden font-light line-clamp-3 text-[14px] text-[#767676]">
+                                                {item.short_desc}
+                                            </div>
                                         </div>
                                     </Link>
                                     <div className="flex w-full flex-col whitespace-nowrap gap-2">

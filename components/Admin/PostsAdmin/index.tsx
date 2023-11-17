@@ -62,8 +62,6 @@ export default function PostsAdmin() {
         }
     };
 
-    console.log(posts);
-
     return (
         <div className="flex flex-col w-full px-4 gap-4 mt-4">
             <div className="flex gap-3 flex-col-reverse lg:flex-row">
@@ -85,6 +83,7 @@ export default function PostsAdmin() {
                 <TableHeader>
                     <TableColumn key="id">ID</TableColumn>
                     <TableColumn key="name">Tiêu đề bài viết</TableColumn>
+                    <TableColumn key="name">Mô tả ngắn</TableColumn>
                     <TableColumn key="content">Nội dung</TableColumn>
                     <TableColumn key="category">Thể loại cha</TableColumn>
                     <TableColumn key="role">Thể loại con</TableColumn>
@@ -102,6 +101,11 @@ export default function PostsAdmin() {
                             <TableCell>
                                 <div className="w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
                                     {item.title}
+                                </div>
+                            </TableCell>
+                            <TableCell>
+                                <div className="w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
+                                    {item.short_desc}
                                 </div>
                             </TableCell>
                             <TableCell className="w-[200px] whitespace-nowrap">
@@ -136,6 +140,7 @@ export default function PostsAdmin() {
                                     id={item.id}
                                     oldTitle={item.title}
                                     oldContent={item.content}
+                                    oldShortDesc={item.short_desc}
                                     oldCategory={item.parent_name}
                                     oldSubCategory={item.category_name}
                                     oldCategoryID={item.category_id}

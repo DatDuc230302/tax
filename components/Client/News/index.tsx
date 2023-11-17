@@ -48,6 +48,8 @@ export default function News() {
         setActive(indexActive);
     };
 
+    console.log(news);
+
     return (
         <div className="flex justify-center font-merriweather min-h-[450px] px-4 py-2">
             <div className="w-wMain flex flex-col gap-4">
@@ -88,10 +90,9 @@ export default function News() {
                                     <div className="flex flex-col gap-4 justify-center">
                                         <div className="flex flex-col pr-[20px] gap-2">
                                             <h3 className="line-clamp-2 font-bold">{item.title}</h3>
-                                            <div
-                                                dangerouslySetInnerHTML={{ __html: item.content }}
-                                                className="font-light line-clamp-3 text-[14px] text-[#767676]"
-                                            ></div>
+                                            <div className="font-light line-clamp-3 text-[14px] text-[#767676]">
+                                                {item.short_desc}
+                                            </div>
                                         </div>
                                         <div className="flex w-full whdivtespace-nowrap items-center gap-2">
                                             <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
@@ -105,7 +106,7 @@ export default function News() {
                                         </div>
                                     </div>
                                     <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
-                                        {/* <Image
+                                        <Image
                                             src={
                                                 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202310/Images/dth-1077-20231023104509-e.jpg'
                                             }
@@ -113,8 +114,8 @@ export default function News() {
                                             alt=""
                                             fill
                                             sizes="100000px"
-                                        /> */}
-                                        <Image
+                                        />
+                                        {/* <Image
                                     src={
                                         `${serverBackend}${item.images}`
                                     }
@@ -122,7 +123,7 @@ export default function News() {
                                     alt=""
                                     fill
                                     sizes="100000px"
-                                />
+                                /> */}
                                     </div>
                                 </Link>
                             ),

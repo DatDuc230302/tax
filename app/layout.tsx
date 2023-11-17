@@ -14,7 +14,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en">
             <body className={inter.className}>
                 <div className="w-full">{children}</div>
-                <CheckNetwork />
             </body>
         </html>
     );

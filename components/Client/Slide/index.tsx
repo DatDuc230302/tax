@@ -23,7 +23,7 @@ export default function Slide() {
         } catch (error) {
             console.error('Error fetching banner images:', error);
         }
-    };  
+    };
 
     return (
         <div className="flex justify-center px-4 min-h-[450px]">
@@ -42,7 +42,7 @@ export default function Slide() {
                 >
                     {banners.map((item: any, index: number) => (
                         <div className="w-full h-[250px] xs:h-[400px] md:h-[600px] lg:h-[750px] relative" key={index}>
-                            <Image src={`${serverBackend}${item.image_url}`} fill sizes="100000px" alt={item.id} />
+                            {/* <Image src={`${serverBackend}${item.image_url}`} fill sizes="100000px" alt={item.id} /> */}
                         </div>
                     ))}
                 </Carousel>

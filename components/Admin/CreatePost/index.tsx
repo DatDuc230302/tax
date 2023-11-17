@@ -75,8 +75,8 @@ export default function CreatePost({
                 category.length === 0 ||
                 subCategory.length === 0 ||
                 image === null ||
-                content.length === 0||
-                shortDescription.length === 0 
+                content.length === 0 ||
+                shortDescription.length === 0
             ) {
                 setRequire(true);
             } else {
@@ -91,7 +91,7 @@ export default function CreatePost({
                 formData.append('category_id', categoryID);
                 formData.append('file', filesArr);
                 const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
-                console.log(result + '' +  formData);
+                console.log(result + '' + formData);
                 if (result.data.message === 'success') {
                     setTurn(false);
                     setRefresh(!refresh);
@@ -266,11 +266,12 @@ export default function CreatePost({
                                 <div className="flex text-[red] justify-end text-[14px]">Vui lòng chọn ảnh</div>
                             )}
                         </>
-                        <Input
-                            onChange={(e: any) => setShortDescription(e.target.value)}
-                            type="text"
+                        {/* Mô tả ngắn */}
+                        <textarea
+                            placeholder="Mô tả ngắn"
+                            className="h-[56px] py-2 px-3 rounded-[12px] outline-none bg-[#f4f4f5]"
+                            onChange={(e) => setShortDescription(String(e.target.value))}
                             value={shortDescription}
-                            label="Mô tả ngắn"
                         />
                         {/* Nội dung bài viết */}
                         <>
