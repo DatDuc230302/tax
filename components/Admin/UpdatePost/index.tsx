@@ -31,6 +31,7 @@ export default function UpdatePost({
     id,
     oldTitle,
     oldContent,
+    oldShortDesc,
     oldCategoryID,
     oldCategory,
     oldSubCategory,
@@ -46,6 +47,7 @@ export default function UpdatePost({
     id: string;
     oldTitle: string;
     oldContent: string;
+    oldShortDesc: string;
     oldCategoryID: string;
     oldCategory: string;
     oldSubCategory: string;
@@ -64,6 +66,7 @@ export default function UpdatePost({
     const [category, setCategory] = useState<string>(oldCategory);
     const [subCategory, setSubCategory] = useState<string>(oldSubCategory);
     const [content, setContent] = useState<string>(oldContent);
+    const [shortDesc, setShortDesc] = useState<string>(oldShortDesc);
     const [avatar, setAvatar] = useState<any>(oldAvatar);
     const [imageFile, setImageFile] = useState<any>(null);
     const [filesArr, setFilesArr] = useState<any>(oldFilesArr);
@@ -91,6 +94,7 @@ export default function UpdatePost({
                     user_id: dataContext.id,
                     title: title,
                     content: content,
+                    short_desc: shortDesc,
                     imagelink: avatar,
                     serial_number: serial,
                     Issuance_date: issuance,
@@ -138,6 +142,7 @@ export default function UpdatePost({
             </Tooltip>
             <Modal
                 className="h-[750px] flex overflow-y-auto"
+                size="4xl"
                 isOpen={turn}
                 onOpenChange={() => setTurn(false)}
                 isDismissable={false}
@@ -242,6 +247,13 @@ export default function UpdatePost({
                             <Ckeditor content={content} setContent={setContent} />
                             <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                         </>
+                        {/* Mô tả ngắn */}
+                        <textarea
+                            placeholder="Mô tả ngắn"
+                            className="h-[56px] py-2 px-3 rounded-[12px] outline-none bg-[#f4f4f5]"
+                            onChange={(e) => setShortDesc(String(e.target.value))}
+                            value={shortDesc}
+                        />
                         {/* Thêm file */}
                         <UploadFiles filesArr={filesArr} setFilesArr={setFilesArr} />
                     </ModalBody>

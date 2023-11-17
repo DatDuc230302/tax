@@ -25,18 +25,11 @@ const data = [
 
 export default function HistoryAdmin() {
     const dataContext = useContext(AdminContext);
-    const [postHistory, setPostHistory] = useState([]);
+    const [postsHistory, setPostsHistory] = useState<object[]>([]);
     const [userHistory, setUserHistory] = useState([]);
 
     useEffect(() => {
-        axios
-            .get(`${serverBackend}/api/v1/post_history`)
-            .then((response) => {
-                setPostHistory(response.data.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching post history:', error);
-            });
+        getPostHistory();
 
         axios
             .get(`${serverBackend}/api/v1/user_history`)
@@ -47,8 +40,12 @@ export default function HistoryAdmin() {
                 console.error('Error fetching user history:', error);
             });
     }, []);
-    const showAction = (id: string) => {
-        alert(id);
+
+    const getPostHistory = async () => {
+        const result = await axios.get(`${serverBackend}/api/v1/post_history`);
+        if (result.data.message === 'success') {
+            setPostsHistory(result.data.data);
+        }
     };
 
     return dataContext.role !== 'root' ? (
@@ -73,7 +70,7 @@ export default function HistoryAdmin() {
                             <TableColumn key="role">Công cụ</TableColumn>
                         </TableHeader>
                         <TableBody>
-                            {postHistory.map((item: any, index: number) => (
+                            {postsHistory.map((item: any, index: number) => (
                                 <TableRow key={index}>
                                     <TableCell>
                                         <span className="w-[280px] line-clamp-1">{item.post_title}</span>
@@ -85,11 +82,6 @@ export default function HistoryAdmin() {
                                     <TableCell className="w-[170px] whitespace-nowrap">{item.action_time}</TableCell>
                                     <TableCell>
                                         <div className='className="w-[170px] text-center whitespace-nowrap flex gap-2'>
-                                            <Tooltip content="Xem chi tiết dữ liệu">
-                                                <i className="cursor-pointer">
-                                                    <BsInfoCircle fontSize={20} />
-                                                </i>
-                                            </Tooltip>
                                             <Tooltip content="Xem chi tiết dữ liệu">
                                                 <i className="cursor-pointer">
                                                     <BsInfoCircle fontSize={20} />
