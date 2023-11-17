@@ -64,6 +64,8 @@ export default function CreatePost({
     //
     const [filesArr, setFilesArr] = useState<string[]>([]);
 
+    const [shortDescription, setShortDescription] = useState<string>('');
+
     const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
 
     const handleSubmit = async () => {
@@ -73,13 +75,15 @@ export default function CreatePost({
                 category.length === 0 ||
                 subCategory.length === 0 ||
                 image === null ||
-                content.length === 0
+                content.length === 0||
+                shortDescription.length === 0 
             ) {
                 setRequire(true);
             } else {
                 const formData: any = new FormData();
                 formData.append('user_id', dataContext.id);
                 formData.append('title', title);
+                formData.append('short_desc', shortDescription);
                 formData.append('content', content);
                 formData.append('image', image, image.name);
                 formData.append('serial_number', serial);
@@ -87,6 +91,7 @@ export default function CreatePost({
                 formData.append('category_id', categoryID);
                 formData.append('file', filesArr);
                 const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
+                console.log(result + '' +  formData);
                 if (result.data.message === 'success') {
                     setTurn(false);
                     setRefresh(!refresh);
@@ -261,6 +266,12 @@ export default function CreatePost({
                                 <div className="flex text-[red] justify-end text-[14px]">Vui lòng chọn ảnh</div>
                             )}
                         </>
+                        <Input
+                            onChange={(e: any) => setShortDescription(e.target.value)}
+                            type="text"
+                            value={shortDescription}
+                            label="Mô tả ngắn"
+                        />
                         {/* Nội dung bài viết */}
                         <>
                             <Ckeditor content={content} setContent={setContent} />

@@ -9,7 +9,7 @@ export default function Ckeditor({ content, setContent }) {
         readonly: false,
         toolbarAdaptive: false,
         toolbarSticky: false,
-        fullsize: true,
+        fullsize: false,
         globalFullSize: false,
         uploader: {
             insertImageAsBase64URI: true,
@@ -20,5 +20,7 @@ export default function Ckeditor({ content, setContent }) {
         },
     };
 
-    return <JoditEditor ref={editor} value={content} config={config} onChange={(content) => setContent(content)} />;
+  return useMemo( () => ( 
+<JoditEditor ref={editor} value={content} config={config} onChange={content => setContent(content)} /> 
+), [] )
 }

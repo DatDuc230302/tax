@@ -119,10 +119,10 @@ export default function BannersAdmin() {
                             <TableRow key={index}>
                                 <TableCell className="whitespace-nowrap">{item.id}</TableCell>
                                 <TableCell>
-                                    {/* <div className="w-[100px] h-[100px] relative">
-                                        <Image src={`${serverBackend}item.image_url`} alt={item.image_url} fill sizes="100000px" />
-                                    </div> */}
-                                    {item.image_url}
+                                    <div className="w-[100px] h-[100px] relative">
+                                        <Image src={`${serverBackend}${item.image_url}`} alt={item.image_url} fill sizes="100000px" />
+                                    </div>
+                                    {/* {item.image_url} */}
                                 </TableCell>
                                 <TableCell className="whitespace-nowrap">
                                     {item.status === 'active' ? (

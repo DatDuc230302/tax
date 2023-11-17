@@ -105,7 +105,7 @@ export default function News() {
                                         </div>
                                     </div>
                                     <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
-                                        <Image
+                                        {/* <Image
                                             src={
                                                 'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202310/Images/dth-1077-20231023104509-e.jpg'
                                             }
@@ -113,16 +113,16 @@ export default function News() {
                                             alt=""
                                             fill
                                             sizes="100000px"
-                                        />
-                                        {/* <Image
+                                        /> */}
+                                        <Image
                                     src={
-                                        `${serverBackend}/item.images
+                                        `${serverBackend}${item.images}`
                                     }
                                     className="object-cover rounded-[12px]"
                                     alt=""
                                     fill
                                     sizes="100000px"
-                                /> */}
+                                />
                                     </div>
                                 </Link>
                             ),
