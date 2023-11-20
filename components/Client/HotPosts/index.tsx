@@ -1,31 +1,15 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import css from './HotPosts.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import axios from 'axios';
 import { serverBackend } from '@/server';
 import { AiOutlineEye } from 'react-icons/ai';
 import { descViews } from '@/functions/descViews';
 
-export default function HotPosts() {
-    const [hotPosts, setHotPosts] = useState<object[]>([]);
-
-    useEffect(() => {
-        getHotPosts();
-    }, []);
-
-    const getHotPosts = async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/post`);
-            if (result.data.message === 'success') {
-                setHotPosts(descViews(result.data.data));
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    };
+export default function HotPosts({ posts }: { posts: any }) {
+    let hotPosts: any = descViews(posts);
 
     return (
         <div className="flex justify-center px-4 py-4 min-h-[450px]">

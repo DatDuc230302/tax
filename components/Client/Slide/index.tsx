@@ -10,20 +10,20 @@ import { serverBackend } from '@/server';
 export default function Slide() {
     const [banners, setBanners] = useState<object[]>([]);
 
-    useEffect(() => {
-        getBanners();
-    }, []);
+    // useEffect(() => {
+    //     getBanners();
+    // }, []);
 
-    const getBanners = async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/bannerImages`);
-            if (result.data.message === 'success') {
-                setBanners(result.data.data);
-            }
-        } catch (error) {
-            console.error('Error fetching banner images:', error);
-        }
-    };
+    // const getBanners = async () => {
+    //     try {
+    //         const result = await axios.get(`${serverBackend}/api/v1/bannerImages`);
+    //         if (result.data.message === 'success') {
+    //             setBanners(result.data.data);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching banner images:', error);
+    //     }
+    // };
 
     return (
         <div className="flex justify-center px-4 min-h-[450px]">

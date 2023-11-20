@@ -11,23 +11,8 @@ import { AiOutlineEye } from 'react-icons/ai';
 import { FaFlag } from 'react-icons/fa';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 
-export default function RecentPosts() {
-    const [recentPosts, setRecentPosts] = useState<object[]>([]);
-
-    useEffect(() => {
-        getRecentPosts();
-    }, []);
-
-    const getRecentPosts = async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/post`);
-            if (result.data.message === 'success') {
-                setRecentPosts(result.data.data.filter((item: any) => item.status !== 'inactive'));
-            }
-        } catch (err: any) {
-            console.log(err);
-        }
-    };
+export default function RecentPosts({ posts }: { posts: any }) {
+    let recentPosts: any = posts.filter((item: any) => item.status !== 'inactive');
 
     return (
         <div className="flex justify-center my-2 font-merriweather px-4 min-h-[450px]">
