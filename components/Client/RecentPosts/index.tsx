@@ -35,38 +35,19 @@ export default function RecentPosts({ posts }: { posts: any }) {
                                     key={index}
                                     className="flex gap-3 justify-center p-4 md:w-[40%] lg:w-[25%] h-max flex-col rounded-[16px] border-[2px] border-[#e8e8e8]"
                                 >
-                                    <div className="flex justify-end">
-                                        <Dropdown placement="bottom-end">
-                                            <DropdownTrigger>
-                                                <i className="p-2 cursor-pointer">
-                                                    <IoEllipsisHorizontalSharp fontSize={18} />
-                                                </i>
-                                            </DropdownTrigger>
-                                            <DropdownMenu aria-label="Static Actions">
-                                                <DropdownItem key="report">
-                                                    <div className="flex gap-2 items-center">
-                                                        <FaFlag fontSize={16} />
-                                                        Báo cáo
-                                                    </div>
-                                                </DropdownItem>
-                                            </DropdownMenu>
-                                        </Dropdown>
-                                    </div>
                                     <Link
                                         href={`bai-dang?postId=${item.id}`}
                                         className="flex cursor-pointer flex-col gap-3"
                                     >
                                         <div className="flex flex-col gap-2 items-center">
                                             <div className="w-full select-none relative h-[150px]">
-                                                {/* <Image
-                                                    src={
-                                                        `${serverBackend}${item.images}`
-                                                    }
+                                                <Image
+                                                    src={`${serverBackend}${item.images}`}
                                                     alt=""
                                                     fill
                                                     sizes="100000px"
                                                     className="object-cover rounded-[4px]"
-                                                /> */}
+                                                />
                                             </div>
                                             <h3 className="line-clamp-2 font-bold">{item.title}</h3>
                                             <div className="overflow-hidden font-light line-clamp-3 text-[14px] text-[#767676]">
@@ -79,7 +60,7 @@ export default function RecentPosts({ posts }: { posts: any }) {
                                             <span className="text-[12px]">{getDays(item.created_at)} ngày trước</span>
                                             <span className="flex gap-1 items-center text-[14px]">
                                                 <AiOutlineEye fontSize={18} />
-                                                {item.view}
+                                                {item.views}
                                             </span>
                                         </div>
                                         <div className="flex gap-2 items-center">

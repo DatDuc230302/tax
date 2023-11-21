@@ -10,11 +10,18 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 
 export default function News({ posts }: { posts: any }) {
-    let news: any = posts.filter((item: any) => item.parent_name === 'Tin tức');
-    let initialNews: any = posts.filter((item: any) => item.parent_name === 'Tin tức');
+    const [news, setNews] = useState<any>(posts.filter((item: any) => item.parent_name === 'Tin tức'));
 
-    const [subCategory, setSubCategory] = useState<string>('');
+    const [subCategory, setSubCategory] = useState<string>('Tất cả');
     const [active, setActive] = useState<number>(-1);
+
+    useEffect(() => {
+        if (subCategory === 'Tất cả') {
+            setNews(posts);
+        } else {
+            setNews(posts.filter((item: any) => item.category_name === subCategory));
+        }
+    }, [subCategory]);
 
     const onclickSubCategory = (name: string, indexActive: number) => {
         setSubCategory(name);
@@ -35,7 +42,7 @@ export default function News({ posts }: { posts: any }) {
                         >
                             Tất cả
                         </h4>
-                        {removeDuplicates(initialNews, 'category_name').map((item: any, index: number) => (
+                        {removeDuplicates(posts, 'category_name').map((item: any, index: number) => (
                             <h4
                                 onClick={() => onclickSubCategory(item.category_name, index)}
                                 key={index}
@@ -70,7 +77,9 @@ export default function News({ posts }: { posts: any }) {
                                                 {item.category_name}
                                             </span>
                                             <span className="text-[12px]">{item.Issuance_date}</span>
-                                            <span className="text-[12px]">Mã: {item.serial_number}</span>
+                                            {item.serial_number && (
+                                                <span className="text-[12px]">Mã: {item.serial_number}</span>
+                                            )}
                                             <span className="flex gap-1 items-center text-[14px]">
                                                 <AiOutlineEye fontSize={18} />0
                                             </span>
@@ -78,23 +87,12 @@ export default function News({ posts }: { posts: any }) {
                                     </div>
                                     <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
                                         <Image
-                                            src={
-                                                'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202310/Images/dth-1077-20231023104509-e.jpg'
-                                            }
+                                            src={`${serverBackend}${item.images}`}
                                             className="object-cover rounded-[12px]"
                                             alt=""
                                             fill
                                             sizes="100000px"
                                         />
-                                        {/* <Image
-                                    src={
-                                        `${serverBackend}${item.images}`
-                                    }
-                                    className="object-cover rounded-[12px]"
-                                    alt=""
-                                    fill
-                                    sizes="100000px"
-                                /> */}
                                     </div>
                                 </Link>
                             ),

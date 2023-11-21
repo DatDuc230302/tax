@@ -8,7 +8,7 @@ import { serverBackend } from '@/server';
 import { useEffect } from 'react';
 
 async function getPosts() {
-    const result: any = await fetch(`https://jsonplaceholder.typicode.com/posts`);
+    const result: any = await fetch(`${serverBackend}/api/v1/post`);
     if (result.ok) {
         return result.json();
     } else {
@@ -17,7 +17,7 @@ async function getPosts() {
 }
 
 async function getSlides() {
-    const result: any = await fetch(`https://jsonplaceholder.typicode.com/posts`);
+    const result: any = await fetch(`${serverBackend}/api/v1/getBanner`);
     if (result.ok) {
         return result.json();
     } else {
@@ -27,12 +27,20 @@ async function getSlides() {
 
 export default async function Page() {
     let posts = await getPosts();
+    let slides = await getSlides();
+    if (posts.message === 'success') {
+        posts = posts.data;
+    }
+    if (slides.message === 'success') {
+        slides = slides.data;
+    }
+
     return (
         <div className="flex flex-col">
-            <Slide />
+            <Slide slides={slides} />
             <HotPosts posts={posts} />
-            {/* <News posts={posts} />
-            <RecentPosts posts={posts} /> */}
+            <News posts={posts} />
+            <RecentPosts posts={posts} />
             <Video />
         </div>
     );

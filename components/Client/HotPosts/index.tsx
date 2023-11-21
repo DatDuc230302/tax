@@ -9,9 +9,7 @@ import { AiOutlineEye } from 'react-icons/ai';
 import { descViews } from '@/functions/descViews';
 
 export default function HotPosts({ posts }: { posts: any }) {
-    let hotPosts: any = [];
-    console.log(posts);
-    // let hotPosts: any = descViews(posts);
+    let hotPosts: any = descViews(posts);
 
     return (
         <div className="flex justify-center px-4 py-4 min-h-[450px]">
@@ -36,15 +34,13 @@ export default function HotPosts({ posts }: { posts: any }) {
                                         className={`${css.hover} flex w-full flex-col gap-3`}
                                     >
                                         <div className="flex relative w-full overflow-hidden h-[420px]">
-                                            {/* <Image
-                                                src={
-                                                   `${serverBackend}${item.images}`
-                                                }
+                                            <Image
+                                                src={`${serverBackend}${item.images}`}
                                                 alt=""
                                                 className={`${css.img} object-cover`}
                                                 fill
                                                 sizes="1000000px"
-                                            /> */}
+                                            />
                                         </div>
                                         <div className="flex flex-col gap-2">
                                             <h3 className={`${css.title} text-[26px] line-clamp-2`}>{item.title}</h3>
@@ -59,7 +55,7 @@ export default function HotPosts({ posts }: { posts: any }) {
                                             <span className="text-[12px]">{item.Issuance_date}</span>
                                             <span className="flex gap-1 items-center text-[14px]">
                                                 <AiOutlineEye fontSize={18} />
-                                                {item.view}
+                                                {item.views}
                                             </span>
                                         </div>
                                     </Link>
@@ -105,7 +101,7 @@ export default function HotPosts({ posts }: { posts: any }) {
                                                 <span className="text-[12px]">{item.Issuance_date}</span>
                                                 <span className="flex gap-1 items-center text-[14px]">
                                                     <AiOutlineEye fontSize={18} />
-                                                    {item.view}
+                                                    {item.views}
                                                 </span>
                                             </div>
                                         </Link>

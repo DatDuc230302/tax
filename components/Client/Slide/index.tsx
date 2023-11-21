@@ -7,24 +7,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import axios from 'axios';
 import { serverBackend } from '@/server';
 
-export default function Slide() {
-    const [banners, setBanners] = useState<object[]>([]);
-
-    // useEffect(() => {
-    //     getBanners();
-    // }, []);
-
-    // const getBanners = async () => {
-    //     try {
-    //         const result = await axios.get(`${serverBackend}/api/v1/bannerImages`);
-    //         if (result.data.message === 'success') {
-    //             setBanners(result.data.data);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching banner images:', error);
-    //     }
-    // };
-
+export default function Slide({ slides }: { slides: any }) {
     return (
         <div className="flex justify-center px-4 min-h-[450px]">
             <div className="flex w-wMain justify-center">
@@ -40,9 +23,9 @@ export default function Slide() {
                     emulateTouch={true}
                     swipeable={true}
                 >
-                    {banners.map((item: any, index: number) => (
+                    {slides.map((item: any, index: number) => (
                         <div className="w-full h-[250px] xs:h-[400px] md:h-[600px] lg:h-[750px] relative" key={index}>
-                            {/* <Image src={`${serverBackend}${item.image_url}`} fill sizes="100000px" alt={item.id} /> */}
+                            <Image src={`${serverBackend}${item.image_url}`} fill sizes="100000px" alt={item.id} />
                         </div>
                     ))}
                 </Carousel>

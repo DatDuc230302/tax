@@ -90,24 +90,6 @@ export default function PostsClient() {
                                             key={index}
                                             className="border-[2px] gap-3 border-[#eaeaea] w-full rounded-[16px] p-4 flex flex-col"
                                         >
-                                            <div className="flex w-full justify-between items-center">
-                                                <div></div>
-                                                <Dropdown placement="bottom-end">
-                                                    <DropdownTrigger>
-                                                        <i className="p-2 cursor-pointer">
-                                                            <IoEllipsisHorizontalSharp fontSize={18} />
-                                                        </i>
-                                                    </DropdownTrigger>
-                                                    <DropdownMenu aria-label="Static Actions">
-                                                        <DropdownItem key="report">
-                                                            <div className="flex gap-2 items-center">
-                                                                <FaFlag fontSize={16} />
-                                                                Báo cáo
-                                                            </div>
-                                                        </DropdownItem>
-                                                    </DropdownMenu>
-                                                </Dropdown>
-                                            </div>
                                             <Link
                                                 href={`/bai-dang?postId=${item.id}`}
                                                 key={index}
@@ -116,21 +98,17 @@ export default function PostsClient() {
                                                 <div className="flex flex-col gap-4 justify-center">
                                                     <div className="flex flex-col pr-[20px] gap-2">
                                                         <h3 className="line-clamp-2 font-bold">{item.title}</h3>
-                                                        <div
-                                                            // dangerouslySetInnerHTML={{ __html: item.content }}
-                                                            className="font-light line-clamp-3 text-[14px] text-[#767676]"
-                                                        >
-                                                            Mới đây, Bộ Tài chính đã có Văn bản số 14246/BTC-CST báo cáo
-                                                            Thủ tướng Chính phủ và Công văn số 14247/BTC-CST xin ý kiến
-                                                            các bộ, ngành về việc rà soát giảm phí, lệ phí để tháo gỡ
-                                                            khó khăn cho đối tượng chịu ảnh hưởng bởi dịch Covid-19 nhằm
-                                                            gia hạn thêm 06 tháng đối với các khoản phí, lệ phí đã điều
-                                                            chỉnh giảm tại 21 Thông tư ban hành trong năm 2020
-                                                        </div>
+                                                        <span className="font-light line-clamp-3 text-[14px] text-[#767676]">
+                                                            {item.short_desc}
+                                                        </span>
                                                     </div>
                                                     <div className="flex w-full whdivtespace-nowrap items-center gap-2">
                                                         <span className="text-[12px]">{item.Issuance_date}</span>
-                                                        <span className="text-[12px]">Mã: {item.serial_number}</span>
+                                                        {item.serial_number && (
+                                                            <span className="text-[12px]">
+                                                                Mã: {item.serial_number}
+                                                            </span>
+                                                        )}
                                                         <span className="flex gap-1 items-center text-[14px]">
                                                             <AiOutlineEye fontSize={18} />0
                                                         </span>
@@ -138,9 +116,7 @@ export default function PostsClient() {
                                                 </div>
                                                 <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
                                                     <Image
-                                                        src={
-                                                            `${serverBackend}${item.images}`
-                                                        }
+                                                        src={`${serverBackend}${item.images}`}
                                                         className="object-cover rounded-[12px]"
                                                         alt=""
                                                         fill
@@ -162,10 +138,6 @@ export default function PostsClient() {
                                                 </div>
                                                 <span className="text-[12px]">
                                                     {getDays(item.created_at)} ngày trước
-                                                </span>
-                                                <span className="flex gap-1 items-center text-[14px]">
-                                                    <AiOutlineEye fontSize={18} />
-                                                    {item.view}
                                                 </span>
                                             </div>
                                         </div>
