@@ -81,7 +81,7 @@ export default function ChatBot() {
                 </div>
                 <div className={`${css.scroll} flex flex-col bg-[#ebeced] p-4 h-full`}>
                     {questions.map((item: typeQuestions, index: number) => (
-                        <>
+                        <div key={index}>
                             {item.type === 'bot' && (
                                 <div className="flex">
                                     <div className="flex w-[300px] items-center gap-2">
@@ -113,7 +113,7 @@ export default function ChatBot() {
                                     </div>
                                 </div>
                             )}
-                        </>
+                        </div>
                     ))}
                 </div>
                 <div className="w-full flex items-center h-[100px] border-t-[1px] border-[#ccc]">
