@@ -9,7 +9,9 @@ import { AiOutlineEye } from 'react-icons/ai';
 import { descViews } from '@/functions/descViews';
 
 export default function HotPosts({ posts }: { posts: any }) {
-    let hotPosts: any = descViews(posts);
+    let hotPosts: any = [];
+    console.log(posts);
+    // let hotPosts: any = descViews(posts);
 
     return (
         <div className="flex justify-center px-4 py-4 min-h-[450px]">
