@@ -34,16 +34,7 @@ export default function PostsClient({ postsRes, categoriesRes }: { postsRes: any
         setEnd(newEnd);
     }, [currentPage]);
 
-    // Sắp xếp theo thể loại
-    useEffect(() => {
-        if (subCategory) {
-            setPosts(postsRes.filter((item: any) => removeDiacriticsAndSpaces(item.category_name) === subCategory));
-        } else {
-            setPosts(postsRes);
-        }
-    }, [subCategory]);
-
-    // Tìm kiếm tên bài đăng
+    // Chưa đặt tên
     useEffect(() => {
         if (searchValue) {
             setPosts(
@@ -51,8 +42,14 @@ export default function PostsClient({ postsRes, categoriesRes }: { postsRes: any
                     item.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
                 ),
             );
+        } else {
+            if (subCategory) {
+                setPosts(postsRes.filter((item: any) => removeDiacriticsAndSpaces(item.category_name) === subCategory));
+            } else {
+                setPosts(postsRes);
+            }
         }
-    }, [searchValue]);
+    }, [searchValue, subCategory]);
 
     return (
         <div className="flex flex-col lg:flex-row w-full gap-6 px-4 font-roboto min-h-[700px]">
