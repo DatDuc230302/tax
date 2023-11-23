@@ -2,14 +2,10 @@
 
 import { getDays } from '@/functions/getDays';
 import { serverBackend } from '@/server';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Pagination, usePagination } from '@nextui-org/react';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
-import { FaFlag } from 'react-icons/fa';
-import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 
 export default function RecentPosts({ posts }: { posts: any }) {
     let recentPosts: any = posts.filter((item: any) => item.status !== 'inactive');

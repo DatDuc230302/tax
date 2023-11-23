@@ -1,9 +1,7 @@
 'use client';
 
-import SnackbarMessage from '@/components/Common/SnackbarMessage';
 import { removeDuplicates } from '@/functions/removeDuplicates';
 import { serverBackend } from '@/server';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';

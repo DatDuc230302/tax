@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PostsCategories from '../PostsCategories';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Pagination } from '@nextui-org/react';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
@@ -16,7 +16,7 @@ import Link from 'next/link';
 import { BiChevronRight } from 'react-icons/bi';
 import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces';
 
-export default function PostsClient() {
+export default function PostsClient({ postsRes, categoriesRes }: { postsRes: any; categoriesRes: any }) {
     // Lấy Categroy và SubCategory trên URL
     const searchParams: any = useSearchParams();
     const sort: any = searchParams.get('sort') ? searchParams.get('category') : null;
@@ -28,8 +28,8 @@ export default function PostsClient() {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [start, setStart] = useState<number>(0);
     const [end, setEnd] = useState<number>(itemsPerPage);
-    const [posts, setPosts] = useState<object[]>([]);
-    const [initialPost, setInitialPost] = useState<object[]>([]);
+    const [posts, setPosts] = useState<object[]>(postsRes);
+    const [initialPost, setInitialPost] = useState<object[]>(postsRes);
     //
 
     useEffect(() => {
@@ -48,28 +48,13 @@ export default function PostsClient() {
     }, [subCategory]);
 
     useEffect(() => {
-        getPosts();
-    }, []);
-
-    const getPosts = async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/post`);
-            if (result.data.message === 'success') {
-                setInitialPost(result.data.data);
-                if (subCategory) {
-                    setPosts(
-                        result.data.data.filter(
-                            (item: any) => removeDiacriticsAndSpaces(item.category_name) === subCategory,
-                        ),
-                    );
-                } else {
-                    setPosts(result.data.data);
-                }
-            }
-        } catch (err) {
-            console.log(err);
+        setInitialPost(postsRes);
+        if (subCategory) {
+            setPosts(postsRes.filter((item: any) => removeDiacriticsAndSpaces(item.category_name) === subCategory));
+        } else {
+            setPosts(postsRes);
         }
-    };
+    }, [postsRes]);
 
     return (
         <div className="flex flex-col lg:flex-row w-full gap-6 px-4 font-roboto min-h-[700px]">
@@ -77,7 +62,7 @@ export default function PostsClient() {
                 <PostClient postId={searchParams.get('postId')} />
             ) : (
                 <>
-                    <PostsCategories />
+                    <PostsCategories categoriesRes={categoriesRes} />
                     <div className="w-full flex flex-col gap-2 pb-[20px]">
                         <div className="justify-between flex flex-col md:flex-row">
                             <h2 className="font-bold text-[26px]">Bài đăng</h2>

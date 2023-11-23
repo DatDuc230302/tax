@@ -1,32 +1,14 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import { FiChevronRight } from 'react-icons/fi';
+import React from 'react';
 import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces';
-import axios from 'axios';
-import { serverBackend } from '@/server';
 import Link from 'next/link';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 
-export default function PostsCategories() {
+export default function PostsCategories({ categoriesRes }: { categoriesRes: any }) {
     const router = useRouter();
-    const [categories, setCategories] = useState<any>([]);
-
-    useEffect(() => {
-        getCategories();
-    }, []);
-
-    const getCategories = async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/category`);
-            if (result.data.message === 'success') {
-                setCategories(result.data.data);
-            }
-        } catch (err: any) {
-            console.log(err);
-        }
-    };
+    const categories: any = categoriesRes;
 
     return (
         <div className="flex flex-col gap-2">

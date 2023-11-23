@@ -1,11 +1,9 @@
-import Service from '@/components/Client/Service';
 import Slide from '@/components/Client/Slide';
 import Video from '@/components/Client/Video';
 import HotPosts from '@/components/Client/HotPosts';
 import News from '@/components/Client/News';
 import RecentPosts from '@/components/Client/RecentPosts';
 import { serverBackend } from '@/server';
-import { useEffect } from 'react';
 
 async function getPosts() {
     const result: any = await fetch(`${serverBackend}/api/v1/post`, {
@@ -34,12 +32,8 @@ async function getSlides() {
 export default async function Page() {
     let posts = await getPosts();
     let slides = await getSlides();
-    if (posts.message === 'success') {
-        posts = posts.data;
-    }
-    if (slides.message === 'success') {
-        slides = slides.data;
-    }
+    if (posts.message === 'success') posts = posts.data;
+    if (slides.message === 'success') slides = slides.data;
 
     return (
         <div className="flex flex-col">
