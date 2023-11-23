@@ -8,8 +8,17 @@ import { serverBackend } from '@/server';
 import { AiOutlineEye } from 'react-icons/ai';
 import { descViews } from '@/functions/descViews';
 
-export default function HotPosts({ posts }: { posts: any }) {
-    let hotPosts: any = descViews(posts);
+export default function HotPosts({ postsRes }: { postsRes: any }) {
+    let hotPosts: any;
+    if (postsRes.err === 'None URL') {
+        console.log('Check your URL');
+        hotPosts = [];
+    } else if (postsRes.err === 'None API') {
+        console.log('Check your API');
+        hotPosts = [];
+    } else if (postsRes.message === 'success') {
+        hotPosts = descViews(postsRes.data);
+    }
 
     return (
         <div className="flex justify-center px-4 py-4 min-h-[450px]">

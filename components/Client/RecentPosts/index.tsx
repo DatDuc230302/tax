@@ -7,8 +7,17 @@ import Link from 'next/link';
 import React from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 
-export default function RecentPosts({ posts }: { posts: any }) {
-    let recentPosts: any = posts.filter((item: any) => item.status !== 'inactive');
+export default function RecentPosts({ postsRes }: { postsRes: any }) {
+    let recentPosts: any;
+    if (postsRes.err === 'None URL') {
+        console.log('Check your URL');
+        recentPosts = [];
+    } else if (postsRes.err === 'None API') {
+        console.log('Check your API');
+        recentPosts = [];
+    } else if (postsRes.message === 'success') {
+        recentPosts = postsRes.filter((item: any) => item.status !== 'inactive');
+    }
 
     return (
         <div className="flex justify-center my-2 font-merriweather px-4 min-h-[450px]">

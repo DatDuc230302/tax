@@ -7,17 +7,28 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 
-export default function News({ posts }: { posts: any }) {
-    const [news, setNews] = useState<any>(posts.filter((item: any) => item.parent_name === 'Tin tức'));
+export default function News({ postsRes }: { postsRes: any }) {
+    const [news, setNews] = useState<any>([]);
+    if (postsRes.err === 'None URL') {
+        console.log('Check your URL');
+        setNews([]);
+    } else if (postsRes.err === 'None API') {
+        console.log('Check your API');
+        setNews([]);
+    } else if (postsRes.message === 'success') {
+        setNews(postsRes.filter((item: any) => item.parent_name === 'Tin tức'));
+    }
 
     const [subCategory, setSubCategory] = useState<string>('Tất cả');
     const [active, setActive] = useState<number>(-1);
 
     useEffect(() => {
-        if (subCategory === 'Tất cả') {
-            setNews(posts);
-        } else {
-            setNews(posts.filter((item: any) => item.category_name === subCategory));
+        if (postsRes) {
+            if (subCategory === 'Tất cả') {
+                setNews(postsRes);
+            } else {
+                setNews(postsRes.filter((item: any) => item.category_name === subCategory));
+            }
         }
     }, [subCategory]);
 
@@ -40,17 +51,18 @@ export default function News({ posts }: { posts: any }) {
                         >
                             Tất cả
                         </h4>
-                        {removeDuplicates(posts, 'category_name').map((item: any, index: number) => (
-                            <h4
-                                onClick={() => onclickSubCategory(item.category_name, index)}
-                                key={index}
-                                className={`${
-                                    active === index && 'text-red-500'
-                                } cursor-pointer text-[#414141] hover:text-red-500 duration-200 ease-linear `}
-                            >
-                                {item.category_name}
-                            </h4>
-                        ))}
+                        {postsRes.message === 'success' &&
+                            removeDuplicates(postsRes, 'category_name').map((item: any, index: number) => (
+                                <h4
+                                    onClick={() => onclickSubCategory(item.category_name, index)}
+                                    key={index}
+                                    className={`${
+                                        active === index && 'text-red-500'
+                                    } cursor-pointer text-[#414141] hover:text-red-500 duration-200 ease-linear `}
+                                >
+                                    {item.category_name}
+                                </h4>
+                            ))}
                     </div>
                 </div>
                 <div className="flex flex-col gap-4">
