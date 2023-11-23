@@ -1,15 +1,12 @@
 'use client';
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PostsCategories from '../PostsCategories';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Pagination } from '@nextui-org/react';
-import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
-import { FaFlag } from 'react-icons/fa';
 import Image from 'next/image';
 import { AiOutlineEye } from 'react-icons/ai';
 import { useSearchParams } from 'next/navigation';
 import PostClient from '../PostClient';
-import axios from 'axios';
 import { serverBackend } from '@/server';
 import { getDays } from '@/functions/getDays';
 import Link from 'next/link';
@@ -19,19 +16,17 @@ import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces
 export default function PostsClient({ postsRes, categoriesRes }: { postsRes: any; categoriesRes: any }) {
     // Lấy Categroy và SubCategory trên URL
     const searchParams: any = useSearchParams();
-    const sort: any = searchParams.get('sort') ? searchParams.get('category') : null;
-    const category: any = searchParams.get('category') ? searchParams.get('category') : null;
     const subCategory: any = searchParams.get('subCategory') ? searchParams.get('subCategory') : null;
+    const searchValue: any = searchParams.get('search') ? searchParams.get('search') : null;
 
-    // Phân trang
+    // Phân trang 1
     const itemsPerPage: number = 5;
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [start, setStart] = useState<number>(0);
     const [end, setEnd] = useState<number>(itemsPerPage);
-    const [posts, setPosts] = useState<object[]>(postsRes);
-    const [initialPost, setInitialPost] = useState<object[]>(postsRes);
-    //
+    const [posts, setPosts] = useState<any>(postsRes);
 
+    // Phân trang 2
     useEffect(() => {
         const newStart = (currentPage - 1) * itemsPerPage;
         const newEnd = newStart + itemsPerPage;
@@ -39,22 +34,25 @@ export default function PostsClient({ postsRes, categoriesRes }: { postsRes: any
         setEnd(newEnd);
     }, [currentPage]);
 
+    // Sắp xếp theo thể loại
     useEffect(() => {
-        if (subCategory) {
-            setPosts(initialPost.filter((item: any) => removeDiacriticsAndSpaces(item.category_name) === subCategory));
-        } else {
-            setPosts(initialPost);
-        }
-    }, [subCategory]);
-
-    useEffect(() => {
-        setInitialPost(postsRes);
         if (subCategory) {
             setPosts(postsRes.filter((item: any) => removeDiacriticsAndSpaces(item.category_name) === subCategory));
         } else {
             setPosts(postsRes);
         }
-    }, [postsRes]);
+    }, [subCategory]);
+
+    // Tìm kiếm tên bài đăng
+    useEffect(() => {
+        if (searchValue) {
+            setPosts(
+                postsRes.filter((item: any) =>
+                    item.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+                ),
+            );
+        }
+    }, [searchValue]);
 
     return (
         <div className="flex flex-col lg:flex-row w-full gap-6 px-4 font-roboto min-h-[700px]">

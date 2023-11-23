@@ -15,6 +15,7 @@ export default function PostClient({ postId }: { postId: any }) {
     const [post, setPost] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     useEffect(() => {
+        increaseView();
         getPost();
     }, []);
 
@@ -28,6 +29,14 @@ export default function PostClient({ postId }: { postId: any }) {
             console.log(err);
         }
     }, setLoading);
+
+    const increaseView = async () => {
+        try {
+            const result = await axios.get(`${serverBackend}/api/v1/increase-views/${postId}`);
+        } catch (err: any) {
+            console.log(err);
+        }
+    };
 
     return loading ? (
         <SkeletonLoading h={400} />
