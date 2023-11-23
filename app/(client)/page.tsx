@@ -8,7 +8,9 @@ import { serverBackend } from '@/server';
 import { useEffect } from 'react';
 
 async function getPosts() {
-    const result: any = await fetch(`${serverBackend}/api/v1/post`);
+    const result: any = await fetch(`${serverBackend}/api/v1/post`, {
+        cache: 'no-cache',
+    });
     if (result.ok) {
         return result.json();
     } else {
@@ -25,23 +27,36 @@ async function getSlides() {
     }
 }
 
+async function getTime() {
+    const result: any = await fetch(`http://worldtimeapi.org/api/timezone/Asia/Ho_Chi_Minh`, {
+        cache: 'no-store',
+    });
+    if (result.ok) {
+        return result.json();
+    } else {
+        return { message: 'Error' };
+    }
+}
+
 export default async function Page() {
-    let posts = await getPosts();
-    let slides = await getSlides();
-    if (posts.message === 'success') {
-        posts = posts.data;
-    }
-    if (slides.message === 'success') {
-        slides = slides.data;
-    }
+    // let posts = await getPosts();
+    // let slides = await getSlides();
+    // if (posts.message === 'success') {
+    //     posts = posts.data;
+    // }
+    // if (slides.message === 'success') {
+    //     slides = slides.data;
+    // }
+
+    const time = await getTime();
 
     return (
         <div className="flex flex-col">
-            <Slide slides={slides} />
+            {/* <Slide slides={slides} />
             <HotPosts posts={posts} />
             <News posts={posts} />
-            <RecentPosts posts={posts} />
-            <Video />
+            <RecentPosts posts={posts} /> */}
+            <Video time={time} />
         </div>
     );
 }
