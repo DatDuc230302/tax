@@ -3,8 +3,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-export default function Video({ time }: { time: any }) {
-    console.log(time.datetime);
+export default function Video() {
     const list: any = [
         {
             title: 'LANDSHOW#18: Đối thoại về sửa đổi luật đất đai | VTV24',
@@ -26,7 +25,6 @@ export default function Video({ time }: { time: any }) {
 
     return (
         <div className="flex justify-center py-6 px-4 font-merriweather">
-            {time.datetime}
             <div className="flex flex-col bg-white w-wMain h-max">
                 <div className="flex items-center justify-between border-b-[2px] boder-[#ccc]">
                     <h2 className="text-[26px]">Thư viện video</h2>
