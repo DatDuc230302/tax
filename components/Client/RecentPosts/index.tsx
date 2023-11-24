@@ -8,7 +8,10 @@ import React from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 
 export default function RecentPosts({ postsRes }: { postsRes: any }) {
-    let recentPosts: any = postsRes;
+    let recentPosts: any;
+    if (postsRes.message === 'success') {
+        recentPosts = postsRes.data;
+    }
 
     return (
         <div className="flex justify-center my-2 font-merriweather px-4 min-h-[450px]">

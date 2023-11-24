@@ -8,15 +8,17 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 
 export default function News({ postsRes }: { postsRes: any }) {
-    const [news, setNews] = useState<any>(postsRes.filter((item: any) => item.parent_name === 'Tin tức'));
+    const [news, setNews] = useState<any>([]);
     const [subCategory, setSubCategory] = useState<string>('Tất cả');
     const [active, setActive] = useState<number>(-1);
 
     useEffect(() => {
-        if (subCategory === 'Tất cả') {
-            setNews(postsRes);
-        } else {
-            setNews(postsRes.filter((item: any) => item.category_name === subCategory));
+        if (postsRes.message === 'success') {
+            if (subCategory === 'Tất cả') {
+                setNews(postsRes.data.filter((item: any) => item.parent_name === 'Tin tức'));
+            } else {
+                setNews(postsRes.data.filter((item: any) => item.category_name === subCategory));
+            }
         }
     }, [subCategory]);
 
@@ -39,8 +41,8 @@ export default function News({ postsRes }: { postsRes: any }) {
                         >
                             Tất cả
                         </h4>
-                        {postsRes.message === 'success' &&
-                            removeDuplicates(postsRes, 'category_name').map((item: any, index: number) => (
+                        {news.length > 0 &&
+                            removeDuplicates(news, 'category_name').map((item: any, index: number) => (
                                 <h4
                                     onClick={() => onclickSubCategory(item.category_name, index)}
                                     key={index}
