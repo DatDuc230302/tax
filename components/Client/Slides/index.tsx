@@ -7,15 +7,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { serverBackend } from '@/server';
 
 export default function Slides({ slidesRes }: { slidesRes: any }) {
-    let slides: any;
-    if (slidesRes.err === 'None URL') {
-        console.log('Check your URL');
-        slides = [];
-    } else if (slidesRes.err === 'None API') {
-        console.log('Check your API');
-        slides = [];
-    }
-
+    let slides = slidesRes;
     return (
         <div className="flex justify-center px-4 min-h-[450px]">
             <div className="flex w-wMain justify-center">
