@@ -1,38 +1,6 @@
+import { getCategories, getPosts } from '@/app/api/getApi';
 import PostsClient from '@/components/Client/PostsClient';
-import { serverBackend } from '@/server';
 import React from 'react';
-
-async function getPosts() {
-    try {
-        const result: any = await fetch(`${serverBackend}/api/v1/post`, {
-            method: 'GET',
-            cache: 'no-cache',
-        });
-        if (result.ok) {
-            return result.json();
-        } else {
-            return { err: 'None API' };
-        }
-    } catch {
-        return { err: 'None URL' };
-    }
-}
-
-async function getCategories() {
-    try {
-        const result: any = await fetch(`${serverBackend}/api/v1/category`, {
-            method: 'GET',
-            cache: 'no-cache',
-        });
-        if (result.ok) {
-            return result.json();
-        } else {
-            return { err: 'None API' };
-        }
-    } catch {
-        return { err: 'None URL' };
-    }
-}
 
 export default async function Page() {
     let postsRes: any = await getPosts();
