@@ -1,20 +1,9 @@
 'use client';
 
-import {
-    Button,
-    Chip,
-    Input,
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    Spinner,
-} from '@nextui-org/react';
+import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Spinner } from '@nextui-org/react';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { loadingApi } from '@/functions/loadingApi';
 import { serverBackend } from '@/server';
@@ -39,19 +28,26 @@ export default function LoginAdmin() {
             if (email.length === 0 || !isEmail(email) || pass.length === 0) {
                 setRequire(true);
             } else {
-                const result = await axios.post(`${serverBackend}/api/v1/login`, {
-                    email: email,
-                    password: pass,
+                let res: any = await fetch(`${serverBackend}/api/v1/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: pass,
+                    }),
                 });
-                if (result.data.status === 'success') {
-                    if (result.data.user.status === 'active') {
+                res = await res.json();
+                if (res.status === 'success') {
+                    if (res.user.status === 'active') {
                         const currentUser: object = {
-                            id: result.data.user.id,
-                            name: result.data.user.name,
-                            role: result.data.user.role,
-                            email: result.data.user.email,
-                            phone: result.data.user.phone,
-                            token: result.data.authorization.token,
+                            id: res.user.id,
+                            name: res.user.name,
+                            role: res.user.role,
+                            email: res.user.email,
+                            phone: res.user.phone,
+                            token: res.authorization.token,
                         };
                         const valueEncrypt: any = encrypt(JSON.stringify(currentUser), 'DucDat2303');
                         sessionStorage.setItem('currentUser', valueEncrypt);

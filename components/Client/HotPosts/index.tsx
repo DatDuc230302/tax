@@ -1,32 +1,18 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import css from './HotPosts.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import axios from 'axios';
 import { serverBackend } from '@/server';
 import { AiOutlineEye } from 'react-icons/ai';
 import { descViews } from '@/functions/descViews';
 
-export default function HotPosts() {
-    const [hotPosts, setHotPosts] = useState<object[]>([]);
-
-    useEffect(() => {
-        getHotPosts();
-    }, []);
-
-    const getHotPosts = async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/post`);
-            if (result.data.message === 'success') {
-                setHotPosts(descViews(result.data.data));
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
+export default function HotPosts({ postsRes }: { postsRes: any }) {
+    let hotPosts: any;
+    if (postsRes.message === 'success') {
+        hotPosts = descViews(postsRes.data);
+    }
     return (
         <div className="flex justify-center px-4 py-4 min-h-[450px]">
             <div className="flex w-wMain flex-col my-2 font-merriweather">
@@ -50,15 +36,13 @@ export default function HotPosts() {
                                         className={`${css.hover} flex w-full flex-col gap-3`}
                                     >
                                         <div className="flex relative w-full overflow-hidden h-[420px]">
-                                            {/* <Image
-                                                src={
-                                                   `${serverBackend}${item.images}`
-                                                }
+                                            <Image
+                                                src={`${serverBackend}${item.images}`}
                                                 alt=""
                                                 className={`${css.img} object-cover`}
                                                 fill
                                                 sizes="1000000px"
-                                            /> */}
+                                            />
                                         </div>
                                         <div className="flex flex-col gap-2">
                                             <h3 className={`${css.title} text-[26px] line-clamp-2`}>{item.title}</h3>
@@ -73,7 +57,7 @@ export default function HotPosts() {
                                             <span className="text-[12px]">{item.Issuance_date}</span>
                                             <span className="flex gap-1 items-center text-[14px]">
                                                 <AiOutlineEye fontSize={18} />
-                                                {item.view}
+                                                {item.views}
                                             </span>
                                         </div>
                                     </Link>
@@ -119,7 +103,7 @@ export default function HotPosts() {
                                                 <span className="text-[12px]">{item.Issuance_date}</span>
                                                 <span className="flex gap-1 items-center text-[14px]">
                                                     <AiOutlineEye fontSize={18} />
-                                                    {item.view}
+                                                    {item.views}
                                                 </span>
                                             </div>
                                         </Link>
