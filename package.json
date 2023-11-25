@@ -19,7 +19,7 @@
         "diacritic": "^0.0.2",
         "framer-motion": "^10.16.4",
         "jodit-react": "^1.3.39",
-        "next": "latest",
+        "next": "^13.4.19",
         "react": "latest",
         "react-color": "^2.19.3",
         "react-dom": "latest",
