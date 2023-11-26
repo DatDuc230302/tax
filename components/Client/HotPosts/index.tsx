@@ -4,7 +4,6 @@ import React from 'react';
 import css from './HotPosts.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import { serverBackend } from '@/server';
 import { AiOutlineEye } from 'react-icons/ai';
 import { descViews } from '@/functions/descViews';
 
@@ -37,7 +36,7 @@ export default function HotPosts({ postsRes }: { postsRes: any }) {
                                     >
                                         <div className="flex relative w-full overflow-hidden h-[420px]">
                                             <Image
-                                                src={`${serverBackend}${item.images}`}
+                                                src={`${item.images}`}
                                                 alt=""
                                                 className={`${css.img} object-cover`}
                                                 fill
@@ -83,7 +82,7 @@ export default function HotPosts({ postsRes }: { postsRes: any }) {
                                                         sizes="100000000000000px"
                                                         className={`${css.img} object-cover`}
                                                         fill
-                                                        src={`${serverBackend}${item.images}`}
+                                                        src={`${item.images}`}
                                                         alt=""
                                                     />
                                                 </div>

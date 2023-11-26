@@ -1,30 +1,8 @@
 'use client';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { serverBackend } from '@/server';
+import React from 'react';
 
-export default function Footer() {
-    const [settingData, setSettingData] = useState<any>(null);
-
-    useEffect(() => {
-        const footerData: any = localStorage.getItem('settingData');
-        if (footerData) {
-            setSettingData(JSON.parse(footerData));
-        } else {
-            getFooter();
-        }
-    }, []);
-
-    const getFooter = async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/ReadSetting`);
-            setSettingData(result.data);
-            localStorage.setItem('settingData', JSON.stringify(result.data));
-        } catch (err) {
-            console.log(err);
-        }
-    };
+export default function Footer({ settingData }: { settingData: any }) {
     return (
         <div className="w-full flex justify-center bg-[#0B80FF] p-4 min-h-[200px]">
             {settingData ? (
