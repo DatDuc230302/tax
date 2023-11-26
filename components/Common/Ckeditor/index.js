@@ -13,6 +13,12 @@ export default function Ckeditor({ content, setContent }) {
         globalFullSize: false,
         uploader: {
             insertImageAsBase64URI: true,
+             files: {
+            mimeTypes: ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+            url: `${serverBackend}/api/v1/upload-file-post`, // Thay đổi đường dẫn URL với URL thực tế của bạn
+            method: 'POST',
+            fieldName: 'file',
+        },
         },
         language: 'vi',
         messages: {
