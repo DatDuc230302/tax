@@ -31,13 +31,7 @@ export default function Slides({ slidesRes }: { slidesRes: any }) {
                 >
                     {slides.map((item: any, index: number) => (
                         <div className="w-full h-[250px] xs:h-[400px] md:h-[600px] lg:h-[750px] relative" key={index}>
-                            <Image
-                                priority
-                                src={`${serverBackend}${item.image_url}`}
-                                fill
-                                sizes="100000px"
-                                alt={item.id}
-                            />
+                            <Image priority src={`${item.image_url}`} fill sizes="100000px" alt={item.id} />
                         </div>
                     ))}
                 </Carousel>

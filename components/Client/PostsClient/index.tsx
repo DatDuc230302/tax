@@ -96,7 +96,7 @@ export default function PostsClient({ postsRes, categoriesRes }: { postsRes: any
                                                 </div>
                                                 <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
                                                     <Image
-                                                        src={`${serverBackend}${item.images}`}
+                                                        src={`${item.images}`}
                                                         className="object-cover rounded-[12px]"
                                                         alt=""
                                                         fill

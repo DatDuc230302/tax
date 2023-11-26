@@ -20,12 +20,11 @@ import {
 import { serverBackend, serverImages } from '@/server';
 import Image from 'next/image';
 import { HiMiniPencilSquare } from 'react-icons/hi2';
-import { BsChevronDown } from 'react-icons/bs';
 import axios from 'axios';
 import { isDate } from '@/functions/isDate';
 import UploadFiles from '../UploadFiles';
 import { AdminContext } from '@/app/admin/layout';
-import Ckeditor from '@/components/Common/Ckeditor';
+import Editor from '@/components/Common/Editor/Editor';
 
 export default function UpdatePost({
     id,
@@ -38,7 +37,7 @@ export default function UpdatePost({
     oldFilesArr,
     oldserial,
     oldissuance,
-    oldAvatar,
+    oldImageBase,
     categories,
     parentCategories,
     refresh,
@@ -54,7 +53,7 @@ export default function UpdatePost({
     oldserial: string;
     oldissuance: string;
     oldFilesArr: any;
-    oldAvatar: string;
+    oldImageBase: string;
     categories: any;
     parentCategories: any;
     refresh: boolean;
@@ -67,9 +66,7 @@ export default function UpdatePost({
     const [subCategory, setSubCategory] = useState<string>(oldSubCategory);
     const [content, setContent] = useState<string>(oldContent);
     const [shortDesc, setShortDesc] = useState<string>(oldShortDesc);
-    const [avatar, setAvatar] = useState<any>(oldAvatar);
-    const [noAvatar, setNoAvatar] = useState<any>(null);
-    const [imageFile, setImageFile] = useState<any>(null);
+    const [imageBase, setImageBase] = useState<any>(oldImageBase);
     const [filesArr, setFilesArr] = useState<any>(oldFilesArr);
     const [serial, setSerial] = useState<string>(oldserial);
     const [issuance, setIssuance] = useState<string>(oldissuance);
@@ -88,35 +85,20 @@ export default function UpdatePost({
 
     const handleSubmit = async () => {
         try {
-            if (title.length === 0 || content.length === 0 || avatar === null) {
+            if (title.length === 0 || content.length === 0 || imageBase === null) {
                 setRequire(true);
             } else {
-                let formData: any = new FormData();
-                if (noAvatar) {
-                    formData = {
-                        user_id: dataContext.id,
-                        title: title,
-                        content: content,
-                        short_desc: shortDesc,
-                        image: imageFile.name,
-                        serial_number: serial,
-                        Issuance_date: issuance,
-                        category_id: String(categoryID),
-                        file: filesArr[0] === '[]' || filesArr.length === 0 ? null : filesArr,
-                    };
-                } else {
-                    formData = {
-                        user_id: dataContext.id,
-                        title: title,
-                        content: content,
-                        short_desc: shortDesc,
-                        imagelink: avatar,
-                        serial_number: serial,
-                        Issuance_date: issuance,
-                        category_id: String(categoryID),
-                        file: filesArr[0] === '[]' || filesArr.length === 0 ? null : filesArr,
-                    };
-                }
+                const formData: any = {
+                    user_id: dataContext.id,
+                    title: title,
+                    content: content,
+                    short_desc: shortDesc,
+                    image: imageBase,
+                    serial_number: serial,
+                    Issuance_date: issuance,
+                    category_id: String(categoryID),
+                    file: filesArr[0] === '[]' || filesArr.length === 0 ? null : filesArr,
+                };
                 const result = await axios.put(`${serverBackend}/api/v1/post/${id}`, formData);
                 if (result.data.message === 'success') {
                     setTurn(false);
@@ -133,14 +115,13 @@ export default function UpdatePost({
         const reader: any = new FileReader();
 
         reader.onloadend = () => {
-            setNoAvatar(reader.result);
-            setImageFile(file);
+            setImageBase(reader.result);
         };
 
         if (file) {
             reader.readAsDataURL(file);
         } else {
-            setAvatar(null);
+            setImageBase(null);
         }
     };
 
@@ -255,16 +236,13 @@ export default function UpdatePost({
                         <div className="flex items-center gap-3">
                             <label htmlFor="uploadImg">Upload hình</label>
                             <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">
-                                {!noAvatar && (
-                                    <Image src={`${serverBackend}${avatar}`} alt={avatar} fill sizes="10000px" />
-                                )}
-                                {noAvatar && <Image src={`${noAvatar}`} alt={noAvatar} fill sizes="10000px" />}
+                                <Image src={`${imageBase}`} alt={''} fill sizes="10000px" />
                             </div>
                             <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                         </div>
                         {/* Thêm content */}
                         <>
-                            <Ckeditor content={content} setContent={setContent} />
+                            <Editor content={content} setContent={setContent} />
                         </>
                         {/* Mô tả ngắn */}
                         <textarea
@@ -281,7 +259,7 @@ export default function UpdatePost({
                             Đóng
                         </Button>
                         <Button color="primary" onPress={() => handleSubmit()}>
-                            Thêm
+                            Cập nhật
                         </Button>
                     </ModalFooter>
                 </ModalContent>

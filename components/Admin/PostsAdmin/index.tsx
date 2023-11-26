@@ -147,7 +147,7 @@ export default function PostsAdmin() {
                                     oldserial={item.serial_number}
                                     oldissuance={item.Issuance_date}
                                     oldFilesArr={item.file ? item.file.split(',') : []}
-                                    oldAvatar={item.images}
+                                    oldImageBase={item.images}
                                     categories={categories}
                                     parentCategories={parentCategories}
                                     refresh={refresh}
