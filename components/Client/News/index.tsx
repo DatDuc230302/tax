@@ -1,47 +1,26 @@
 'use client';
 
-import SnackbarMessage from '@/components/Common/SnackbarMessage';
 import { removeDuplicates } from '@/functions/removeDuplicates';
 import { serverBackend } from '@/server';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 
-export default function News() {
-    const [news, setNews] = useState<object[]>([]);
-    const [initialNews, setInitialNews] = useState<object[]>([]);
-    const [subCategory, setSubCategory] = useState<string>('');
+export default function News({ postsRes }: { postsRes: any }) {
+    const [news, setNews] = useState<any>([]);
+    const [subCategory, setSubCategory] = useState<string>('Tất cả');
     const [active, setActive] = useState<number>(-1);
 
     useEffect(() => {
-        getNews();
-    }, []);
-
-    useEffect(() => {
-        let sortNews: object[];
-        if (subCategory === 'Tất cả') {
-            sortNews = initialNews;
-        } else {
-            sortNews = initialNews.filter((item: any) => item.category_name === subCategory);
+        if (postsRes.message === 'success') {
+            if (subCategory === 'Tất cả') {
+                setNews(postsRes.data.filter((item: any) => item.parent_name === 'Tin tức'));
+            } else {
+                setNews(postsRes.data.filter((item: any) => item.category_name === subCategory));
+            }
         }
-        setNews(sortNews);
     }, [subCategory]);
-
-    const getNews = async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/postByCategory/1`);
-            if (result.data.message === 'success') {
-                setNews(result.data.data.filter((item: any) => item.status !== 'inactive'));
-                setInitialNews(result.data.data.filter((item: any) => item.status !== 'inactive'));
-            }
-        } catch (err: any) {
-            if (err.message === 'Network Error') {
-                console.log(err.message);
-            }
-        }
-    };
 
     const onclickSubCategory = (name: string, indexActive: number) => {
         setSubCategory(name);
@@ -62,17 +41,18 @@ export default function News() {
                         >
                             Tất cả
                         </h4>
-                        {removeDuplicates(initialNews, 'category_name').map((item: any, index: number) => (
-                            <h4
-                                onClick={() => onclickSubCategory(item.category_name, index)}
-                                key={index}
-                                className={`${
-                                    active === index && 'text-red-500'
-                                } cursor-pointer text-[#414141] hover:text-red-500 duration-200 ease-linear `}
-                            >
-                                {item.category_name}
-                            </h4>
-                        ))}
+                        {news.length > 0 &&
+                            removeDuplicates(news, 'category_name').map((item: any, index: number) => (
+                                <h4
+                                    onClick={() => onclickSubCategory(item.category_name, index)}
+                                    key={index}
+                                    className={`${
+                                        active === index && 'text-red-500'
+                                    } cursor-pointer text-[#414141] hover:text-red-500 duration-200 ease-linear `}
+                                >
+                                    {item.category_name}
+                                </h4>
+                            ))}
                     </div>
                 </div>
                 <div className="flex flex-col gap-4">
@@ -88,41 +68,31 @@ export default function News() {
                                     <div className="flex flex-col gap-4 justify-center">
                                         <div className="flex flex-col pr-[20px] gap-2">
                                             <h3 className="line-clamp-2 font-bold">{item.title}</h3>
-                                            <div
-                                                dangerouslySetInnerHTML={{ __html: item.content }}
-                                                className="font-light line-clamp-3 text-[14px] text-[#767676]"
-                                            ></div>
+                                            <div className="font-light line-clamp-3 text-[14px] text-[#767676]">
+                                                {item.short_desc}
+                                            </div>
                                         </div>
                                         <div className="flex w-full whdivtespace-nowrap items-center gap-2">
                                             <span className="rounded-[16px] hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
                                                 {item.category_name}
                                             </span>
                                             <span className="text-[12px]">{item.Issuance_date}</span>
-                                            <span className="text-[12px]">Mã: {item.serial_number}</span>
+                                            {item.serial_number && (
+                                                <span className="text-[12px]">Mã: {item.serial_number}</span>
+                                            )}
                                             <span className="flex gap-1 items-center text-[14px]">
                                                 <AiOutlineEye fontSize={18} />0
                                             </span>
                                         </div>
                                     </div>
                                     <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
-                                        {/* <Image
-                                            src={
-                                                'https://media.hcmtax.gov.vn/Media/1_HCMTAX/FolderFunc/202310/Images/dth-1077-20231023104509-e.jpg'
-                                            }
+                                        <Image
+                                            src={`${item.images}`}
                                             className="object-cover rounded-[12px]"
                                             alt=""
                                             fill
                                             sizes="100000px"
-                                        /> */}
-                                        <Image
-                                    src={
-                                        `${serverBackend}${item.images}`
-                                    }
-                                    className="object-cover rounded-[12px]"
-                                    alt=""
-                                    fill
-                                    sizes="100000px"
-                                />
+                                        />
                                     </div>
                                 </Link>
                             ),

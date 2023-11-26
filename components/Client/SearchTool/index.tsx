@@ -14,7 +14,7 @@ export default function SearchTool({ className }: { className?: string }) {
 
     const handleSearch = () => {
         if (valueInput.length > 0) {
-            router.push(`/search?key=${valueInput}`);
+            router.push(`/bai-dang?search=${valueInput}`);
         }
     };
 

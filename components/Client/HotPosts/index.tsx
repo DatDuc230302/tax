@@ -1,32 +1,17 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import css from './HotPosts.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import axios from 'axios';
-import { serverBackend } from '@/server';
 import { AiOutlineEye } from 'react-icons/ai';
 import { descViews } from '@/functions/descViews';
 
-export default function HotPosts() {
-    const [hotPosts, setHotPosts] = useState<object[]>([]);
-
-    useEffect(() => {
-        getHotPosts();
-    }, []);
-
-    const getHotPosts = async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/post`);
-            if (result.data.message === 'success') {
-                setHotPosts(descViews(result.data.data));
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
+export default function HotPosts({ postsRes }: { postsRes: any }) {
+    let hotPosts: any;
+    if (postsRes.message === 'success') {
+        hotPosts = descViews(postsRes.data);
+    }
     return (
         <div className="flex justify-center px-4 py-4 min-h-[450px]">
             <div className="flex w-wMain flex-col my-2 font-merriweather">
@@ -51,9 +36,7 @@ export default function HotPosts() {
                                     >
                                         <div className="flex relative w-full overflow-hidden h-[420px]">
                                             <Image
-                                                src={
-                                                   `${serverBackend}${item.images}`
-                                                }
+                                                src={`${item.images}`}
                                                 alt=""
                                                 className={`${css.img} object-cover`}
                                                 fill
@@ -73,7 +56,7 @@ export default function HotPosts() {
                                             <span className="text-[12px]">{item.Issuance_date}</span>
                                             <span className="flex gap-1 items-center text-[14px]">
                                                 <AiOutlineEye fontSize={18} />
-                                                {item.view}
+                                                {item.views}
                                             </span>
                                         </div>
                                     </Link>
@@ -99,9 +82,7 @@ export default function HotPosts() {
                                                         sizes="100000000000000px"
                                                         className={`${css.img} object-cover`}
                                                         fill
-                                                        src={
-                                                           `${serverBackend}${item.images}`
-                                                        }
+                                                        src={`${item.images}`}
                                                         alt=""
                                                     />
                                                 </div>
@@ -121,7 +102,7 @@ export default function HotPosts() {
                                                 <span className="text-[12px]">{item.Issuance_date}</span>
                                                 <span className="flex gap-1 items-center text-[14px]">
                                                     <AiOutlineEye fontSize={18} />
-                                                    {item.view}
+                                                    {item.views}
                                                 </span>
                                             </div>
                                         </Link>

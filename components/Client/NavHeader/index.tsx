@@ -94,13 +94,18 @@ export default function NavHeader() {
                             <div
                                 className={`${
                                     active === index && `bg-[#52b6ff]`
-                                } text-white select-none gap-1 h-full items-center px-4 hover:bg-[#52B6FF] duration-100 ease-linear flex shrink-0 cursor-pointer font-bold`}
+                                } text-white gap-1 h-full items-center hover:bg-[#52B6FF] duration-100 ease-linear flex shrink-0 font-bold`}
                             >
                                 {!item.isBlank && (
-                                    <Link href={`${item.href}`}>{item.icon ? item.icon : item.title}</Link>
+                                    <Link
+                                        className="px-4 h-full cursor-pointer items-center flex"
+                                        href={`${item.href}`}
+                                    >
+                                        {item.icon ? item.icon : item.title}
+                                    </Link>
                                 )}
                                 {item.isBlank && (
-                                    <a target="blank" href={`${item.href}`}>
+                                    <a className="px-4 cursor-pointer" target="blank" href={`${item.href}`}>
                                         {item.icon ? item.icon : item.title}
                                     </a>
                                 )}

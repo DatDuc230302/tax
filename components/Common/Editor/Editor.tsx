@@ -1,9 +1,8 @@
 import React, { useMemo, useRef } from 'react';
 import JoditEditor from 'jodit-react';
-import { serverBackend } from '@/server';
 
-export default function Ckeditor({ content, setContent }) {
-    const editor = useRef(null);
+export default function Editor({ content, setContent }: { content: any; setContent: any }) {
+    const editor = useRef<any>(null);
 
     const config = {
         readonly: false,
@@ -26,7 +25,8 @@ export default function Ckeditor({ content, setContent }) {
         },
     };
 
-  return useMemo( () => ( 
-<JoditEditor ref={editor} value={content} config={config} onChange={content => setContent(content)} /> 
-), [] )
+    return useMemo(
+        () => <JoditEditor ref={editor} value={content} config={config} onChange={(content) => setContent(content)} />,
+        [],
+    );
 }
