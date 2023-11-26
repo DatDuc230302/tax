@@ -1,9 +1,10 @@
 import Header from '@/components/Client/Header';
 import Footer from '@/components/Client/Footer';
 import ChatBot from '@/components/Client/ChatBot';
+import { serverBackend } from '@/server';
 
-async function getTime() {
-    const result: any = await fetch(`http://worldtimeapi.org/api/timezone/Asia/Ho_Chi_Minh`, {
+async function getSettingData() {
+    const result: any = await fetch(`${serverBackend}/api/v1/ReadSetting`, {
         cache: 'no-store',
     });
     if (result.ok) {
@@ -14,11 +15,12 @@ async function getTime() {
 }
 
 export default async function ClientLayout({ children }: { children: React.ReactNode }) {
+    const settingData = await getSettingData();
     return (
         <div className="flex flex-col">
-            <Header />
+            <Header settingData={settingData} />
             {children}
-            <Footer />
+            <Footer settingData={settingData} />
             <ChatBot />
         </div>
     );

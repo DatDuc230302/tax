@@ -1,20 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-
 import React from 'react';
-
 import Sidebar from '../Sidebar';
 import NavHeader from '../NavHeader';
 import NavMove from '../NavMove';
 import Link from 'next/link';
 
-export default function Header() {
+export default function Header({ settingData }: { settingData: any }) {
     return (
         <header className="flex flex-col select-none">
             <div className="hidden lg:flex relative h-[240px]">
                 <div className="flex w-full h-[240px] relative">
-                    <Image src={'/imgs/bg_header.jpg'} priority fill sizes="1000000px" alt="" />
+                    <Image src={`${settingData.header_bg}`} priority fill sizes="1000000px" alt="" />
                 </div>
                 <div className="flex absolute w-full justify-center h-full">
                     <div className="flex w-wMain items-center gap-3">

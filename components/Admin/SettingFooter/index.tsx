@@ -1,20 +1,10 @@
 import { serverBackend } from '@/server';
 import { Button, Input, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { SketchPicker } from 'react-color';
 
-export default function SettingFooter() {
-    const [data, setData] = useState<any>({
-        theme_color: '',
-        footer_color: '',
-        footer_owner: '',
-        footer_address: '',
-        footer_phone: '',
-        footer_email: '',
-        footer_working_hours: '',
-        footer_website: '',
-    });
-
+export default function SettingFooter({ data, setData, updateData }: { data: any; setData: any; updateData: any }) {
     const [themeColor, setThemeColor] = useState(); // Default color
     const [footerColor, setFooterColor] = useState(); // Default color
 
@@ -24,39 +14,6 @@ export default function SettingFooter() {
             ...data,
             [name]: value,
         });
-    };
-
-    useEffect(() => {
-        fetch(`${serverBackend}/api/v1/ReadSetting`)
-            .then((response) => response.json())
-            .then((json) => {
-                setData(json);
-            })
-            .catch((error) => {
-                console.error('Error loading config:', error);
-            });
-    }, []);
-
-    const handleSave = () => {
-        fetch(`${serverBackend}/api/v1/UpdateSetting`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then((response) => response.json())
-            .then((response) => {
-                if (response.message === 'success') {
-                    console.log('Config updated successfully');
-                    window.location.reload();
-                } else {
-                    console.error('Config update failed:', response.error);
-                }
-            })
-            .catch((error) => {
-                console.error('Error updating config:', error);
-            });
     };
 
     const handleThemeColor = (newColor: any) => {
@@ -134,8 +91,8 @@ export default function SettingFooter() {
                     value={data['footer_website']}
                     onChange={handleInputChange}
                 />
-                <Button color="primary" onClick={handleSave}>
-                    Cập nhật
+                <Button color="primary" onClick={updateData}>
+                    Cập nhật Footer
                 </Button>
             </div>
         </div>

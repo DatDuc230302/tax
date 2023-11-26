@@ -10,7 +10,10 @@ export default function Slides({ slidesRes }: { slidesRes: any }) {
     let slides: any;
     if (slidesRes.message === 'success') {
         slides = slidesRes.data;
+    } else {
+        slides = [];
     }
+
     return (
         <div className="flex justify-center px-4 min-h-[450px]">
             <div className="flex w-wMain justify-center">
