@@ -25,6 +25,7 @@ import { isDate } from '@/functions/isDate';
 import UploadFiles from '../UploadFiles';
 import { AdminContext } from '@/app/admin/layout';
 import Editor from '@/components/Common/Editor/Editor';
+import { reduceBase64 } from '@/functions/reduceBase64';
 
 export default function UpdatePost({
     id,

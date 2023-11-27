@@ -30,8 +30,8 @@ export default function Sidebar() {
                 ></div>
                 <div
                     className={`${
-                        turn ? 'left-[0]' : 'left-[-250px]'
-                    } duration-250 ease-linear z-50 bg-white h-full fixed top-0 `}
+                        turn ? 'left-[0]' : 'left-[-260px]'
+                    } duration-250 ease-linear w-[260px] z-50 bg-white h-full fixed top-0 `}
                 >
                     <div className="h-[70px] w-full bg-[#0B80FF] flex justify-between items-center px-4">
                         <AiOutlineClose
