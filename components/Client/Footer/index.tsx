@@ -1,8 +1,11 @@
 'use client';
+import { ClientContext } from '@/app/(client)/layout';
 import Image from 'next/image';
-import React from 'react';
+import React, { useContext } from 'react';
 
-export default function Footer({ settingWeb }: { settingWeb: any }) {
+export default function Footer() {
+    const dataContext: any = useContext(ClientContext);
+    const settingWeb = dataContext.settingWeb;
     return (
         <div className="w-full flex justify-center bg-[#0B80FF] p-4 min-h-[200px]">
             {settingWeb ? (

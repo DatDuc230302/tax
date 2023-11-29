@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PostsCategories from '../PostsCategories';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Pagination } from '@nextui-org/react';
 import Image from 'next/image';
@@ -12,19 +12,23 @@ import { getDays } from '@/functions/getDays';
 import Link from 'next/link';
 import { BiChevronRight } from 'react-icons/bi';
 import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces';
+import { ClientContext } from '@/app/(client)/layout';
 
-export default function PostsClient({ postsRes, categoriesRes }: { postsRes: any; categoriesRes: any }) {
+export default function PostsClient() {
     // Lấy Categroy và SubCategory trên URL
     const searchParams: any = useSearchParams();
     const subCategory: any = searchParams.get('subCategory') ? searchParams.get('subCategory') : null;
     const searchValue: any = searchParams.get('search') ? searchParams.get('search') : null;
+
+    // lẫy dữ liệu
+    const dataContext: any = useContext(ClientContext);
 
     // Phân trang 1
     const itemsPerPage: number = 5;
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [start, setStart] = useState<number>(0);
     const [end, setEnd] = useState<number>(itemsPerPage);
-    const [posts, setPosts] = useState<any>(postsRes);
+    const [posts, setPosts] = useState<any>(dataContext.posts);
 
     // Phân trang 2
     useEffect(() => {
@@ -38,18 +42,22 @@ export default function PostsClient({ postsRes, categoriesRes }: { postsRes: any
     useEffect(() => {
         if (searchValue) {
             setPosts(
-                postsRes.filter((item: any) =>
+                dataContext.posts.filter((item: any) =>
                     item.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
                 ),
             );
         } else {
             if (subCategory) {
-                setPosts(postsRes.filter((item: any) => removeDiacriticsAndSpaces(item.category_name) === subCategory));
+                setPosts(
+                    dataContext.posts.filter(
+                        (item: any) => removeDiacriticsAndSpaces(item.category_name) === subCategory,
+                    ),
+                );
             } else {
-                setPosts(postsRes);
+                setPosts(dataContext.posts);
             }
         }
-    }, [searchValue, subCategory]);
+    }, [searchValue, subCategory, dataContext.posts]);
 
     return (
         <div className="flex flex-col lg:flex-row w-full gap-6 px-4 font-roboto min-h-[700px]">
@@ -57,10 +65,14 @@ export default function PostsClient({ postsRes, categoriesRes }: { postsRes: any
                 <PostClient postId={searchParams.get('postId')} />
             ) : (
                 <>
-                    <PostsCategories categoriesRes={categoriesRes} />
+                    <PostsCategories />
                     <div className="w-full flex flex-col gap-2 pb-[20px]">
                         <div className="justify-between flex flex-col md:flex-row">
-                            <h2 className="font-bold text-[26px]">Bài đăng</h2>
+                            {posts.length > 0 ? (
+                                <h2 className="font-bold text-[26px]">Bài đăng</h2>
+                            ) : (
+                                <h2>Không có dữ liệu</h2>
+                            )}
                         </div>
                         <div className="flex flex-col gap-4">
                             {posts.slice(start, end).map(
