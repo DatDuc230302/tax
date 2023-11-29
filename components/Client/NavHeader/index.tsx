@@ -111,7 +111,7 @@ export default function NavHeader() {
                                 )}
                             </div>
                         )}
-                        {!item.href && (
+                        {/* {!item.href && (
                             <span
                                 className={`${active === index && `bg-[#52b6ff]`} ${
                                     css.news
@@ -133,7 +133,7 @@ export default function NavHeader() {
                                     ))}
                                 </div>
                             </span>
-                        )}
+                        )} */}
                     </div>
                 ))}
             </div>
