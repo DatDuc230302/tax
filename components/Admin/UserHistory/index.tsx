@@ -21,6 +21,10 @@ export default function UserHistory({ userHistory }: { userHistory: any }) {
                         <TableCell className="w-[25%] whitespace-nowrap">
                             {item.activity_type === 'created post' && 'Tạo bài viết mới'}
                             {item.activity_type === 'updated post' && 'Cập nhật bài viết'}
+                            {item.activity_type === 'Updated post status to inactive' &&
+                                'Chuyển trạng thái bài viết thành không hoạt động'}
+                            {item.activity_type === 'Updated post status to active' &&
+                                'Chuyển trạng thái bài viết thành hoạt động'}
                         </TableCell>
                         <TableCell className="w-[25%] whitespace-nowrap flex gap-2">{item.activity_time}</TableCell>
                     </TableRow>

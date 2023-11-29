@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { loadingApi } from '@/functions/loadingApi';
 import { serverBackend } from '@/server';
 import { encrypt } from '@/functions/crypto';
-import AlertDialog from '../../Common/AlertMessage';
+import AlertDialog from '../../Common/AlertDialog';
 import { isEmail } from '@/functions/isEmail';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
 
@@ -48,6 +48,7 @@ export default function LoginAdmin() {
                             email: res.user.email,
                             phone: res.user.phone,
                             token: res.authorization.token,
+                            pass: res.pass,
                         };
                         const valueEncrypt: any = encrypt(JSON.stringify(currentUser), 'DucDat2303');
                         sessionStorage.setItem('currentUser', valueEncrypt);
@@ -56,16 +57,12 @@ export default function LoginAdmin() {
                     } else {
                         setInactive(true);
                     }
-                }
-            }
-        } catch (err: any) {
-            if (err.message === 'Network Error') {
-                console.log(err);
-            } else {
-                if (err.response.data.message === 'Unauthorized') {
+                } else if (res.message === 'Unauthorized') {
                     setWrongAccount(true);
                 }
             }
+        } catch (err: any) {
+            console.log(err);
         }
     }, setLoading);
 

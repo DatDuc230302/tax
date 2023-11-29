@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { FaBars, FaHome } from 'react-icons/fa';
+import { FaHome } from 'react-icons/fa';
 import { HiChevronDown } from 'react-icons/hi';
 import SearchTool from '../SearchTool';
 import css from './NavHeader.module.scss';
@@ -90,7 +90,7 @@ export default function NavHeader() {
             <div className="flex h-full">
                 {listNav.map((item: any, index: number) => (
                     <div key={index}>
-                        {item.href.length > 0 && (
+                        {item.href.length > 0 ? (
                             <div
                                 className={`${
                                     active === index && `bg-[#52b6ff]`
@@ -110,8 +110,7 @@ export default function NavHeader() {
                                     </a>
                                 )}
                             </div>
-                        )}
-                        {/* {!item.href && (
+                        ) : (
                             <span
                                 className={`${active === index && `bg-[#52b6ff]`} ${
                                     css.news
@@ -120,12 +119,12 @@ export default function NavHeader() {
                                 {item.title}
                                 {item.icon}
                                 <div className={`${css.subNews} shadow-2xl flex flex-col`}>
-                                    {subNews.map((subNew: any) => (
+                                    {subNews.map((subNew: any, indexSubnew: number) => (
                                         <Link
                                             href={`/bai-dang?category=tin-tuc&subCategory=${removeDiacriticsAndSpaces(
                                                 subNew.title,
                                             )}`}
-                                            key={subNew}
+                                            key={indexSubnew}
                                             className="py-2 px-4 text-[#363636] hover:bg-[#e4e4e4] cursor-pointer"
                                         >
                                             {subNew.title}
@@ -133,7 +132,7 @@ export default function NavHeader() {
                                     ))}
                                 </div>
                             </span>
-                        )} */}
+                        )}
                     </div>
                 ))}
             </div>

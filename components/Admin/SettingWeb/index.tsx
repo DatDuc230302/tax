@@ -6,23 +6,15 @@ import SettingFooter from '../SettingFooter';
 import SettingHeader from '../SettingHeader';
 import axios from 'axios';
 import { serverBackend } from '@/server';
+import SnackbarTimeout from '@/components/Common/SnackbarTimeout';
 
 export default function SettingWeb() {
     useEffect(() => {
         document.title = 'Quản lý trang';
     }, []);
 
-    const [data, setData] = useState<any>({
-        theme_color: '',
-        footer_color: '',
-        footer_owner: '',
-        footer_address: '',
-        footer_phone: '',
-        footer_email: '',
-        footer_workingHours: '',
-        footer_website: '',
-        header_backGround: '',
-    });
+    const [data, setData] = useState<any>(null);
+    const [updated, setUpdated] = useState<boolean>(false);
 
     useEffect(() => {
         getData();
@@ -38,21 +30,27 @@ export default function SettingWeb() {
     };
 
     const updateData = async () => {
-        const res = await axios.post(`${serverBackend}/api/v1/UpdateSetting`, data);
-        if (res.data.message === 'success') {
-        }
+        try {
+            const res = await axios.post(`${serverBackend}/api/v1/UpdateSetting`, data);
+            if (res.data.message === 'success') {
+                setUpdated(true);
+            }
+        } catch (err: any) {}
     };
 
     return (
-        <div className="flex w-full flex-col px-4 mt-4">
-            <Tabs aria-label="Options">
-                <Tab key="footer" title="Footer">
-                    <SettingFooter data={data} setData={setData} updateData={updateData} />
-                </Tab>
-                <Tab key="header" title="Header">
-                    <SettingHeader data={data} setData={setData} updateData={updateData} />
-                </Tab>
-            </Tabs>
-        </div>
+        <>
+            <SnackbarTimeout turn={updated} setTurn={setUpdated} title="Cập nhật thành công" />
+            <div className="flex w-full flex-col px-4 mt-4">
+                <Tabs aria-label="Options">
+                    <Tab key="footer" title="Footer">
+                        <SettingFooter data={data} setData={setData} updateData={updateData} />
+                    </Tab>
+                    <Tab key="header" title="Header">
+                        <SettingHeader data={data} setData={setData} updateData={updateData} />
+                    </Tab>
+                </Tabs>
+            </div>
+        </>
     );
 }

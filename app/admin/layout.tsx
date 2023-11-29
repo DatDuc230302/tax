@@ -14,6 +14,7 @@ interface typeContext {
     email: string;
     phone: string;
     token: string;
+    pass: string;
 }
 
 export const AdminContext = createContext<typeContext>({
@@ -23,6 +24,7 @@ export const AdminContext = createContext<typeContext>({
     email: '',
     phone: '',
     token: '',
+    pass: '',
 });
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -32,16 +34,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const [tokenUser, setTokenUser] = useState<string>('');
     const [emailUser, setEmailUser] = useState<string>('');
     const [phoneUser, setPhoneUser] = useState<string>('');
-
-    // Truyền dữ liệu thông qua đây
-    const dataContext = {
-        id: idUser,
-        name: nameUser,
-        role: roleUser,
-        token: tokenUser,
-        email: emailUser,
-        phone: phoneUser,
-    };
+    const [passUser, setPassUser] = useState<string>('');
 
     useEffect(() => {
         document.title = 'Trang quản trị';
@@ -55,13 +48,26 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         const token: string = currentUser && currentUser.token ? currentUser.token : 'Null';
         const email: string = currentUser && currentUser.email ? currentUser.email : 'Null';
         const phone: string = currentUser && currentUser.phone ? currentUser.phone : 'Null';
+        const pass: string = currentUser && currentUser.pass ? currentUser.pass : 'Null';
         setIdUser(String(id));
         setNameUser(String(name));
         setRoleUser(String(role));
         setEmailUser(String(email));
         setPhoneUser(String(phone));
         setTokenUser(token);
+        setPassUser(String(pass));
     }, []);
+
+    // Truyền dữ liệu thông qua đây
+    const dataContext = {
+        id: idUser,
+        name: nameUser,
+        role: roleUser,
+        token: tokenUser,
+        email: emailUser,
+        phone: phoneUser,
+        pass: passUser,
+    };
 
     const renderUI = () => {
         if (roleUser.length > 0) {
