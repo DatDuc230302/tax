@@ -10,42 +10,35 @@ import axios from 'axios';
 
 export default function UpdateProfile({ user }: { user: any }) {
     const [turn, setTurn] = useState<boolean>(false);
-    const [name, setName] = useState<string>(user.name);
-    const [phone, setPhone] = useState<string>(user.phone);
+    const [pass, setPass] = useState<any>('');
 
-    const handleSubmit = async () => {};
+    const handleSubmit = async () => {
+        try {
+            alert(pass);
+        } catch (err: any) {
+            console.log(err);
+        }
+    };
 
     return (
         <>
-            <Tooltip content="Sửa thông tin">
+            <Tooltip content="Đổi mật khẩu">
                 <i onClick={() => setTurn(true)} className="cursor-pointer">
                     <HiMiniPencilSquare />
                 </i>
             </Tooltip>
             <Modal size="lg" isOpen={turn} onOpenChange={() => setTurn(false)} isDismissable={false}>
                 <ModalContent>
-                    <ModalHeader className="flex flex-col gap-1">Cập nhật thông tin</ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1">Đổi mật khẩu</ModalHeader>
                     <ModalBody>
-                        <Input
-                            onChange={(e) => setName(String(e.target.value))}
-                            value={name}
-                            type="text"
-                            label="Họ và tên"
-                        />
-                        <Input
-                            onChange={(e) => setPhone(e.target.value)}
-                            value={phone}
-                            type="number"
-                            label="Số điện thoại"
-                        />
-                        <Input type="text" label="Mật khẩu" />
+                        <Input onChange={(e) => setPass(String(e.target.value))} type="text" label="Mật khẩu mới" />
                     </ModalBody>
                     <ModalFooter>
                         <Button color="danger" variant="light" onClick={() => setTurn(false)}>
                             Đóng
                         </Button>
                         <Button color="primary" onPress={() => handleSubmit()}>
-                            Thêm
+                            Đồng ý
                         </Button>
                     </ModalFooter>
                 </ModalContent>
