@@ -190,7 +190,11 @@ export default function UpdatePost({
                             </Dropdown>
                             <Dropdown>
                                 <DropdownTrigger>
-                                    <Button className="w-full h-full px-0" variant="flat">
+                                    <Button
+                                        isDisabled={category.length === 0}
+                                        className="w-full h-full px-0"
+                                        variant="flat"
+                                    >
                                         <Input
                                             errorMessage={
                                                 require && subCategory.length === 0 && 'Vui lòng chọn thể loại con'

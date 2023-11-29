@@ -10,7 +10,7 @@ import { serverBackend } from '@/server';
 import { encrypt } from '@/functions/crypto';
 import AlertDialog from '../../Common/AlertDialog';
 import { isEmail } from '@/functions/isEmail';
-import SnackbarMessage from '@/components/Common/SnackbarMessage';
+import DialogLoading from '@/components/Common/DialogLoading';
 
 export default function LoginAdmin() {
     const [email, setEmail] = useState<string>('');
@@ -84,7 +84,7 @@ export default function LoginAdmin() {
                 title="Thông báo"
                 content="Tài khoản của bạn đã bị khóa, vui lòng liên hệ quản trị viên"
             />
-            {loginSuccess && <SnackbarMessage title="Đăng nhập thành công" type={1} />}
+            {loginSuccess && <DialogLoading content={'Đăng nhập thành công'} />}
             <Modal backdrop="blur" hideCloseButton isOpen placement="top-center">
                 <ModalContent>
                     {loading ? (

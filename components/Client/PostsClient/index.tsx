@@ -40,6 +40,7 @@ export default function PostsClient() {
 
     // Chưa đặt tên
     useEffect(() => {
+        setCurrentPage(1);
         if (searchValue) {
             setPosts(
                 dataContext.posts.filter((item: any) =>
@@ -59,96 +60,107 @@ export default function PostsClient() {
         }
     }, [searchValue, subCategory, dataContext.posts]);
 
+    const handleChangePage = (pageNum: number) => {
+        setCurrentPage(pageNum);
+        window.scrollTo(0, 0);
+    };
+
     return (
-        <div className="flex flex-col lg:flex-row w-full gap-6 px-4 font-roboto min-h-[700px]">
-            {searchParams.get('postId') ? (
-                <PostClient postId={searchParams.get('postId')} />
-            ) : (
-                <>
-                    <PostsCategories />
-                    <div className="w-full flex flex-col gap-2 pb-[20px]">
-                        <div className="justify-between flex flex-col md:flex-row">
-                            {posts.length > 0 ? (
-                                <h2 className="font-bold text-[26px]">Bài đăng</h2>
-                            ) : (
-                                <h2>Không có dữ liệu</h2>
-                            )}
-                        </div>
-                        <div className="flex flex-col gap-4">
-                            {posts.slice(start, end).map(
-                                (item: any, index: number) =>
-                                    item.status === 'active' && (
-                                        <div
-                                            key={index}
-                                            className="border-[2px] gap-3 border-[#eaeaea] w-full rounded-[16px] p-4 flex flex-col"
-                                        >
-                                            <Link
-                                                href={`/bai-dang?postId=${item.id}`}
-                                                key={index}
-                                                className="cursor-pointer rounded-[12px] flex-col-reverse md:flex-row flex justify-between gap-4 bg-[#F9F9F9] p-3"
-                                            >
-                                                <div className="flex flex-col gap-4 justify-center">
-                                                    <div className="flex flex-col pr-[20px] gap-2">
-                                                        <h3 className="line-clamp-2 font-bold">{item.title}</h3>
-                                                        <span className="font-light line-clamp-3 text-[14px] text-[#767676]">
-                                                            {item.short_desc}
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex w-full whdivtespace-nowrap items-center gap-2">
-                                                        <span className="text-[12px]">{item.Issuance_date}</span>
-                                                        {item.serial_number && (
-                                                            <span className="text-[12px]">
-                                                                Mã: {item.serial_number}
+        <>
+            <div className="flex flex-col lg:flex-row w-full gap-6 px-4 font-roboto">
+                {searchParams.get('postId') ? (
+                    <PostClient postId={searchParams.get('postId')} />
+                ) : (
+                    <>
+                        <PostsCategories />
+                        <div className="w-full flex flex-col gap-2 pb-[20px] min-h-[700px] justify-between">
+                            <div className="flex flex-col gap-2">
+                                <div className="justify-between flex flex-col md:flex-row">
+                                    {posts.length > 0 ? (
+                                        <h2 className="font-bold text-[26px]">Bài đăng</h2>
+                                    ) : (
+                                        <h2>Không có dữ liệu</h2>
+                                    )}
+                                </div>
+                                <div className="flex flex-col gap-4">
+                                    {posts.slice(start, end).map(
+                                        (item: any, index: number) =>
+                                            item.status === 'active' && (
+                                                <div
+                                                    key={index}
+                                                    className="border-[2px] gap-3 border-[#eaeaea] w-full rounded-[16px] p-4 flex flex-col"
+                                                >
+                                                    <Link
+                                                        href={`/bai-dang?postId=${item.id}`}
+                                                        key={index}
+                                                        className="cursor-pointer rounded-[12px] flex-col-reverse md:flex-row flex justify-between gap-4 bg-[#F9F9F9] p-3"
+                                                    >
+                                                        <div className="flex flex-col gap-4 justify-center">
+                                                            <div className="flex flex-col pr-[20px] gap-2">
+                                                                <h3 className="line-clamp-2 font-bold">{item.title}</h3>
+                                                                <span className="font-light line-clamp-3 text-[14px] text-[#767676]">
+                                                                    {item.short_desc}
+                                                                </span>
+                                                            </div>
+                                                            <div className="flex w-full whdivtespace-nowrap items-center gap-2">
+                                                                <span className="text-[12px]">
+                                                                    {item.Issuance_date}
+                                                                </span>
+                                                                {item.serial_number && (
+                                                                    <span className="text-[12px]">
+                                                                        Mã: {item.serial_number}
+                                                                    </span>
+                                                                )}
+                                                                <span className="flex gap-1 items-center text-[14px]">
+                                                                    <AiOutlineEye fontSize={18} /> {item.views}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
+                                                            <Image
+                                                                src={`${item.images}`}
+                                                                className="object-cover rounded-[12px]"
+                                                                alt=""
+                                                                fill
+                                                                sizes="100000px"
+                                                            />
+                                                        </div>
+                                                    </Link>
+                                                    <div className="flex w-full whitespace-nowrap items-center gap-2">
+                                                        <div className="flex gap-2 items-center">
+                                                            <span className="rounded-[16px] cursor-pointer hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                                {item.parent_name}
                                                             </span>
-                                                        )}
-                                                        <span className="flex gap-1 items-center text-[14px]">
-                                                            <AiOutlineEye fontSize={18} />0
+                                                            <BiChevronRight fontSize={14} />
+                                                            {item.category_name && (
+                                                                <span className="rounded-[16px] cursor-pointer hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
+                                                                    {item.category_name}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <span className="text-[12px]">
+                                                            {getDays(item.created_at)} ngày trước
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
-                                                    <Image
-                                                        src={`${item.images}`}
-                                                        className="object-cover rounded-[12px]"
-                                                        alt=""
-                                                        fill
-                                                        sizes="100000px"
-                                                    />
-                                                </div>
-                                            </Link>
-                                            <div className="flex w-full whitespace-nowrap items-center gap-2">
-                                                <div className="flex gap-2 items-center">
-                                                    <span className="rounded-[16px] cursor-pointer hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
-                                                        {item.parent_name}
-                                                    </span>
-                                                    <BiChevronRight fontSize={14} />
-                                                    {item.category_name && (
-                                                        <span className="rounded-[16px] cursor-pointer hover:bg-[#bdbdbd] duration-100 ease-linear font-bold py-1 px-2 items-center flex justify-center text-[12px] bg-[#F2F2F2]">
-                                                            {item.category_name}
-                                                        </span>
-                                                    )}
-                                                </div>
-                                                <span className="text-[12px]">
-                                                    {getDays(item.created_at)} ngày trước
-                                                </span>
-                                            </div>
-                                        </div>
-                                    ),
-                            )}
+                                            ),
+                                    )}
+                                </div>
+                            </div>
+                            <div className="flex justify-end pb-4">
+                                {posts.length > 5 && (
+                                    <Pagination
+                                        onChange={(e) => handleChangePage(e)}
+                                        showControls
+                                        total={Math.ceil(posts.length / 5)}
+                                        initialPage={1}
+                                    />
+                                )}
+                            </div>
                         </div>
-                        <div className="flex justify-end">
-                            {posts.length > 5 && (
-                                <Pagination
-                                    onChange={setCurrentPage}
-                                    showControls
-                                    total={Math.ceil(posts.length / 5)}
-                                    initialPage={1}
-                                />
-                            )}
-                        </div>
-                    </div>
-                </>
-            )}
-        </div>
+                    </>
+                )}
+            </div>
+        </>
     );
 }

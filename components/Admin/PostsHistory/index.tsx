@@ -1,13 +1,13 @@
 import { Chip, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from '@nextui-org/react';
 import React from 'react';
-import { BsInfoCircle } from 'react-icons/bs';
+import DetailPost from '../DetailPost';
 
 export default function PostsHistory({ postsHistory }: { postsHistory: any }) {
     return (
         <Table
             aria-label="Example table with client side pagination"
             classNames={{
-                wrapper: 'max-h-[400px]',
+                wrapper: 'max-h-[500px]',
             }}
         >
             <TableHeader>
@@ -39,11 +39,11 @@ export default function PostsHistory({ postsHistory }: { postsHistory: any }) {
                         <TableCell className="w-[170px] whitespace-nowrap">{item.action_time}</TableCell>
                         <TableCell>
                             <div className='className="w-[170px] text-center whitespace-nowrap flex gap-2'>
-                                <Tooltip content="Xem chi tiết dữ liệu">
-                                    <i className="cursor-pointer">
-                                        <BsInfoCircle fontSize={20} />
-                                    </i>
-                                </Tooltip>
+                                <DetailPost
+                                    postHistory={postsHistory.filter(
+                                        (item: any, postIndex: number) => index === postIndex,
+                                    )}
+                                />
                             </div>
                         </TableCell>
                     </TableRow>

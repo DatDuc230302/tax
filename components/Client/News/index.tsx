@@ -11,6 +11,7 @@ export default function News() {
     //
     const dataContext: any = useContext(ClientContext);
     //
+    const subCategories: any = dataContext.posts.filter((item: any) => item.parent_name === 'Tin tức');
     const [news, setNews] = useState<any>(dataContext.posts.filter((item: any) => item.parent_name === 'Tin tức'));
     const [subCategory, setSubCategory] = useState<string>('Tất cả');
     const [active, setActive] = useState<number>(-1);
@@ -43,7 +44,7 @@ export default function News() {
                             Tất cả
                         </h4>
                         {dataContext.posts.length > 0 &&
-                            removeDuplicates(dataContext.posts, 'category_name').map((item: any, index: number) => (
+                            removeDuplicates(subCategories, 'category_name').map((item: any, index: number) => (
                                 <h4
                                     onClick={() => onclickSubCategory(item.category_name, index)}
                                     key={index}
