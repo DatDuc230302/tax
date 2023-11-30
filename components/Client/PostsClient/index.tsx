@@ -17,6 +17,7 @@ import { ClientContext } from '@/app/(client)/layout';
 export default function PostsClient() {
     // Lấy Categroy và SubCategory trên URL
     const searchParams: any = useSearchParams();
+    const category: any = searchParams.get('category') ? searchParams.get('category') : null;
     const subCategory: any = searchParams.get('subCategory') ? searchParams.get('subCategory') : null;
     const searchValue: any = searchParams.get('search') ? searchParams.get('search') : null;
 
@@ -38,6 +39,8 @@ export default function PostsClient() {
         setEnd(newEnd);
     }, [currentPage]);
 
+    console.log(posts);
+
     // Chưa đặt tên
     useEffect(() => {
         setCurrentPage(1);
@@ -48,17 +51,25 @@ export default function PostsClient() {
                 ),
             );
         } else {
-            if (subCategory) {
-                setPosts(
-                    dataContext.posts.filter(
-                        (item: any) => removeDiacriticsAndSpaces(item.category_name) === subCategory,
-                    ),
-                );
+            if (category) {
+                if (subCategory) {
+                    setPosts(
+                        dataContext.posts.filter(
+                            (item: any) => removeDiacriticsAndSpaces(item.category_name) === subCategory,
+                        ),
+                    );
+                } else {
+                    setPosts(
+                        dataContext.posts.filter(
+                            (item: any) => removeDiacriticsAndSpaces(item.parent_name) === category,
+                        ),
+                    );
+                }
             } else {
                 setPosts(dataContext.posts);
             }
         }
-    }, [searchValue, subCategory, dataContext.posts]);
+    }, [searchValue, category, subCategory, dataContext.posts]);
 
     const handleChangePage = (pageNum: number) => {
         setCurrentPage(pageNum);

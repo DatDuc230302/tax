@@ -38,7 +38,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         try {
             const res = await axios.get(`${serverBackend}/api/v1/post`);
             if (res.data.message === 'success') {
-                setPostsRes(res.data.data);
+                setPostsRes(res.data.data.filter((item: any) => item.status === 'active'));
             }
         } catch (err: any) {
             console.log(err);

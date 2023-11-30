@@ -85,76 +85,80 @@ export default function LoginAdmin() {
                 content="Tài khoản của bạn đã bị khóa, vui lòng liên hệ quản trị viên"
             />
             {loginSuccess && <DialogLoading content={'Đăng nhập thành công'} />}
-            <Modal backdrop="blur" hideCloseButton isOpen placement="top-center">
-                <ModalContent>
-                    {loading ? (
-                        <ModalBody>
-                            <div className="h-[255px] select-none items-center gap-4 flex flex-col justify-center">
-                                <Spinner size="lg" />
-                                <span>Vui lòng chờ trong giây lát</span>
-                            </div>
-                        </ModalBody>
-                    ) : (
-                        <>
-                            <ModalHeader className="flex flex-col gap-1">Đăng nhập</ModalHeader>
+            {!loginSuccess && (
+                <Modal backdrop="blur" hideCloseButton isOpen placement="top-center">
+                    <ModalContent>
+                        {loading ? (
                             <ModalBody>
-                                <Input
-                                    label="Email"
-                                    placeholder="Nhập email"
-                                    variant="flat"
-                                    type="text"
-                                    onChange={(e) => e.target.value[0] !== ' ' && setEmail(e.target.value)}
-                                    value={email}
-                                    onKeyDown={(e) => handleOnKeyDown(e)}
-                                    errorMessage={
-                                        require &&
-                                        (email.length === 0
-                                            ? 'Vui lòng nhập email'
-                                            : !isEmail(email) && 'Vui lòng nhập đúng định dạng email')
-                                    }
-                                />
-                                <div className="relative">
-                                    <Input
-                                        label="Mật khẩu"
-                                        placeholder="Nhập mật khẩu"
-                                        type={hidePass ? 'password' : 'text'}
-                                        variant="flat"
-                                        value={pass}
-                                        onChange={(e) => e.target.value[0] !== ' ' && setPass(String(e.target.value))}
-                                        onKeyDown={(e) => handleOnKeyDown(e)}
-                                        errorMessage={require && pass.length === 0 && 'Vui lòng nhập mật khẩu'}
-                                    />
-                                    <div className="h-full pr-3 items-center flex absolute bottom-0 right-0">
-                                        {hidePass ? (
-                                            <AiFillEye
-                                                fontSize={20}
-                                                className="cursor-pointer"
-                                                onClick={() => setHidePass(false)}
-                                            />
-                                        ) : (
-                                            <AiFillEyeInvisible
-                                                className="cursor-pointer"
-                                                onClick={() => setHidePass(true)}
-                                                fontSize={20}
-                                            />
-                                        )}
-                                    </div>
+                                <div className="h-[255px] select-none items-center gap-4 flex flex-col justify-center">
+                                    <Spinner size="lg" />
+                                    <span>Vui lòng chờ trong giây lát</span>
                                 </div>
                             </ModalBody>
-                            <ModalFooter>
-                                <Button color="danger" variant="flat">
-                                    <Link className="text-red" href="/">
-                                        Trang trủ
-                                    </Link>
-                                </Button>
-                                <Button onClick={() => handleSubmit()} color="primary">
-                                    Đăng nhập
-                                </Button>
-                            </ModalFooter>
-                        </>
-                    )}
-                </ModalContent>
-            </Modal>
+                        ) : (
+                            <>
+                                <ModalHeader className="flex flex-col gap-1">Đăng nhập</ModalHeader>
+                                <ModalBody>
+                                    <Input
+                                        label="Email"
+                                        placeholder="Nhập email"
+                                        variant="flat"
+                                        type="text"
+                                        onChange={(e) => e.target.value[0] !== ' ' && setEmail(e.target.value)}
+                                        value={email}
+                                        onKeyDown={(e) => handleOnKeyDown(e)}
+                                        errorMessage={
+                                            require &&
+                                            (email.length === 0
+                                                ? 'Vui lòng nhập email'
+                                                : !isEmail(email) && 'Vui lòng nhập đúng định dạng email')
+                                        }
+                                    />
+                                    <div className="relative">
+                                        <Input
+                                            label="Mật khẩu"
+                                            placeholder="Nhập mật khẩu"
+                                            type={hidePass ? 'password' : 'text'}
+                                            variant="flat"
+                                            value={pass}
+                                            onChange={(e) =>
+                                                e.target.value[0] !== ' ' && setPass(String(e.target.value))
+                                            }
+                                            onKeyDown={(e) => handleOnKeyDown(e)}
+                                            errorMessage={require && pass.length === 0 && 'Vui lòng nhập mật khẩu'}
+                                        />
+                                        <div className="h-full pr-3 items-center flex absolute bottom-0 right-0">
+                                            {hidePass ? (
+                                                <AiFillEye
+                                                    fontSize={20}
+                                                    className="cursor-pointer"
+                                                    onClick={() => setHidePass(false)}
+                                                />
+                                            ) : (
+                                                <AiFillEyeInvisible
+                                                    className="cursor-pointer"
+                                                    onClick={() => setHidePass(true)}
+                                                    fontSize={20}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="danger" variant="flat">
+                                        <Link className="text-red" href="/">
+                                            Trang trủ
+                                        </Link>
+                                    </Button>
+                                    <Button onClick={() => handleSubmit()} color="primary">
+                                        Đăng nhập
+                                    </Button>
+                                </ModalFooter>
+                            </>
+                        )}
+                    </ModalContent>
+                </Modal>
+            )}
         </div>
     );
 }

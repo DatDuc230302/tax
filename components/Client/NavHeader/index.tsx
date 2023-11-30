@@ -12,6 +12,7 @@ import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces
 interface items {
     icon?: ReactElement;
     title?: string;
+    subs?: string;
     href?: string;
     isBlank?: boolean;
 }
@@ -24,7 +25,7 @@ export const listNav: items[] = [
     {
         icon: <HiChevronDown color="white" fontSize={22} />,
         title: 'TIN TỨC',
-        href: '',
+        subs: 'news',
     },
     {
         title: 'BÀI ĐĂNG',
@@ -40,8 +41,9 @@ export const listNav: items[] = [
         href: '/bai-dang?category=van-ban',
     },
     {
+        icon: <HiChevronDown color="white" fontSize={22} />,
         title: 'TIỆN ÍCH',
-        href: '/tien-ich',
+        subs: 'utilities',
     },
     {
         title: 'LIÊN HỆ',
@@ -49,11 +51,12 @@ export const listNav: items[] = [
     },
 ];
 
-interface subNewItems {
+interface items {
     title: string;
 }
 
-const subNews: subNewItems[] = [{ title: 'Tin kinh tế' }, { title: 'Tin chính trị' }, { title: 'Tin về thuế' }];
+const subNews: items[] = [{ title: 'Tin kinh tế' }, { title: 'Tin chính trị' }, { title: 'Tin về thuế' }];
+const subUtilities: items[] = [{ title: 'Tra cứu thông tin' }, { title: 'Tra cứu chính sách' }];
 
 export default function NavHeader() {
     const [active, setActive] = useState<number>(0);
@@ -90,7 +93,7 @@ export default function NavHeader() {
             <div className="flex h-full">
                 {listNav.map((item: any, index: number) => (
                     <div key={index}>
-                        {item.href.length > 0 ? (
+                        {item.href && (
                             <div
                                 className={`${
                                     active === index && `bg-[#52b6ff]`
@@ -110,7 +113,8 @@ export default function NavHeader() {
                                     </a>
                                 )}
                             </div>
-                        ) : (
+                        )}
+                        {item.subs === 'news' && (
                             <span
                                 className={`${active === index && `bg-[#52b6ff]`} ${
                                     css.news
@@ -129,6 +133,26 @@ export default function NavHeader() {
                                         >
                                             {subNew.title}
                                         </Link>
+                                    ))}
+                                </div>
+                            </span>
+                        )}
+                        {item.subs === 'utilities' && (
+                            <span
+                                className={`${active === index && `bg-[#52b6ff]`} ${
+                                    css.news
+                                } text-white cursor-default relative select-none gap-1 h-full items-center px-4 hover:bg-[#52B6FF] duration-100 ease-linear flex shrink-0 font-bold`}
+                            >
+                                {item.title}
+                                {item.icon}
+                                <div className={`${css.subNews} shadow-2xl flex flex-col`}>
+                                    {subUtilities.map((subNew: any, indexSubnew: number) => (
+                                        <span
+                                            key={indexSubnew}
+                                            className="py-2 px-4 text-[#363636] hover:bg-[#e4e4e4] cursor-pointer"
+                                        >
+                                            {subNew.title}
+                                        </span>
                                     ))}
                                 </div>
                             </span>
