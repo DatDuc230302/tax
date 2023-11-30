@@ -9,15 +9,7 @@ import SearchTool from '../SearchTool';
 import css from './NavHeader.module.scss';
 import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces';
 
-interface items {
-    icon?: ReactElement;
-    title?: string;
-    subs?: string;
-    href?: string;
-    isBlank?: boolean;
-}
-
-export const listNav: items[] = [
+export const listNav: any[] = [
     {
         icon: <FaHome color={'white'} fontSize={'18px'} />,
         href: '/',
