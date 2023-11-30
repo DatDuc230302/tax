@@ -69,7 +69,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         try {
             const res = await axios.get(`${serverBackend}/api/v1/getBanner`);
             if (res.data.message === 'success') {
-                setSlidesRes(res.data.data);
+                setSlidesRes(res.data.data.filter((item: any) => item.status === 'active'));
             }
         } catch (err: any) {
             console.log(err);
