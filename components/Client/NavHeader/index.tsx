@@ -100,9 +100,9 @@ export default function NavHeader() {
                                     </Link>
                                 )}
                                 {item.isBlank && (
-                                    <a className="px-4 cursor-pointer" target="blank" href={`${item.href}`}>
+                                    <Link className="px-4 cursor-pointer" target="_blank" href={`${item.href}`}>
                                         {item.icon ? item.icon : item.title}
-                                    </a>
+                                    </Link>
                                 )}
                             </div>
                         )}

@@ -48,12 +48,16 @@ export default function PostClient({ postId }: { postId: any }) {
                     <h2 className="font-bold text-[26px]">{post.title}</h2>
                     <div className="flex justify-between items-center">
                         <div className="flex gap-4">
-                            <span>
-                                <b>Ngày ban hành:</b> {post.Issuance_date}
-                            </span>
-                            <span>
-                                <b>Số hiệu:</b> {post.serial_number}
-                            </span>
+                            {post.Issuance_data && (
+                                <span>
+                                    <b>Ngày ban hành:</b> {post.Issuance_date}
+                                </span>
+                            )}
+                            {post.serial_number && (
+                                <span>
+                                    <b>Số hiệu:</b> {post.serial_number}
+                                </span>
+                            )}
                         </div>
                         {post.file !== null && (
                             <div className="flex gap-2 items-center">

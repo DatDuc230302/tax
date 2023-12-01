@@ -6,6 +6,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { FaBars } from 'react-icons/fa';
 import Link from 'next/link';
 import SearchTool from '../SearchTool';
+import { useRouter } from 'next/navigation';
 
 interface items {
     icon?: ReactElement;
@@ -15,6 +16,12 @@ interface items {
 
 export default function Sidebar() {
     const [turn, setTurn] = useState<boolean>(false);
+    const router = useRouter();
+
+    const onMove = (href: string) => {
+        router.push(href);
+        setTurn(false);
+    };
 
     return (
         <>
@@ -47,12 +54,12 @@ export default function Sidebar() {
                                 index > 0 && (
                                     <div key={index}>
                                         {item.href && (
-                                            <Link
-                                                href={item.href}
+                                            <span
+                                                onClick={() => onMove(String(item.href))}
                                                 className="items-center flex border-b-[1px] cursor-pointer border-[#ccc] h-[49px]"
                                             >
                                                 {item.title}
-                                            </Link>
+                                            </span>
                                         )}
                                     </div>
                                 ),

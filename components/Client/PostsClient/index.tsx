@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { BiChevronRight } from 'react-icons/bi';
 import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces';
 import { ClientContext } from '@/app/(client)/layout';
+import { MdChevronRight } from 'react-icons/md';
 
 export default function PostsClient() {
     // Lấy Categroy và SubCategory trên URL
@@ -38,8 +39,6 @@ export default function PostsClient() {
         setStart(newStart);
         setEnd(newEnd);
     }, [currentPage]);
-
-    console.log(posts);
 
     // Chưa đặt tên
     useEffect(() => {
@@ -83,16 +82,24 @@ export default function PostsClient() {
                     <PostClient postId={searchParams.get('postId')} />
                 ) : (
                     <>
-                        <PostsCategories />
+                        <div className="flex justify-center md:justify-start">
+                            <PostsCategories />
+                        </div>
                         <div className="w-full flex flex-col gap-2 pb-[20px] min-h-[700px] justify-between">
                             <div className="flex flex-col gap-2">
-                                <div className="justify-between flex flex-col md:flex-row">
-                                    {posts.length > 0 ? (
-                                        <h2 className="font-bold text-[26px]">Bài đăng</h2>
-                                    ) : (
-                                        <h2>Không có dữ liệu</h2>
+                                <div className="flex items-center flex-col md:flex-row">
+                                    <h2 className="font-bold text-[26px]">Bài đăng </h2>
+                                    {searchValue && (
+                                        <div className="flex items-center">
+                                            <MdChevronRight fontSize={20} />
+                                            <div className="flex gap-2">
+                                                <span>Tìm kiếm:</span>
+                                                <span>{searchValue}</span>
+                                            </div>
+                                        </div>
                                     )}
                                 </div>
+                                {posts.length === 0 && <div className="">Không có dữ liệu</div>}
                                 <div className="flex flex-col gap-4">
                                     {posts.slice(start, end).map(
                                         (item: any, index: number) =>
