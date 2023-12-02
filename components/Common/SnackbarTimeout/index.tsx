@@ -16,4 +16,3 @@ export default function SnackbarTimeout({ turn, setTurn, title }: { turn: boolea
         </Snackbar>
     );
 }
-    

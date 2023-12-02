@@ -183,7 +183,13 @@ export default function CreatePost({
                                 </DropdownTrigger>
                                 <DropdownMenu aria-label="Static Actions">
                                     {parentCategories.map((item: any, index: number) => (
-                                        <SelectItem onClick={() => setCategory(item.name)} key={index}>
+                                        <SelectItem
+                                            onClick={() => {
+                                                setCategory(item.name);
+                                                setSubCategory('');
+                                            }}
+                                            key={index}
+                                        >
                                             {item.name}
                                         </SelectItem>
                                     ))}

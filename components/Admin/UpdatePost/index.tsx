@@ -25,6 +25,7 @@ import { isDate } from '@/functions/isDate';
 import UploadFiles from '../UploadFiles';
 import { AdminContext } from '@/app/admin/layout';
 import Editor from '@/components/Common/Editor/Editor';
+import { reduceBase64 } from '@/functions/reduceBase64';
 
 export default function UpdatePost({
     id,
@@ -189,7 +190,11 @@ export default function UpdatePost({
                             </Dropdown>
                             <Dropdown>
                                 <DropdownTrigger>
-                                    <Button className="w-full h-full px-0" variant="flat">
+                                    <Button
+                                        isDisabled={category.length === 0}
+                                        className="w-full h-full px-0"
+                                        variant="flat"
+                                    >
                                         <Input
                                             errorMessage={
                                                 require && subCategory.length === 0 && 'Vui lòng chọn thể loại con'
@@ -215,14 +220,14 @@ export default function UpdatePost({
                             <Input
                                 onChange={(e: any) => setSerial(String(e.target.value))}
                                 type="text"
-                                value={serial}
+                                value={serial ? serial : ''}
                                 label="Số hiệu"
                                 errorMessage={require && serial.length === 0 && 'Vui lòng nhập số hiệu'}
                             />
                             <Input
                                 onChange={(e: any) => setIssuance(String(e.target.value))}
                                 type="text"
-                                value={issuance}
+                                value={issuance ? issuance : ''}
                                 label="Ngày ban hành VD: 13\10\2022"
                                 errorMessage={
                                     require &&
@@ -234,7 +239,14 @@ export default function UpdatePost({
                         </div>
                         {/* Thêm avatar */}
                         <div className="flex items-center gap-3">
-                            <label htmlFor="uploadImg">Upload hình</label>
+                            <Button className="px-0">
+                                <label
+                                    className=" h-full px-10 w-full flex justify-center items-center cursor-pointer"
+                                    htmlFor="uploadImg"
+                                >
+                                    Sửa hình
+                                </label>
+                            </Button>
                             <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">
                                 <Image src={`${imageBase}`} alt={''} fill sizes="10000px" />
                             </div>
