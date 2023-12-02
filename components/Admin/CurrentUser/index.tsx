@@ -9,6 +9,7 @@ import {
     Popover,
     PopoverContent,
     PopoverTrigger,
+    Tooltip,
 } from '@nextui-org/react';
 import Link from 'next/link';
 import React, { useContext } from 'react';
@@ -23,23 +24,9 @@ export default function CurrentUser() {
 
     return (
         <div className="flex select-none h-full items-center gap-6">
-            <Popover placement="bottom" crossOffset={-60} offset={14}>
-                <Badge content="1" size="sm" color="danger">
-                    <PopoverTrigger>
-                        <div>
-                            <BiMessageAltDetail className="cursor-pointer" fontSize={30} color="white" />
-                        </div>
-                    </PopoverTrigger>
-                </Badge>
-                <PopoverContent>
-                    <div className="px-4 py-2">
-                        <div className="text-small font-bold">Hộp thư</div>
-                        <div className="">
-                            <span>Cập nhật mới</span>
-                        </div>
-                    </div>
-                </PopoverContent>
-            </Popover>
+            <Link href="/admin/message">
+                <BiMessageAltDetail className="cursor-pointer" fontSize={30} color="white" />
+            </Link>
             <Popover placement="bottom" crossOffset={-60} offset={14}>
                 <Badge content="7" size="sm" color="danger">
                     <PopoverTrigger>
