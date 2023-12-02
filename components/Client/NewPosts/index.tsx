@@ -1,17 +1,16 @@
 'use client';
 
+import { ClientContext } from '@/app/(client)/layout';
 import { getDays } from '@/functions/getDays';
 import { serverBackend } from '@/server';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 
-export default function RecentPosts({ postsRes }: { postsRes: any }) {
-    let recentPosts: any;
-    if (postsRes.message === 'success') {
-        recentPosts = postsRes.data;
-    }
+export default function NewPosts() {
+    const dataContext: any = useContext(ClientContext);
+    let NewPosts: any = dataContext.posts;
 
     return (
         <div className="flex justify-center my-2 font-merriweather px-4 min-h-[450px]">
@@ -26,7 +25,7 @@ export default function RecentPosts({ postsRes }: { postsRes: any }) {
                     </Link>
                 </div>
                 <div className="mt-2 flex w-full gap-3 flex-wrap md:justify-center lg:justify-start lg:flex-nowrap">
-                    {recentPosts.map(
+                    {NewPosts.map(
                         (item: any, index: number) =>
                             index < 4 &&
                             item.status === 'active' && (

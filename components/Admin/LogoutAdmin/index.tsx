@@ -27,10 +27,7 @@ export default function LogoutAdmin({ children }: { children: React.ReactNode })
                 router.push('/');
             }
         } catch (err: any) {
-            if (err.message === 'Network Error') {
-                sessionStorage.removeItem('currentUser');
-                router.push('/');
-            }
+            console.log(err);
         }
     };
     return <div onClick={() => logout()}>{children}</div>;

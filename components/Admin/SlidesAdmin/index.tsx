@@ -31,7 +31,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import ChangeStatus from '../ChangeStatus';
 import Delete from '../Delete';
 
-export default function BannersAdmin() {
+export default function SlidesAdmin() {
     const [banners, setBanners] = useState<object[]>([]);
     const [imageUrl, setImageUrl] = useState<any>('');
     const [status, setStatus] = useState<any>('active');

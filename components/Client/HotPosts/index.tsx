@@ -1,17 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import css from './HotPosts.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AiOutlineEye } from 'react-icons/ai';
 import { descViews } from '@/functions/descViews';
+import { ClientContext } from '@/app/(client)/layout';
 
-export default function HotPosts({ postsRes }: { postsRes: any }) {
-    let hotPosts: any;
-    if (postsRes.message === 'success') {
-        hotPosts = descViews(postsRes.data);
-    }
+export default function HotPosts() {
+    const dataContext = useContext(ClientContext);
+    let hotPosts: any = descViews(dataContext.posts);
+
     return (
         <div className="flex justify-center px-4 py-4 min-h-[450px]">
             <div className="flex w-wMain flex-col my-2 font-merriweather">

@@ -6,6 +6,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { FaBars } from 'react-icons/fa';
 import Link from 'next/link';
 import SearchTool from '../SearchTool';
+import { useRouter } from 'next/navigation';
 
 interface items {
     icon?: ReactElement;
@@ -15,6 +16,12 @@ interface items {
 
 export default function Sidebar() {
     const [turn, setTurn] = useState<boolean>(false);
+    const router = useRouter();
+
+    const onMove = (href: string) => {
+        router.push(href);
+        setTurn(false);
+    };
 
     return (
         <>
@@ -30,8 +37,8 @@ export default function Sidebar() {
                 ></div>
                 <div
                     className={`${
-                        turn ? 'left-[0]' : 'left-[-250px]'
-                    } duration-250 ease-linear z-50 bg-white h-full fixed top-0 `}
+                        turn ? 'left-[0]' : 'left-[-260px]'
+                    } duration-250 ease-linear w-[260px] z-50 bg-white h-full fixed top-0 `}
                 >
                     <div className="h-[70px] w-full bg-[#0B80FF] flex justify-between items-center px-4">
                         <AiOutlineClose
@@ -47,12 +54,12 @@ export default function Sidebar() {
                                 index > 0 && (
                                     <div key={index}>
                                         {item.href && (
-                                            <Link
-                                                href={item.href}
+                                            <span
+                                                onClick={() => onMove(String(item.href))}
                                                 className="items-center flex border-b-[1px] cursor-pointer border-[#ccc] h-[49px]"
                                             >
                                                 {item.title}
-                                            </Link>
+                                            </span>
                                         )}
                                     </div>
                                 ),
