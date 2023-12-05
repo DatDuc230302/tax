@@ -10,6 +10,8 @@ import css from './ChatBot.module.scss';
 import { BsRobot, BsTelephoneFill } from 'react-icons/bs';
 import { formatTime } from '@/functions/formatTime';
 import { getTime } from '@/functions/getTime';
+import  socket  from '@/components/Common/chatbox/socketUtil'
+import axios from 'axios';
 
 interface typeQuestions {
     question: string;
@@ -25,18 +27,73 @@ export default function ChatBot() {
         { question: 'Bạn cần hỗ trợ gì ?', type: 'bot', time: getTime() },
     ]);
     const [boxQuestions, setBoxQuestion] = useState<string[]>(['Đóng tiền diện', 'Đóng thuế']);
+    const [messages, setMessages] = useState([]);
+    useEffect(() => {
+   
+    socket.on('chat:message', function (data){
+        setQuestions([...questions, { question: data.content, type: 'user', time: getTime() }]);
+        setValueInput('');
+    });
+
+    return () => {
+      socket.off('chat message');
+    };
+  }, []);
 
     const handleOnchange = (value: string) => {
         value[0] !== ' ' && setValueInput(value);
     };
+    const handleSend = async () => {
+    let guestToken = getCookie('guest_token');
 
-    const handleSend = () => {
-        if (valueInput.length > 0) {
-            setQuestions([...questions, { question: valueInput, type: 'user', time: getTime() }]);
-            setValueInput('');
+    if (!guestToken) {
+        guestToken = generateUniqueToken();
+        document.cookie = `guest_token=${guestToken}; expires=${new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toUTCString()}; path=/`;
+    }
+
+    if (valueInput.length > 0) {
+        console.log(guestToken);
+        try {
+            const formData: any = new FormData();
+            formData.append('content', valueInput);
+            formData.append('guest_token', guestToken);
+            const response = await axios.post(
+                'http://localhost:8000/api/v1/messages',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+            if (response.status === 200) {
+                console.log("");
+            } else {
+                console.log(response);
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
         }
-    };
+    }
+};
 
+const getCookie = (name: string): string | undefined => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+        const cookieValue = parts.pop();
+        if (cookieValue) {
+            return cookieValue.split(';').shift();
+        }
+    }
+    return undefined;
+};
+const generateUniqueToken = () => {
+    const timestamp = (new Date()).getTime().toString(); // Lấy thời gian hiện tại dưới dạng số
+    const randomStr = Math.random().toString().substring(2, 10); // Chuỗi số ngẫu nhiên từ Math.random()
+
+    return `${timestamp}${randomStr}`   ;;
+};
     const onKeyDown = (e: any) => {
         if (e.key === 'Enter') {
             handleSend();
