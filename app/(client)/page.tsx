@@ -1,5 +1,5 @@
 import Slides from '@/components/Client/Slides';
-import Video from '@/components/Client/Video';
+import Videos from '@/components/Client/Videos';
 import HotPosts from '@/components/Client/HotPosts';
 import News from '@/components/Client/News';
 import NewPosts from '@/components/Client/NewPosts';
@@ -10,7 +10,7 @@ export default function Page() {
             <HotPosts />
             <News />
             <NewPosts />
-            <Video />
+            <Videos />
         </div>
     );
 }

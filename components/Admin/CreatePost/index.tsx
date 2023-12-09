@@ -88,7 +88,6 @@ export default function CreatePost({
                 formData.append('category_id', categoryID);
                 formData.append('file', filesArr);
                 const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
-                console.log(result + '' + formData);
                 if (result.data.message === 'success') {
                     setTurn(false);
                     setRefresh(!refresh);
