@@ -2,6 +2,7 @@ import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } 
 import React, { useEffect, useState } from 'react';
 import ManageCategory from '../ManageCategory';
 import CreatePost from '../CreatePost';
+import CreateVideo from '../CreateVideo';
 
 export default function PostsToolsAdmin({
     setPosts,
@@ -167,6 +168,12 @@ export default function PostsToolsAdmin({
                 </Dropdown>
                 <ManageCategory refresh={refresh} setRefresh={setRefresh} />
                 <CreatePost
+                    categories={categories}
+                    parentCategories={parentCategories}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                />
+                <CreateVideo
                     categories={categories}
                     parentCategories={parentCategories}
                     refresh={refresh}

@@ -136,7 +136,7 @@ export default function PostsAdmin() {
                                 )}
                             </TableCell>
                             <TableCell className="w-[200px] flex gap-3 whitespace-nowrap">
-                                <UpdatePost
+                                {/* <UpdatePost
                                     id={item.id}
                                     oldTitle={item.title}
                                     oldContent={item.content}
@@ -152,7 +152,7 @@ export default function PostsAdmin() {
                                     parentCategories={parentCategories}
                                     refresh={refresh}
                                     setRefresh={setRefresh}
-                                />
+                                /> */}
 
                                 <ChangeStatus
                                     type="post"
