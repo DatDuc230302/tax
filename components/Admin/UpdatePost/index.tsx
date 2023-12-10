@@ -31,6 +31,7 @@ export default function UpdatePost({
     id,
     oldTitle,
     oldContent,
+    oldShortDesc,
     oldCategoryID,
     oldCategory,
     oldSubCategory,
@@ -46,6 +47,7 @@ export default function UpdatePost({
     id: string;
     oldTitle: string;
     oldContent: string;
+    oldShortDesc: string;
     oldCategoryID: string;
     oldCategory: string;
     oldSubCategory: string;
@@ -64,7 +66,9 @@ export default function UpdatePost({
     const [category, setCategory] = useState<string>(oldCategory);
     const [subCategory, setSubCategory] = useState<string>(oldSubCategory);
     const [content, setContent] = useState<string>(oldContent);
+    const [shortDesc, setShortDesc] = useState<string>(oldShortDesc);
     const [avatar, setAvatar] = useState<any>(oldAvatar);
+    const [noAvatar, setNoAvatar] = useState<any>(null);
     const [imageFile, setImageFile] = useState<any>(null);
     const [filesArr, setFilesArr] = useState<any>(oldFilesArr);
     const [serial, setSerial] = useState<string>(oldserial);
@@ -87,16 +91,32 @@ export default function UpdatePost({
             if (title.length === 0 || content.length === 0 || avatar === null) {
                 setRequire(true);
             } else {
-                const formData: any = {
-                    user_id: dataContext.id,
-                    title: title,
-                    content: content,
-                    imagelink: avatar,
-                    serial_number: serial,
-                    Issuance_date: issuance,
-                    category_id: String(categoryID),
-                    file: filesArr[0] === '[]' || filesArr.length === 0 ? null : filesArr,
-                };
+                let formData: any = new FormData();
+                if (noAvatar) {
+                    formData = {
+                        user_id: dataContext.id,
+                        title: title,
+                        content: content,
+                        short_desc: shortDesc,
+                        image: imageFile.name,
+                        serial_number: serial,
+                        Issuance_date: issuance,
+                        category_id: String(categoryID),
+                        file: filesArr[0] === '[]' || filesArr.length === 0 ? null : filesArr,
+                    };
+                } else {
+                    formData = {
+                        user_id: dataContext.id,
+                        title: title,
+                        content: content,
+                        short_desc: shortDesc,
+                        imagelink: avatar,
+                        serial_number: serial,
+                        Issuance_date: issuance,
+                        category_id: String(categoryID),
+                        file: filesArr[0] === '[]' || filesArr.length === 0 ? null : filesArr,
+                    };
+                }
                 const result = await axios.put(`${serverBackend}/api/v1/post/${id}`, formData);
                 if (result.data.message === 'success') {
                     setTurn(false);
@@ -113,7 +133,7 @@ export default function UpdatePost({
         const reader: any = new FileReader();
 
         reader.onloadend = () => {
-            setAvatar(reader.result);
+            setNoAvatar(reader.result);
             setImageFile(file);
         };
 
@@ -138,6 +158,7 @@ export default function UpdatePost({
             </Tooltip>
             <Modal
                 className="h-[750px] flex overflow-y-auto"
+                size="4xl"
                 isOpen={turn}
                 onOpenChange={() => setTurn(false)}
                 isDismissable={false}
@@ -232,16 +253,26 @@ export default function UpdatePost({
                         </div>
                         {/* Thêm avatar */}
                         <div className="flex items-center gap-3">
+                            <label htmlFor="uploadImg">Upload hình</label>
                             <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">
-                                {avatar && <Image src="" alt={avatar} fill sizes="10000px" />}
-                                {/* {avatar && <Image src={`${serverBackend}${avatar}`} alt={avatar} fill sizes="10000px" />} */}
+                                {!noAvatar && (
+                                    <Image src={`${serverBackend}${avatar}`} alt={avatar} fill sizes="10000px" />
+                                )}
+                                {noAvatar && <Image src={`${noAvatar}`} alt={noAvatar} fill sizes="10000px" />}
                             </div>
+                            <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                         </div>
                         {/* Thêm content */}
                         <>
                             <Ckeditor content={content} setContent={setContent} />
-                            <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                         </>
+                        {/* Mô tả ngắn */}
+                        <textarea
+                            placeholder="Mô tả ngắn"
+                            className="h-[56px] py-2 px-3 rounded-[12px] outline-none bg-[#f4f4f5]"
+                            onChange={(e) => setShortDesc(String(e.target.value))}
+                            value={shortDesc}
+                        />
                         {/* Thêm file */}
                         <UploadFiles filesArr={filesArr} setFilesArr={setFilesArr} />
                     </ModalBody>

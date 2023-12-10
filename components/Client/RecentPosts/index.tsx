@@ -2,32 +2,16 @@
 
 import { getDays } from '@/functions/getDays';
 import { serverBackend } from '@/server';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Pagination, usePagination } from '@nextui-org/react';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
-import { FaFlag } from 'react-icons/fa';
-import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 
-export default function RecentPosts() {
-    const [recentPosts, setRecentPosts] = useState<object[]>([]);
-
-    useEffect(() => {
-        getRecentPosts();
-    }, []);
-
-    const getRecentPosts = async () => {
-        try {
-            const result = await axios.get(`${serverBackend}/api/v1/post`);
-            if (result.data.message === 'success') {
-                setRecentPosts(result.data.data.filter((item: any) => item.status !== 'inactive'));
-            }
-        } catch (err: any) {
-            console.log(err);
-        }
-    };
+export default function RecentPosts({ postsRes }: { postsRes: any }) {
+    let recentPosts: any;
+    if (postsRes.message === 'success') {
+        recentPosts = postsRes.data;
+    }
 
     return (
         <div className="flex justify-center my-2 font-merriweather px-4 min-h-[450px]">
@@ -50,23 +34,6 @@ export default function RecentPosts() {
                                     key={index}
                                     className="flex gap-3 justify-center p-4 md:w-[40%] lg:w-[25%] h-max flex-col rounded-[16px] border-[2px] border-[#e8e8e8]"
                                 >
-                                    <div className="flex justify-end">
-                                        <Dropdown placement="bottom-end">
-                                            <DropdownTrigger>
-                                                <i className="p-2 cursor-pointer">
-                                                    <IoEllipsisHorizontalSharp fontSize={18} />
-                                                </i>
-                                            </DropdownTrigger>
-                                            <DropdownMenu aria-label="Static Actions">
-                                                <DropdownItem key="report">
-                                                    <div className="flex gap-2 items-center">
-                                                        <FaFlag fontSize={16} />
-                                                        Báo cáo
-                                                    </div>
-                                                </DropdownItem>
-                                            </DropdownMenu>
-                                        </Dropdown>
-                                    </div>
                                     <Link
                                         href={`bai-dang?postId=${item.id}`}
                                         className="flex cursor-pointer flex-col gap-3"
@@ -74,9 +41,7 @@ export default function RecentPosts() {
                                         <div className="flex flex-col gap-2 items-center">
                                             <div className="w-full select-none relative h-[150px]">
                                                 <Image
-                                                    src={
-                                                        `${serverBackend}${item.images}`
-                                                    }
+                                                    src={`${serverBackend}${item.images}`}
                                                     alt=""
                                                     fill
                                                     sizes="100000px"
@@ -84,10 +49,9 @@ export default function RecentPosts() {
                                                 />
                                             </div>
                                             <h3 className="line-clamp-2 font-bold">{item.title}</h3>
-                                            <div
-                                                dangerouslySetInnerHTML={{ __html: item.content }}
-                                                className="overflow-hidden font-light line-clamp-3 text-[14px] text-[#767676]"
-                                            ></div>
+                                            <div className="overflow-hidden font-light line-clamp-3 text-[14px] text-[#767676]">
+                                                {item.short_desc}
+                                            </div>
                                         </div>
                                     </Link>
                                     <div className="flex w-full flex-col whitespace-nowrap gap-2">
@@ -95,7 +59,7 @@ export default function RecentPosts() {
                                             <span className="text-[12px]">{getDays(item.created_at)} ngày trước</span>
                                             <span className="flex gap-1 items-center text-[14px]">
                                                 <AiOutlineEye fontSize={18} />
-                                                {item.view}
+                                                {item.views}
                                             </span>
                                         </div>
                                         <div className="flex gap-2 items-center">

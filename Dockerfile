@@ -1,34 +1,18 @@
-# Base on official Node.js Alpine image
-FROM node:alpine
+FROM node:18-alpine as builder
+WORKDIR /app
 
-# Set working directory
-WORKDIR /usr/app
-
-# Install PM2 globally
-RUN npm install --global pm2
-
-# Copy package.json and package-lock.json before other files
-# Utilize Docker cache to save re-installing dependencies if unchanged
-COPY ./package*.json ./
-
-# Install dependencies
-RUN npm install --production
-
-# Copy all files
-COPY ./ ./
-
-# Build app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
 RUN npm run build
 
-# Create and set correct permissions for the cache directory
-RUN mkdir -p .next/cache/images && chown -R node:node .next
-
-# Expose the listening port
+FROM node:18-alpine as runner
+WORKDIR /app
+COPY --from=builder /app/package.json .
+COPY --from=builder /app/package-lock.json .
+COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 EXPOSE 3000
-
-# Run container as non-root (unprivileged) user
-# The node user is provided in the Node.js Alpine base image
-USER node
-
-# Run npm start script with PM2 when container starts
-CMD ["pm2-runtime", "npm", "--", "start"]
+ENTRYPOINT ["npm", "start"]
