@@ -28,7 +28,7 @@ export default function Videos() {
     const videos: any = dataContext.posts.filter((item: any) => item.parent_name === 'Video');
 
     return (
-        <div className="flex justify-center py-6 px-4 font-merriweather">
+        <div className="flex justify-center py-6 px-4 font-merriweather min-h-[350px]">
             <div className="flex flex-col bg-white w-wMain h-max">
                 <div className="flex items-center justify-between border-b-[2px] boder-[#ccc]">
                     <h2 className="text-[26px]">Thư viện video</h2>
@@ -41,18 +41,23 @@ export default function Videos() {
                 </div>
                 <div className="flex lg:flex-row flex-col w-full gap-3 mt-3">
                     <div className="flex justify-center flex-wrap lg:flex-nowrap gap-3">
-                        {videos.map((item: any, index: number) => (
-                            <div key={index} className="w-[45%] lg:w-[25%] flex flex-col gap-2">
-                                <iframe
-                                    className="select-none"
-                                    allowFullScreen={true}
-                                    width="100%"
-                                    height="150"
-                                    src={item.content}
-                                ></iframe>
-                                <span className="text-[#505050] line-clamp-2 text-[13px]">{item.short_desc}</span>
-                            </div>
-                        ))}
+                        {videos.map(
+                            (item: any, index: number) =>
+                                index < 4 && (
+                                    <div key={index} className="w-[45%] lg:w-[25%] flex flex-col gap-2">
+                                        <iframe
+                                            className="select-none"
+                                            allowFullScreen={true}
+                                            width="100%"
+                                            height="150"
+                                            src={`https://www.youtube.com/embed/${item.content}?si=fo9sSxzqp_r6LJ2z`}
+                                        ></iframe>
+                                        <span className="text-[#505050] line-clamp-2 text-[13px]">
+                                            {item.short_desc}
+                                        </span>
+                                    </div>
+                                ),
+                        )}
                     </div>
                 </div>
             </div>
