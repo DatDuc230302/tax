@@ -37,8 +37,8 @@ const listItems: items[] = [
     },
     {
         icon: <AiFillSliders fontSize={20} />,
-        title: 'Quản lý Banners',
-        href: '/admin/banners',
+        title: 'Quản lý Slides',
+        href: '/admin/slides',
     },
     {
         icon: <AiFillSetting fontSize={20} />,

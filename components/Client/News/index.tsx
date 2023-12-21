@@ -1,26 +1,28 @@
 'use client';
 
+import { ClientContext } from '@/app/(client)/layout';
 import { removeDuplicates } from '@/functions/removeDuplicates';
-import { serverBackend } from '@/server';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 
-export default function News({ postsRes }: { postsRes: any }) {
-    const [news, setNews] = useState<any>([]);
+export default function News() {
+    //
+    const dataContext: any = useContext(ClientContext);
+    //
+    const subCategories: any = dataContext.posts.filter((item: any) => item.parent_name === 'Tin tức');
+    const [news, setNews] = useState<any>(dataContext.posts.filter((item: any) => item.parent_name === 'Tin tức'));
     const [subCategory, setSubCategory] = useState<string>('Tất cả');
     const [active, setActive] = useState<number>(-1);
 
     useEffect(() => {
-        if (postsRes.message === 'success') {
-            if (subCategory === 'Tất cả') {
-                setNews(postsRes.data.filter((item: any) => item.parent_name === 'Tin tức'));
-            } else {
-                setNews(postsRes.data.filter((item: any) => item.category_name === subCategory));
-            }
+        if (subCategory === 'Tất cả') {
+            setNews(dataContext.posts.filter((item: any) => item.parent_name === 'Tin tức'));
+        } else {
+            setNews(dataContext.posts.filter((item: any) => item.category_name === subCategory));
         }
-    }, [subCategory]);
+    }, [subCategory, dataContext.posts]);
 
     const onclickSubCategory = (name: string, indexActive: number) => {
         setSubCategory(name);
@@ -41,8 +43,8 @@ export default function News({ postsRes }: { postsRes: any }) {
                         >
                             Tất cả
                         </h4>
-                        {news.length > 0 &&
-                            removeDuplicates(news, 'category_name').map((item: any, index: number) => (
+                        {dataContext.posts.length > 0 &&
+                            removeDuplicates(subCategories, 'category_name').map((item: any, index: number) => (
                                 <h4
                                     onClick={() => onclickSubCategory(item.category_name, index)}
                                     key={index}
@@ -87,7 +89,7 @@ export default function News({ postsRes }: { postsRes: any }) {
                                     </div>
                                     <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
                                         <Image
-                                            src={`${serverBackend}${item.images}`}
+                                            src={`${item.images}`}
                                             className="object-cover rounded-[12px]"
                                             alt=""
                                             fill

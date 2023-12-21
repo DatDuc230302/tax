@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useContext, useEffect, useState, useRef, useMemo } from 'react';
-// import Placeholder from 'ckeditor5-placeholder/src/placeholder';
 
 import {
     Modal,
@@ -25,7 +24,7 @@ import { isDate } from '@/functions/isDate';
 import axios from 'axios';
 import { AdminContext } from '@/app/admin/layout';
 import UploadFiles from '../UploadFiles';
-import Ckeditor from '@/components/Common/Ckeditor';
+import Editor from '@/components/Common/Editor/Editor';
 
 export default function CreatePost({
     categories,
@@ -42,10 +41,8 @@ export default function CreatePost({
     const [turn, setTurn] = useState<boolean>(false);
     // Dữ liệu từ DataContext
     const dataContext: any = useContext(AdminContext);
-    // State cho phép hiển thị ảnh khi người dùng tải lên
-    const [showImage, setShowImage] = useState<any>(null);
     // State cho phép gữi file ảnh lên server
-    const [image, setImage] = useState<any>(null);
+    const [imageBase, setImageBase] = useState<any>(null);
     // State tiêu đề của bài đăng
     const [title, setTitle] = useState<string>('');
     // State thể loại của bài đăng
@@ -74,7 +71,7 @@ export default function CreatePost({
                 title.length === 0 ||
                 category.length === 0 ||
                 subCategory.length === 0 ||
-                image === null ||
+                imageBase === null ||
                 content.length === 0 ||
                 shortDescription.length === 0
             ) {
@@ -85,13 +82,12 @@ export default function CreatePost({
                 formData.append('title', title);
                 formData.append('short_desc', shortDescription);
                 formData.append('content', content);
-                formData.append('image', image, image.name);
+                formData.append('image', imageBase);
                 formData.append('serial_number', serial);
                 formData.append('Issuance_date', issuance);
                 formData.append('category_id', categoryID);
                 formData.append('file', filesArr);
                 const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
-                console.log(result + '' + formData);
                 if (result.data.message === 'success') {
                     setTurn(false);
                     setRefresh(!refresh);
@@ -108,14 +104,13 @@ export default function CreatePost({
         const reader: any = new FileReader();
 
         reader.onloadend = () => {
-            setImage(file);
-            setShowImage(reader.result);
+            setImageBase(reader.result);
         };
 
         if (file) {
             reader.readAsDataURL(file);
         } else {
-            setImage(null);
+            setImageBase(reader.result);
         }
     };
 
@@ -126,11 +121,6 @@ export default function CreatePost({
             setShowSubCategories(categories.filter((item: any) => item.parent_name === category));
         }
     }, [category]);
-
-    const handleCkeditor = (event: any, editor: any) => {
-        const data: any = editor.getData();
-        setContent(data);
-    };
 
     const handleSubCategoryChange = (item: any) => {
         setSubCategory(item.name);
@@ -144,8 +134,7 @@ export default function CreatePost({
         setSerial('');
         setCategory('');
         setSubCategory('');
-        setShowImage(null);
-        setImage(null);
+        setImageBase(null);
         setFilesArr([]);
     };
 
@@ -193,7 +182,13 @@ export default function CreatePost({
                                 </DropdownTrigger>
                                 <DropdownMenu aria-label="Static Actions">
                                     {parentCategories.map((item: any, index: number) => (
-                                        <SelectItem onClick={() => setCategory(item.name)} key={index}>
+                                        <SelectItem
+                                            onClick={() => {
+                                                setCategory(item.name);
+                                                setSubCategory('');
+                                            }}
+                                            key={index}
+                                        >
                                             {item.name}
                                         </SelectItem>
                                     ))}
@@ -259,10 +254,10 @@ export default function CreatePost({
                                     style={{ height: 300 }}
                                     className="flex border-[1px] relative border-[#ccc] w-full"
                                 >
-                                    {image && <Image src={showImage} alt="" sizes="300px" fill={true} />}
+                                    {imageBase && <Image src={imageBase} alt="" sizes="300px" fill={true} />}
                                 </div>
                             </div>
-                            {require && image === null && (
+                            {require && imageBase === null && (
                                 <div className="flex text-[red] justify-end text-[14px]">Vui lòng chọn ảnh</div>
                             )}
                         </>
@@ -275,7 +270,10 @@ export default function CreatePost({
                         />
                         {/* Nội dung bài viết */}
                         <>
-                            <Ckeditor content={content} setContent={setContent} />
+                            <Editor content={content} setContent={setContent} />
+                            {require && content.length === 0 && (
+                                <div className="flex text-[red] justify-end text-[14px]">Vui lòng nhập nội dung</div>
+                            )}
                         </>
                         {/* Tải file lên */}
                         <>

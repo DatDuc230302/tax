@@ -82,8 +82,8 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                         }}
                                     >
                                         <TableHeader>
-                                            <TableColumn key="name">ID</TableColumn>
-                                            <TableColumn key="name">Thể loại cha</TableColumn>
+                                            <TableColumn key="id">ID</TableColumn>
+                                            <TableColumn key="parent_name">Thể loại cha</TableColumn>
                                             <TableColumn key="created">Ngày tạo</TableColumn>
                                             <TableColumn key="updated">Ngày cập nhật</TableColumn>
                                             <TableColumn key="tools">Công cụ</TableColumn>
@@ -100,14 +100,16 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                                         {formatTime(item.updated_at)}
                                                     </TableCell>
                                                     <TableCell className="flex w-[80px] items-center h-full justify-between">
-                                                        {item.name !== 'Tin tức' && item.name !== 'Văn bản' && (
-                                                            <UpdateCategoryAndSubCategory
-                                                                type="category"
-                                                                idCategory={item.id}
-                                                                refresh={refresh}
-                                                                setRefresh={setRefresh}
-                                                            />
-                                                        )}
+                                                        {item.name !== 'Tin tức' &&
+                                                            item.name !== 'Văn bản' &&
+                                                            item.name !== 'Video' && (
+                                                                <UpdateCategoryAndSubCategory
+                                                                    type="category"
+                                                                    idCategory={item.id}
+                                                                    refresh={refresh}
+                                                                    setRefresh={setRefresh}
+                                                                />
+                                                            )}
                                                     </TableCell>
                                                 </TableRow>
                                             ))}

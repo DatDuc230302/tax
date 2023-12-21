@@ -83,16 +83,16 @@ export default function PostsAdmin() {
                 <TableHeader>
                     <TableColumn key="id">ID</TableColumn>
                     <TableColumn key="name">Tiêu đề bài viết</TableColumn>
-                    <TableColumn key="name">Mô tả ngắn</TableColumn>
+                    <TableColumn key="short_desc">Mô tả ngắn</TableColumn>
                     <TableColumn key="content">Nội dung</TableColumn>
                     <TableColumn key="category">Thể loại cha</TableColumn>
                     <TableColumn key="role">Thể loại con</TableColumn>
-                    <TableColumn key="status">Số hiệu</TableColumn>
-                    <TableColumn key="status">Ngày ban hành</TableColumn>
-                    <TableColumn key="status">Ngày tạo</TableColumn>
-                    <TableColumn key="status">Ngày cập nhật</TableColumn>
+                    <TableColumn key="serial">Số hiệu</TableColumn>
+                    <TableColumn key="issuance">Ngày ban hành</TableColumn>
+                    <TableColumn key="created">Ngày tạo</TableColumn>
+                    <TableColumn key="updated">Ngày cập nhật</TableColumn>
                     <TableColumn key="status">Trạng thái</TableColumn>
-                    <TableColumn key="status">Công cụ</TableColumn>
+                    <TableColumn key="tools">Công cụ</TableColumn>
                 </TableHeader>
                 <TableBody>
                     {posts.map((item: any, index: number) => (
@@ -136,7 +136,7 @@ export default function PostsAdmin() {
                                 )}
                             </TableCell>
                             <TableCell className="w-[200px] flex gap-3 whitespace-nowrap">
-                                <UpdatePost
+                                {/* <UpdatePost
                                     id={item.id}
                                     oldTitle={item.title}
                                     oldContent={item.content}
@@ -147,12 +147,12 @@ export default function PostsAdmin() {
                                     oldserial={item.serial_number}
                                     oldissuance={item.Issuance_date}
                                     oldFilesArr={item.file ? item.file.split(',') : []}
-                                    oldAvatar={item.images}
+                                    oldImageBase={item.images}
                                     categories={categories}
                                     parentCategories={parentCategories}
                                     refresh={refresh}
                                     setRefresh={setRefresh}
-                                />
+                                /> */}
 
                                 <ChangeStatus
                                     type="post"

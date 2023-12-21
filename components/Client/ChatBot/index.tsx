@@ -1,7 +1,7 @@
 'use client';
-
+import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import { Divider, Tooltip, useTable } from '@nextui-org/react';
+import { Tooltip } from '@nextui-org/react';
 import { TbMessageCircle2Filled } from 'react-icons/tb';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FiSend } from 'react-icons/fi';
@@ -10,33 +10,108 @@ import css from './ChatBot.module.scss';
 import { BsRobot, BsTelephoneFill } from 'react-icons/bs';
 import { formatTime } from '@/functions/formatTime';
 import { getTime } from '@/functions/getTime';
+import echo from '@/laravel-echo-config';
+import axios from 'axios';
+import { serverBackend } from '@/server';
 
 interface typeQuestions {
-    question: string;
-    type: string;
-    time: string;
+    content: string;
+    sender_type: string;
+    created_at: string;
 }
 
 export default function ChatBot() {
     const [turn, setTurn] = useState<boolean>(false);
     const [turnBox, setTurnBox] = useState<boolean>(false);
     const [valueInput, setValueInput] = useState<string>('');
-    const [questions, setQuestions] = useState<typeQuestions[]>([
-        { question: 'Bạn cần hỗ trợ gì ?', type: 'bot', time: getTime() },
-    ]);
+    // const [questions, setQuestions] = useState<typeQuestions[]>([
+    //     { question: 'Bạn cần hỗ trợ gì ?', type: 'bot', time: getTime() },
+    // ]);
+    const [messages, setMessages] = useState<typeQuestions[]>([]);
     const [boxQuestions, setBoxQuestion] = useState<string[]>(['Đóng tiền diện', 'Đóng thuế']);
+    useEffect(() => {
+        let token = getCookie('guest_token');
+        const channel = echo.channel('laravel_database_chat' + token);
 
+        channel.listen('ChatEvent', function (data: any) {
+            setMessages((prevMessages) => [
+                ...prevMessages,
+                {
+                    content: data['content'],
+                    sender_type: data['sender_type'],
+                    created_at: moment(data['created_at']).format('DD/MM/YYYY HH:mm:ss'),
+                },
+            ]);
+            setValueInput('');
+        });
+
+        return () => {
+            channel.stopListening('ChatEvent');
+        };
+    }, []);
+
+    useEffect(() => {
+        const fetchMessages = async () => {
+            try {
+                let token = getCookie('guest_token');
+                const response = await axios.get(`${serverBackend}/api/v1/guest-get-message/${token}`);
+                setMessages(response.data.data);
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+            }
+        };
+        fetchMessages();
+    }, []);
     const handleOnchange = (value: string) => {
         value[0] !== ' ' && setValueInput(value);
     };
-
-    const handleSend = () => {
+    const handleSend = async () => {
+        let guestToken = getCookie('guest_token');
+        if (!guestToken) {
+            guestToken = generateUniqueToken();
+            document.cookie = `guest_token=${guestToken}; expires=${new Date(
+                new Date().getTime() + 24 * 60 * 60 * 1000,
+            ).toUTCString()}; path=/`;
+        }
         if (valueInput.length > 0) {
-            setQuestions([...questions, { question: valueInput, type: 'user', time: getTime() }]);
-            setValueInput('');
+            try {
+                const formData: any = new FormData();
+                formData.append('content', valueInput);
+                formData.append('guest_token', guestToken);
+                const response = await axios.post(`${serverBackend}/api/v1/send-message-to-admin`, formData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (response.status === 200) {
+                    // setMessages([...messages, { content: valueInput, sender_type: 'customer', created_at: moment(getTime()).format('DD/MM/YYYY HH:mm:ss')}]);
+                    // setValueInput('');
+                } else {
+                    console.log(response);
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+            }
         }
     };
 
+    const getCookie = (name: string): string | undefined => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) {
+            const cookieValue = parts.pop();
+            if (cookieValue) {
+                return cookieValue.split(';').shift();
+            }
+        }
+        return undefined;
+    };
+    const generateUniqueToken = () => {
+        const timestamp = new Date().getTime().toString(); // Lấy thời gian hiện tại dưới dạng số
+        const randomStr = Math.random().toString().substring(2, 10); // Chuỗi số ngẫu nhiên từ Math.random()
+
+        return `${timestamp}${randomStr}`.substring(0, 17);
+    };
     const onKeyDown = (e: any) => {
         if (e.key === 'Enter') {
             handleSend();
@@ -44,8 +119,8 @@ export default function ChatBot() {
     };
 
     const onChoose = (value: string) => {
-        setQuestions([...questions, { question: value, type: 'user', time: getTime() }]);
-        setValueInput('');
+        // setQuestions([...questions, { question: value, type: 'user', time: getTime() }]);
+        // setValueInput('');
     };
 
     const handleCall = () => {
@@ -80,41 +155,46 @@ export default function ChatBot() {
                     </i>
                 </div>
                 <div className={`${css.scroll} flex flex-col bg-[#ebeced] p-4 h-full`}>
-                    {questions.map((item: typeQuestions, index: number) => (
-                        <div key={index}>
-                            {item.type === 'bot' && (
-                                <div className="flex">
-                                    <div className="flex w-[300px] items-center gap-2">
-                                        <i className="rounded-[50%] shadow-lg bg-white p-3">
-                                            <BsRobot fontSize={20} />
-                                        </i>
-                                        <span
-                                            key={index}
-                                            className="flex p-[10px] bg-white shadow-lg flex-col text-[15px] rounded-[8px] my-2"
-                                        >
-                                            {item.question}
-                                            {index !== 0 && (
-                                                <span className="text-[12px] text-[#476285]">{item.time}</span>
-                                            )}
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
-                            {item.type === 'user' && (
-                                <div className="flex justify-end">
-                                    <div className="flex w-[300px] justify-end items-end flex-col">
-                                        <div
-                                            key={index}
-                                            className="flex flex-col p-[12px] shadow-lg bg-[#E5EFFF] text-[15px] rounded-[8px] my-2"
-                                        >
-                                            {item.question}
-                                            <span className="text-[12px] text-[#476285]">{item.time}</span>
+                    {messages &&
+                        messages.map((item: any, index: number) => (
+                            <div key={index}>
+                                {item.sender_type === 'customer' && (
+                                    <div className="flex justify-end">
+                                        <div className="flex w-[300px] justify-end items-end flex-col">
+                                            <div
+                                                key={index}
+                                                className="flex flex-col p-[12px] shadow-lg bg-[#E5EFFF] text-[15px] rounded-[8px] my-2"
+                                            >
+                                                {item.content}
+                                                <span className="text-[12px] text-[#476285]">
+                                                    {moment(item.created_at).format('DD/MM/YYYY HH:mm:ss')}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                                )}
+                                {item.sender_type === 'admin' && (
+                                    <div className="flex">
+                                        <div className="flex w-[300px] items-center gap-2">
+                                            <i className="rounded-[50%] shadow-lg bg-white p-3">
+                                                <BsRobot fontSize={20} />
+                                            </i>
+                                            <span
+                                                key={index}
+                                                className="flex p-[10px] bg-white shadow-lg flex-col text-[15px] rounded-[8px] my-2"
+                                            >
+                                                {item.content}
+                                                {index !== 0 && (
+                                                    <span className="text-[12px] text-[#476285]">
+                                                        {moment(item.created_at).format('DD/MM/YYYY HH:mm:ss')}
+                                                    </span>
+                                                )}
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
                 </div>
                 <div className="w-full flex items-center h-[100px] border-t-[1px] border-[#ccc]">
                     <div className="flex px-4 w-full items-center gap-2">

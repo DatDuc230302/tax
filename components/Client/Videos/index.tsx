@@ -1,9 +1,10 @@
 'use client';
 
+import { ClientContext } from '@/app/(client)/layout';
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
 
-export default function Video() {
+export default function Videos() {
     const list: any = [
         {
             title: 'LANDSHOW#18: Đối thoại về sửa đổi luật đất đai | VTV24',
@@ -23,6 +24,9 @@ export default function Video() {
         },
     ];
 
+    const dataContext: any = useContext(ClientContext);
+    const videos: any = dataContext.posts.filter((item: any) => item.parent_name === 'Video');
+
     return (
         <div className="flex justify-center py-6 px-4 font-merriweather">
             <div className="flex flex-col bg-white w-wMain h-max">
@@ -37,16 +41,16 @@ export default function Video() {
                 </div>
                 <div className="flex lg:flex-row flex-col w-full gap-3 mt-3">
                     <div className="flex justify-center flex-wrap lg:flex-nowrap gap-3">
-                        {list.map((item: any, index: number) => (
+                        {videos.map((item: any, index: number) => (
                             <div key={index} className="w-[45%] lg:w-[25%] flex flex-col gap-2">
                                 <iframe
                                     className="select-none"
                                     allowFullScreen={true}
                                     width="100%"
                                     height="150"
-                                    src={item.src}
+                                    src={item.content}
                                 ></iframe>
-                                <span className="text-[#505050] line-clamp-2 text-[13px]">{item.title}</span>
+                                <span className="text-[#505050] line-clamp-2 text-[13px]">{item.short_desc}</span>
                             </div>
                         ))}
                     </div>

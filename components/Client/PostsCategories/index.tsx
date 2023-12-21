@@ -1,14 +1,15 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useContext } from 'react';
 import { removeDiacriticsAndSpaces } from '@/functions/removeDiacriticsAndSpaces';
 import Link from 'next/link';
 import { Accordion, AccordionItem } from '@nextui-org/react';
+import { ClientContext } from '@/app/(client)/layout';
 
-export default function PostsCategories({ categoriesRes }: { categoriesRes: any }) {
+export default function PostsCategories() {
     const router = useRouter();
-    const categories: any = categoriesRes;
+    const dataContext = useContext(ClientContext);
 
     return (
         <div className="flex flex-col gap-2">
@@ -20,7 +21,7 @@ export default function PostsCategories({ categoriesRes }: { categoriesRes: any 
                     Thể loại
                 </h2>
                 <Accordion selectionMode="single">
-                    {categories
+                    {dataContext.categories
                         .map(
                             (category: any, index: number) =>
                                 category.parent_name === null && (
@@ -31,7 +32,7 @@ export default function PostsCategories({ categoriesRes }: { categoriesRes: any 
                                         title={category.name}
                                     >
                                         <div className="flex flex-col">
-                                            {categories.map(
+                                            {dataContext.categories.map(
                                                 (subCategory: any, index: number) =>
                                                     subCategory.parent_name === category.name && (
                                                         <Link

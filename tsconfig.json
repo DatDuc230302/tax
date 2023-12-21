@@ -33,7 +33,10 @@
         "app/api/upload.js",
         "components/Admin/CreatePost/index.js",
         "ckeditor5/src/Components/TextEditor.jsx",
-        "components/Admin/CreatePost/index.jsx"
-, "functions/removeDiacriticsAndSpaces.js", "components/Common/Ckeditor/index.js"    ],
+        "components/Admin/CreatePost/index.jsx",
+        "functions/removeDiacriticsAndSpaces.js",
+        "components/Common/Editor/JoditEditor.js",
+        "components/Common/chatbox/socketUtil.js"
+    ],
     "exclude": ["node_modules"]
 }

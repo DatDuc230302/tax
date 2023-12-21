@@ -7,7 +7,7 @@ import { serverBackend } from '@/server';
 import { BsPencilSquare } from 'react-icons/bs';
 import Image from 'next/image';
 import { isEmail } from '@/functions/isEmail';
-import AlertDialog from '../../Common/AlertMessage';
+import AlertDialog from '../../Common/AlertDialog';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import SnackbarMessage from '@/components/Common/SnackbarMessage';
 import { Alert, Snackbar } from '@mui/material';

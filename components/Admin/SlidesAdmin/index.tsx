@@ -31,12 +31,11 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import ChangeStatus from '../ChangeStatus';
 import Delete from '../Delete';
 
-export default function BannersAdmin() {
+export default function SlidesAdmin() {
     const [banners, setBanners] = useState<object[]>([]);
     const [imageUrl, setImageUrl] = useState<any>('');
     const [status, setStatus] = useState<any>('active');
     const [imageFile, setImageFile] = useState<any>(null);
-    const [imageShow, setImageShow] = useState<any>(null);
     const [refresh, setRefresh] = useState<boolean>(false);
     const [turnUpload, setTurnUpload] = useState<boolean>(false);
 
@@ -62,16 +61,17 @@ export default function BannersAdmin() {
     const handleAddBanner = async () => {
         try {
             const formData = new FormData();
-            formData.append('file', imageFile);
+            formData.append('images', imageFile);
             formData.append('status', status);
             const result = await axios.post(`${serverBackend}/api/v1/bannerImages`, formData);
+            console.log(result);
             if (result.data.message === 'success') {
                 setRefresh(!refresh);
                 setTurnUpload(false);
                 handleCancleUpload();
             }
         } catch (error) {
-            console.error('Error adding banner:', error);
+            console.log('Lỗi add banner');
         }
     };
 
@@ -80,8 +80,7 @@ export default function BannersAdmin() {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setImageFile(file);
-                setImageShow(reader.result);
+                setImageFile(reader.result);
             };
             reader.readAsDataURL(file);
         }
@@ -89,7 +88,6 @@ export default function BannersAdmin() {
 
     const handleCancleUpload = () => {
         setImageFile(null);
-        setImageShow(null);
     };
 
     return (
@@ -119,10 +117,9 @@ export default function BannersAdmin() {
                             <TableRow key={index}>
                                 <TableCell className="whitespace-nowrap">{item.id}</TableCell>
                                 <TableCell>
-                                    <div className="w-[100px] h-[100px] relative">
-                                        <Image src={`${serverBackend}${item.image_url}`} alt={item.image_url} fill sizes="100000px" />
+                                    <div className="w-[200px] h-[150px] relative">
+                                        <Image src={`${item.image_url}`} alt={item.image_url} fill sizes="100000px" />
                                     </div>
-                                    {/* {item.image_url} */}
                                 </TableCell>
                                 <TableCell className="whitespace-nowrap">
                                     {item.status === 'active' ? (
@@ -162,8 +159,8 @@ export default function BannersAdmin() {
                         <ModalBody>
                             <input hidden id="uploadBanner" type="file" onChange={handleImageUpload} />
                             <div className="flex w-full h-[300px] relative">
-                                {imageShow ? (
-                                    <Image src={imageShow} fill sizes="1000000px" alt="" />
+                                {imageFile ? (
+                                    <Image src={imageFile} fill sizes="1000000px" alt="" />
                                 ) : (
                                     <label
                                         htmlFor="uploadBanner"
@@ -173,7 +170,7 @@ export default function BannersAdmin() {
                                     </label>
                                 )}
                             </div>
-                            {imageShow && (
+                            {imageFile && (
                                 <Dropdown>
                                     <DropdownTrigger>
                                         <Button color="primary" className="w-full">

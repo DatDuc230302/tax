@@ -1,26 +1,29 @@
 'use client';
 
 import Image from 'next/image';
-
-import React from 'react';
-
+import React, { useContext } from 'react';
 import Sidebar from '../Sidebar';
 import NavHeader from '../NavHeader';
 import NavMove from '../NavMove';
 import Link from 'next/link';
+import { ClientContext } from '@/app/(client)/layout';
 
 export default function Header() {
+    const dataContext: any = useContext(ClientContext);
+    const settingWeb = dataContext.settingWeb;
     return (
         <header className="flex flex-col select-none">
             <div className="hidden lg:flex relative h-[240px]">
                 <div className="flex w-full h-[240px] relative">
-                    <Image src={'/imgs/bg_header.jpg'} priority fill sizes="1000000px" alt="" />
+                    {settingWeb.header_bg && (
+                        <Image src={`${settingWeb.header_bg}`} priority fill sizes="1000000px" alt="" />
+                    )}
                 </div>
                 <div className="flex absolute w-full justify-center h-full">
                     <div className="flex w-wMain items-center gap-3">
-                        <div className="w-[110px] h-[110px] relative">
+                        <Link href={'/'} className="w-[110px] h-[110px] relative">
                             <Image src={'/imgs/logo.png'} fill sizes="100000px" alt="" />
-                        </div>
+                        </Link>
                         <div className="hidden lg:flex h-full justify-center flex-col text-white font-bold text-[26px]">
                             <span>CỤC THUẾ TP. HỒ CHÍ MINH</span>
                             <span>CHI CỤC THUẾ QUẬN 8</span>

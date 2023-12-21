@@ -1,18 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import css from './HotPosts.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import { serverBackend } from '@/server';
 import { AiOutlineEye } from 'react-icons/ai';
 import { descViews } from '@/functions/descViews';
+import { ClientContext } from '@/app/(client)/layout';
 
-export default function HotPosts({ postsRes }: { postsRes: any }) {
-    let hotPosts: any;
-    if (postsRes.message === 'success') {
-        hotPosts = descViews(postsRes.data);
-    }
+export default function HotPosts() {
+    const dataContext = useContext(ClientContext);
+    let hotPosts: any = descViews(dataContext.posts);
+
     return (
         <div className="flex justify-center px-4 py-4 min-h-[450px]">
             <div className="flex w-wMain flex-col my-2 font-merriweather">
@@ -37,7 +36,7 @@ export default function HotPosts({ postsRes }: { postsRes: any }) {
                                     >
                                         <div className="flex relative w-full overflow-hidden h-[420px]">
                                             <Image
-                                                src={`${serverBackend}${item.images}`}
+                                                src={`${item.images}`}
                                                 alt=""
                                                 className={`${css.img} object-cover`}
                                                 fill
@@ -83,7 +82,7 @@ export default function HotPosts({ postsRes }: { postsRes: any }) {
                                                         sizes="100000000000000px"
                                                         className={`${css.img} object-cover`}
                                                         fill
-                                                        src={`${serverBackend}${item.images}`}
+                                                        src={`${item.images}`}
                                                         alt=""
                                                     />
                                                 </div>
