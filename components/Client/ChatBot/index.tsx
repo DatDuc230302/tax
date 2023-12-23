@@ -28,39 +28,41 @@ export default function ChatBot() {
     // ]);
     const [messages, setMessages] = useState<typeQuestions[]>([]);
     const [boxQuestions, setBoxQuestion] = useState<string[]>(['Đóng tiền diện', 'Đóng thuế']);
-    useEffect(() => {
-        let token = getCookie('guest_token');
-        const channel = echo.channel('laravel_database_chat' + token);
 
-        channel.listen('ChatEvent', function (data: any) {
-            setMessages((prevMessages) => [
-                ...prevMessages,
-                {
-                    content: data['content'],
-                    sender_type: data['sender_type'],
-                    created_at: moment(data['created_at']).format('DD/MM/YYYY HH:mm:ss'),
-                },
-            ]);
-            setValueInput('');
-        });
+    // useEffect(() => {
+    //     let token = getCookie('guest_token');
+    //     const channel = echo.channel('laravel_database_chat' + token);
 
-        return () => {
-            channel.stopListening('ChatEvent');
-        };
-    }, []);
+    //     channel.listen('ChatEvent', function (data: any) {
+    //         setMessages((prevMessages) => [
+    //             ...prevMessages,
+    //             {
+    //                 content: data['content'],
+    //                 sender_type: data['sender_type'],
+    //                 created_at: moment(data['created_at']).format('DD/MM/YYYY HH:mm:ss'),
+    //             },
+    //         ]);
+    //         setValueInput('');
+    //     });
 
-    useEffect(() => {
-        const fetchMessages = async () => {
-            try {
-                let token = getCookie('guest_token');
-                const response = await axios.get(`http://localhost:8000/api/v1/guest-get-message/${token}`);
-                setMessages(response.data.data);
-            } catch (error) {
-                console.error('Error fetching messages:', error);
-            }
-        };
-        fetchMessages();
-    }, []);
+    //     return () => {
+    //         channel.stopListening('ChatEvent');
+    //     };
+    // }, []);
+
+    // useEffect(() => {
+    //     const fetchMessages = async () => {
+    //         try {
+    //             let token = getCookie('guest_token');
+    //             const response = await axios.get(`http://localhost:8000/api/v1/guest-get-message/${token}`);
+    //             setMessages(response.data.data);
+    //         } catch (error) {
+    //             console.error('Error fetching messages:', error);
+    //         }
+    //     };
+    //     fetchMessages();
+    // }, []);
+
     const handleOnchange = (value: string) => {
         value[0] !== ' ' && setValueInput(value);
     };

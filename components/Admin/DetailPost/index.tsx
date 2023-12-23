@@ -9,8 +9,6 @@ export default function DetailPost({ postHistory }: { postHistory: any }) {
     const oldData: any = postHistory[0].previous_data ? JSON.parse(postHistory[0].previous_data) : null;
     const newData: any = postHistory[0].updated_data ? JSON.parse(postHistory[0].updated_data) : null;
 
-    console.log(oldData);
-
     return (
         <>
             <Tooltip content="Xem chi tiết dữ liệu">
