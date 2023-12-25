@@ -9,8 +9,14 @@ import moment from 'moment';
 import { IoArrowBackSharp, IoEllipsisVerticalSharp } from 'react-icons/io5';
 import echo from '@/laravel-echo-config';
 import { AdminContext } from '@/app/admin/layout';
+import { serverBackend } from '@/server';
+import { CiLight } from 'react-icons/ci';
+interface Customer {
+    id: number;
+    unreadCount: number;
+}
 export default function Message() {
-    const [customers, setCustomers] = useState<number[]>([1, 2, 3, 5, 6, 7, 8]);
+    const [customers, setCustomers] = useState<Customer[]>([]);
     const [selectedUserId, setSelectedUserId] = useState<any>(null);
     const [allMessages, setAllMessages] = useState<any>([
         { content: 'Tôi muốn hỏi', sender_type: 'customer', created_at: '12/10/2022' },
@@ -20,9 +26,17 @@ export default function Message() {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/v1/admin-get-message');
+                const response = await axios.get(`${serverBackend}/api/v1/admin-get-message`);
                 console.log(response);
-                setCustomers((prevCustomers) => [...prevCustomers, ...response.data.customer_tokens]);
+                const customersWithUnreadCount = response.data.customer_tokens.map((item: any) => {
+                    const unreadCount = response.data.unread_messages_count[item] || 0;
+                    return {
+                        id: item,
+                        unreadCount,
+                    };
+                });
+                console.log(customersWithUnreadCount);
+                setCustomers(customersWithUnreadCount);
                 setAllMessages(response.data.customer_messages);
             } catch (error) {
                 console.error('Error fetching messages:', error);
@@ -30,54 +44,54 @@ export default function Message() {
         };
         fetchMessages();
     }, []);
-    // useEffect(() => {
-    //     const subscribeToChat = () => {
-    //         if (selectedUserId) {
-    //             const channel = echo.channel('laravel_database_chat' + selectedUserId);
+    useEffect(() => {
+        const subscribeToChat = () => {
+            if (selectedUserId) {
+                const channel = echo.channel('laravel_database_chat' + selectedUserId);
 
-    //             channel.listen('ChatEvent', function (data: any) {
-    //                 setAllMessages((prevMessages) => [
-    //                     ...prevMessages,
-    //                     {
-    //                         content: data['content'],
-    //                         sender_type: data['sender_type'],
-    //                         created_at: moment(data['created_at']).format('DD/MM/YYYY HH:mm:ss'),
-    //                     },
-    //                 ]);
-    //                 setNewMessage('');
-    //             });
+                channel.listen('ChatEvent', function (data: any) {
+                    setAllMessages((prevMessages: any) => [
+                        ...prevMessages,
+                        {
+                            content: data['content'],
+                            sender_type: data['sender_type'],
+                            created_at: moment(data['created_at']).format('DD/MM/YYYY HH:mm:ss'),
+                        },
+                    ]);
+                    setNewMessage('');
+                });
 
-    //             return () => {
-    //                 channel.stopListening('ChatEvent');
-    //             };
-    //         }
-    //     };
+                return () => {
+                    channel.stopListening('ChatEvent');
+                };
+            }
+        };
 
-    //     subscribeToChat(); // Gọi hàm subscribe khi selectedUserId thay đổi
-    // }, [selectedUserId]); // Thêm selectedUserId vào dependency để lắng nghe sự thay đổi
+        subscribeToChat(); // Gọi hàm subscribe khi selectedUserId thay đổi
+    }, [selectedUserId]); // Thêm selectedUserId vào dependency để lắng nghe sự thay đổi
 
     const sendMessage = async () => {
         try {
             if (newMessage.length > 0) {
-                // const headers = {
-                //     'Content-Type': 'application/json',
-                //     Authorization: `Bearer ${dataContext.token}`, // Gửi token trong header
-                // };
-                // const requestData = {
-                //     guest_token: selectedUserId,
-                //     content: newMessage,
-                // };
-                // const response = await axios.post('http://localhost:8000/api/v1/reply-message-to-guest', requestData, {
-                //     headers,
-                // });
-                // if (response.data.success) {
-                //     console.log('Tin nhắn đã được gửi thành công!');
-                // }
-                setAllMessages([
-                    ...allMessages,
-                    { content: newMessage, sender_type: 'admin', created_at: '12/10/2022' },
-                ]);
-                setNewMessage('');
+                const headers = {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${dataContext.token}`, // Gửi token trong header
+                };
+                const requestData = {
+                    guest_token: selectedUserId,
+                    content: newMessage,
+                };
+                const response = await axios.post(`${serverBackend}/api/v1/reply-message-to-guest`, requestData, {
+                    headers,
+                });
+                if (response.data.success) {
+                    console.log('Tin nhắn đã được gửi thành công!');
+                }
+                // setAllMessages([
+                //     ...allMessages,
+                //     { content: newMessage, sender_type: 'admin', created_at: '12/10/2022' },
+                // ]);
+                // setNewMessage('');
             }
         } catch (error) {
             console.error('Error sending message:', error);
@@ -86,10 +100,23 @@ export default function Message() {
 
     const handleUserClick = async (userId: any) => {
         try {
-            // const response = await axios.get(`http://localhost:8000/api/v1/guest-get-message/${userId}`);
-            // setAllMessages(response.data.data);
+            const headers = {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${dataContext.token}`,
+            };
+
+            const response = await axios.get(`${serverBackend}/api/v1/guest-get-message/${userId}`, { headers });
+
+            setAllMessages(response.data.data);
             setSelectedUserId(userId);
-            console.log(userId);
+            const updatedCustomers = customers.map((item) => {
+                if (item.id === userId) {
+                    return { ...item, unreadCount: 0 };
+                }
+                return item;
+            });
+
+            setCustomers(updatedCustomers);
         } catch (error) {
             console.error('Error fetching messages:', error);
         }
@@ -107,9 +134,9 @@ export default function Message() {
                             <div
                                 key={item}
                                 className={`flex gap-2 last:border-b-[0] px-4 py-4 items-center cursor-pointer border-b-[1px] border-b-[#c4c4c4] hover:bg-[#e4e4e4] duration-100 ease-linear ${
-                                    selectedUserId === item ? 'active_chat' : ''
+                                    selectedUserId === item.id ? 'active_chat' : ''
                                 }`}
-                                onClick={() => handleUserClick(item)}
+                                onClick={() => handleUserClick(item.id)}
                             >
                                 <div className="relative w-[56px] h-[50px]">
                                     <Image
@@ -122,7 +149,10 @@ export default function Message() {
                                 </div>
                                 <div className="flex w-full flex-col justify-between">
                                     <div className="flex w-full justify-between">
-                                        <span className="text-[14px] font-bold">{`user: ${item}`}</span>
+                                        <span className="text-[14px] font-bold">{`user: ${item.id}`}</span>
+                                        {item.unreadCount > 0 ? (
+                                            <span className="text-red-500 font-bold">+{item.unreadCount}</span>
+                                        ) : null}
                                     </div>
                                 </div>
                             </div>
@@ -142,9 +172,9 @@ export default function Message() {
                                 <div
                                     key={item}
                                     className={`flex gap-2 last:border-b-[0] px-4 py-4 items-center cursor-pointer border-b-[1px] border-b-[#c4c4c4] hover:bg-[#e4e4e4] duration-100 ease-linear ${
-                                        selectedUserId === item ? 'active_chat' : ''
+                                        selectedUserId === item.id ? 'active_chat' : ''
                                     }`}
-                                    onClick={() => handleUserClick(item)}
+                                    onClick={() => handleUserClick(item.id)}
                                 >
                                     <div className="relative w-[56px] h-[50px]">
                                         <Image
@@ -157,7 +187,10 @@ export default function Message() {
                                     </div>
                                     <div className="flex w-full flex-col justify-between">
                                         <div className="flex w-full justify-between">
-                                            <span className="text-[14px] font-bold">{`user: ${item}`}</span>
+                                            <span className="text-[14px] font-bold">{`user: ${item.id}`}</span>
+                                            {item.unreadCount > 0 ? (
+                                                <span className="text-red-500 font-bold">+{item.unreadCount}</span>
+                                            ) : null}
                                         </div>
                                     </div>
                                 </div>
@@ -197,7 +230,7 @@ export default function Message() {
                                                     {message.content}
                                                 </p>
                                                 <span className="text-[12px] flex justify-end">
-                                                    {message.created_at}
+                                                    {moment(message.created_at).format('YYYY-MM-DD HH:mm')}
                                                 </span>
                                             </div>
                                         </div>
@@ -208,7 +241,7 @@ export default function Message() {
                                                     {message.content}
                                                 </span>
                                                 <span className="text-[12px] flex justify-end">
-                                                    {message.created_at}
+                                                    {moment(message.created_at).format('YYYY-MM-DD HH:mm')}
                                                 </span>
                                             </div>
                                         </div>
