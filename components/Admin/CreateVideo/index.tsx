@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useContext, useEffect, useState } from 'react';
+import { parse } from 'url';
+import { parse as qsParse } from 'querystring';
 
 import {
     Modal,
@@ -19,6 +21,7 @@ import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { AdminContext } from '@/app/admin/layout';
 import axios from 'axios';
 import { serverBackend } from '@/server';
+import { videoImg } from '@/public/imgs/video';
 
 export default function CreateVideo({
     categories,
@@ -40,13 +43,15 @@ export default function CreateVideo({
     const dataContext: any = useContext(AdminContext);
 
     const handleSubmit = async () => {
+        const parsedUrl: any = parse(linkVideo);
+        const videoId: any = qsParse(parsedUrl.query).v;
         try {
             const formData: any = new FormData();
             formData.append('user_id', dataContext.id);
             formData.append('title', 'Video');
             formData.append('short_desc', shortDesc);
-            formData.append('content', linkVideo);
-            formData.append('image', 'Video');
+            formData.append('content', videoId);
+            formData.append('image', videoImg);
             formData.append('serial_number', 'Video');
             formData.append('Issuance_date', 'Video');
             formData.append('category_id', categoryID);

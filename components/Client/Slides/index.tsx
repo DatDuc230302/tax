@@ -9,6 +9,9 @@ import { ClientContext } from '@/app/(client)/layout';
 export default function Slides() {
     const dataContext: any = useContext(ClientContext);
     const slides: any = dataContext.slides;
+
+    const arr = ['/imgs/slides/s1.jpg', '/imgs/slides/s2.jpg'];
+
     return (
         <div className="flex justify-center px-4 min-h-[450px]">
             <div className="flex w-wMain justify-center">
@@ -24,9 +27,9 @@ export default function Slides() {
                     emulateTouch={true}
                     swipeable={true}
                 >
-                    {slides.map((item: any, index: number) => (
+                    {arr.map((item: any, index: number) => (
                         <div className="w-full h-[250px] xs:h-[400px] md:h-[600px] lg:h-[750px] relative" key={index}>
-                            <Image priority src={`${item.image_url}`} fill sizes="100000px" alt={item.id} />
+                            <Image priority src={item} fill sizes="100000px" alt={item.id} />
                         </div>
                     ))}
                 </Carousel>

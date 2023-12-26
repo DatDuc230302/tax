@@ -8,9 +8,9 @@ import Link from 'next/link';
 import React, { useContext } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 
-export default function NewPosts() {
+export default function RecentPosts() {
     const dataContext: any = useContext(ClientContext);
-    let NewPosts: any = dataContext.posts;
+    let RecentPosts: any = dataContext.posts;
 
     return (
         <div className="flex justify-center my-2 font-merriweather px-4 min-h-[450px]">
@@ -25,7 +25,7 @@ export default function NewPosts() {
                     </Link>
                 </div>
                 <div className="mt-2 flex w-full gap-3 flex-wrap md:justify-center lg:justify-start lg:flex-nowrap">
-                    {NewPosts.map(
+                    {RecentPosts.map(
                         (item: any, index: number) =>
                             index < 4 &&
                             item.status === 'active' && (

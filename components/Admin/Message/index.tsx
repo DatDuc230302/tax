@@ -104,9 +104,8 @@ export default function Message() {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${dataContext.token}`,
             };
-    
+
             const response = await axios.get(`${serverBackend}/api/v1/guest-get-message/${userId}`, { headers });
-    
             setAllMessages(response.data.data);
             setSelectedUserId(userId);
             const updatedCustomers = customers.map((item) => {
@@ -115,7 +114,7 @@ export default function Message() {
                 }
                 return item;
             });
-    
+
             setCustomers(updatedCustomers);
         } catch (error) {
             console.error('Error fetching messages:', error);
@@ -151,8 +150,8 @@ export default function Message() {
                                     <div className="flex w-full justify-between">
                                         <span className="text-[14px] font-bold">{`user: ${item.id}`}</span>
                                         {item.unreadCount > 0 ? (
-                                    <span className="text-red-500 font-bold">+{(item.unreadCount)}</span>
-                                    ) : null}
+                                            <span className="text-red-500 font-bold">+{item.unreadCount}</span>
+                                        ) : null}
                                     </div>
                                 </div>
                             </div>
@@ -189,8 +188,8 @@ export default function Message() {
                                         <div className="flex w-full justify-between">
                                             <span className="text-[14px] font-bold">{`user: ${item.id}`}</span>
                                             {item.unreadCount > 0 ? (
-                                        <span className="text-red-500 font-bold">+{(item.unreadCount)}</span>
-                                        ) : null}
+                                                <span className="text-red-500 font-bold">+{item.unreadCount}</span>
+                                            ) : null}
                                         </div>
                                     </div>
                                 </div>
@@ -230,7 +229,8 @@ export default function Message() {
                                                     {message.content}
                                                 </p>
                                                 <span className="text-[12px] flex justify-end">
-                                                {moment(message.created_at).format('YYYY-MM-DD HH:mm')}
+
+                                                    {moment(message.created_at).format('YYYY-MM-DD HH:mm')}
                                                 </span>
                                             </div>
                                         </div>

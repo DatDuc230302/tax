@@ -10,8 +10,7 @@ import { ClientContext } from '@/app/(client)/layout';
 
 export default function HotPosts() {
     const dataContext = useContext(ClientContext);
-    let hotPosts: any = descViews(dataContext.posts);
-
+    let hotPosts: any = descViews(dataContext.posts.filter((item: any) => item.parent_name !== 'Video'));
     return (
         <div className="flex justify-center px-4 py-4 min-h-[450px]">
             <div className="flex w-wMain flex-col my-2 font-merriweather">
