@@ -48,23 +48,49 @@ export default function SettingFooter({ data, setData, updateData }: { data: any
                             <SketchPicker color={footerColor} onChange={handleFooterColor} />
                         </PopoverContent>
                     </Popover>
-                    <Input type="text" value={data.footer_owner} onChange={handleInputChange} label="Người sở hữu" />
+                    <Input
+                        type="text"
+                        name="footer_owner"
+                        value={data.footer_owner}
+                        onChange={handleInputChange}
+                        label="Người sở hữu"
+                    />
                     <Input
                         type="text"
                         placeholder="Địa chỉ"
+                        name="footer_address"
                         value={data.footer_address}
                         onChange={handleInputChange}
                         label="Địa chỉ"
                     />
-                    <Input type="text" value={data.footer_phone} onChange={handleInputChange} label="Số điện thoại" />
-                    <Input type="text" label="Email" value={data.footer_email} onChange={handleInputChange} />
+                    <Input
+                        type="text"
+                        name="footer_phone"
+                        value={data.footer_phone}
+                        onChange={handleInputChange}
+                        label="Số điện thoại"
+                    />
+                    <Input
+                        type="text"
+                        name="footer_email"
+                        label="Email"
+                        value={data.footer_email}
+                        onChange={handleInputChange}
+                    />
                     <Input
                         type="text"
                         label="Giờ làm việc"
+                        name="footer_working_hours"
                         value={data.footer_working_hours}
                         onChange={handleInputChange}
                     />
-                    <Input type="text" label="Tên Website" value={data.footer_website} onChange={handleInputChange} />
+                    <Input
+                        type="text"
+                        label="Tên Website"
+                        name="footer_website"
+                        value={data.footer_website}
+                        onChange={handleInputChange}
+                    />
                     <Button color="primary" onClick={updateData}>
                         Cập nhật Footer
                     </Button>

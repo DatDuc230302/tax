@@ -43,8 +43,8 @@ export default function PostClient({ postId }: { postId: any }) {
         <SkeletonLoading h={700} />
     ) : (
         <>
-            {post && (
-                <div className="flex flex-col font-roboto gap-4 py-4">
+            {post && post.Issuance_date !== 'Video' && (
+                <div className="flex flex-col font-roboto gap-4 py-4 min-h-[700px]">
                     <h2 className="font-bold text-[26px]">{post.title}</h2>
                     <div className="flex justify-between items-center">
                         <div className="flex gap-4">
@@ -80,6 +80,18 @@ export default function PostClient({ postId }: { postId: any }) {
                         )}
                     </div>
                     <h2 dangerouslySetInnerHTML={{ __html: post.content }}></h2>
+                </div>
+            )}
+            {post && post.Issuance_date === 'Video' && (
+                <div className="flex w-full flex-col gap-2 py-4 min-h-[700px]">
+                    <iframe
+                        className="select-none"
+                        allowFullScreen={true}
+                        width="100%"
+                        height="500"
+                        src={`https://www.youtube.com/embed/${post.content}?si=fo9sSxzqp_r6LJ2z`}
+                    ></iframe>
+                    <span className="text-[#505050] line-clamp-2 text-[18px]">{post.short_desc}</span>
                 </div>
             )}
             {!post && <span>Bài đăng không tồn tại</span>}

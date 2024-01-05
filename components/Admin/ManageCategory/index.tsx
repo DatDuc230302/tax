@@ -131,8 +131,8 @@ export default function ManageCategory({ refresh, setRefresh }: { refresh: boole
                                         }}
                                     >
                                         <TableHeader>
-                                            <TableColumn key="name">ID</TableColumn>
-                                            <TableColumn key="name">Thể loại con</TableColumn>
+                                            <TableColumn key="id">ID</TableColumn>
+                                            <TableColumn key="sub_category">Thể loại con</TableColumn>
                                             <TableColumn key="parent">Thể loại cha</TableColumn>
                                             <TableColumn key="created">Ngày tạo</TableColumn>
                                             <TableColumn key="updated">Ngày cập nhật</TableColumn>

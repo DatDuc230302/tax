@@ -66,6 +66,7 @@ export default function CreatePost({
     const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
 
     const handleSubmit = async () => {
+        console.log(imageBase);
         try {
             if (
                 title.length === 0 ||

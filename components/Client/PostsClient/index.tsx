@@ -115,16 +115,22 @@ export default function PostsClient() {
                                                     >
                                                         <div className="flex flex-col gap-4 justify-center">
                                                             <div className="flex flex-col pr-[20px] gap-2">
-                                                                <h3 className="line-clamp-2 font-bold">{item.title}</h3>
+                                                                {item.parent_name !== 'Video' && (
+                                                                    <h3 className="line-clamp-2 font-bold">
+                                                                        {item.title}
+                                                                    </h3>
+                                                                )}
                                                                 <span className="font-light line-clamp-3 text-[14px] text-[#767676]">
                                                                     {item.short_desc}
                                                                 </span>
                                                             </div>
                                                             <div className="flex w-full whdivtespace-nowrap items-center gap-2">
-                                                                <span className="text-[12px]">
-                                                                    {item.Issuance_date}
-                                                                </span>
-                                                                {item.serial_number && (
+                                                                {item.parent_name !== 'Video' && (
+                                                                    <span className="text-[12px]">
+                                                                        {item.Issuance_date}
+                                                                    </span>
+                                                                )}
+                                                                {item.parent_name !== 'Video' && item.serial_number && (
                                                                     <span className="text-[12px]">
                                                                         Mã: {item.serial_number}
                                                                     </span>
@@ -135,13 +141,24 @@ export default function PostsClient() {
                                                             </div>
                                                         </div>
                                                         <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
-                                                            <Image
-                                                                src={`${item.images}`}
-                                                                className="object-cover rounded-[12px]"
-                                                                alt=""
-                                                                fill
-                                                                sizes="100000px"
-                                                            />
+                                                            {item.parent_name !== 'Video' && (
+                                                                <Image
+                                                                    src={`${item.images}`}
+                                                                    className="object-cover rounded-[12px]"
+                                                                    alt=""
+                                                                    fill
+                                                                    sizes="100000px"
+                                                                />
+                                                            )}
+                                                            {item.parent_name === 'Video' && (
+                                                                <iframe
+                                                                    className="select-none"
+                                                                    allowFullScreen={true}
+                                                                    width="100%"
+                                                                    height="150"
+                                                                    src={`https://www.youtube.com/embed/${item.content}?si=fo9sSxzqp_r6LJ2z`}
+                                                                ></iframe>
+                                                            )}
                                                         </div>
                                                     </Link>
                                                     <div className="flex w-full whitespace-nowrap items-center gap-2">
