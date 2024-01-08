@@ -12,6 +12,7 @@ import { formatTime } from '@/functions/formatTime';
 import { getTime } from '@/functions/getTime';
 import echo from '@/laravel-echo-config';
 import axios from 'axios';
+import { serverBackend } from '@/server';
 
 interface typeQuestions {
     content: string;
@@ -63,6 +64,19 @@ export default function ChatBot() {
     //     fetchMessages();
     // }, []);
 
+    useEffect(() => {
+        const fetchMessages = async () => {
+            try {
+                let token = getCookie('guest_token');
+                const response = await axios.get(`${serverBackend}/api/v1/guest-get-message/${token}`);
+                setMessages(response.data.data);
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+            }
+        };
+        fetchMessages();
+    }, []);
+
     const handleOnchange = (value: string) => {
         value[0] !== ' ' && setValueInput(value);
     };
@@ -79,7 +93,7 @@ export default function ChatBot() {
                 const formData: any = new FormData();
                 formData.append('content', valueInput);
                 formData.append('guest_token', guestToken);
-                const response = await axios.post('http://localhost:8000/api/v1/send-message-to-admin', formData, {
+                const response = await axios.post(`${serverBackend}/api/v1/send-message-to-admin`, formData, {
                     headers: {
                         'Content-Type': 'application/json',
                     },

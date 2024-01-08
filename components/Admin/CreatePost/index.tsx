@@ -78,16 +78,24 @@ export default function CreatePost({
             ) {
                 setRequire(true);
             } else {
+                // Chuyển đổi hình ảnh từ base64 sang file
+                const file = await fetch(imageBase);
+                const blob = await file.blob();
+    
+                // Tạo file từ blob và gửi lên server
+                const imageFile = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+    
                 const formData: any = new FormData();
                 formData.append('user_id', dataContext.id);
                 formData.append('title', title);
                 formData.append('short_desc', shortDescription);
                 formData.append('content', content);
-                formData.append('image', imageBase);
+                formData.append('image', imageFile); // Gửi file hình ảnh đã chuyển đổi
                 formData.append('serial_number', serial);
                 formData.append('Issuance_date', issuance);
                 formData.append('category_id', categoryID);
                 formData.append('file', filesArr);
+    
                 const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
                 if (result.data.message === 'success') {
                     setTurn(false);
@@ -96,25 +104,26 @@ export default function CreatePost({
                 }
             }
         } catch {
-            alert('Khong the post');
+            alert('Không thể post');
         }
     };
+    
 
     const handleUploadImg = (e: any) => {
         const file = e.target.files[0];
         const reader: any = new FileReader();
-
+    
         reader.onloadend = () => {
             setImageBase(reader.result);
         };
-
+    
         if (file) {
             reader.readAsDataURL(file);
         } else {
-            setImageBase(reader.result);
+            setImageBase(null);
         }
     };
-
+    
     useEffect(() => {
         if (category.length === 0) {
             setShowSubCategories(categories);
