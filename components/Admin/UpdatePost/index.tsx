@@ -68,13 +68,12 @@ export default function UpdatePost({
     const [content, setContent] = useState<string>(oldContent);
     const [shortDesc, setShortDesc] = useState<string>(oldShortDesc);
     const [imageBase, setImageBase] = useState<any>(oldImageBase);
-    const [imageFile, setImageFile] = useState<any>(null);
     const [filesArr, setFilesArr] = useState<any>(oldFilesArr);
     const [serial, setSerial] = useState<string>(oldserial);
     const [issuance, setIssuance] = useState<string>(oldissuance);
     const [categoryID, setcategoryID] = useState<string>(String(oldCategoryID));
     const dataContext: any = useContext(AdminContext);
-
+    const [previewImage, setPreviewImage] = useState<any>(null);
     const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
 
     useEffect(() => {
@@ -90,18 +89,29 @@ export default function UpdatePost({
             if (title.length === 0 || content.length === 0 || imageBase === null) {
                 setRequire(true);
             } else {
-                const formData: any = {
-                    user_id: dataContext.id,
-                    title: title,
-                    content: content,
-                    short_desc: shortDesc,
-                    image: imageFile,
-                    serial_number: serial,
-                    Issuance_date: issuance,
-                    category_id: String(categoryID),
-                    file: filesArr[0] === '[]' || filesArr.length === 0 ? null : filesArr,
-                };
-                const result = await axios.put(`${serverBackend}/api/v1/post/${id}`, formData);
+                let imageFile = null; // Khởi tạo biến để lưu trữ file ảnh
+
+                if (previewImage) {
+                    // Nếu có previewImage
+                    const file = await fetch(previewImage);
+                    const blob = await file.blob();
+                    imageFile = new File([blob], 'image.jpg', { type: 'image/jpeg' }); // Tạo file từ blob
+                }
+
+                const formData = new FormData();
+                formData.append('user_id', dataContext.id);
+                formData.append('title', title);
+                formData.append('content', content);
+                formData.append('short_desc', shortDesc);
+                if (imageFile) {
+                    formData.append('image', imageFile);
+                }
+                formData.append('serial_number', serial);
+                formData.append('Issuance_date', issuance);
+                formData.append('category_id', String(categoryID));
+                formData.append('file', filesArr[0] === '[]' || filesArr.length === 0 ? null : filesArr);
+
+                const result = await axios.post(`${serverBackend}/api/v1/updatePost/${id}`, formData);
                 if (result.data.message === 'success') {
                     setTurn(false);
                     setRefresh(!refresh);
@@ -112,20 +122,40 @@ export default function UpdatePost({
         }
     };
 
-    const handleUploadImg = (e: any) => {
-        const file = e.target.files[0];
-        const reader: any = new FileReader();
+    // const handleUploadImg = (e: any) => {
+    //     const file = e.target.files[0];
+    //     const reader: any = new FileReader();
+
+    //     reader.onloadend = () => {
+    //         setImageBase(reader.result);
+    //     };
+
+    //     if (file) {
+    //         reader.readAsDataURL(file);
+    //     } else {
+    //         setImageBase(null);
+    //     }
+    // };
+    console.log(filesArr);
+    const handlePreviewImage = (file: File) => {
+        const reader = new FileReader();
 
         reader.onloadend = () => {
             setImageBase(reader.result);
-            setImageFile(file);
+            setPreviewImage(reader.result as string);
         };
 
         if (file) {
             reader.readAsDataURL(file);
         } else {
-            setImageBase(null);
+            setPreviewImage(null);
         }
+    };
+
+    const handleUploadImg = (e: any) => {
+        const file = e.target.files[0];
+        handlePreviewImage(file);
+        console.log('Preview Image:', previewImage); // In giá trị ra console
     };
 
     const handleSubCategoryChange = (item: any) => {
@@ -251,6 +281,12 @@ export default function UpdatePost({
                             </Button>
                             <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">
                                 <Image src={`${serverBackend}/${imageBase}`} alt={''} fill sizes="10000px" />
+                                <Image
+                                    src={previewImage ? previewImage : `${serverBackend}/${imageBase}`}
+                                    alt={''}
+                                    fill
+                                    sizes="10000px"
+                                />
                             </div>
                             <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                         </div>

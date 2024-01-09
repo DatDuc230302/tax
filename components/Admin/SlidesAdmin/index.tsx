@@ -33,9 +33,9 @@ import Delete from '../Delete';
 
 export default function SlidesAdmin() {
     const [banners, setBanners] = useState<object[]>([]);
-    const [imageUrl, setImageUrl] = useState<any>('');
-    const [status, setStatus] = useState<any>('active');
     const [imageFile, setImageFile] = useState<any>(null);
+    const [status, setStatus] = useState<any>('active');
+    const [imageBase, setImageBase] = useState<any>(null);
     const [refresh, setRefresh] = useState<boolean>(false);
     const [turnUpload, setTurnUpload] = useState<boolean>(false);
 
@@ -61,10 +61,9 @@ export default function SlidesAdmin() {
     const handleAddBanner = async () => {
         try {
             const formData = new FormData();
-            formData.append('images', imageFile);
+            formData.append('image', imageFile);
             formData.append('status', status);
-            const result = await axios.post(`${serverBackend}/api/v1/bannerImages`, formData);
-            console.log(result);
+            const result = await axios.post(`${serverBackend}/api/v1/banner-images`, formData);
             if (result.data.message === 'success') {
                 setRefresh(!refresh);
                 setTurnUpload(false);
@@ -80,7 +79,8 @@ export default function SlidesAdmin() {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setImageFile(reader.result);
+                setImageBase(reader.result);
+                setImageFile(file);
             };
             reader.readAsDataURL(file);
         }
@@ -159,8 +159,8 @@ export default function SlidesAdmin() {
                         <ModalBody>
                             <input hidden id="uploadBanner" type="file" onChange={handleImageUpload} />
                             <div className="flex w-full h-[300px] relative">
-                                {imageFile ? (
-                                    <Image src={imageFile} fill sizes="1000000px" alt="" />
+                                {imageBase ? (
+                                    <Image src={imageBase} fill sizes="1000000px" alt="" />
                                 ) : (
                                     <label
                                         htmlFor="uploadBanner"
@@ -170,7 +170,7 @@ export default function SlidesAdmin() {
                                     </label>
                                 )}
                             </div>
-                            {imageFile && (
+                            {imageBase && (
                                 <Dropdown>
                                     <DropdownTrigger>
                                         <Button color="primary" className="w-full">

@@ -143,7 +143,7 @@ export default function PostsClient() {
                                                         <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
                                                             {item.parent_name !== 'Video' && (
                                                                 <Image
-                                                                    src={`${item.images}`}
+                                                                    src={`${serverBackend}/${item.images}`}
                                                                     className="object-cover rounded-[12px]"
                                                                     alt=""
                                                                     fill
