@@ -68,6 +68,7 @@ export default function UpdatePost({
     const [content, setContent] = useState<string>(oldContent);
     const [shortDesc, setShortDesc] = useState<string>(oldShortDesc);
     const [imageBase, setImageBase] = useState<any>(oldImageBase);
+    const [imageFile, setImageFile] = useState<any>(null);
     const [filesArr, setFilesArr] = useState<any>(oldFilesArr);
     const [serial, setSerial] = useState<string>(oldserial);
     const [issuance, setIssuance] = useState<string>(oldissuance);
@@ -94,7 +95,7 @@ export default function UpdatePost({
                     title: title,
                     content: content,
                     short_desc: shortDesc,
-                    image: imageBase,
+                    image: imageFile,
                     serial_number: serial,
                     Issuance_date: issuance,
                     category_id: String(categoryID),
@@ -117,6 +118,7 @@ export default function UpdatePost({
 
         reader.onloadend = () => {
             setImageBase(reader.result);
+            setImageFile(file);
         };
 
         if (file) {
@@ -248,7 +250,7 @@ export default function UpdatePost({
                                 </label>
                             </Button>
                             <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">
-                                <Image src={`${imageBase}`} alt={''} fill sizes="10000px" />
+                                <Image src={`${serverBackend}/${imageBase}`} alt={''} fill sizes="10000px" />
                             </div>
                             <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                         </div>

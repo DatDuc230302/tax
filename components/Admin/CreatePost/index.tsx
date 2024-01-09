@@ -42,6 +42,7 @@ export default function CreatePost({
     // Dữ liệu từ DataContext
     const dataContext: any = useContext(AdminContext);
     // State cho phép gữi file ảnh lên server
+    const [imageFile, setImageFile] = useState<any>(null);
     const [imageBase, setImageBase] = useState<any>(null);
     // State tiêu đề của bài đăng
     const [title, setTitle] = useState<string>('');
@@ -66,13 +67,12 @@ export default function CreatePost({
     const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
 
     const handleSubmit = async () => {
-        console.log(imageBase);
         try {
             if (
                 title.length === 0 ||
                 category.length === 0 ||
                 subCategory.length === 0 ||
-                imageBase === null ||
+                imageFile === null ||
                 content.length === 0 ||
                 shortDescription.length === 0
             ) {
@@ -83,7 +83,7 @@ export default function CreatePost({
                 formData.append('title', title);
                 formData.append('short_desc', shortDescription);
                 formData.append('content', content);
-                formData.append('image', imageBase);
+                formData.append('image', imageFile);
                 formData.append('serial_number', serial);
                 formData.append('Issuance_date', issuance);
                 formData.append('category_id', categoryID);
@@ -103,15 +103,15 @@ export default function CreatePost({
     const handleUploadImg = (e: any) => {
         const file = e.target.files[0];
         const reader: any = new FileReader();
+        setImageFile(file);
 
         reader.onloadend = () => {
             setImageBase(reader.result);
+            setImageFile(file);
         };
 
         if (file) {
             reader.readAsDataURL(file);
-        } else {
-            setImageBase(reader.result);
         }
     };
 

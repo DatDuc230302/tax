@@ -40,7 +40,7 @@ export default function RecentPosts() {
                                         <div className="flex flex-col gap-2 items-center">
                                             <div className="w-full select-none relative h-[150px]">
                                                 <Image
-                                                    src={`${item.images}`}
+                                                    src={`${serverBackend}/${item.images}`}
                                                     alt=""
                                                     fill
                                                     sizes="100000px"

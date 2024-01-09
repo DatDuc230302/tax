@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { AiOutlineEye } from 'react-icons/ai';
 import { descViews } from '@/functions/descViews';
 import { ClientContext } from '@/app/(client)/layout';
+import { serverBackend } from '@/server';
 
 export default function HotPosts() {
     const dataContext = useContext(ClientContext);
@@ -35,7 +36,7 @@ export default function HotPosts() {
                                     >
                                         <div className="flex relative w-full overflow-hidden h-[420px]">
                                             <Image
-                                                src={`${item.images}`}
+                                                src={`${serverBackend}/${item.images}`}
                                                 alt=""
                                                 className={`${css.img} object-cover`}
                                                 fill
