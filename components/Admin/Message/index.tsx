@@ -106,7 +106,6 @@ export default function Message() {
             };
 
             const response = await axios.get(`${serverBackend}/api/v1/guest-get-message/${userId}`, { headers });
-
             setAllMessages(response.data.data);
             setSelectedUserId(userId);
             const updatedCustomers = customers.map((item) => {
@@ -230,6 +229,7 @@ export default function Message() {
                                                     {message.content}
                                                 </p>
                                                 <span className="text-[12px] flex justify-end">
+
                                                     {moment(message.created_at).format('YYYY-MM-DD HH:mm')}
                                                 </span>
                                             </div>
