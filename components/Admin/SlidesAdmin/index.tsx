@@ -63,8 +63,8 @@ export default function SlidesAdmin() {
             const formData = new FormData();
             formData.append('image', imageFile);
             formData.append('status', status);
-            const result = await axios.post(`${serverBackend}/api/v1/banner-images`, formData);
-            if (result.data.message === 'success') {
+            const result = await axios.post(`${serverBackend}/api/v1/bannerImages`, formData);
+            if (result.data === '    ') {
                 setRefresh(!refresh);
                 setTurnUpload(false);
                 handleCancleUpload();
@@ -118,7 +118,13 @@ export default function SlidesAdmin() {
                                 <TableCell className="whitespace-nowrap">{item.id}</TableCell>
                                 <TableCell>
                                     <div className="w-[200px] h-[150px] relative">
-                                        <Image src={`${item.image_url}`} alt={item.image_url} fill sizes="100000px" />
+                                        <Image
+                                            src={`${serverBackend}/${item.image_url}`}
+                                            alt={item.image_url}
+                                            fill
+                                            sizes="100000px"
+                                            priority
+                                        />
                                     </div>
                                 </TableCell>
                                 <TableCell className="whitespace-nowrap">

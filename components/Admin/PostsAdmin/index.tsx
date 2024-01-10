@@ -62,8 +62,6 @@ export default function PostsAdmin() {
         }
     };
 
-    console.log(posts);
-
     return (
         <div className="flex flex-col w-full px-4 gap-4 mt-4">
             <div className="flex gap-3 flex-col-reverse lg:flex-row">

@@ -54,10 +54,10 @@ export default function ChangeStatus({
 
     const changeStatusPost = async () => {
         try {
-            const result = await axios.post(`${serverBackend}/api/v1/postStatus`, {
-                user_id: Number(dataContext.id),
+            const result = await axios.post(`${serverBackend}/api/v1/postStatus/${Number(dataContext.id)}`, {
                 id: idPost,
             });
+            console.log(result);
             if (result.data.message === 'success') {
                 setTurn(false);
                 setRefresh(!refresh);

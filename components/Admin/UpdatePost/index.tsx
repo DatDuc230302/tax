@@ -122,21 +122,6 @@ export default function UpdatePost({
         }
     };
 
-    // const handleUploadImg = (e: any) => {
-    //     const file = e.target.files[0];
-    //     const reader: any = new FileReader();
-
-    //     reader.onloadend = () => {
-    //         setImageBase(reader.result);
-    //     };
-
-    //     if (file) {
-    //         reader.readAsDataURL(file);
-    //     } else {
-    //         setImageBase(null);
-    //     }
-    // };
-    console.log(filesArr);
     const handlePreviewImage = (file: File) => {
         const reader = new FileReader();
 
