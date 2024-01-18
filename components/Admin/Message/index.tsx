@@ -11,6 +11,7 @@ import echo from '@/laravel-echo-config';
 import { AdminContext } from '@/app/admin/layout';
 import { serverBackend } from '@/server';
 import { CiLight } from 'react-icons/ci';
+import ManageQuestions from '../ManageQuestions';
 interface Customer {
     id: number;
     unreadCount: number;
@@ -44,6 +45,7 @@ export default function Message() {
         };
         fetchMessages();
     }, []);
+
     useEffect(() => {
         const subscribeToChat = () => {
             if (selectedUserId) {
@@ -229,7 +231,6 @@ export default function Message() {
                                                     {message.content}
                                                 </p>
                                                 <span className="text-[12px] flex justify-end">
-
                                                     {moment(message.created_at).format('YYYY-MM-DD HH:mm')}
                                                 </span>
                                             </div>
@@ -268,6 +269,7 @@ export default function Message() {
                     </div>
                 )}
             </div>
+            <ManageQuestions />
         </div>
     );
 }

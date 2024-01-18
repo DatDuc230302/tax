@@ -170,6 +170,50 @@ export default function ChatBot() {
                     </i>
                 </div>
                 <div className={`${css.scroll} flex flex-col bg-[#ebeced] p-4 h-full`}>
+                    <div className="flex">
+                        <div className="flex w-[300px] items-center gap-2">
+                            <i className="rounded-[50%] shadow-lg bg-white p-3">
+                                <BsRobot fontSize={20} />
+                            </i>
+                            <span className="flex p-[10px] bg-white shadow-lg flex-col text-[15px] rounded-[8px] my-2">
+                                <span className="text-[12px] text-[#476285]">Tôi có thể giúp gì được cho bạn ?</span>
+                            </span>
+                        </div>
+                    </div>
+                    <>
+                        <div className="flex">
+                            <div className="flex w-[300px] items-center gap-2">
+                                <span className="flex p-[10px] cursor-pointer  border-[1px] bg-[#00ff00] border-[#00ff00] hover:opacity-40 duration-200 shadow-lg flex-col text-[15px] rounded-[8px] my-2">
+                                    <span className="text-[12px] text-[#476285]">Thuế là gì</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div className="flex">
+                            <div className="flex w-[300px] items-center gap-2">
+                                <span className="flex p-[10px] cursor-pointer  border-[1px] bg-[#00ff00] border-[#00ff00] hover:opacity-40 duration-200 shadow-lg flex-col text-[15px] rounded-[8px] my-2">
+                                    <span className="text-[12px] text-[#476285]">Tài chính là gì ?</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div className="flex">
+                            <div className="flex w-[300px] items-center gap-2">
+                                <span className="flex p-[10px] cursor-pointer  border-[1px] bg-[#00ff00] border-[#00ff00] hover:opacity-40 duration-200 shadow-lg flex-col text-[15px] rounded-[8px] my-2">
+                                    <span className="text-[12px] text-[#476285]">
+                                        Tôi có thể giúp gì được cho bạn ?
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div className="flex">
+                            <div className="flex w-[300px] items-center gap-2">
+                                <span className="flex p-[10px] cursor-pointer  border-[1px] bg-[#00ff00] border-[#00ff00] hover:opacity-40 duration-200 shadow-lg flex-col text-[15px] rounded-[8px] my-2">
+                                    <span className="text-[12px] text-[#476285]">
+                                        Tôi có thể giúp gì được cho bạn ?
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </>
                     {messages &&
                         messages.map((item: any, index: number) => (
                             <div key={index}>
