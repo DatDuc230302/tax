@@ -42,6 +42,7 @@ export default function CreatePost({
     // Dữ liệu từ DataContext
     const dataContext: any = useContext(AdminContext);
     // State cho phép gữi file ảnh lên server
+    const [imageFile, setImageFile] = useState<any>(null);
     const [imageBase, setImageBase] = useState<any>(null);
     // State tiêu đề của bài đăng
     const [title, setTitle] = useState<string>('');
@@ -66,36 +67,27 @@ export default function CreatePost({
     const [showSubCategories, setShowSubCategories] = useState<object[]>(categories);
 
     const handleSubmit = async () => {
-        console.log(imageBase);
         try {
             if (
                 title.length === 0 ||
                 category.length === 0 ||
                 subCategory.length === 0 ||
-                imageBase === null ||
+                imageFile === null ||
                 content.length === 0 ||
                 shortDescription.length === 0
             ) {
                 setRequire(true);
             } else {
-                // Chuyển đổi hình ảnh từ base64 sang file
-                const file = await fetch(imageBase);
-                const blob = await file.blob();
-    
-                // Tạo file từ blob và gửi lên server
-                const imageFile = new File([blob], 'image.jpg', { type: 'image/jpeg' });
-    
                 const formData: any = new FormData();
                 formData.append('user_id', dataContext.id);
                 formData.append('title', title);
                 formData.append('short_desc', shortDescription);
                 formData.append('content', content);
-                formData.append('image', imageFile); // Gửi file hình ảnh đã chuyển đổi
+                formData.append('image', imageFile);
                 formData.append('serial_number', serial);
                 formData.append('Issuance_date', issuance);
                 formData.append('category_id', categoryID);
                 formData.append('file', filesArr);
-    
                 const result = await axios.post(`${serverBackend}/api/v1/post`, formData);
                 if (result.data.message === 'success') {
                     setTurn(false);
@@ -104,26 +96,25 @@ export default function CreatePost({
                 }
             }
         } catch {
-            alert('Không thể post');
+            alert('Khong the post');
         }
     };
-    
 
     const handleUploadImg = (e: any) => {
         const file = e.target.files[0];
         const reader: any = new FileReader();
-    
+        setImageFile(file);
+
         reader.onloadend = () => {
             setImageBase(reader.result);
+            setImageFile(file);
         };
-    
+
         if (file) {
             reader.readAsDataURL(file);
-        } else {
-            setImageBase(null);
         }
     };
-    
+
     useEffect(() => {
         if (category.length === 0) {
             setShowSubCategories(categories);

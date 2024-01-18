@@ -2,6 +2,7 @@
 
 import { ClientContext } from '@/app/(client)/layout';
 import { removeDuplicates } from '@/functions/removeDuplicates';
+import { serverBackend } from '@/server';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react';
@@ -89,7 +90,7 @@ export default function News() {
                                     </div>
                                     <div className="w-full md:w-[280px] shrink-0 h-[180px] relative">
                                         <Image
-                                            src={`${item.images}`}
+                                            src={`${serverBackend}/${item.images}`}
                                             className="object-cover rounded-[12px]"
                                             alt=""
                                             fill

@@ -91,7 +91,8 @@ export default function UpdatePost({
             } else {
                 let imageFile = null; // Khởi tạo biến để lưu trữ file ảnh
 
-                if (previewImage) { // Nếu có previewImage
+                if (previewImage) {
+                    // Nếu có previewImage
                     const file = await fetch(previewImage);
                     const blob = await file.blob();
                     imageFile = new File([blob], 'image.jpg', { type: 'image/jpeg' }); // Tạo file từ blob
@@ -121,41 +122,27 @@ export default function UpdatePost({
         }
     };
 
-    // const handleUploadImg = (e: any) => {
-    //     const file = e.target.files[0];
-    //     const reader: any = new FileReader();
-
-    //     reader.onloadend = () => {
-    //         setImageBase(reader.result);
-    //     };
-
-    //     if (file) {
-    //         reader.readAsDataURL(file);
-    //     } else {
-    //         setImageBase(null);
-    //     }
-    // };
-    console.log(filesArr);
     const handlePreviewImage = (file: File) => {
         const reader = new FileReader();
-    
+
         reader.onloadend = () => {
+            setImageBase(reader.result);
             setPreviewImage(reader.result as string);
         };
-    
+
         if (file) {
             reader.readAsDataURL(file);
         } else {
             setPreviewImage(null);
         }
     };
-    
+
     const handleUploadImg = (e: any) => {
         const file = e.target.files[0];
         handlePreviewImage(file);
         console.log('Preview Image:', previewImage); // In giá trị ra console
     };
-        
+
     const handleSubCategoryChange = (item: any) => {
         setSubCategory(item.name);
         setcategoryID(item.id);
@@ -278,7 +265,13 @@ export default function UpdatePost({
                                 </label>
                             </Button>
                             <div style={{ height: 400 }} className="flex border-[1px] relative border-[#ccc] w-full">
-                                <Image src={previewImage ? previewImage: `${serverBackend}/${imageBase}`} alt={''} fill sizes="10000px" />
+                                <Image src={`${serverBackend}/${imageBase}`} alt={''} fill sizes="10000px" />
+                                <Image
+                                    src={previewImage ? previewImage : `${serverBackend}/${imageBase}`}
+                                    alt={''}
+                                    fill
+                                    sizes="10000px"
+                                />
                             </div>
                             <input onChange={(e) => handleUploadImg(e)} id="uploadImg" type="file" hidden />
                         </div>
