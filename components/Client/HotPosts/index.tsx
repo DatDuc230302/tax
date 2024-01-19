@@ -82,7 +82,7 @@ export default function HotPosts() {
                                                         sizes="100000000000000px"
                                                         className={`${css.img} object-cover`}
                                                         fill
-                                                        src={`${item.images}`}
+                                                        src={`${serverBackend}/${item.images}`}
                                                         alt=""
                                                     />
                                                 </div>

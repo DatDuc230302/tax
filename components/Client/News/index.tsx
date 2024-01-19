@@ -12,14 +12,16 @@ export default function News() {
     //
     const dataContext: any = useContext(ClientContext);
     //
-    const subCategories: any = dataContext.posts.filter((item: any) => item.parent_name === 'Tin tức');
-    const [news, setNews] = useState<any>(dataContext.posts.filter((item: any) => item.parent_name === 'Tin tức'));
+    const subCategories: any = dataContext.posts.filter((item: any) => item.parent_id === 3);
+    const [news, setNews] = useState<any>(dataContext.posts.filter((item: any) => item.parent_id === 3));
     const [subCategory, setSubCategory] = useState<string>('Tất cả');
     const [active, setActive] = useState<number>(-1);
 
+    console.log(dataContext.posts.filter((item: any) => item.parent_id === 3));
+
     useEffect(() => {
         if (subCategory === 'Tất cả') {
-            setNews(dataContext.posts.filter((item: any) => item.parent_name === 'Tin tức'));
+            setNews(dataContext.posts.filter((item: any) => item.parent_id === 3));
         } else {
             setNews(dataContext.posts.filter((item: any) => item.category_name === subCategory));
         }
