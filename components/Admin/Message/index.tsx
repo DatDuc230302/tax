@@ -124,7 +124,10 @@ export default function Message() {
     };
 
     return (
-        <div className="flex w-full h-full p-4">
+        <div className="flex w-full h-full p-4 gap-4 flex-col">
+            <div className="w-[200px]">
+                <ManageQuestions />
+            </div>
             <div className="w-full h-[600px] flex lg:flex-row flex-col border-[1px] border-[#c4c4c4]">
                 <div className={`hidden lg:flex shrink-0 flex-col w-[100%] lg:w-[40%] border-[1px] border-r-[#c4c4c4]`}>
                     <div className="flex px-4 py-2 border-[1px] border-b-[#c4c4c4] justify-between">
@@ -269,7 +272,6 @@ export default function Message() {
                     </div>
                 )}
             </div>
-            <ManageQuestions />
         </div>
     );
 }
