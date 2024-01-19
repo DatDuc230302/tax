@@ -24,6 +24,7 @@ export default function ChatBot() {
     const [turn, setTurn] = useState<boolean>(false);
     const [turnBox, setTurnBox] = useState<boolean>(false);
     const [valueInput, setValueInput] = useState<string>('');
+    const [answers, setAnswers] = useState<any>({});
     // const [questions, setQuestions] = useState<typeQuestions[]>([
     //     { question: 'Bạn cần hỗ trợ gì ?', type: 'bot', time: getTime() },
     // ]);
@@ -63,6 +64,18 @@ export default function ChatBot() {
     //     };
     //     fetchMessages();
     // }, []);
+
+    const getAnswers = async () => {
+        const formData = new FormData();
+        try {
+            const result = await axios.post(`${serverBackend}/api/v1/get-answer`, formData);
+            setAnswers(result.data.answer);
+        } catch {}
+    };
+
+    useEffect(() => {
+        getAnswers();
+    }, []);
 
     useEffect(() => {
         const fetchMessages = async () => {
@@ -142,6 +155,24 @@ export default function ChatBot() {
         window.location.href = 'tel:+84962862925';
     };
 
+    const onClickAnswer = async (valueAnswer: string) => {
+        const formData = new FormData();
+        try {
+            setMessages((prevMessages: any) => [
+                ...prevMessages,
+                {
+                    content: valueAnswer,
+                    sender_type: 'customer',
+                },
+            ]);
+            const result = await axios.post(`${serverBackend}/api/v1/get-answer`, formData);
+            if (result.data.answer === 'Xin lỗi, không có câu trả lời cho lựa chọn này.') {
+            } else {
+                setAnswers(result.data.answer);
+            }
+        } catch {}
+    };
+
     return (
         <>
             <Tooltip content="Đặt câu hỏi">
@@ -180,40 +211,17 @@ export default function ChatBot() {
                             </span>
                         </div>
                     </div>
-                    <>
+                    {Object.keys(answers).map((option) => (
                         <div className="flex">
                             <div className="flex w-[300px] items-center gap-2">
                                 <span className="flex p-[10px] cursor-pointer  border-[1px] bg-[#00ff00] border-[#00ff00] hover:opacity-40 duration-200 shadow-lg flex-col text-[15px] rounded-[8px] my-2">
-                                    <span className="text-[12px] text-[#476285]">Thuế là gì</span>
-                                </span>
-                            </div>
-                        </div>
-                        <div className="flex">
-                            <div className="flex w-[300px] items-center gap-2">
-                                <span className="flex p-[10px] cursor-pointer  border-[1px] bg-[#00ff00] border-[#00ff00] hover:opacity-40 duration-200 shadow-lg flex-col text-[15px] rounded-[8px] my-2">
-                                    <span className="text-[12px] text-[#476285]">Tài chính là gì ?</span>
-                                </span>
-                            </div>
-                        </div>
-                        <div className="flex">
-                            <div className="flex w-[300px] items-center gap-2">
-                                <span className="flex p-[10px] cursor-pointer  border-[1px] bg-[#00ff00] border-[#00ff00] hover:opacity-40 duration-200 shadow-lg flex-col text-[15px] rounded-[8px] my-2">
-                                    <span className="text-[12px] text-[#476285]">
-                                        Tôi có thể giúp gì được cho bạn ?
+                                    <span onClick={() => onClickAnswer(option)} className="text-[12px] text-[#476285]">
+                                        {option}
                                     </span>
                                 </span>
                             </div>
                         </div>
-                        <div className="flex">
-                            <div className="flex w-[300px] items-center gap-2">
-                                <span className="flex p-[10px] cursor-pointer  border-[1px] bg-[#00ff00] border-[#00ff00] hover:opacity-40 duration-200 shadow-lg flex-col text-[15px] rounded-[8px] my-2">
-                                    <span className="text-[12px] text-[#476285]">
-                                        Tôi có thể giúp gì được cho bạn ?
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                    </>
+                    ))}
                     {messages &&
                         messages.map((item: any, index: number) => (
                             <div key={index}>
@@ -225,9 +233,6 @@ export default function ChatBot() {
                                                 className="flex flex-col p-[12px] shadow-lg bg-[#E5EFFF] text-[15px] rounded-[8px] my-2"
                                             >
                                                 {item.content}
-                                                <span className="text-[12px] text-[#476285]">
-                                                    {moment(item.created_at).format('DD/MM/YYYY HH:mm:ss')}
-                                                </span>
                                             </div>
                                         </div>
                                     </div>

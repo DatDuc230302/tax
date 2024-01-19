@@ -29,7 +29,6 @@ export default function ManageQuestions() {
         try {
             const result = await axios.post(`${serverBackend}/api/v1/get-answer`);
             setAnswers(result.data.answer);
-            console.log(result.data.answer);
         } catch (error) {
             console.error('Error fetching answers:', error);
         }
