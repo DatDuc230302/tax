@@ -10,7 +10,7 @@ export default function Page() {
             <HotPosts />
             <News />
             <RecentPosts />
-            <Videos />
+            {/* <Videos /> */}
         </div>
     );
 }
